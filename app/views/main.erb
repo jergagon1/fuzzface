@@ -1,24 +1,32 @@
-<nav></nav>
+<%= erb :sidebar %>
+<div class="container">
+  <div class="row">
 
-<div class="row">
+  	<img src="#" alt="Fuzz Finders">
 
-	<img src="#" alt="Fuzz Finders">
+  	<p>Wags</p>
 
-	<p>Wags</p>
+  	<p class="wags"> </p>
 
-	<p class="wags">
+  </div>
+
+  <div class="row">
+  	<button class="btn-lg">Lost a Pet</button>
+  </div>
+  <div class="row">
+  	<button class="btn-lg">Found a Pet</button>
+  </div>
+  <div class="row">
+  	<button class="btn-lg">Reports</button>
+  </div>
+
+  <div class="chat pull-right">Chat</div>
 
 </div>
 
-<div class="row">
-	<button class="btn-lg">Lost a Pet</button>
-</div>
-<div class="row">
-	<div class="btn-lg">Found a Pet</div>
-</div>
-<div class="row">
-	<div class="btn-lg">Reports</div>
-</div>
-
-<div class="chat pull-right">Chat</div>
-
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
