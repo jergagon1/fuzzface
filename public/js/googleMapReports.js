@@ -15,14 +15,14 @@ function initializeReport() {
       lng = position.coords.longitude;     
 
      	var marker = new google.maps.Marker({
-        map: map,
+        map: reportMap,
         position: pos,
-        icon: '/Users/jessgreb01/Desktop/fuzzface/public/images/fuzzfinders_favicon.png',
+        icon: '/images/fuzzfinders_favicon.png',
         draggable: true,
         title: "Current location"
       });
 
-      map.setCenter(pos);
+      reportMap.setCenter(pos);
     }, function() {
       handleNoGeolocation(true);
     });
@@ -49,7 +49,11 @@ function handleNoGeolocation(errorFlag) {
   map.setCenter(options.position);
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+  var reportBtn = document.getElementsByClassName("report")[0];
+  // console.log(lostPetBtn);
+  google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
+
+// google.maps.event.addDomListener(window, 'load', initialize);
 
 var createMarker = function(reports) {
 
