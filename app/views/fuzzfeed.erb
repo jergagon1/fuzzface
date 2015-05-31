@@ -1,4 +1,25 @@
 <div class="page-container">
+  <h1>FuzzFeed</h1>
+
+  <script id="article-template" type="text/x-handlebars-template">
+    <div class="article_{{id}}">
+      <p><a href="http://localhost:3002/articles/{{id}}">{{title}}</a></p>
+       <p>{{content}}</p>
+    </div>
+  </script>
+
+  <script id="comment-template" type="text/x-handlebars-template">
+    <p>{{content}}</p>
+  </script>
+
+  <h2>Create Article</h2>
+    <form id="new_article">
+      Article Title: <br>
+      <input type="text" name="title">
+      <br>
+      <input type="text" name="content">
+      <input type="submit" value="Submit">
+    </form>
 
 </div>
 
