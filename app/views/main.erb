@@ -68,6 +68,8 @@
               <textarea name="notes" class="form-control" id="lost-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
             </div>
 
+            <div id="lost-map-canvas" style="width: 300px; height: 300px;"></div>
+
 
 
 
@@ -76,10 +78,18 @@
         </div>
       </div>
       <div class="row">
-        <button class="btn-block main-buttons">Found a Pet</button>
+        <button class="btn-block main-buttons found-pet">Found a Pet</button>
+        <div id="found-pet">
+            <div id="found-map-canvas" style="width: 300px; height: 300px;"></div>
+
+        </div>
       </div>
       <div class="row">
-        <button class="btn-block main-buttons">Reports</button>
+        <button class="btn-block main-buttons report">Reports</button>
+        <div id="reports">
+          <div id="report-map-canvas" style="width: 300px; height: 300px;"></div>
+          
+        </div>
       </div>
       <div class="chat">
         <a href="#">Chat</a>
@@ -100,9 +110,9 @@
   $(".main-buttons").on("click", function(e){
     e.preventDefault();
     if ($(this).siblings().first().is(":hidden")){
-    $(this).siblings().first().slideDown("slow");
-  } else {
-    $(this).siblings().first().slideUp();
-  }
+      $(this).siblings().first().slideDown("slow");
+    } else {
+      $(this).siblings().first().slideUp();
+    }
   })
 </script>
