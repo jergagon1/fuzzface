@@ -34,6 +34,8 @@ body {
 	background-color: #eee;
 }
 
+
+
 /*index title*/
 
 .index-dog-img {
@@ -50,4 +52,73 @@ body {
 	text-align: center;
 	margin: 1.25em;
 	padding: 1.25em;
+}
+
+/*main page FIRST PANEL*/
+
+#main-logo {
+	width: 90%;
+}
+
+#menu-toggle {
+	z-index: 9999;
+}
+
+.sidebar-container {
+	width: 50px;
+	height: 0px;
+}
+
+.logo-section {
+	/*padding-top: 11%;*/
+	z-index: -1000;
+	text-align: center;
+	line-height: 200px;
+}
+
+.wags-section {
+	padding-top: 13%;
+	z-index: -1000;
+}
+
+.chat {
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+	z-index: 2000;
+}
+
+.first-panel {
+	height: 200px;
+}
+
+#menu-toggle {
+	margin-top: 102%;
+	margin-left: 20%;
+}
+
+
+/*main page SECOND PANEL*/
+
+.option-buttons {
+	margin-top: 10%;
+}
+
+.main-buttons {
+	margin-bottom: 2%;
+	background: transparent;
+	border: 1px solid black;
+}
+
+/*style for button*/
+.lost-pet {
+
+}
+/*style for div*/
+#lost-pet {
+
+}
+
+#lost-pet-notes {
+	/*height: 50px;*/
 }

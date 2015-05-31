@@ -1,24 +1,108 @@
-<nav></nav>
+      <div class="sidebar-container">
+        <%= erb :sidebar %>
+      </div>
+  <div class="container">
+  <div class="row first-panel">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
+    	<img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
+    </div>
 
-<div class="row">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
+    	<p>Wags</p>
 
-	<img src="#" alt="Fuzz Finders">
+    	<p class="wags"> </p>
+    </div>
+  </div>
 
-	<p>Wags</p>
+    <div class="options-buttons">
+      <div class="row">
+        <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
+        <div id="lost-pet">
+          <form>
+            <div class="form-group">
+              <select class="form-control">
+                <option value="">Pet Type</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="bird">Bird</option>
+                <option value="reptile">Reptile</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="lost-pet-breed" placeholder="Pet Breed" name="lost-pet-breed">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="lost-pet-name" placeholder="Pet Name" name="name">
+            </div>
+            <div class="form-group">
+              <select class="form-control">
+                <option value="">Sex</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select class="form-control">
+                <option value="">Size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="x-large">Extra Large</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select class="form-control">
+                <option value="">Age</option>
+                <option value="Baby">Baby</option>
+                <option value="young">Young</option>
+                <option value="adult">Adult</option>
+                <option value="senior">Senior</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="lost-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="lost-pet-tags">
+            </div>
+            <div class="form-group">
+              <textarea name="notes" class="form-control" id="lost-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+            </div>
 
-	<p class="wags">
 
-</div>
 
-<div class="row">
-	<button class="btn-lg">Lost a Pet</button>
-</div>
-<div class="row">
-	<div class="btn-lg">Found a Pet</div>
-</div>
-<div class="row">
-	<div class="btn-lg">Reports</div>
-</div>
 
-<div class="chat pull-right">Chat</div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn-block main-buttons">Found a Pet</button>
+      </div>
+      <div class="row">
+        <button class="btn-block main-buttons">Reports</button>
+      </div>
+      <div class="chat">
+        <a href="#">Chat</a>
+      </div>
+    </div>
 
+  </div>
+
+
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+
+  $(".main-buttons").siblings().hide();
+
+  $(".main-buttons").on("click", function(e){
+    e.preventDefault();
+    if ($(this).siblings().first().is(":hidden")){
+    $(this).siblings().first().slideDown("slow");
+  } else {
+    $(this).siblings().first().slideUp();
+  }
+  })
+</script>
