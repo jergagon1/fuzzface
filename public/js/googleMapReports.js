@@ -12,7 +12,27 @@ function initializeReport() {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
       lat = position.coords.latitude;
-      lng = position.coords.longitude;     
+      lng = position.coords.longitude;    
+
+      var boundary;
+      var ne;
+      var sw;
+
+      //get bounds of map
+      google.maps.event.addListener(reportMap, 'bounds_changed', function() {
+        boundary = reportMap.getBounds();
+        console.log(boundary);
+        ne_bounds = boundary.getNorthEast(); 
+        sw_bounds = boundary.getSouthWest();
+        ne_string = ne_bounds.toString();
+        sw_string = sw_bounds.toString();
+
+        ne = ne_bounds.toString().substr(1, ne_string.length-2);
+        sw = sw_bounds.toString().substr(1, sw_string.length-2);
+        console.log(ne);
+        console.log(sw);
+        mostRecentReportsAjax(sw, ne);
+      });
 
      	var marker = new google.maps.Marker({
         map: reportMap,
@@ -27,7 +47,7 @@ function initializeReport() {
       handleNoGeolocation(true);
     });
   } else {
-    // Browser doesn't support Geolocation
+    // if browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
 }
@@ -50,47 +70,39 @@ function handleNoGeolocation(errorFlag) {
 }
 
   var reportBtn = document.getElementsByClassName("report")[0];
-  // console.log(lostPetBtn);
   google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
 
-// google.maps.event.addDomListener(window, 'load', initialize);
 
-var createMarker = function(reports) {
+// var createMarker = function(reports) {
 
-	for(var i = 0; i < reports.length; i++ ) {
-		if (report[i].report_type === 'lost') {
-			report_lat = report[i].lat;
-			report_lng = report[i].lng;
-			var marker = new google.maps.Marker({
-        map: reportMap,
-        position: new google.maps.LatLng(report_lat, report_lng),
-        icon: '/Users/jessgreb01/Desktop/fuzzface/public/images/fuzzfinders_favicon.png',
-        draggable: true,
-        title: "Current location"
-      });
-		}
-	};
-};
+// 	for(var i = 0; i < reports.length; i++ ) {
+// 		if (report[i].report_type === 'lost') {
+// 			report_lat = report[i].lat;
+// 			report_lng = report[i].lng;
+// 			var marker = new google.maps.Marker({
+//         map: reportMap,
+//         position: new google.maps.LatLng(report_lat, report_lng),
+//         icon: '/Users/jessgreb01/Desktop/fuzzface/public/images/fuzzfinders_favicon.png',
+//         draggable: true,
+//         title: "Current location"
+//       });
+// 		}
+// 	};
+// };
 
-
-
-var mostRecentReportsAjax = function(lat, long) {
-	$(".reports-btn").on("click", function(event) {
-		event.preventDefault();
-		var data = {lat: marker_lat, lng: marker_lng}
-		$.ajax({
-			url: "http://localhost:3000/reports",
-			type: "get",
-			data: formData,
-		})
-		.done(function(response){
-			console.log("success");
-			console.log(response);
-			createMarker(response.lat, response.lng);
-			
-		})
-		.fail(function(){
-			console.log("sign in fail!");
-		})
-	})
+var mostRecentReportsAjax = function(sw, ne) {
+    
+    $.ajax({
+      url: "http://localhost:3001/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
+      type: "get"
+    })
+    .done(function(response){
+      console.log("success");
+      console.log(response);
+      // createMarker(response);
+      
+    })
+    .fail(function(){
+      console.log("reports request fail!");
+    })
 };
