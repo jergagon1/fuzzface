@@ -1,5 +1,11 @@
+enable :sessions
+
 get "/" do
-	erb :index
+	if session[:user]
+		erb :index
+	else
+		redirect "/sign_in"
+	end
 end
 
 put "/sign_in" do
@@ -11,11 +17,16 @@ put "/sign_in" do
 
 	if response.body
 		@user = JSON.parse(response.body)
-		p @user
-		erb :main
+		session[:user] = @user
+		p session[:user]
+		redirect "/"
 	else
-		erb :index
+		erb :sign_in
 	end
+end
+
+get "/sign_in" do
+	erb :sign_in
 end
 
 
@@ -23,13 +34,15 @@ post "/sign_up" do
 	response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{params[:password_hash]}&user[zipcode]=#{params[:zip]}")
 	if response.body
 		@user=JSON.parse(response.body)
-		erb :main
+		session[:user] = @user
+		redirect "/"
 	else
-		erb :index
+		erb :sign_in
 	end
 end
 
 
 # get '/sign_out' do
-# 	HTTParty.put("http://localhost:3000/api/v1/log_out")
+# 	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{params[:email]}&password_hash=#{params[:password_hash]}")
+#   session.clear!
 # end

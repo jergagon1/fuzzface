@@ -1,71 +1,186 @@
-<div class='nav-container'>
-    <div class='logo-container'>
-      <img class='logo-img' src='images/FuzzFinders_Logo_small.png'>
-    </div>
-    <div class='nav-list-container'>
-      <ul class='nav-list'>
-        <li><a href='#'>About</a></li>
-        <li><a href='#'>FAQ</a></li>
-        <li><a href='#'>Contact</a></li>
-      </ul>
-    </div>
-    
+
+<div class="sidebar-container">
+  <%= erb :sidebar %>
+</div>
+<div class="container">
+<div class="row first-panel">
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
+  	<img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
   </div>
 
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
+  	<p>Wags</p>
 
-  <div> 
-    <div class='title-container'>
-      <img class='index-dog-img' src='images/dog-title.jpg'>
+  	<p class="wags"> </p>
+  </div>
+</div>
+
+  <div class="options-buttons">
+    <div class="row">
+      <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
+      <div id="lost-pet">
+        <form>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Pet Type</option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="bird">Bird</option>
+              <option value="reptile">Reptile</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="lost-pet-breed" placeholder="Pet Breed" name="lost-pet-breed">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="lost-pet-name" placeholder="Pet Name" name="name">
+          </div>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Sex</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Size</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="x-large">Extra Large</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Age</option>
+              <option value="Baby">Baby</option>
+              <option value="young">Young</option>
+              <option value="adult">Adult</option>
+              <option value="senior">Senior</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="lost-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="lost-pet-tags">
+          </div>
+          <div class="form-group">
+            <textarea name="notes" class="form-control" id="lost-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+          </div>
+          <div class="form-group">
+            <input class="hidden-lat-field" type="hidden" name="lat" value="">
+          </div>
+          <div class="form-group">
+            <input class="hidden-lng-field" type="hidden" name="lng" value="">
+
+          </div>
+
+          <div id="lost-map-canvas" style="width: 300px; height: 300px;"></div>
+
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
     </div>
+    <div class="row">
+      <button class="btn-block main-buttons found-pet">Found a Pet</button>
+      <div id="found-pet">
+        <form>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Pet Type</option>
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="bird">Bird</option>
+              <option value="reptile">Reptile</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="found-pet-breed" placeholder="Pet Breed" name="found-pet-breed">
+          </div>
+          
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Sex</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Size</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="extra large">Extra Large</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control">
+              <option value="">Age</option>
+              <option value="Baby">Baby</option>
+              <option value="young">Young</option>
+              <option value="adult">Adult</option>
+              <option value="senior">Senior</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="found-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="found-pet-tags">
+          </div>
+          <div class="form-group">
+            <textarea name="notes" class="form-control" id="found-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+          </div>
+          <div class="form-group">
+            <input class="hidden-lat-field" type="hidden" name="lat" value="">
+          </div>
+          <div class="form-group">
+            <input class="hidden-lng-field" type="hidden" name="lng" value="">
+
+          </div>
+
+          <div id="found-map-canvas" style="width: 300px; height: 300px;"></div>
 
 
-      <div class='sign-in-form-container'>
-      <form class="signIn" action="/sign_in" method="post" role="form">
-        <input type="hidden" name="_method" value="put">
-        <p>Sign In</p>
-        <div class="form-group">
-          <label for="email">Your Email:</label>
-          <input type="email" class="form-control" id="email" name="email">
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password :</label>
-          <input type="password" class="form-control" id="pwd" name="password_hash">
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox">Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-        <p>
-          <a href="#" class="sign-form-swap">Sign Up</a>
-        </p>
-      </form>
-      <form class="signUp" action="/sign_up" method="post">
-        <p>Sign Up</p>
-        <div class="form-group">
-          <label for="username">Enter a Username:</label>
-          <input type="text" class="form-control" name="username">
-        </div>
-        <div class="form-group">
-          <label for="email">Your Email:</label>
-          <input type="email" class="form-control" id="email" name="email">
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password :</label>
-          <input type="password" class="form-control" id="pwd" name="password_hash">
-        </div>
-        <div class="form-group">
-          <label for="zip">Enter your Zip Code:</label>
-          <input type="text" class="form-control" name="zip">
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox">Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-        <p>
-          <a href="#" class="sign-form-swap">Sign In</a>
-        </p>
-      </form>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+
+
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn-block main-buttons report">Reports</button>
+      <div id="reports">
+        <div id="report-map-canvas" style="width: 300px; height: 300px;"></div>
+        
+      </div>
+    </div>
+    <div class="chat">
+      <a href="#">Chat</a>
     </div>
   </div>
 
+  <%= @user %>
+
+</div>
+
+
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+
+  $(".main-buttons").siblings().hide();
+
+  $(".main-buttons").on("click", function(e){
+    e.preventDefault();
+    if ($(this).siblings().first().is(":hidden")){
+      $(this).siblings().first().slideDown("slow");
+    } else {
+      $(this).siblings().first().slideUp();
+    }
+  })
+</script>
 
