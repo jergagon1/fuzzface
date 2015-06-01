@@ -29,3 +29,7 @@ post "/sign_up" do
 	end
 end
 
+
+# get '/sign_out' do
+# 	HTTParty.put("http://localhost:3000/api/v1/log_out")
+# end
