@@ -1,25 +1,30 @@
 <div class="page-container">
   <h1>FuzzFeed</h1>
 
-  <script id="article-template" type="text/x-handlebars-template">
-    <div class="article_{{id}}">
-      <p><a href="http://localhost:3002/articles/{{id}}">{{title}}</a></p>
-       <p>{{content}}</p>
-    </div>
-  </script>
+  <h2>Create Article</h2>
+  <form id="new_article">
+    Article Title: <br>
+    <input type="text" name="title">
+    <br>
+    <input type="text" name="content">
+    <input type="submit" value="Submit">
+  </form>
+
+  <ul class="articles-list">
+    <script id="article-template" type="text/x-handlebars-template">
+      {{#each articles}}
+        <li class="article" data-article-id="{{id}}">
+          <h4 class="title">{{title}}</h4>
+          <p class="content">{{content}}</p>
+        </li>
+      {{/each}}
+    </script>
+  </ul>
 
   <script id="comment-template" type="text/x-handlebars-template">
     <p>{{content}}</p>
   </script>
 
-  <h2>Create Article</h2>
-    <form id="new_article">
-      Article Title: <br>
-      <input type="text" name="title">
-      <br>
-      <input type="text" name="content">
-      <input type="submit" value="Submit">
-    </form>
 
 </div>
 
