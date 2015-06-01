@@ -49,6 +49,7 @@ function initialize() {
       });
 
       map.setCenter(pos);
+      addLatLongAttr(lat,lng);
     }, function() {
       handleNoGeolocation(true);
     });
@@ -80,16 +81,10 @@ function handleNoGeolocation(errorFlag) {
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
   google.maps.event.addDomListener(lostPetBtn, 'click', initialize);
 
-  // console.log(lostMapDiv);
-  // console.log(lostPetBtn);
-
-
-
-  // var foundMapDiv = document.getElementsByClassName('map-canvas')[1];
-  // var foundPetBtn = document.getElementsByClassName("found-pet")[0];
-  // google.maps.event.addDomListener(foundPetBtn, 'click', initialize(foundMapDiv));
-
-
+  var addLatLongAttr = function(lat, lng) {
+    $('.hidden-lat-field').attr('value', lat);
+    $('.hidden-lng-field').attr('value', lng);
+  };
 
 
 
