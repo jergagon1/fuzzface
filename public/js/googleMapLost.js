@@ -38,6 +38,7 @@ function initialize() {
       google.maps.event.addListener(marker, 'dragend', function(){
           lat = this.getPosition().lat();
           lng = this.getPosition().lng();
+          addLatLongAttr(lat,lng);
           infowindow.close();	      
      //      markerLat = new_drag_lat
      //      markerLong = new_drag_lng
