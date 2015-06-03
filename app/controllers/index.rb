@@ -1,4 +1,5 @@
 enable :sessions
+
 get "/jack" do
 	puts "Jack's testing"
 	p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
@@ -10,14 +11,8 @@ end
 
 get "/" do
 	if session[:user]
-		erb :index
-	else
-		redirect "/sign_in"
-	end
-end
 
-put "/sign_in" do
-    p "users_controller line 18"
+    p "users_controller line 15"
     p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     s3_hash = Hash.new
     s3_hash['url'] = @s3_direct_post.url
@@ -25,9 +20,34 @@ put "/sign_in" do
     #p s3_hash['hostlink'] = @s3_direct_post.url.host
     s3_hash['fields'] = @s3_direct_post.fields
     #gon.push(s3_hash)
-    p "line 26"
+    p "line 23"
     p gon.s3_hash = s3_hash
- p "line 28"
+ p "line 25"
+
+
+
+
+
+
+
+		erb :index
+	else
+		redirect "/sign_in"
+	end
+end
+
+put "/sign_in" do
+    p "users_controller line 40"
+    p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+    s3_hash = Hash.new
+    s3_hash['url'] = @s3_direct_post.url
+    s3_hash['urlstring'] = @s3_direct_post.url.to_s
+    #p s3_hash['hostlink'] = @s3_direct_post.url.host
+    s3_hash['fields'] = @s3_direct_post.fields
+    #gon.push(s3_hash)
+    p "line 48"
+    p gon.s3_hash = s3_hash
+ p "line 50"
 
 
 	options = params
