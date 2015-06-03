@@ -107,7 +107,9 @@ body {
 .main-buttons {
 	margin-bottom: 2%;
 	background: transparent;
+	background: rgba(0,0,0,0.1);
 	border: 1px solid black;
+	height: 40px;
 }
 
 /*style for button*/

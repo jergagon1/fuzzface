@@ -1,21 +1,24 @@
 $(document).ready(function() {
   $.ajax({
-   url: 'http://localhost:3002/articles',
-   dataType: 'JSON'
-  }).done(function(response){
-    var raw_template =  $('#article-template').html();
-    var template = Handlebars.compile(raw_template);
-        for (var i=0; i<response.length; i++) {
-    $('#articles').append(template(response[i]))
-  }
-  }).fail(function(response){
-    console.log("Something went wrong")
+   url: 'http://localhost:3002/api/v1/articles',
+   type: 'GET'
   })
+  .done(function(response){
+    console.log(response);
+    var context = { articles: response };
+    var source =  $('#article-template').html();
+    var template = Handlebars.compile(source);
+    var html = template(context);
+    $('.articles-list').append(html);
+  })
+  .fail(function(){
+    console.log("Something went wrong");
+  });
 
   $('#articles').on('click', 'a', function(evt) {
     evt.preventDefault();
     $.ajax({
-      url: 'http://localhost:3002/articles',
+      url: 'http://localhost:3002/api/v1/articles',
       type: 'GET'
     })
     .done(function(response) {
@@ -33,7 +36,7 @@ $(document).ready(function() {
   $('#new_article').on('submit', function(evt) {
     evt.preventDefault();
     $.ajax({
-      url: 'http://localhost:3002/articles',
+      url: 'http://localhost:3002/api/v1/articles',
       type: 'POST',
       dataType: 'JSON',
       data: $('#new_article').serialize()
@@ -46,6 +49,6 @@ $(document).ready(function() {
     .fail(function() {
       console.log("error");
     })
-  })
+  });
 
-}) //ready
+}); //ready

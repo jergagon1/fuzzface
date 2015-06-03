@@ -1,11 +1,11 @@
+
 var map;
-function initialize() {
+function foundInitialize() {
   var mapOptions = {
     zoom: 14,
     center: new google.maps.LatLng(37.7848676, -122.3978871)
   };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+  map = new google.maps.Map(document.getElementById("found-map-canvas"), mapOptions);
 
 //User's Current Location
   if(navigator.geolocation) {
@@ -18,7 +18,7 @@ function initialize() {
      	var marker = new google.maps.Marker({
         map: map,
         position: pos,
-        icon: '/Users/jessgreb01/Desktop/fuzzface/public/images/fuzzfinders_favicon.png',
+        icon: '/images/fuzzfinders_favicon.png',
         draggable: true,
       });
 
@@ -77,4 +77,21 @@ function handleNoGeolocation(errorFlag) {
 }
 
 
-google.maps.event.addDomListener(window, 'load', initialize);
+
+  var foundMapDiv = document.getElementById('map-canvas');
+  var foundPetBtn = document.getElementsByClassName("found-pet")[0];
+  google.maps.event.addDomListener(foundPetBtn, 'click', foundInitialize);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
