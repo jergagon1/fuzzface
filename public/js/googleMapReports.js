@@ -14,6 +14,12 @@ function initializeReport() {
       lat = position.coords.latitude;
       lng = position.coords.longitude;    
 
+     	var currentLocationMarker = new google.maps.Marker({
+        map: reportMap,
+        position: pos,
+        title: "Current location"
+      });
+
       var boundary;
       var ne;
       var sw;
@@ -33,15 +39,6 @@ function initializeReport() {
         console.log(sw);
         mostRecentReportsAjax(sw, ne);
       });
-
-     	var marker = new google.maps.Marker({
-        map: reportMap,
-        position: pos,
-        icon: '/images/fuzzfinders_favicon.png',
-        draggable: true,
-        title: "Current location"
-      });
-
       reportMap.setCenter(pos);
     }, function() {
       handleNoGeolocation(true);
@@ -73,22 +70,44 @@ function handleNoGeolocation(errorFlag) {
   google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
 
 
-// var createMarker = function(reports) {
+var createMarker = function(reports) {
+	for(var i = 0; i < reports.length; i++ ) {
+		if (reports[i].report_type === 'lost') {
+      lostOrFound(reports[i]); 
+		} else if (reports[i].report_type == 'found') {
+     lostOrFound(reports[i]);
+    } else {
+      console.log('no report type');
+    }
+	};
+};
 
-// 	for(var i = 0; i < reports.length; i++ ) {
-// 		if (report[i].report_type === 'lost') {
-// 			report_lat = report[i].lat;
-// 			report_lng = report[i].lng;
-// 			var marker = new google.maps.Marker({
-//         map: reportMap,
-//         position: new google.maps.LatLng(report_lat, report_lng),
-//         icon: '/Users/jessgreb01/Desktop/fuzzface/public/images/fuzzfinders_favicon.png',
-//         draggable: true,
-//         title: "Current location"
-//       });
-// 		}
-// 	};
-// };
+var lostOrFound = function(report) {
+  // console.log('found dog');
+  // console.log(report.pet_name);
+  report_lat = report.lat;
+  // console.log(report_lat);
+  report_lng = report.lng;    
+  // console.log(report_lng);
+
+  var reportPos = new google.maps.LatLng(report_lat,
+                                   report_lng);
+
+  var marker = new google.maps.Marker({
+    map: reportMap,
+    position: reportPos,
+    icon: selectIcon(report.report_type),
+    title: report.pet_name
+  })
+};
+
+var selectIcon = function(reportType) {
+  if (reportType === 'lost') {
+    return '/images/fuzzfinders_favicon.png'
+  } else {
+    return '/images/FuzzFinders_icon_blue.png'
+  }
+};
 
 var mostRecentReportsAjax = function(sw, ne) {   
     $.ajax({
@@ -96,13 +115,10 @@ var mostRecentReportsAjax = function(sw, ne) {
       type: "GET",
       crossDomain: true,
       dataType: 'json'
-
     })
     .done(function(response){
-      console.log("success");
       console.log(response);
-      // createMarker(response);
-      
+      createMarker(response);    
     })
     .fail(function(){
       console.log("reports request fail!");
