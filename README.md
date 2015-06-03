@@ -8,8 +8,11 @@ The goal of FuzzFinders is to create a global  community of  animal  lovers. Thi
 Following a decoupled architectural framework, the goal is to separate application concerns and create discrete applications that will be updated asynchronously.
 
 FuzzFace consumes the following backend applications:
+
 1. [FuzzFinders-API] (https://github.com/jergagon1/fuzzfinders-api)
+
 2. [FuzzFeed-API] (https://github.com/jergagon1/fuzzfeed-api)
+
 3. [FuzzFriends-API] (https://github.com/jergagon1/fuzzfriends-api)
 
 ### Setup Instructions for FuzzFace
