@@ -1,7 +1,9 @@
+console.log("haha 27");
+
 $(function() {
-    $('.directUpload').find("input:file").each(function(i, elem) {
+    $('.directUpload').each(function(i, elem) {
         var fileInput = $(elem);
-        console.log("haha 32")
+        console.log("haha 32");
         console.log(fileInput);
         var form = $(fileInput.parents('form:first'));
         var submitButton = form.find('input[type="submit"]');
@@ -11,10 +13,10 @@ $(function() {
         console.log(gon);
         fileInput.fileupload({
             fileInput: fileInput,
-            url: gon.urlstring,
+            url: gon.s3_hash.urlstring,
             type: 'POST',
             autoUpload: true,
-            formData: gon.fields,
+            formData: gon.s3_hash.fields,
             paramName: 'file', // S3 does not like nested name fields i.e. name="user[avatar_url]"
             dataType: 'XML', // S3 returns XML if success_action_status is set to 201
             replaceFileInput: false,
@@ -37,12 +39,16 @@ $(function() {
 
                 // extract key and generate URL from response
                 var key = $(data.jqXHR.responseXML).find("Key").text();
-                var url = gon.urlstring + key;
+                //var url = gon.s3_hash.urlstring + key;
+                url = $(data.jqXHR.responseText).find("Location").text()
+                console.log(data);
                 console.log("In done haha 69");
+                $(".img_url").val(url);
+                console.log(url);
                 // create hidden field
                 var input = $("<input />", {
                     type: 'hidden',
-                    name: fileInput.attr('name'),
+                    name: fileInput.attr('name'), //we don't have this
                     value: url
                 })
                 form.append(input);
