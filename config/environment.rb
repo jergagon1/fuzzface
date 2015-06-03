@@ -22,6 +22,18 @@ require 'erb'
 require 'httparty'
 require 'json'
 
+## Here is Jack's setting for preparing S3 direct upload from browser
+require 'SecureRandom'
+require 'dotenv'
+Dotenv.load
+require 'gon-sinatra'
+Sinatra::register Gon::Sinatra
+require 'aws-sdk-v1'
+AWS.config(access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+           secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] )
+S3_BUCKET = AWS::S3.new.buckets[ENV['S3_BUCKET']]
+## End of Jack's setting
+
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
