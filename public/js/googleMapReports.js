@@ -90,11 +90,13 @@ function handleNoGeolocation(errorFlag) {
 // 	};
 // };
 
-var mostRecentReportsAjax = function(sw, ne) {
-    
+var mostRecentReportsAjax = function(sw, ne) {   
     $.ajax({
-      url: "http://localhost:3001/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
-      type: "get"
+      url: "http://localhost:3001/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
+      type: "GET",
+      crossDomain: true,
+      dataType: 'json'
+
     })
     .done(function(response){
       console.log("success");
