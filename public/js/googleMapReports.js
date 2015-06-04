@@ -17,7 +17,12 @@ function initializeReport() {
     var newLocationLat = result.geometry.location.A;
     var newLocationLng = result.geometry.location.F;
     var latLng = new google.maps.LatLng(newLocationLat, newLocationLng);
-    reportMap.setCenter(latLng);
+    var newSearchLocation = reportMap.setCenter(latLng);
+      var currentLocationMarker = new google.maps.Marker({
+        map: reportMap,
+        position: latLng,
+        title: "Current location"
+      });
   });
 
   if(navigator.geolocation) {
