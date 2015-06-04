@@ -6,7 +6,20 @@ function initializeReport() {
   reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
       reportMapOptions);
 
-  // user current location
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', reportMap);
+
+   google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    var result = autocomplete.getPlace();
+    var newLocationLat = result.geometry.location.A;
+    var newLocationLng = result.geometry.location.F;
+    var latLng = new google.maps.LatLng(newLocationLat, newLocationLng);
+    reportMap.setCenter(latLng);
+  });
+
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
@@ -64,10 +77,12 @@ function handleNoGeolocation(errorFlag) {
 
   var infowindow = new google.maps.InfoWindow(options);
   map.setCenter(options.position);
+
 }
 
-  var reportBtn = document.getElementsByClassName("report")[0];
-  google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
+var reportBtn = document.getElementsByClassName("report")[0];
+google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
+
 
 
 var createMarker = function(reports) {
@@ -104,8 +119,10 @@ var lostOrFound = function(report) {
 var selectIcon = function(reportType) {
   if (reportType === 'lost') {
     return '/images/fuzzfinders_favicon.png'
-  } else {
+  } else if (reportType === 'found') {
     return '/images/FuzzFinders_icon_blue.png'
+  } else {
+    console.log('no reports');
   }
 };
 
