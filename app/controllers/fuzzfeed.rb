@@ -5,6 +5,7 @@ get "/fuzzfeed" do
   # else
   #   retrieve @articles json
   #   render fuzzfeed page template
+  @page_title = "FuzzFeed"
   erb :fuzzfeed
 
 end
