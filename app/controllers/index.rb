@@ -30,7 +30,7 @@ get "/" do
 
 
 
-      @page_title = "Jack's Testing"
+      @page_title = "FuzzFinders"
 		erb :index
 	else
 		redirect "/sign_in"
