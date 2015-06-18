@@ -23,14 +23,9 @@ get "/" do
     #gon.push(s3_hash)
     p "line 23"
     p gon.s3_hash = s3_hash
- p "line 25"
+    p "line 25"
 
-
-
-
-
-
-      @page_title = "FuzzFinders"
+    @page_title = "FuzzFinders"
 		erb :index
 	else
 		redirect "/sign_in"
