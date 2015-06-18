@@ -2,6 +2,7 @@ enable :sessions
 
 get "/jack" do
 	puts "Jack's testing"
+  @page_title = "Jack's Testing"
 	p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
 	puts "Testing dotENV:"
 	p ENV['AWS_SECRET_ACCESS_KEY']
@@ -29,7 +30,7 @@ get "/" do
 
 
 
-
+      @page_title = "Jack's Testing"
 		erb :index
 	else
 		redirect "/sign_in"

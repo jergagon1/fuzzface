@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!--
-    normalize.css removes cross-browser differences in defaults, e.g.,
-    differences in how form elements appear between Firefox and IE
-    See: http://necolas.github.com/normalize.css/
-  -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <!--
+      normalize.css removes cross-browser differences in defaults, e.g.,
+      differences in how form elements appear between Firefox and IE
+      See: http://necolas.github.com/normalize.css/
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="/css/normalize.css">
-  <!--
-    application.css is where you put your styles
-  -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <!--
+      application.css is where you put your styles
+    -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" href="/css/application.css">
-  <link rel="stylesheet" href="/css/stylesheet.css">
-  <link rel="stylesheet" href="/css/simple-sidebar.css">
-  <link rel="stylesheet" href="/css/fuzzfeed.css">
-  <link rel="stylesheet" href="/css/s3upload.css">
-  <link rel="stylesheet" href="/css/google_map.css">
-
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <link rel="stylesheet" href="/css/application.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
+    <link rel="stylesheet" href="/css/simple-sidebar.css">
+    <link rel="stylesheet" href="/css/fuzzfeed.css">
+    <link rel="stylesheet" href="/css/s3upload.css">
+    <link rel="stylesheet" href="/css/google_map.css">
 
 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-  <script src="/js/application.js"></script>
-  <script type="text/javascript" src="/js/signInUp.js"></script>
-  <script src="/js/handlebars-v3.0.3.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
 
-  <script src="/js/jquery.ui.widget.js"></script>
-  <script src="/js/jquery.iframe-transport.js"></script>
-  <script src="/js/jquery.fileupload.js"></script>
-  <script src="/js/s3upload.js"></script>
-  <script type="text/javascript" src="/js/reports.js"></script>
 
-  <title></title>
-  <script>console.log("layout.erb line 38");</script>
-  <%= include_gon %>
-</head>
-<body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-  <%= yield %>
-  <script type="text/javascript" src="/js/googleMapReports.js"></script>
-  <script type="text/javascript" src="/js/googleMapLost.js"></script>
-  <script type="text/javascript" src="/js/googleMapFound.js"></script>
-</body>
+    <script src="/js/application.js"></script>
+    <script type="text/javascript" src="/js/signInUp.js"></script>
+    <script src="/js/handlebars-v3.0.3.js"></script>
+
+    <script src="/js/jquery.ui.widget.js"></script>
+    <script src="/js/jquery.iframe-transport.js"></script>
+    <script src="/js/jquery.fileupload.js"></script>
+    <script src="/js/s3upload.js"></script>
+    <script type="text/javascript" src="/js/reports.js"></script>
+
+    <title><%= @page_title %></title>
+    <%= include_gon %>
+  </head>
+  <body>
+
+    <%= yield %>
+    <script type="text/javascript" src="/js/googleMapReports.js"></script>
+    <script type="text/javascript" src="/js/googleMapLost.js"></script>
+    <script type="text/javascript" src="/js/googleMapFound.js"></script>
+  </body>
 </html>
