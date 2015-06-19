@@ -35,7 +35,6 @@ body {
 }
 
 
-
 /*index title*/
 
 .index-dog-img {
@@ -47,8 +46,9 @@ body {
 .sign-in-form-container {
 	margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  /*width: 40%;*/
 	border: solid;
+	border-color: #eee;
 	text-align: center;
 	margin: 1.25em;
 	padding: 1.25em;
@@ -124,3 +124,4 @@ body {
 #lost-pet-notes {
 	/*height: 50px;*/
 }
+
