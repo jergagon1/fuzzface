@@ -18,7 +18,7 @@ $(document).ready(function() {
   $('#articles').on('click', 'a', function(evt) {
     evt.preventDefault();
     $.ajax({
-      url: 'http://localhost:3002/api/v1/articles',
+      url: 'http://localhost:3000/api/v1/articles',
       type: 'GET'
     })
     .done(function(response) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
   $('#new_article').on('submit', function(evt) {
     evt.preventDefault();
     $.ajax({
-      url: 'http://localhost:3002/api/v1/articles',
+      url: 'http://localhost:3000/api/v1/articles',
       type: 'POST',
       dataType: 'JSON',
       data: $('#new_article').serialize()

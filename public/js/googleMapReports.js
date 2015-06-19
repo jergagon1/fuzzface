@@ -30,7 +30,7 @@ function initializeReport() {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
       lat = position.coords.latitude;
-      lng = position.coords.longitude;    
+      lng = position.coords.longitude;
 
      	var currentLocationMarker = new google.maps.Marker({
         map: reportMap,
@@ -46,7 +46,7 @@ function initializeReport() {
       google.maps.event.addListener(reportMap, 'bounds_changed', function() {
         boundary = reportMap.getBounds();
         console.log(boundary);
-        ne_bounds = boundary.getNorthEast(); 
+        ne_bounds = boundary.getNorthEast();
         sw_bounds = boundary.getSouthWest();
         ne_string = ne_bounds.toString();
         sw_string = sw_bounds.toString();
@@ -93,7 +93,7 @@ google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
 var createMarker = function(reports) {
 	for(var i = 0; i < reports.length; i++ ) {
 		if (reports[i].report_type === 'lost') {
-      lostOrFound(reports[i]); 
+      lostOrFound(reports[i]);
 		} else if (reports[i].report_type == 'found') {
      lostOrFound(reports[i]);
     } else {
@@ -107,7 +107,7 @@ var lostOrFound = function(report) {
   // console.log(report.pet_name);
   report_lat = report.lat;
   // console.log(report_lat);
-  report_lng = report.lng;    
+  report_lng = report.lng;
   // console.log(report_lng);
 
   var reportPos = new google.maps.LatLng(report_lat,
@@ -131,16 +131,16 @@ var selectIcon = function(reportType) {
   }
 };
 
-var mostRecentReportsAjax = function(sw, ne) {   
+var mostRecentReportsAjax = function(sw, ne) {
     $.ajax({
-      url: "http://localhost:3001/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
+      url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
       type: "GET",
       crossDomain: true,
       dataType: 'json'
     })
     .done(function(response){
       console.log(response);
-      createMarker(response);    
+      createMarker(response);
     })
     .fail(function(){
       console.log("reports request fail!");
