@@ -47,8 +47,8 @@ put "/sign_in" do
 	p params
 	#@response = HTTParty.put('http://localhost:3000/api/v1/log_in', options)
 	response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{params[:password_hash]}")
-
-	if response.body
+	p response.body
+	if response.body 
 		@user = JSON.parse(response.body)
 		session[:user] = @user
 		p session[:user]
