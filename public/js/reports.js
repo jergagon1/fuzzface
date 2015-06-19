@@ -7,7 +7,7 @@ $(document).ready(function(){
 		var formData = $(this).serialize();
 		console.log(formData);
 		$.ajax({
-			url: "http://localhost:3001/api/v1/reports",
+			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
 			dataType: "json",
 			data: formData
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		var formData = $(this).serialize();
 		console.log(formData);
 		$.ajax({
-			url: "http://localhost:3001/api/v1/reports",
+			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
 			dataType: "json",
 			data: formData
