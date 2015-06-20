@@ -23,7 +23,7 @@ require 'httparty'
 require 'json'
 
 ## Here is Jack's setting for preparing S3 direct upload from browser
-require 'SecureRandom'
+require 'securerandom'
 require 'dotenv'
 Dotenv.load
 require 'gon-sinatra'
