@@ -20,6 +20,8 @@ gem 'rake'
 gem 'shotgun'
 
 gem 'httparty'
+gem 'uuid'
+gem 'json'
 
 group :test do
   gem 'shoulda-matchers'
