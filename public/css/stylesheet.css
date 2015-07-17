@@ -125,3 +125,10 @@ body {
 	/*height: 50px;*/
 }
 
+.notification {
+	background-color: orange;
+	font-weight: bold;
+	text-align: center;
+	font-size: 2em;
+	padding-bottom: .3em;
+}
