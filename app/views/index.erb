@@ -1,18 +1,18 @@
-
 <div class="sidebar-container">
   <%= erb :sidebar %>
 </div>
 <div class="container">
+  <div class='notification'></div>
 <div class="row first-panel">
   <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
   <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
-  	<img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
+    <img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
   </div>
 
   <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
-  	<p>Wags</p>
+    <p>Wags</p>
 
-  	<p class="wags"> </p>
+    <p class="wags"> </p>
   </div>
 </div>
 
@@ -27,6 +27,7 @@
           </div>
           <input type="hidden" class="img_url" name="report[img_url]" value=""/>
           <input type="hidden" name="report[report_type]" value="lost">
+          <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
 
           <div class="form-group">
             <select name="report[animal_type]" class="form-control">

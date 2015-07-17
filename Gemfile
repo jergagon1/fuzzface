@@ -23,6 +23,9 @@ gem 'httparty'
 gem 'uuid'
 gem 'json'
 
+gem 'pusher', '~> 0.14.5'
+
+
 group :test do
   gem 'shoulda-matchers'
   gem 'rack-test'

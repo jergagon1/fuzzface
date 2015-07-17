@@ -1,4 +1,6 @@
 enable :sessions
+  require 'pusher'
+
 
 get "/jack" do
 	puts "Jack's testing"
@@ -12,19 +14,15 @@ end
 
 get "/" do
 	if session[:user]
-    # p "users_controller line 15"
     p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     s3_hash = Hash.new
     s3_hash['url'] = @s3_direct_post.url
     s3_hash['urlstring'] = @s3_direct_post.url.to_s
-    #p s3_hash['hostlink'] = @s3_direct_post.url.host
     s3_hash['fields'] = @s3_direct_post.fields
-    #gon.push(s3_hash)
-    # p "line 23"
     p gon.s3_hash = s3_hash
-    # p "line 25"
-
     @page_title = "FuzzFinders"
+    @user_id = session[:user]["id"]
+    
 		erb :index
 	else
 		redirect "/sign_in"
@@ -32,26 +30,17 @@ get "/" do
 end
 
 put "/sign_in" do
-  p "users_controller line 40"
   p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
   s3_hash = Hash.new
   s3_hash['url'] = @s3_direct_post.url
   s3_hash['urlstring'] = @s3_direct_post.url.to_s
-  #p s3_hash['hostlink'] = @s3_direct_post.url.host
   s3_hash['fields'] = @s3_direct_post.fields
-  #gon.push(s3_hash)
-  # p "line 48"
-  p gon.s3_hash = s3_hash
-  # p "line 50"
+  gon.s3_hash = s3_hash
 	options = params
-	p params
-	#@response = HTTParty.put('http://localhost:3000/api/v1/log_in', options)
 	response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{params[:password_hash]}")
-	p response.body
 	if response.body 
 		@user = JSON.parse(response.body)
 		session[:user] = @user
-		p session[:user]
 		redirect "/"
 	else
 		erb :sign_in
