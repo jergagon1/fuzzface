@@ -20,6 +20,7 @@ gem 'rake'
 gem 'shotgun'
 
 gem 'httparty'
+gem 'pusher', '~> 0.14.5'
 
 group :test do
   gem 'shoulda-matchers'
