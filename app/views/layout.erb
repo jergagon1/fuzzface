@@ -27,7 +27,8 @@
  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-
+    <script src="pusher-realtime-chat-widget/src/js/PusherChatWidget.js"></script>
+    <link href="pusher-realtime-chat-widget/src/pusher-chat.css" rel="stylesheet" />
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
@@ -47,6 +48,14 @@
   <body>
 
     <%= yield %>
+    <script>
+    $(function() {
+      var pusher = new Pusher('3b5fcae47e2c2ecfad91');
+      var chatWidget = new PusherChatWidget(pusher, {
+        chatEndPoint: 'pusher-realtime-chat-widget/src/ruby-sinatra/chat.rb'
+      });
+    });
+    </script>
     <script type="text/javascript" src="/js/googleMapReports.js"></script>
     <script type="text/javascript" src="/js/googleMapLost.js"></script>
     <script type="text/javascript" src="/js/googleMapFound.js"></script>
