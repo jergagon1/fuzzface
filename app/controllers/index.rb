@@ -72,7 +72,11 @@ post "/sign_up" do
 end
 
 
-# get '/sign_out' do
-# 	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{params[:email]}&password_hash=#{params[:password_hash]}")
-#   session.clear!
-# end
+get '/sign_out' do
+  p session[:user] if session && session[:user]
+  p "line 77"
+  p session[:user]["email"]
+	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
+  session.clear
+  redirect "/"
+end
