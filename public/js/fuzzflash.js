@@ -4,7 +4,7 @@ var clearFuzzflash = function() {
         }, 2000);
 };
 
-var pusher = new Pusher(ENV['PUSHER_KEY']);
+var pusher = new Pusher(gon.pusher_key);
 var fuzzflashChannel = pusher.subscribe('fuzzflash');
 
 fuzzflashChannel.bind('report_created', function(fuzzflash){

@@ -8,19 +8,19 @@
 function PusherChatWidget(pusher, options) {
   PusherChatWidget.instances.push(this);
   var self = this;
-  
+
   this._pusher = pusher;
   this._autoScroll = true;
-  
+
   options = options || {};
   this.settings = $.extend({
     maxItems: 50, // max items to show in the UI. Items beyond this limit will be removed as new ones come in.
-    chatEndPoint: 'php/chat.php', // the end point where chat messages should be sanitized and then triggered
-    channelName: document.location.href, // the name of the channel the chat will take place on
+    chatEndPoint: '/chat', // the end point where chat messages should be sanitized and then triggered
+    // channelName: gon.channel_name,
     appendTo: document.body, // A jQuery selector or object. Defines where the element should be appended to
     debug: true
   }, options);
-  
+
   if(this.settings.debug && !Pusher.log) {
     Pusher.log = function(msg) {
       if(console && console.log) {
@@ -28,48 +28,50 @@ function PusherChatWidget(pusher, options) {
       }
     }
   }
-  
+
   // remove any unsupported characters from the chat channel name
   // see: http://pusher.com/docs/client_api_guide/client_channels#naming-channels
+
   this.settings.channelName = PusherChatWidget.getValidChannelName(this.settings.channelName);
-  
   this._chatChannel = this._pusher.subscribe(this.settings.channelName);
-  
+
+
   this._chatChannel.bind('chat_message', function(data) {
     self._chatMessageReceived(data);
   })
-    
+
   this._itemCount = 0;
-  
+
   this._widget = PusherChatWidget._createHTML(this.settings.appendTo);
   this._nicknameEl = this._widget.find('input[name=nickname]');
-  this._emailEl = this._widget.find('input[name=email]');  
+  this._emailEl = this._widget.find('input[name=email]');
   this._messageInputEl = this._widget.find('textarea');
   this._messagesEl = this._widget.find('ul');
-  
+
   this._widget.find('button').click(function() {
     self._sendChatButtonClicked();
   })
-  
+
   var messageEl = this._messagesEl;
   messageEl.scroll(function() {
     var el = messageEl.get(0);
     var scrollableHeight = (el.scrollHeight - messageEl.height());
     self._autoScroll = ( scrollableHeight === messageEl.scrollTop() );
   });
-  
+
   this._startTimeMonitor();
 };
 PusherChatWidget.instances = [];
 
 /* @private */
 PusherChatWidget.prototype._chatMessageReceived = function(data) {
+  console.log("CHAT MESSAGE RECEIVED");
   var self = this;
-  
+
   if(this._itemCount === 0) {
     this._messagesEl.html('');
   }
-  
+
   var messageEl = PusherChatWidget._buildListItem(data);
   messageEl.hide();
   this._messagesEl.append(messageEl);
@@ -80,9 +82,9 @@ PusherChatWidget.prototype._chatMessageReceived = function(data) {
       self._messagesEl.scrollTop(messageEl.scrollHeight);
     }
   });
-  
+
   ++this._itemCount;
-  
+
   if(this._itemCount > this.settings.maxItems) {
     /* get first li of list */
     this._messagesEl.children(':first').slideUp(function() {
@@ -115,8 +117,9 @@ PusherChatWidget.prototype._sendChatButtonClicked = function() {
 
 /* @private */
 PusherChatWidget.prototype._sendChatMessage = function(data) {
+  console.log("SEND CHAT MESSAGE");
   var self = this;
-  
+
   this._messageInputEl.attr('readonly', 'readonly');
   $.ajax({
     url: this.settings.chatEndPoint,
@@ -148,7 +151,7 @@ PusherChatWidget.prototype._sendChatMessage = function(data) {
 /* @private */
 PusherChatWidget.prototype._startTimeMonitor = function() {
   var self = this;
-  
+
   setInterval(function() {
     self._messagesEl.children('.activity').each(function(i, el) {
       var timeEl = $(el).find('a.timestamp span[data-activity-published]');
@@ -194,16 +197,16 @@ PusherChatWidget._buildListItem = function(activity) {
   li.attr('data-activity-id', activity.id);
   var item = $('<div class="stream-item-content"></div>');
   li.append(item);
-  
+
   var imageInfo = activity.actor.image;
   var image = $('<div class="image">' +
                   '<img src="' + imageInfo.url + '" width="' + imageInfo.width + '" height="' + imageInfo.height + '" />' +
                 '</div>');
   item.append(image);
-  
+
   var content = $('<div class="content"></div>');
   item.append(content);
-  
+
   var user = $('<div class="activity-row">' +
                 '<span class="user-name">' +
                   '<a class="screen-name" title="' + activity.actor.displayName.replace(/\\'/g, "'") + '">' + activity.actor.displayName.replace(/\\'/g, "'") + '</a>' +
@@ -211,13 +214,13 @@ PusherChatWidget._buildListItem = function(activity) {
                 '</span>' +
               '</div>');
   content.append(user);
-  
+
   var message = $('<div class="activity-row">' +
                     '<div class="text">' + activity.body.replace(/\\('|&quot;)/g, '$1') + '</div>' +
                   '</div>');
   content.append(message);
-  
-  var time = $('<div class="activity-row">' + 
+
+  var time = $('<div class="activity-row">' +
                 '<a ' + (activity.link?'href="' + activity.link + '" ':'') + ' class="timestamp">' +
                   '<span title="' + activity.published + '" data-activity-published="' + activity.published + '">' + PusherChatWidget.timeToDescription(activity.published) + '</span>' +
                 '</a>' +
@@ -228,8 +231,8 @@ PusherChatWidget._buildListItem = function(activity) {
                 '</span>' +
               '</div>');
   content.append(time);
-                
-  
+
+
   return li;
 };
 

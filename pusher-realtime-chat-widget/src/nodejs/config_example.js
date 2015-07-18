@@ -1,5 +1,0 @@
-module.exports = {
-  app_id: "YOUR_APP_ID",
-  key: "YOUR_APP_KEY",
-  secret: "YOUR_APP_SECRET"
-}

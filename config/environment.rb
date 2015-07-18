@@ -22,6 +22,10 @@ require 'erb'
 require 'httparty'
 require 'json'
 
+require 'pusher'
+require 'digest/md5'
+require 'uuid'
+
 ## Here is Jack's setting for preparing S3 direct upload from browser
 require 'securerandom'
 require 'dotenv'
@@ -38,6 +42,10 @@ S3_BUCKET = AWS::S3.new.buckets[ENV['S3_BUCKET']]
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
 APP_NAME = APP_ROOT.basename.to_s
+
+Pusher.app_id = ENV['PUSHER_APP_ID']
+Pusher.key = ENV['PUSHER_KEY']
+Pusher.secret = ENV['PUSHER_SECRET']
 
 configure do
   # By default, Sinatra assumes that the root is the file that calls the configure block.

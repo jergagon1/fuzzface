@@ -1,6 +1,9 @@
 enable :sessions
-  require 'pusher'
 
+before do
+  gon.pusher_key = ENV["PUSHER_KEY"]
+  gon.channel_name = ENV["PUSHER_CHANNEL_NAME"]
+end
 
 get "/jack" do
   @page_title = "Jack's Testing"
