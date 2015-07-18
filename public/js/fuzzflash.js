@@ -1,7 +1,7 @@
 var clearFuzzflash = function() {
     setTimeout(function() {
         $('div.notification').text("");
-        }, 2000);
+        }, 10000);
 };
 
 var pusher = new Pusher(gon.pusher_key);
