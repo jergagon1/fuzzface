@@ -89,11 +89,12 @@ body {
 }
 
 .first-panel {
-	height: 200px;
+	height: 150px;
 }
 
 #menu-toggle {
-	margin-top: 102%;
+	/*margin-top: 102%;*/
+	margin-top: 20%;
 	margin-left: 20%;
 }
 
@@ -102,33 +103,50 @@ body {
 
 .option-buttons {
 	margin-top: 10%;
+	margin: 10% 15px 0;
 }
+
 
 .main-buttons {
-	margin-bottom: 2%;
-	background: transparent;
-	background: rgba(0,0,0,0.1);
-	border: 1px solid black;
-	height: 40px;
+	margin-bottom: 3%;
+	background: rgb(223,131,97);
+	color: white;
+	font-size: 1.2em;
+	border-radius: 3px;	
+	border: none;
+	height: 50px;
 }
 
-/*style for button*/
-.lost-pet {
-
-}
-/*style for div*/
-#lost-pet {
-
-}
-
-#lost-pet-notes {
-	/*height: 50px;*/
+/* add this class on click of lost/found/report button */
+.selected-button {
+	background: rgb(253, 109, 62) !important;
 }
 
 .notification {
-	background-color: orange;
+	background-color: transparent;
+	position: fixed;
+	top: 0;
+	width: 100%;
 	font-weight: bold;
 	text-align: center;
 	font-size: 2em;
 	padding-bottom: .3em;
 }
+
+
+/* Form Styles */
+
+.option-buttons .form-group {
+	display: inline-block !important;
+	width: 49% !important;
+
+}
+
+.padded {
+	padding: 15px 0;
+}
+
+button[type='submit'] {
+	width: 100% !important;
+}
+
