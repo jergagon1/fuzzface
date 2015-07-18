@@ -65,4 +65,4 @@ $(function() {
 
 });
 console.log("s3upload.js is loaded")
-console.log(gon.s3_hash)
+// console.log(gon.s3_hash)
