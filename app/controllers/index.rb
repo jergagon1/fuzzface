@@ -3,6 +3,7 @@ enable :sessions
 before do
   gon.pusher_key = ENV["PUSHER_KEY"]
   gon.channel_name = ENV["PUSHER_CHANNEL_NAME"]
+  gon.username = session[:user]["username"]
 end
 
 get "/jack" do
