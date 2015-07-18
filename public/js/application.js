@@ -13,8 +13,10 @@ $(document).ready(function() {
     e.preventDefault();
     if ($(this).siblings().first().is(":hidden")){
       $(this).siblings().first().slideDown("slow");
+      $(this).addClass("selected-button");
     } else {
       $(this).siblings().first().slideUp();
+      $(this).removeClass("selected-button");
     }
   })
 });

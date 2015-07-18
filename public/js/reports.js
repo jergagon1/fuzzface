@@ -6,6 +6,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var formData = $(this).serialize();
 		console.log(formData);
+		$that = $(this)
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
@@ -18,6 +19,7 @@ $(document).ready(function(){
 			$("textarea").val("");
 			$("select").prop("selectedIndex", 0);
 			$(".main-buttons").siblings().first().slideUp("slow");
+			$(".main-buttons").removeClass('selected-button');
 		})
 		.fail(function(){
 			console.log('fail');
