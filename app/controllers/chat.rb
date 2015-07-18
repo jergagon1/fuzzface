@@ -1,17 +1,4 @@
-require 'sinatra'
-require 'pusher'
-require 'json'
-
-require_relative 'activity'
-require_relative 'config'
-
 include Rack::Utils
-
-set :public_folder, '../'
-
-get '/' do
-  File.read('../index.html')
-end
 
 post '/chat' do
   chat_info = params[:chat_info]
@@ -23,12 +10,13 @@ post '/chat' do
     body 'chat_info must be provided'
   end
 
-  if( !request.referer )
-    status 400
-    body 'channel name could not be determined from request.referer'
-  end
+  # if( !request.referer )
+  #   status 400
+  #   body 'channel name could not be determined from request.referer'
+  # end
 
-  channel_name = get_channel_name(request.referer)
+  channel_name = ENV["PUSHER_CHANNEL_NAME"]#get_channel_name(request.referer)
+
   options = sanitise_input(chat_info)
 
   activity = Activity.new('chat-message', options['text'], options)
