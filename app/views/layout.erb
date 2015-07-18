@@ -50,7 +50,7 @@
     <%= yield %>
     <script>
     $(function() {
-      var pusher = new Pusher('3b5fcae47e2c2ecfad91');
+      var pusher = new Pusher(ENV['PUSHER_KEY']);
       var chatWidget = new PusherChatWidget(pusher, {
         chatEndPoint: 'pusher-realtime-chat-widget/src/ruby-sinatra/chat.rb'
       });
