@@ -18,7 +18,7 @@ function PusherChatWidget(pusher, options) {
     chatEndPoint: '/chat', // the end point where chat messages should be sanitized and then triggered
     // channelName: gon.channel_name,
     appendTo: document.body, // A jQuery selector or object. Defines where the element should be appended to
-    debug: true
+    debug: true,
   }, options);
 
   if(this.settings.debug && !Pusher.log) {
@@ -43,6 +43,11 @@ function PusherChatWidget(pusher, options) {
   this._itemCount = 0;
 
   this._widget = PusherChatWidget._createHTML(this.settings.appendTo);
+  $('.pusher-chat-body').toggle();
+  $('.pusher-chat-widget-header').on('click', function() {
+    $('.pusher-chat-body').toggle();
+    $('.pusher-chat-widget-header').css('backgroundColor', '');
+  });
   this._nicknameEl = this._widget.find('input[name=nickname]');
   this._emailEl = this._widget.find('input[name=email]');
   this._messageInputEl = this._widget.find('textarea');
@@ -65,8 +70,11 @@ PusherChatWidget.instances = [];
 
 /* @private */
 PusherChatWidget.prototype._chatMessageReceived = function(data) {
-  console.log("CHAT MESSAGE RECEIVED");
   var self = this;
+
+  if ($('.pusher-chat-body').css('display') === 'none') {
+    $('.pusher-chat-widget-header').css('backgroundColor', 'red');
+  }
 
   if(this._itemCount === 0) {
     this._messagesEl.html('');
@@ -95,12 +103,12 @@ PusherChatWidget.prototype._chatMessageReceived = function(data) {
 
 /* @private */
 PusherChatWidget.prototype._sendChatButtonClicked = function() {
-  var nickname = $.trim(this._nicknameEl.val()); // optional
-  var email = $.trim(this._emailEl.val()); // optional
-  if(!nickname) {
-    alert('please supply a nickname');
-    return;
-  }
+  // var nickname = $.trim(this._nicknameEl.val()); // optional
+  // var email = $.trim(this._emailEl.val()); // optional
+  // if(!nickname) {
+  //   alert('please supply a nickname');
+  //   return;
+  // }
   var message = $.trim(this._messageInputEl.val());
   if(!message) {
     alert('please supply a chat message');
@@ -108,8 +116,8 @@ PusherChatWidget.prototype._sendChatButtonClicked = function() {
   }
 
   var chatInfo = {
-    nickname: nickname,
-    email: email,
+    nickname: gon.username,
+    // email: email,
     text: message
   };
   this._sendChatMessage(chatInfo);
@@ -117,7 +125,6 @@ PusherChatWidget.prototype._sendChatButtonClicked = function() {
 
 /* @private */
 PusherChatWidget.prototype._sendChatMessage = function(data) {
-  console.log("SEND CHAT MESSAGE");
   var self = this;
 
   this._messageInputEl.attr('readonly', 'readonly');
@@ -167,23 +174,24 @@ PusherChatWidget._createHTML = function(appendTo) {
   var html = '' +
   '<div class="pusher-chat-widget">' +
     '<div class="pusher-chat-widget-header">' +
-      '<label for="nickname">Name</label>' +
-      '<input type="text" name="nickname" />' +
-      '<label for="email" title="So we can look up your Gravatar">Email (optional)</label>' +
-      '<input type="email" name="email" />' +
+      '<div class="pusher-chat-widget-current-user-name">' +
+        gon.username +
+      '</div>' +
     '</div>' +
-    '<div class="pusher-chat-widget-messages">' +
-      '<ul class="activity-stream">' +
-        '<li class="waiting">No chat messages available</li>' +
-      '</ul>' +
-    '</div>' +
-    '<div class="pusher-chat-widget-input">' +
-      '<label for="message">Message</label>' +
-      '<textarea name="message"></textarea>' +
-      '<button class="pusher-chat-widget-send-btn">Send</button>' +
-    '</div>' +
-    '<div class="pusher-chat-widget-footer">' +
-      '<a href="http://pusher.com">Pusher</a> powered realtime chat' +
+    '<div class="pusher-chat-body">' +
+      '<div class="pusher-chat-widget-messages">' +
+        '<ul class="activity-stream">' +
+          '<li class="waiting">No chat messages available</li>' +
+        '</ul>' +
+      '</div>' +
+      '<div class="pusher-chat-widget-input">' +
+        '<label for="message">Message</label>' +
+        '<textarea name="message"></textarea>' +
+        '<button class="pusher-chat-widget-send-btn">Send</button>' +
+      '</div>' +
+      '<div class="pusher-chat-widget-footer">' +
+        '<a href="http://pusher.com">Pusher</a> powered realtime chat' +
+      '</div>' +
     '</div>' +
   '</div>';
   var widget = $(html);
