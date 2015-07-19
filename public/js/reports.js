@@ -32,6 +32,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var formData = $(this).serialize();
 		console.log(formData);
+		that = $(this)
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
@@ -43,7 +44,7 @@ $(document).ready(function(){
 			$("input[type='text']").val('');
 			$("textarea").val("");
 			$("select").prop("selectedIndex", 0);
-			$(".main-buttons").siblings().first().slideUp("slow");
+			that.parent().slideUp("slow");
 		})
 		.fail(function(){
 			console.log('fail');
