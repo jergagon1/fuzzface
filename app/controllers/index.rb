@@ -1,4 +1,5 @@
 enable :sessions
+require 'digest/sha1'
 
 before do
   gon.pusher_key = ENV["PUSHER_KEY"]
@@ -44,15 +45,15 @@ put "/sign_in" do
   s3_hash['urlstring'] = @s3_direct_post.url.to_s
   s3_hash['fields'] = @s3_direct_post.fields
   gon.s3_hash = s3_hash
-	options = params
-	response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{params[:password_hash]}")
-	if response.body
-		@user = JSON.parse(response.body)
-		session[:user] = @user
-		redirect "/"
-	else
-		erb :sign_in
-	end
+  options = params
+  response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{Digest::SHA1.hexdigest(params[:password_hash])}")
+  unless response.body.empty?
+    @user = JSON.parse(response.body)
+    session[:user] = @user
+    redirect "/"
+  else
+    erb :sign_in
+  end
 end
 
 get "/sign_in" do
@@ -61,21 +62,18 @@ end
 
 
 post "/sign_up" do
-	response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{params[:password_hash]}&user[zipcode]=#{params[:zip]}")
-	if response.body
-		@user=JSON.parse(response.body)
-		session[:user] = @user
-		redirect "/"
-	else
-		erb :sign_in
-	end
+  response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
+  if response.body
+    @user=JSON.parse(response.body)
+    session[:user] = @user
+    redirect "/"
+  else
+    erb :sign_in
+  end
 end
 
 
 get '/sign_out' do
-  p session[:user] if session && session[:user]
-  p "line 77"
-  p session[:user]["email"]
 	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   session.clear
   redirect "/"
