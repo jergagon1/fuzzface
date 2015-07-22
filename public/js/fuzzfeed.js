@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $.ajax({
-   url: 'http://localhost:3002/api/v1/articles',
+   url: 'http://localhost:3000/api/v1/articles',
    type: 'GET'
   })
   .done(function(response){
