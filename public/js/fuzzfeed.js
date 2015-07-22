@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  // retrieve articles
+  // retrieve articles to populate feed
   $.ajax({
    url: 'http://localhost:3000/api/v1/articles',
    type: 'GET'
