@@ -1,6 +1,8 @@
 $(document).ready(function() {
+
+  // retrieve articles
   $.ajax({
-   url: 'http://localhost:3002/api/v1/articles',
+   url: 'http://localhost:3000/api/v1/articles',
    type: 'GET'
   })
   .done(function(response){
@@ -15,8 +17,9 @@ $(document).ready(function() {
     console.log("Something went wrong");
   });
 
-  $('#articles').on('click', 'a', function(evt) {
-    evt.preventDefault();
+  //
+  $('#articles').on('click', 'a', function(event) {
+    event.preventDefault();
     $.ajax({
       url: 'http://localhost:3000/api/v1/articles',
       type: 'GET'
@@ -33,13 +36,16 @@ $(document).ready(function() {
     })
   })
 
-  $('#new_article').on('submit', function(evt) {
-    evt.preventDefault();
+  $('.new_article').on('submit', function(event) {
+    event.preventDefault();
+    var link = $(this).attr("action");
+    var method = $(this).attr("method");
+    var formData = $(this).serialize();
     $.ajax({
-      url: 'http://localhost:3000/api/v1/articles',
-      type: 'POST',
+      url: link,
+      type: method,
       dataType: 'JSON',
-      data: $('#new_article').serialize()
+      data: formData
     })
     .done(function(response) {
       var raw_template =  $('#entry-template').html();
