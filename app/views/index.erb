@@ -2,20 +2,19 @@
   <%= erb :'partials/sidebar' %>
 </div>
 <div class="container">
-  <div class='notification'></div>
-<div class="row first-panel">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
-    <img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
+  <div class='notification'>
   </div>
-
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
-    <p>Wags</p>
-
-    <p class="wags"> </p>
+  <div class="row first-panel">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
+      <img src="/images/FuzzFinders_RGB_Final.png" alt="Fuzz Finders" id="main-logo">
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
+      <p>Wags</p>
+      <p class="wags"></p>
+    </div>
   </div>
-</div>
-
   <div class="option-buttons">
     <div class="row">
       <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
@@ -31,17 +30,12 @@
     </div>
     <div class="row">
       <button class="btn-block main-buttons report">Reports</button>
-      <div id="reports-map-container"><input id="pac-input" class="controls" type="text"
-        placeholder="Search near a location">
-        <div id="report-map-canvas" style="width: 300px; height: 300px;"></div>
-
+      <div id="reports-map-container">
+        <input id="pac-input" class="controls" type="text" placeholder="Search near a location">
+        <div id="report-map-canvas" style="width: 300px; height: 300px;">
+        </div>
       </div>
     </div>
   </div>
-
   <%= @user %>
-
 </div>
-
-
-
