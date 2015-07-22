@@ -1,12 +1,16 @@
+<div class="sidebar-container">
+  <%= erb :sidebar %>
+</div>
+
 <div class="page-container">
   <h1>FuzzFeed</h1>
 
   <h2>Create Article</h2>
-  <form id="new_article">
-    Article Title: <br>
-    <input type="text" name="title">
-    <br>
-    <input type="text" name="content">
+  <form class="new_article" action="http://localhost:3000/api/v1/articles" method="post">
+    <h3>Article Title:</h3>
+    <input type="text" name="article[title]" placeholder="Enter a title">
+    <br />
+    <textarea name="article[content]" placeholder="Enter article content here"></textarea><br />
     <input type="submit" value="Submit">
   </form>
 
@@ -21,7 +25,7 @@
     </script>
   </ul>
 
-  <script id="comment-template" type="text/x-handlebars-template">
+  <script id="remark-template" type="text/x-handlebars-template">
     <p>{{content}}</p>
   </script>
 
