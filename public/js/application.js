@@ -1,8 +1,7 @@
 $(document).ready(function() {
-  
 
-
-   $("#menu-toggle").click(function(e) {
+  // menu button configuration
+  $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
   });
@@ -18,5 +17,5 @@ $(document).ready(function() {
       $(this).siblings().first().slideUp();
       $(this).removeClass("selected-button");
     }
-  })
+  });
 });
