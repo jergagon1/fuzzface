@@ -11,9 +11,9 @@ function initialize() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
-                                       position.coords.longitude);     
+                                       position.coords.longitude);
       lat = position.coords.latitude;
-      lng = position.coords.longitude;     
+      lng = position.coords.longitude;
 
      	var marker = new google.maps.Marker({
         map: map,
@@ -27,7 +27,7 @@ function initialize() {
      	markerLat = marker.position.A  //marker latitude
 			markerLong = marker.position.F  //marker longitude
 
-      var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001); 
+      var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
 
       var infowindow = new google.maps.InfoWindow({
         map: map,
@@ -39,12 +39,12 @@ function initialize() {
           lat = this.getPosition().lat();
           lng = this.getPosition().lng();
           addLatLongAttr(lat,lng);
-          infowindow.close();	      
+          infowindow.close();
      //      markerLat = new_drag_lat
      //      markerLong = new_drag_lng
      //      console.log(markerLat);
 					// console.log(markerLong);
-					// infowindow.position = new google.maps.LatLng(markerLat + .0025, markerLong + .00001); 
+					// infowindow.position = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
 					// console.log(infowindow.position);
 					// infowindow;
       });

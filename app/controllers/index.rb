@@ -31,7 +31,7 @@ get "/" do
     p gon.s3_hash = s3_hash
     @page_title = "FuzzFinders"
     @user_id = session[:user]["id"]
-    p @wags = session[:user]["wags"]
+    # p @wags = session[:user]["wags"]
 		erb :index
 	else
 		redirect "/sign_in"
