@@ -1,7 +1,7 @@
-
-
 $(document).ready(function(){
-	console.log("hello");
+	// console.log("hello");
+
+	// lost pet form submission
 	$(".lost-pet-form").on("submit", function(event){
 		event.preventDefault();
 		var formData = $(this).serialize();
@@ -24,10 +24,9 @@ $(document).ready(function(){
 		.fail(function(){
 			console.log('fail');
 		})
-
-
 	});
 
+	// found pet form submission
 	$(".found-pet-form").on("submit", function(event){
 		event.preventDefault();
 		var formData = $(this).serialize();
@@ -49,6 +48,6 @@ $(document).ready(function(){
 		.fail(function(){
 			console.log('fail');
 		})
-	})
+	});
 
 });
