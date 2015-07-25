@@ -1,5 +1,5 @@
 <div class="sidebar-container">
-  <%= erb :'partials/sidebar' %>
+  <%= erb :'partials/_sidebar' %>
 </div>
 <div class="container">
   <div class='notification'>
@@ -12,20 +12,20 @@
     </div>
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
       <p>Wags</p>
-      <p class="wags"></p>
+      <p class="wags"><%= @wags %></p>
     </div>
   </div>
   <div class="option-buttons">
     <div class="row">
       <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
       <div id="lost-pet">
-        <%= erb :'partials/lost_pet_form' %>
+        <%= erb :'partials/_lost_pet_form' %>
       </div>
     </div>
     <div class="row">
       <button class="btn-block main-buttons found-pet">Found a Pet</button>
       <div id="found-pet">
-        <%= erb :'partials/found_pet_form' %>
+        <%= erb :'partials/_found_pet_form' %>
       </div>
     </div>
     <div class="row">
