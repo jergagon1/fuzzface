@@ -1,11 +1,12 @@
-<form class="lost-pet-form" >
+<form class="<%= form_type %>-pet-form" >
+  <input type="hidden" name="report[report_type]" value="<%= form_type %>">
+  <input type="hidden" class="img_url" name="report[img_url]" value="">
+  <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
+
   <div class="padded">
     <input type="file" class="directUpload">
   </div>
 
-  <input type="hidden" class="img_url" name="report[img_url]" value=""/>
-  <input type="hidden" name="report[report_type]" value="lost">
-  <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
 
   <div class="form-group">
     <select name="report[animal_type]" class="form-control">
@@ -43,17 +44,17 @@
     </select>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" id="lost-pet-breed" placeholder="Pet Breed" name="report[breed]">
+    <input type="text" class="form-control" id="<%= form_type %>-pet-breed" placeholder="Pet Breed" name="report[breed]">
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" id="lost-pet-name" placeholder="Pet Name" name="report[pet_name]">
+    <input type="text" class="form-control" id="<%= form_type %>-pet-name" placeholder="Pet Name" name="report[pet_name]">
   </div>
 
   <div class="padded-input">
-    <input type="text" class="form-control" id="lost-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
+    <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
   </div>
   <div class="padded">
-    <textarea name="report[notes]" class="form-control" id="lost-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+    <textarea name="report[notes]" class="form-control" id="<%= form_type %>-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
   </div>
 
   <div class="form-group">
@@ -62,7 +63,7 @@
   <div class="form-group">
     <input class="hidden-lng-field" type="hidden" name="report[lng]" value="">
   </div>
-  <div id="lost-map-canvas" style="width: 300px; height: 300px;">
+  <div id="<%= form_type %>-map-canvas" style="width: 300px; height: 300px;">
   </div>
 
   <div class="padded">

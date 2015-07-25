@@ -19,13 +19,13 @@
     <div class="row">
       <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
       <div id="lost-pet">
-        <%= erb :'partials/_lost_pet_form' %>
+        <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
       </div>
     </div>
     <div class="row">
       <button class="btn-block main-buttons found-pet">Found a Pet</button>
       <div id="found-pet">
-        <%= erb :'partials/_found_pet_form' %>
+        <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
       </div>
     </div>
     <div class="row">
