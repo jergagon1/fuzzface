@@ -1,0 +1,72 @@
+<form class="lost-pet-form" >
+  <div class="padded">
+    <input type="file" class="directUpload">
+  </div>
+
+  <input type="hidden" class="img_url" name="report[img_url]" value=""/>
+  <input type="hidden" name="report[report_type]" value="lost">
+  <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
+
+  <div class="form-group">
+    <select name="report[animal_type]" class="form-control">
+      <option value="">Pet Type</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="bird">Bird</option>
+      <option value="reptile">Reptile</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select name="report[sex]" class="form-control">
+      <option value="">Sex</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select name="report[size]" class="form-control">
+      <option value="">Size</option>
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
+      <option value="x-large">Extra Large</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select name="report[age]" class="form-control">
+      <option value="">Age</option>
+      <option value="Baby">Baby</option>
+      <option value="young">Young</option>
+      <option value="adult">Adult</option>
+      <option value="senior">Senior</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="lost-pet-breed" placeholder="Pet Breed" name="report[breed]">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="lost-pet-name" placeholder="Pet Name" name="report[pet_name]">
+  </div>
+
+  <div class="padded-input">
+    <input type="text" class="form-control" id="lost-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
+  </div>
+  <div class="padded">
+    <textarea name="report[notes]" class="form-control" id="lost-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+  </div>
+
+  <div class="form-group">
+    <input class="hidden-lat-field" type="hidden" name="report[lat]" value="">
+  </div>
+  <div class="form-group">
+    <input class="hidden-lng-field" type="hidden" name="report[lng]" value="">
+  </div>
+  <div id="lost-map-canvas" style="width: 300px; height: 300px;">
+  </div>
+
+  <div class="padded">
+    <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+
+</form>
