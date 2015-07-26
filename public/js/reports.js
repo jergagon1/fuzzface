@@ -1,20 +1,6 @@
 $(document).ready(function(){
 	// console.log("hello");
 
-	var setWags = function() {
-		$.ajax({
-			url: "http://localhost:3000/api/v1/wags",
-			type: "get",
-			dataType: "json"
-		})
-		.done(function(response){
-			console.log(response);
-		})
-		.fail(function(){
-			console.log("error")
-		})
-	}();
-
 	var updateWags = function(value) {
 		$(".wags").text(value)
 	};
