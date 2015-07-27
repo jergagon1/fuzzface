@@ -49,7 +49,9 @@ $(document).ready(function(){
 			$("textarea").val("");
 			$("select").prop("selectedIndex", 0);
 			updateWags(response.wags)
+			// debugger
 			that.parent().slideUp("slow");
+			that.parent().parent().children(":first").removeClass("selected-button");
 		})
 		.fail(function(){
 			console.log('fail');
