@@ -7,7 +7,7 @@ $(document).ready(function() {
   });
 
   $(".main-buttons").siblings().hide();
-
+  // debugger
   $(".main-buttons").on("click", function(e){
     e.preventDefault();
     if ($(this).siblings().first().is(":hidden")){
