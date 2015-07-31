@@ -1,0 +1,27 @@
+<form class="report-lists" >
+  <div class="form-group">
+    <h3>Here are the reported pets in the above map:</h3>
+  </div>
+
+<!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
+  <ul class="reports-list">
+    <script id="report-template" type="text/x-handlebars-template">
+      {{#each reports}}
+        <li class="report" data-report-id="{{id}}" style=
+        {{#if itsfound }}
+          "background-color: #2e8df2;"
+        {{else}}
+          "background-color: rgb(223, 131, 97)"
+        {{/if}}
+        >
+          <img class="report_img" src="{{img_url}}">
+          {{#if pet_name}} <p class="pet_name">name: {{pet_name}}</p>{{/if}}
+          <p class="animal_type">repoted type: {{animal_type}}</p>
+          <p class="last_seen">reported date: {{updated_at}}</p>
+        </li>
+      {{/each}}
+    </script>
+  </ul>
+
+
+</form>
