@@ -1,4 +1,3 @@
-
 var map;
 function foundInitialize() {
   var mapOptions = {
@@ -7,7 +6,7 @@ function foundInitialize() {
   };
   map = new google.maps.Map(document.getElementById("found-map-canvas"), mapOptions);
 
-//User's Current Location
+  //User's Current Location
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
@@ -77,22 +76,6 @@ function handleNoGeolocation(errorFlag) {
   map.setCenter(options.position);
 }
 
-
-
-  var foundMapDiv = document.getElementById('found-map-canvas');
-  var foundPetBtn = document.getElementsByClassName("found-pet")[0];
-  google.maps.event.addDomListener(foundPetBtn, 'click', foundInitialize);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var foundMapDiv = document.getElementById('found-map-canvas');
+var foundPetBtn = document.getElementsByClassName("found-pet")[0];
+google.maps.event.addDomListener(foundPetBtn, 'click', foundInitialize);
