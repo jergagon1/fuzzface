@@ -14,10 +14,10 @@ $(document).ready(function() {
     $('.articles-list').append(html);
   })
   .fail(function(){
-    console.log("Something went wrong");
+    console.log("Error loading articles!");
   });
 
-  //
+  // review this...
   $('#articles').on('click', 'a', function(event) {
     event.preventDefault();
     $.ajax({
