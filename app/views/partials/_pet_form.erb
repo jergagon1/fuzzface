@@ -47,12 +47,24 @@
     <input type="text" class="form-control" id="<%= form_type %>-pet-breed" placeholder="Pet Breed" name="report[breed]">
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" id="<%= form_type %>-pet-name" placeholder="Pet Name" name="report[pet_name]">
+    <input type="text" class="form-control" id="<%= form_type %>-pet-color" placeholder="Pet Color" name="report[color]">
   </div>
 
-  <div class="padded-input">
-    <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
-  </div>
+  <% if form_type == "lost" %>
+    <!-- include name field if lost report -->
+    <div class="form-group">
+      <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="<%= form_type %>-pet-name" placeholder="Pet Name" name="report[pet_name]">
+    </div>
+  <% else %>
+    <!-- omit name field if found report -->
+    <div class="padded">
+      <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tags]">
+    </div>
+  <% end %>
+
   <div class="padded">
     <textarea name="report[notes]" class="form-control" id="<%= form_type %>-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
   </div>
