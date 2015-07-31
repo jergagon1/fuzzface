@@ -53,6 +53,7 @@ function initializeReport() {
 
         ne = ne_bounds.toString().substr(1, ne_string.length-2);
         sw = sw_bounds.toString().substr(1, sw_string.length-2);
+        console.log("googleMapReports.js line 56")
         console.log(ne);
         console.log(sw);
         mostRecentReportsAjax(sw, ne);
@@ -138,8 +139,22 @@ var mostRecentReportsAjax = function(sw, ne) {
     dataType: 'json'
   })
   .done(function(response){
-    console.log(response);
     createMarker(response);
+    // make additional report type (lost or found) required by Handlebar if statement
+    for (i = 0; i < response.length; i++){
+      if (response[i].report_type === "found"){
+        response[i]["itsfound"] = true;
+      }else{
+        response[i]["itsfound"] = false;
+      }
+    }
+
+    // preparing for the Handlebar template
+    var context = { reports: response };
+    var source =  $('#report-template').html();
+    var template = Handlebars.compile(source);
+    var html = template(context);
+    $('.reports-list').append(html);
   })
   .fail(function(){
     console.log("reports request fail!");
