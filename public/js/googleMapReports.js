@@ -131,6 +131,20 @@ var selectIcon = function(reportType) {
   }
 };
 
+var getReportComments = function(report) {
+  $.ajax({
+    url: "http://localhost:3000/api/v1/reports/"+ report.id +"/comments",
+    type: "get",
+    dataType: "json",
+  }).done(function(commentResponse) {
+    var context = { comments: commentResponse };
+    var source =  $('#comment-template').html();
+    var template = Handlebars.compile(source);
+    var html = template(context);
+    $('.something-' + report.id).append(html);
+  })
+}
+
 var mostRecentReportsAjax = function(sw, ne) {
   $.ajax({
     url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
@@ -141,11 +155,14 @@ var mostRecentReportsAjax = function(sw, ne) {
   .done(function(response){
     createMarker(response);
     // make additional report type (lost or found) required by Handlebar if statement
+    // console.log("get comments");
     for (i = 0; i < response.length; i++){
-      if (response[i].report_type === "found"){
-        response[i]["itsfound"] = true;
+      var currentReport = response[i];
+      getReportComments(currentReport);
+      if (currentReport.report_type === "found"){
+        currentReport["itsfound"] = true;
       }else{
-        response[i]["itsfound"] = false;
+        currentReport["itsfound"] = false;
       }
     }
 
@@ -155,6 +172,7 @@ var mostRecentReportsAjax = function(sw, ne) {
     var template = Handlebars.compile(source);
     var html = template(context);
     $('.reports-list').append(html);
+
   })
   .fail(function(){
     console.log("reports request fail!");
