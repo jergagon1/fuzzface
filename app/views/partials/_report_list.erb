@@ -1,16 +1,15 @@
 <form class="report-lists" >
   <div class="form-group">
-    <h3>Here are the reported pets in the above map:</h3>
+    <h3>Reports in your area:</h3>
   </div>
 
 <!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
   <ul class="reports-list" data-currentId= "<%= @user_id %>" >
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
-        <li class="report"  data-report-id="{{id}}" style=
+        <li class="report"  data-reportid="{{id}}" style=
         {{#if itsfound }}
           "background-color: #2e8df2;"
-          ""
         {{else}}
           "background-color: rgb(223, 131, 97)"
         {{/if}}
@@ -30,9 +29,13 @@
             {{#if notes}} <p class="pet_notes">Details: {{notes}}</p>{{/if}}
           </div>
         </li>
-          <div class="something-{{id}}">
-          </div>
-          <div class="comment-div">
+          <div class="comment-div-{{id}} comment-div" style={{#if itsfound }}
+              "background-color: #82BBF7;"
+            {{else}}
+              "background-color: #E9A890;"
+            {{/if}}>
+            <div class="comment-list-{{id}}">
+            </div>
             Comment:<br />
             <input type="hidden" name="comment[{{id}}]" class='report-id' /> 
             <input type="hidden" name="comment[{{user_id}}]" class='current-user-id' /> 
@@ -40,16 +43,12 @@
             <button data-id={{id}} type="button" class="submit-comment">Submit</button>
           </div>
       {{/each}}
-
-
-
-
     </script>
   </ul>
 
   <script id="comment-template" type="text/x-handlebars-template">
     {{#each comments}}
-      <p class='comment-list'>User {{user_id}} says "{{content}}" <br/> {{updated_at}}</p>
+      <p class='comment-list'>{{comment_user_email}} says "{{content}}" <br/> {{updated_at}}</p>
     {{/each}}
   </script>
 
