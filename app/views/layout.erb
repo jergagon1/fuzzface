@@ -21,14 +21,11 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="/js/PusherChatWidget.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="/js/application.js"></script>
-    <script src="/js/signInUp.js"></script>
     <script src="/js/handlebars-v3.0.3.js"></script>
     <script src="/js/jquery.ui.widget.js"></script>
     <script src="/js/jquery.iframe-transport.js"></script>
     <script src="/js/jquery.fileupload.js"></script>
     <script src="/js/s3upload.js"></script>
-    <script src="/js/reports.js"></script>
 
     <title>
         <%= @page_title %>
@@ -37,6 +34,10 @@
   </head>
   <body>
     <%= yield %>
+    <script src="/js/application.js"></script>
+    <script src="/js/signInUp.js"></script>
+    <script src="/js/comments.js"></script>
+    <script src="/js/reports.js"></script>
     <script src="/js/PusherChatWidgetInstantiator.js"></script>
     <script src="/js/googleMapReports.js"></script>
     <script src="/js/googleMapLost.js"></script>
