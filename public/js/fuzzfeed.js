@@ -1,46 +1,31 @@
 $(document).ready(function() {
 
   // retrieve articles to populate feed
-  $.ajax({
-   url: 'http://localhost:3000/api/v1/articles',
-   type: 'GET'
-  })
-  .done(function(response){
-    console.log(response);
-    var context = { articles: response };
-    var source =  $('#article-template').html();
-    var template = Handlebars.compile(source);
-    var html = template(context);
-    $('.articles-list').append(html);
-  })
-  .fail(function(){
-    console.log("Error loading articles!");
-  });
-
-  // review this...
-  $('#articles').on('click', 'a', function(event) {
-    event.preventDefault();
+  var populateArticles = (function() {
     $.ajax({
-      url: 'http://localhost:3000/api/v1/articles',
-      type: 'GET'
+     url: 'http://localhost:3000/api/v1/articles',
+     type: 'GET'
     })
-    .done(function(response) {
-      var raw_template =  $('#comment-template').html();
-      var template = Handlebars.compile(raw_template);
-        for (var i=0; i<response.length; i++) {
-          $('.article_'+response[i].id).append(template(response[i]))
-        }
+    .done(function(response){
+      console.log(response);
+      var context = { articles: response };
+      var source =  $('#article-template').html();
+      var template = Handlebars.compile(source);
+      var html = template(context);
+      $('.articles-list').append(html);
     })
-    .fail(function() {
-      console.log("error");
-    })
-  })
+    .fail(function(){
+      console.log("Error loading articles!");
+    });
+  })();
 
-  $('.new_article').on('submit', function(event) {
+  // create new article
+  $('.new-article').on('submit', function(event) {
     event.preventDefault();
-    var link = $(this).attr("action");
-    var method = $(this).attr("method");
-    var formData = $(this).serialize();
+    that = $(this);
+    var link = that.attr("action");
+    var method = that.attr("method");
+    var formData = that.serialize();
     $.ajax({
       url: link,
       type: method,
@@ -48,13 +33,20 @@ $(document).ready(function() {
       data: formData
     })
     .done(function(response) {
-      var raw_template =  $('#entry-template').html();
-      var template = Handlebars.compile(raw_template);
-      $('#articles').append(template(response));
+      console.log(response);
+      var context = { articles: [response["article"]] };
+      var source =  $('#article-template').html();
+      var template = Handlebars.compile(source);
+      var html = template(context);
+      $('.articles-list').prepend(html);
+      $(".new-article")[0].reset();
+      that.slideUp("slow");
+      that.parent().children(":first").removeClass("selected-button");
     })
     .fail(function() {
       console.log("error");
     })
   });
+
 
 }); //ready

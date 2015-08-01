@@ -1,1 +1,21 @@
 /* styles for fuzzfeed page */
+
+.feed {
+  margin-top: 10%;
+  margin: 10% 15px 0;
+}
+
+.articles-list {
+  width: 100%;
+  list-style: none;
+  list-style-position: inside;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.article {
+  padding-left: 0;
+  margin-left: 0;
+  width 100%;
+  border-bottom: 1px solid #9d9fa2;
+}
