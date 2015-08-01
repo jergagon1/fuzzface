@@ -4,12 +4,13 @@
   </div>
 
 <!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
-  <ul class="reports-list" data-currentId = "<%= @user_id %>" >
+  <ul class="reports-list" data-currentId= "<%= @user_id %>" >
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
         <li class="report"  data-report-id="{{id}}" style=
         {{#if itsfound }}
           "background-color: #2e8df2;"
+          ""
         {{else}}
           "background-color: rgb(223, 131, 97)"
         {{/if}}
@@ -17,8 +18,9 @@
           <img class="report_img" src="{{img_url}}">
           {{#if pet_name}} <p class="pet_name">Name: {{pet_name}}</p>{{/if}}
           <p class="animal_type">Animal type: {{animal_type}}</p>
-          <p class="last_seen">Reported date: {{updated_at}}</p>
-          <div class='more-report-info-{{id}}' >
+
+          <div class='more-report-info-{{id}} more-report-info' style="display: none">
+            <p class="last_seen">Reported date: {{updated_at}}</p>
             {{#if img_url}} <p class="pet_img_url">Photo: <img src='{{img_url}}'></p>{{/if}}
             {{#if age}} <p class="pet_age">Age: {{age}}</p>{{/if}}
             {{#if breed}} <p class="pet_breed">Breed: {{breed}}</p>{{/if}}
@@ -27,6 +29,9 @@
             {{#if size}} <p class="pet_age">Age: {{age}}</p>{{/if}}
             {{#if notes}} <p class="pet_notes">Details: {{notes}}</p>{{/if}}
           </div>
+        </li>
+          <div class="something-{{id}}">
+          </div>
           <div class="comment-div">
             Comment:<br />
             <input type="hidden" name="comment[{{id}}]" class='report-id' /> 
@@ -34,10 +39,19 @@
             <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br />
             <button data-id={{id}} type="button" class="submit-comment">Submit</button>
           </div>
-        </li>
       {{/each}}
+
+
+
+
     </script>
   </ul>
+
+  <script id="comment-template" type="text/x-handlebars-template">
+    {{#each comments}}
+      <p class='comment-list'>User {{user_id}} says "{{content}}" <br/> {{updated_at}}</p>
+    {{/each}}
+  </script>
 
 
 </form>

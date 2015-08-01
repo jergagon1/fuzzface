@@ -1,11 +1,12 @@
 $(document).ready(function(){
 
-
+$('body').on('click', '.report', function() {
+	$(this).find('.more-report-info').toggle();
+});
 
 	var updateWags = function(value) {
 		$(".wags").text(value)
-	};
-
+	}
 	// lost pet form submission
 	$(".lost-pet-form").on("submit", function(event){
 		event.preventDefault();

@@ -150,3 +150,6 @@ button[type='submit'] {
 	width: 100% !important;
 }
 
+.report:hover {
+	cursor: pointer;
+}
