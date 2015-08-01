@@ -57,6 +57,7 @@ function initializeReport() {
         console.log(ne);
         console.log(sw);
         mostRecentReportsAjax(sw, ne);
+
       });
       reportMap.setCenter(pos);
     }, function() {
@@ -74,16 +75,13 @@ function handleNoGeolocation(errorFlag) {
   } else {
     var content = 'Error: Your browser doesn\'t support geolocation.';
   }
-
   var options = {
     map: map,
     position: new google.maps.LatLng(60, 105),
     content: content
   };
-
   var infowindow = new google.maps.InfoWindow(options);
   map.setCenter(options.position);
-
 }
 
 var reportBtn = document.getElementsByClassName("report")[0];
@@ -104,13 +102,8 @@ var createMarker = function(reports) {
 };
 
 var lostOrFound = function(report) {
-  // console.log('found dog');
-  // console.log(report.pet_name);
   report_lat = report.lat;
-  // console.log(report_lat);
   report_lng = report.lng;
-  // console.log(report_lng);
-
   var reportPos = new google.maps.LatLng(report_lat, report_lng);
 
   var marker = new google.maps.Marker({
@@ -131,18 +124,23 @@ var selectIcon = function(reportType) {
   }
 };
 
-var getReportComments = function(report) {
+var getReportComments = function(reportId) {
   $.ajax({
-    url: "http://localhost:3000/api/v1/reports/"+ report.id +"/comments",
+    url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
     type: "get",
     dataType: "json",
   }).done(function(commentResponse) {
-    var context = { comments: commentResponse };
-    var source =  $('#comment-template').html();
-    var template = Handlebars.compile(source);
-    var html = template(context);
-    $('.something-' + report.id).append(html);
+    renderComment(commentResponse, reportId)
+    $('.comment-div').hide();
   })
+}
+
+var renderComment = function(comment, reportId) {
+  var context = { comments: comment };
+  var source =  $('#comment-template').html();
+  var template = Handlebars.compile(source);
+  var html = template(context);
+  $('.comment-list-' + reportId).append(html);
 }
 
 var mostRecentReportsAjax = function(sw, ne) {
@@ -154,11 +152,9 @@ var mostRecentReportsAjax = function(sw, ne) {
   })
   .done(function(response){
     createMarker(response);
-    // make additional report type (lost or found) required by Handlebar if statement
-    // console.log("get comments");
     for (i = 0; i < response.length; i++){
       var currentReport = response[i];
-      getReportComments(currentReport);
+      getReportComments(currentReport.id);
       if (currentReport.report_type === "found"){
         currentReport["itsfound"] = true;
       }else{
