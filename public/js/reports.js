@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	// console.log("hello");
+
+
 
 	var updateWags = function(value) {
 		$(".wags").text(value)
@@ -57,5 +58,7 @@ $(document).ready(function(){
 			console.log('fail');
 		})
 	});
+
+
 
 });

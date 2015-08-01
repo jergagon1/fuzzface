@@ -4,10 +4,10 @@
   </div>
 
 <!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
-  <ul class="reports-list">
+  <ul class="reports-list" data-currentId = "<%= @user_id %>" >
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
-        <li class="report" data-report-id="{{id}}" style=
+        <li class="report"  data-report-id="{{id}}" style=
         {{#if itsfound }}
           "background-color: #2e8df2;"
         {{else}}
@@ -15,9 +15,25 @@
         {{/if}}
         >
           <img class="report_img" src="{{img_url}}">
-          {{#if pet_name}} <p class="pet_name">name: {{pet_name}}</p>{{/if}}
-          <p class="animal_type">repoted type: {{animal_type}}</p>
-          <p class="last_seen">reported date: {{updated_at}}</p>
+          {{#if pet_name}} <p class="pet_name">Name: {{pet_name}}</p>{{/if}}
+          <p class="animal_type">Animal type: {{animal_type}}</p>
+          <p class="last_seen">Reported date: {{updated_at}}</p>
+          <div class='more-report-info-{{id}}' >
+            {{#if img_url}} <p class="pet_img_url">Photo: <img src='{{img_url}}'></p>{{/if}}
+            {{#if age}} <p class="pet_age">Age: {{age}}</p>{{/if}}
+            {{#if breed}} <p class="pet_breed">Breed: {{breed}}</p>{{/if}}
+            {{#if color}} <p class="pet_color">Color: {{color}}</p>{{/if}}
+            {{#if sex}} <p class="pet_sex">Sex: {{sex}}</p>{{/if}}
+            {{#if size}} <p class="pet_age">Age: {{age}}</p>{{/if}}
+            {{#if notes}} <p class="pet_notes">Details: {{notes}}</p>{{/if}}
+          </div>
+          <div class="comment-div">
+            Comment:<br />
+            <input type="hidden" name="comment[{{id}}]" class='report-id' /> 
+            <input type="hidden" name="comment[{{user_id}}]" class='current-user-id' /> 
+            <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br />
+            <button data-id={{id}} type="button" class="submit-comment">Submit</button>
+          </div>
         </li>
       {{/each}}
     </script>
