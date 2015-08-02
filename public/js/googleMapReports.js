@@ -116,7 +116,7 @@ var lostOrFound = function(report) {
 
 var selectIcon = function(reportType) {
   if (reportType === 'lost') {
-    return '/images/fuzzfinders_favicon.png'
+    return '/images/FuzzFinders_icon_orange.png'
   } else if (reportType === 'found') {
     return '/images/FuzzFinders_icon_blue.png'
   } else {

@@ -17,7 +17,7 @@ function foundInitialize() {
      	var marker = new google.maps.Marker({
         map: map,
         position: pos,
-        icon: '/images/fuzzfinders_favicon.png',
+        icon: '/images/FuzzFinders_icon_orange.png',
         draggable: true,
       });
 
