@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-$(document).on("click", ".submit-comment", function(event){
+	$(document).on("click", ".submit-comment", function(event){
 		event.preventDefault();
-		var currentUserId = $('.reports-list').data().currentid
-		var reportId = $(this).data().id
+		var currentUserId = $('.reports-list').data().currentid;
+		var reportId = $(this).data().id;
 		var formData = $('.comment-'+ reportId).val();
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
@@ -21,7 +21,7 @@ $(document).on("click", ".submit-comment", function(event){
 		})
 		.fail(function(){
     console.log("create comment fail");
-  });
-		
+  	});
+
 	});
 });
