@@ -1,16 +1,13 @@
-console.log("haha 27");
-
 $(function() {
     $('.directUpload').each(function(i, elem) {
         var fileInput = $(elem);
-        console.log("haha 32");
-        console.log(fileInput);
+        // console.log(fileInput);
         var form = $(fileInput.parents('form:first'));
         var submitButton = form.find('input[type="submit"]');
         var progressBar = $("<div class='bar'></div>");
         var barContainer = $("<div class='progress'></div>").append(progressBar);
         fileInput.after(barContainer);
-        console.log(gon);
+        // console.log(gon);
         fileInput.fileupload({
             fileInput: fileInput,
             url: gon.s3_hash.urlstring,
@@ -26,7 +23,6 @@ $(function() {
             },
             start: function(e) {
                 submitButton.prop('disabled', true);
-                console.log("In start haha 55");
                 progressBar.
                 css('background', 'green').
                 css('display', 'block').
@@ -41,10 +37,9 @@ $(function() {
                 var key = $(data.jqXHR.responseXML).find("Key").text();
                 //var url = gon.s3_hash.urlstring + key;
                 url = $(data.jqXHR.responseText).find("Location").text()
-                console.log(data);
-                console.log("In done haha 69");
+                // console.log(data);
                 $(".img_url").val(url);
-                console.log(url);
+                // console.log(url);
                 // create hidden field
                 var input = $("<input />", {
                     type: 'hidden',
@@ -55,7 +50,6 @@ $(function() {
             },
             fail: function(e, data) {
                 submitButton.prop('disabled', false);
-                console.log("In fail haha 76");
                 progressBar.
                 css("background", "red").
                 text("Failed");
@@ -65,4 +59,3 @@ $(function() {
 
 });
 console.log("s3upload.js is loaded")
-// console.log(gon.s3_hash)
