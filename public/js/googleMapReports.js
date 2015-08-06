@@ -94,7 +94,7 @@ var createMarker = function(reports) {
 		if (reports[i].report_type === 'lost') {
       lostOrFound(reports[i]);
 		} else if (reports[i].report_type == 'found') {
-     lostOrFound(reports[i]);
+      lostOrFound(reports[i]);
     } else {
       console.log('no report type');
     }
@@ -143,6 +143,15 @@ var renderComment = function(comment, reportId) {
   $('.comment-list-' + reportId).append(html);
 }
 
+var appendViaHandlebars = function(context, $templateLocation, $listLocation) {
+  var source =  $templateLocation.html();
+  var template = Handlebars.compile(source);
+  var html = template(context);
+  $listLocation.append(html);
+};
+
+
+
 var mostRecentReportsAjax = function(sw, ne) {
   $.ajax({
     url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
@@ -161,16 +170,11 @@ var mostRecentReportsAjax = function(sw, ne) {
         currentReport["itsfound"] = false;
       }
     }
-
-    // preparing for the Handlebar template
-    var context = { reports: response };
-    var source =  $('#report-template').html();
-    var template = Handlebars.compile(source);
-    var html = template(context);
-    $('.reports-list').append(html);
-
+    // debugger
+    appendViaHandlebars({ reports: response }, $('#report-template'), $('.reports-list'));
   })
   .fail(function(){
     console.log("reports request fail!");
   });
 };
+

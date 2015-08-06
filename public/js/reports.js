@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
-$('body').on('click', '.report', function() {
-	$(this).find('.more-report-info').toggle();
-	console.log($(this));
-	var id = $(this).data().reportid 
-	console.log(id)
-	$('.comment-div-'+id).toggle();
-});
+	$('body').on('click', '.report', function() {
+		$(this).find('.more-report-info').toggle();
+		console.log($(this));
+		var id = $(this).data().reportid
+		console.log(id)
+		$('.comment-div-'+id).toggle();
+	});
 
 	var updateWags = function(value) {
 		$(".wags").text(value)
