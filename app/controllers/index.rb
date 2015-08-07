@@ -72,5 +72,5 @@ end
 get '/sign_out' do
 	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   session.clear
-  redirect "/"
+  redirect "/sign_in"
 end
