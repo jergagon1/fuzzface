@@ -48,7 +48,7 @@ get "/" do
     # p session[:user]["email"]
     # p session[:user]["password_hash"]
     retrieve_wags
-		erb :index
+		erb :fuzzfinders
 	else
 		redirect "/sign_in"
 	end
