@@ -48,7 +48,7 @@ put "/sign_in" do
     session[:user] = @user
     redirect "/"
   else
-    erb :sign_in
+    redirect "/sign_in"
   end
 end
 
@@ -64,7 +64,7 @@ post "/sign_up" do
     session[:user] = @user
     redirect "/"
   else
-    erb :sign_in
+    redirect "/sign_in"
   end
 end
 
