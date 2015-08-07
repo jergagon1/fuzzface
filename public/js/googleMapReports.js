@@ -93,7 +93,7 @@ var createMarker = function(reports) {
 	for(var i = 0; i < reports.length; i++ ) {
 		if (reports[i].report_type === 'lost') {
       lostOrFound(reports[i]);
-		} else if (reports[i].report_type == 'found') {
+		} else if (reports[i].report_type === 'found') {
       lostOrFound(reports[i]);
     } else {
       console.log('no report type');
@@ -124,32 +124,48 @@ var selectIcon = function(reportType) {
   }
 };
 
+// report timestamp conversion functions
+var convertUtcToLocal = function(utcTimestamp) {
+  var localTimestamp = new Date(utcTimestamp);
+  return localTimestamp.toString();
+};
+
+var updateTimestamps = function(recordArray, fieldToUpdate) {
+  for (var i = 0; i < recordArray.length; i++) {
+    recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
+  }
+};
+
 var getReportComments = function(reportId) {
   $.ajax({
     url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
     type: "get",
     dataType: "json",
-  }).done(function(commentResponse) {
-    renderComment(commentResponse, reportId)
+  })
+  .done(function(commentResponse) {
+    updateTimestamps(commentResponse, "updated_at");
+    renderComments(commentResponse, reportId);
     $('.comment-div').hide();
   })
-}
+  .fail(function(){
+    console.log("Error loading comments");
+  });
+};
 
-var renderComment = function(comment, reportId) {
+var renderComments = function(comment, reportId) {
   var context = { comments: comment };
   var source =  $('#comment-template').html();
   var template = Handlebars.compile(source);
   var html = template(context);
   $('.comment-list-' + reportId).append(html);
-}
+};
 
-var appendViaHandlebars = function(context, $templateLocation, $listLocation) {
+var renderReports = function(context, $templateLocation, $listLocation) {
   var source =  $templateLocation.html();
   var template = Handlebars.compile(source);
   var html = template(context);
   $listLocation.append(html);
 };
-
 
 
 var mostRecentReportsAjax = function(sw, ne) {
@@ -171,7 +187,8 @@ var mostRecentReportsAjax = function(sw, ne) {
       }
     }
     // debugger
-    appendViaHandlebars({ reports: response }, $('#report-template'), $('.reports-list'));
+    updateTimestamps(response, "updated_at");
+    renderReports({ reports: response }, $('#report-template'), $('.reports-list'));
   })
   .fail(function(){
     console.log("reports request fail!");
