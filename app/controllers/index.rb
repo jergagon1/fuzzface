@@ -22,16 +22,32 @@ def setup_s3
   gon.s3_hash = @s3_hash
 end
 
+# method to retrieve user wags
+def retrieve_wags
+  wags_data = HTTParty.get("http://localhost:3000/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
+  @wags = JSON.parse(wags_data.body)["wags"]
+end
+
+# shared method to handle log in and sign up response data from HTTParty
+def handle_auth_response response_data
+  unless response_data.body.empty?
+    @user = JSON.parse(response_data.body)
+    session[:user] = @user
+    redirect "/"
+  else
+    redirect "/sign_in"
+  end
+end
+
 # render root/FuzzFinders page
 get "/" do
-	if session[:user]
+  if session[:user]
     setup_s3
     @page_title = "FuzzFinders"
     @user_id = session[:user]["id"]
     # p session[:user]["email"]
     # p session[:user]["password_hash"]
-    wags_data = HTTParty.get("http://localhost:3000/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
-    @wags = JSON.parse(wags_data.body)["wags"]
+    retrieve_wags
 		erb :index
 	else
 		redirect "/sign_in"
@@ -43,13 +59,7 @@ put "/sign_in" do
   setup_s3
   options = params
   response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{Digest::SHA1.hexdigest(params[:password_hash])}")
-  unless response.body.empty?
-    @user = JSON.parse(response.body)
-    session[:user] = @user
-    redirect "/"
-  else
-    redirect "/sign_in"
-  end
+  handle_auth_response(response)
 end
 
 # render sign in page
@@ -60,13 +70,7 @@ end
 # sign up action
 post "/sign_up" do
   response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
-  if response.body
-    @user=JSON.parse(response.body)
-    session[:user] = @user
-    redirect "/"
-  else
-    redirect "/sign_in"
-  end
+  handle_auth_response(response)
 end
 
 # sign out action
