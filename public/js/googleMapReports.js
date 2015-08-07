@@ -93,7 +93,7 @@ var createMarker = function(reports) {
 	for(var i = 0; i < reports.length; i++ ) {
 		if (reports[i].report_type === 'lost') {
       lostOrFound(reports[i]);
-		} else if (reports[i].report_type == 'found') {
+		} else if (reports[i].report_type === 'found') {
       lostOrFound(reports[i]);
     } else {
       console.log('no report type');
