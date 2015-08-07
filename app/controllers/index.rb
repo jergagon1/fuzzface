@@ -1,7 +1,7 @@
 enable :sessions
 require 'digest/sha1'
 
-# gon gives access to variables from js
+# gon gem gives access to variables from js
 before do
   gon.pusher_key = ENV["PUSHER_KEY"]
   gon.channel_name = ENV["PUSHER_CHANNEL_NAME"]
@@ -22,7 +22,7 @@ def setup_s3
   gon.s3_hash = @s3_hash
 end
 
-# FuzzFinders page
+# render root/FuzzFinders page
 get "/" do
 	if session[:user]
     setup_s3
@@ -38,7 +38,7 @@ get "/" do
 	end
 end
 
-# log in
+# log in action
 put "/sign_in" do
   setup_s3
   options = params
@@ -52,11 +52,12 @@ put "/sign_in" do
   end
 end
 
+# render sign in page
 get "/sign_in" do
 	erb :sign_in
 end
 
-
+# sign up action
 post "/sign_up" do
   response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
   if response.body
@@ -68,7 +69,7 @@ post "/sign_up" do
   end
 end
 
-
+# sign out action
 get '/sign_out' do
 	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   session.clear
