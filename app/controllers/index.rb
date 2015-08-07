@@ -1,6 +1,7 @@
 enable :sessions
 require 'digest/sha1'
 
+# gon gives access to variables from js
 before do
   gon.pusher_key = ENV["PUSHER_KEY"]
   gon.channel_name = ENV["PUSHER_CHANNEL_NAME"]
