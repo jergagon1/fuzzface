@@ -11,29 +11,28 @@ before do
   end
 end
 
-get "/jack" do
-  @page_title = "Jack's Testing"
-  puts "Jack's testing"
-	p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
-	puts "Testing dotENV:"
-	p ENV['AWS_SECRET_ACCESS_KEY']
-	puts "Test bucket:"
-	p AWS::S3.new.buckets[ENV['S3_BUCKET_NAME']]
-end
+# get "/jack" do
+#   @page_title = "Jack's Testing"
+#   puts "Jack's testing"
+# 	p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+# 	puts "Testing dotENV:"
+# 	p ENV['AWS_SECRET_ACCESS_KEY']
+# 	puts "Test bucket:"
+# 	p AWS::S3.new.buckets[ENV['S3_BUCKET_NAME']]
+# end
 
 get "/" do
 	if session[:user]
-    p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     s3_hash = Hash.new
     s3_hash['url'] = @s3_direct_post.url
     s3_hash['urlstring'] = @s3_direct_post.url.to_s
     s3_hash['fields'] = @s3_direct_post.fields
-    p gon.s3_hash = s3_hash
+    gon.s3_hash = s3_hash
     @page_title = "FuzzFinders"
     @user_id = session[:user]["id"]
-    # p @wags = session[:user]["wags"]
-    p session[:user]["email"]
-    p session[:user]["password_hash"]
+    # p session[:user]["email"]
+    # p session[:user]["password_hash"]
     wags_data = HTTParty.get("http://localhost:3000/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
     @wags = JSON.parse(wags_data.body)["wags"]
 		erb :index
@@ -43,7 +42,7 @@ get "/" do
 end
 
 put "/sign_in" do
-  p @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+  @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
   s3_hash = Hash.new
   s3_hash['url'] = @s3_direct_post.url
   s3_hash['urlstring'] = @s3_direct_post.url.to_s
