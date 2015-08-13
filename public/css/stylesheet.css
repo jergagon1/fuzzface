@@ -15,12 +15,9 @@ body {
 
 /*main page FIRST PANEL*/
 
+/* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
 	width: 90%;
-}
-
-#menu-toggle {
-	z-index: 9999;
 }
 
 .sidebar-container {
@@ -54,6 +51,7 @@ body {
 
 #menu-toggle {
 	/*margin-top: 102%;*/
+	z-index: 9999;
 	margin-top: 20%;
 	margin-left: 20%;
 }
@@ -82,6 +80,7 @@ body {
 	background: rgb(253, 109, 62) !important;
 }
 
+/* notification on lost/found pet report creation */
 .notification {
 	background-color: transparent;
 	position: fixed;
