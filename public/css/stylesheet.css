@@ -146,3 +146,8 @@ button[type='submit'] {
 .report:hover {
 	cursor: pointer;
 }
+
+/* bootstrap container override to provide padding for chat widget*/
+.container {
+	padding-bottom: 6rem;
+}
