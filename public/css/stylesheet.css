@@ -72,6 +72,7 @@ body {
 .wags-section {
 	padding-top: 13%;
 	z-index: -1000;
+	text-align: center;
 }
 
 .chat {
@@ -145,4 +146,9 @@ button[type='submit'] {
 
 .report:hover {
 	cursor: pointer;
+}
+
+/* bootstrap container override to provide padding for chat widget*/
+.container {
+	padding-bottom: 6rem;
 }
