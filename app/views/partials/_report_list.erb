@@ -1,6 +1,6 @@
 <div class="report-lists" >
-  <div class="form-group">
-    <h3>Reports in your area:</h3>
+  <div class="padded">
+    <h3>Reports in Your Area</h3>
   </div>
 
 <!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
@@ -36,10 +36,10 @@
             {{/if}}>
             <div class="comment-list-{{id}}">
             </div>
-            Comment:<br />
+            Comment:<br>
             <input type="hidden" name="comment[{{id}}]" class='report-id' />
             <input type="hidden" name="comment[{{user_id}}]" class='current-user-id' />
-            <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br />
+            <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br>
             <button data-id={{id}} type="button" class="submit-comment">Submit</button>
           </div>
       {{/each}}
