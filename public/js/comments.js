@@ -20,7 +20,7 @@ $(document).ready(function(){
 			renderComment([response], reportId);
 		})
 		.fail(function(){
-    console.log("create comment fail");
+    	console.log("create comment fail");
   	});
 
 	});
