@@ -26,6 +26,18 @@
   	display: none;
   }
 
+/*sign in form*/
+.sign-in-form-container {
+  margin-left: auto;
+  margin-right: auto;
+  border: solid;
+  border-color: #eee;
+  text-align: center;
+  margin: 1.25rem;
+  padding: 1.25rem;
+}
+
+/* tablet */
 @media (min-width: 700px) {
   .title-info {
   	font-size: 1.6em;
@@ -49,16 +61,13 @@
 
 	.sign-in-form-container {
 		width: 50%;
-		margin-left: auto;
-		margin-right: auto;
 	}
 }
 
+/* desktop */
 @media (min-width: 1200px) {
 	.sign-in-form-container {
 		width: 30%;
-		margin-left: auto;
-		margin-right: auto;
 	}
 
 	.logo-img-container {
