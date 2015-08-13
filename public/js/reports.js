@@ -1,22 +1,24 @@
 $(document).ready(function(){
 
+	// in reports list - show add'l info for a report w/ comments on click
 	$('body').on('click', '.report', function() {
 		$(this).find('.more-report-info').toggle();
-		console.log($(this));
-		var id = $(this).data().reportid
-		console.log(id)
+		// console.log($(this));
+		var id = $(this).data().reportid;
+		// console.log(id);
 		$('.comment-div-'+id).toggle();
 	});
 
+	// update the user wags count when they submit a found pet report
 	var updateWags = function(value) {
-		$(".wags").text(value)
-	}
+		$(".wags").text(value);
+	};
+
 	// lost pet form submission
 	$(".lost-pet-form").on("submit", function(event){
 		event.preventDefault();
 		var formData = $(this).serialize();
 		console.log(formData);
-		$that = $(this)
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
@@ -32,7 +34,7 @@ $(document).ready(function(){
 			$(".main-buttons").removeClass('selected-button');
 		})
 		.fail(function(){
-			console.log('fail');
+			console.log('lost pet form submission failed');
 		})
 	});
 
@@ -41,7 +43,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var formData = $(this).serialize();
 		console.log(formData);
-		that = $(this)
+		$that = $(this);
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
 			type: "post",
@@ -50,20 +52,16 @@ $(document).ready(function(){
 		})
 		.done(function(response){
 			console.log(response);
-			// debugger
-			$("input[type='text']").val('');
+			$("input[type='text']").val("");
 			$("textarea").val("");
 			$("select").prop("selectedIndex", 0);
 			updateWags(response.wags)
-			// debugger
-			that.parent().slideUp("slow");
-			that.parent().parent().children(":first").removeClass("selected-button");
+			$that.parent().slideUp("slow");
+			$that.parent().parent().children(":first").removeClass("selected-button");
 		})
 		.fail(function(){
-			console.log('fail');
+			console.log('found pet form submission failed');
 		})
 	});
 
-
-
-});
+}); // document ready
