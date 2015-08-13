@@ -13,7 +13,6 @@
 	/*width:85%;*/
 	display: block;
 	margin: 2em;
-
 }
 
 .title-info {
@@ -23,8 +22,8 @@
 }
 
 .logo-img-lrg {
-  	display: none;
-  }
+  display: none;
+}
 
 /*sign in form*/
 .sign-in-form-container {
