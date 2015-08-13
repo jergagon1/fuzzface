@@ -72,6 +72,7 @@ body {
 .wags-section {
 	padding-top: 13%;
 	z-index: -1000;
+	text-align: center;
 }
 
 .chat {
