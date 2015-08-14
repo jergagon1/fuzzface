@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 
   // Pages: All
   // Toggle display of hamburger side menu
@@ -14,7 +14,7 @@ $(document).ready(function() {
     var chatWidget = new PusherChatWidget(pusher, {
       channelName: gon.channel_name,
     });
-  })();
+  })(); // IIFE instantiateChatWidget close/execute
 
   // Pages: All
   // Initialize FuzzFlash - Notification when new lost or found pet report created
@@ -33,6 +33,6 @@ $(document).ready(function() {
       $('div.notification').text(message);
       clearFuzzflash();
     });
-  })(); // IIFE initialFuzzFlash close
+  })(); // IIFE initialFuzzFlash close/execute
 
-});
+}); // close document ready

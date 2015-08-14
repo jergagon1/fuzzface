@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
 	$(document).on("click", ".submit-comment", function(event){
 		event.preventDefault();
@@ -22,6 +22,6 @@ $(document).ready(function(){
 		.fail(function(){
     	console.log("create comment fail");
   	});
-
 	});
-});
+
+}); // close document ready

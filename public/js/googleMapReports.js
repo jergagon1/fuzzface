@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
   var reportMap;
   function initializeReport() {
@@ -197,4 +197,4 @@ $(document).ready(function(){
     });
   };
 
-}); // document ready
+}); // close document ready
