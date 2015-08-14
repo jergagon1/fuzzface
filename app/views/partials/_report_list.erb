@@ -5,13 +5,7 @@
   <ul class="reports-list" data-currentId= "<%= @user_id %>" >
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
-        <li class="report"  data-reportid="{{id}}" style=
-        {{#if itsfound }}
-          "background-color: #2e8df2;"
-        {{else}}
-          "background-color: rgb(223, 131, 97)"
-        {{/if}}
-        >
+        <li class="report {{report_type}}-report" data-reportid="{{id}}">
           <img class="report_img" src="{{img_url}}">
           {{#if pet_name}} <p class="pet_name">Name: {{pet_name}}</p>{{/if}}
           <p class="animal_type">Animal type: {{animal_type}}</p>
