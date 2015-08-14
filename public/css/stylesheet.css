@@ -38,12 +38,6 @@ body {
 	text-align: center;
 }
 
-.chat {
-	position: fixed;
-	bottom: 10px;
-	right: 20px;
-	z-index: 2000;
-}
 
 .first-panel {
 	height: 150px;
