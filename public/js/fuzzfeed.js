@@ -1,5 +1,22 @@
 $(function() {
 
+  var hideForm = function () {
+    $(".fuzzfeed-buttons").siblings().hide();
+  };
+  hideForm();
+
+  // Add event listener for large buttons to show or hide form and list content on click
+  $(".fuzzfeed-buttons").on("click", function(event){
+    event.preventDefault();
+    if ($(this).siblings().first().is(":hidden")){
+      $(this).siblings().first().slideDown("slow");
+      $(this).addClass("selected-button");
+    } else {
+      $(this).siblings().first().slideUp();
+      $(this).removeClass("selected-button");
+    }
+  });
+
   // retrieve articles to populate feed
   var populateArticles = (function() {
     $.ajax({
