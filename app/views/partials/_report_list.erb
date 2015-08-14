@@ -21,19 +21,19 @@
             {{#if notes}} <p class="pet_notes">Details: {{notes}}</p>{{/if}}
           </div>
         </li>
-          <div class="comment-div-{{id}} comment-div" style={{#if itsfound }}
-              "background-color: #82BBF7;"
-            {{else}}
-              "background-color: #E9A890;"
-            {{/if}}>
-            <div class="comment-list-{{id}}">
-            </div>
-            Comment:<br>
-            <input type="hidden" name="comment[{{id}}]" class='report-id' />
-            <input type="hidden" name="comment[{{user_id}}]" class='current-user-id' />
-            <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br>
-            <button data-id={{id}} type="button" class="submit-comment">Submit</button>
+        <div class="comment-div-{{id}} comment-div" style={{#if itsfound }}
+            "background-color: #82BBF7;"
+          {{else}}
+            "background-color: #E9A890;"
+          {{/if}}>
+          <div class="comment-list-{{id}}">
           </div>
+          Comment:<br>
+          <input type="hidden" name="comment[{{id}}]" class='report-id' />
+          <input type="hidden" name="comment[{{user_id}}]" class='current-user-id' />
+          <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br>
+          <button data-id={{id}} type="button" class="submit-comment">Submit</button>
+        </div>
       {{/each}}
     </script>
   </ul>
