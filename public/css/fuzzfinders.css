@@ -33,3 +33,16 @@
   width: 100%;
   height: 22rem;
 }
+
+/* reports list styles */
+h3 {
+  text-align: center;
+}
+
+.lost-report {
+  background-color: rgb(223, 131, 97);
+}
+
+.found-report {
+  background-color: #2e8df2;
+}
