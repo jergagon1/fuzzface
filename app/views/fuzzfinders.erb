@@ -17,19 +17,19 @@
   </div>
   <div class="option-buttons">
     <div class="row">
-      <button class="btn-block main-buttons lost-pet">Lost a Pet</button>
+      <button class="btn-block main-buttons fuzzfinders-buttons lost-pet">Lost a Pet</button>
       <div id="lost-pet">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
       </div>
     </div>
     <div class="row">
-      <button class="btn-block main-buttons found-pet">Found a Pet</button>
+      <button class="btn-block main-buttons fuzzfinders-buttons found-pet">Found a Pet</button>
       <div id="found-pet">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
       </div>
     </div>
     <div class="row">
-      <button class="btn-block main-buttons report report-btn">Reports</button>
+      <button class="btn-block main-buttons fuzzfinders-buttons report-btn">Reports</button>
       <div id="reports-map-container">
         <input id="pac-input" class="controls" type="text" placeholder="Search near a location">
         <div id="report-map-canvas" class="map-canvas">

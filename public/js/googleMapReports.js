@@ -86,7 +86,7 @@ $(function(){
     map.setCenter(options.position);
   }
 
-  var reportBtn = document.getElementsByClassName("report")[0];
+  var reportBtn = document.getElementsByClassName("report-btn")[0];
   google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
 
 
@@ -169,7 +169,6 @@ $(function(){
     $listLocation.append(html);
   };
 
-
   var mostRecentReportsAjax = function(sw, ne) {
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
@@ -178,6 +177,7 @@ $(function(){
       dataType: 'json'
     })
     .done(function(response){
+      $(".report").remove();
       createMarker(response);
       for (i = 0; i < response.length; i++){
         var currentReport = response[i];
