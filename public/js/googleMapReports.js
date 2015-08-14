@@ -169,7 +169,6 @@ $(function(){
     $listLocation.append(html);
   };
 
-
   var mostRecentReportsAjax = function(sw, ne) {
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
@@ -178,6 +177,7 @@ $(function(){
       dataType: 'json'
     })
     .done(function(response){
+      $(".report").remove();
       createMarker(response);
       for (i = 0; i < response.length; i++){
         var currentReport = response[i];
