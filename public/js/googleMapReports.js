@@ -86,7 +86,7 @@ $(function(){
     map.setCenter(options.position);
   }
 
-  var reportBtn = document.getElementsByClassName("report")[0];
+  var reportBtn = document.getElementsByClassName("report-btn")[0];
   google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
 
 

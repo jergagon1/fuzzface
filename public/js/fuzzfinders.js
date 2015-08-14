@@ -2,13 +2,12 @@ $(function(){
 
 	// Hide/collapse the lost or found forms or the reports list if open on page load
 	var hideAllForms = function () {
-		$(".main-buttons").siblings().hide();
+		$(".fuzzfinders-buttons").siblings().hide();
 	};
 	hideAllForms();
 
-	// Pages: FuzzFinders, FuzzFeed
 	// Add event listener for large buttons to show or hide form and list content on click
-	$(".main-buttons").on("click", function(event){
+	$(".fuzzfinders-buttons").on("click", function(event){
 	  event.preventDefault();
 	  if ($(this).siblings().first().is(":hidden")){
 	    $(this).siblings().first().slideDown("slow");
@@ -49,8 +48,8 @@ $(function(){
 			$("input[type='text']").val('');
 			$("textarea").val("");
 			$("select").prop("selectedIndex", 0);
-			$(".main-buttons").siblings().first().slideUp("slow");
-			$(".main-buttons").removeClass('selected-button');
+			$(".fuzzfinders-buttons").siblings().first().slideUp("slow");
+			$(".fuzzfinders-buttons").removeClass('selected-button');
 		})
 		.fail(function(){
 			console.log('lost pet form submission failed');
