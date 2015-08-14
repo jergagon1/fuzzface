@@ -2,8 +2,6 @@
   <div class="padded">
     <h3>Reports in Your Area</h3>
   </div>
-
-<!-- The following was copied from fuzzfeed.erb, the background of li tag will change depedent on itsfound value, which was generated from googleMapReports.js AJAX block -->
   <ul class="reports-list" data-currentId= "<%= @user_id %>" >
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
