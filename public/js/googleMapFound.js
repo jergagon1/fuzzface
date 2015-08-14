@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
   var foundMap;
   function initializeFoundMap() {
@@ -80,4 +80,4 @@ $(document).ready(function(){
     $('.hidden-lng-field').attr('value', lng);
   };
 
-}); // document ready
+}); // close document ready

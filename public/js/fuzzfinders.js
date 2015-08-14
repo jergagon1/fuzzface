@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
 	// Hide/collapse the lost or found forms or the reports list if open on page load
 	var hideAllForms = function () {
@@ -83,4 +83,4 @@ $(document).ready(function(){
 		})
 	});
 
-}); // document ready
+}); // close document ready

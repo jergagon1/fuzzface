@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 
   // retrieve articles to populate feed
   var populateArticles = (function() {
@@ -48,4 +48,4 @@ $(document).ready(function() {
     })
   });
 
-}); //ready
+}); // close document ready

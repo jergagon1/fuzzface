@@ -57,5 +57,5 @@ $(function() {
         });
     });
 
-});
-console.log("s3upload.js is loaded")
+}); // close document ready
+// console.log("s3upload.js is loaded")

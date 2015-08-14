@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
   var lostMap;
   function initializeLostMap() {
@@ -81,4 +81,4 @@ $(document).ready(function(){
     $('.hidden-lng-field').attr('value', lng);
   };
 
-}); // document ready
+}); // close document ready
