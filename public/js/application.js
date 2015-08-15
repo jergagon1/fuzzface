@@ -1,5 +1,12 @@
+// Todo: revise js comprehensively into modules with namespacing management
+
 $(function() {
 
+  // check if element occurs on a page
+  // global namespace! to make available to other files
+  window.checkForElement = function(element){
+    return ($(element).length > 0) ? true : false;
+  }
   // Pages: All
   // Toggle display of hamburger side menu
   $("#menu-toggle").click(function(event) {
