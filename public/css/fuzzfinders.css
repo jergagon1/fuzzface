@@ -39,6 +39,12 @@ h3 {
   text-align: center;
 }
 
+.reports-list {
+  list-style: none;
+  list-style-position: inside;
+  padding-left: 0;
+}
+
 .lost-report {
   background-color: rgb(223, 131, 97);
 }
