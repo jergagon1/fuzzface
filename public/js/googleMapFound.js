@@ -1,7 +1,7 @@
 $(function(){
 
-  var foundMap;
-  function initializeFoundMap() {
+  var initializeFoundMap = function() {
+    var foundMap;
     var mapOptions = {
       zoom: 14,
       center: new google.maps.LatLng(37.7848676, -122.3978871)
@@ -45,16 +45,16 @@ $(function(){
         foundMap.setCenter(pos);
         addLatLongAttr(lat,lng);
       }, function() {
-        handleNoGeolocation(true);
+        handleNoGeolocation(true, foundMap);
       });
     } else {
       // Browser doesn't support Geolocation
-      handleNoGeolocation(false);
+      handleNoGeolocation(false, foundMap);
     }
   };
 
   //if current location does not work, then map defaults to San Francisco
-  function handleNoGeolocation(errorFlag) {
+  var handleNoGeolocation = function(errorFlag, noGeoMap) {
     if (errorFlag) {
       var content = 'Error: The Geolocation service failed.';
     } else {
@@ -62,23 +62,25 @@ $(function(){
     }
 
     var options = {
-      map: foundMap,
+      map: noGeoMap,
       position: new google.maps.LatLng(37.7848676, -122.3978871),
       content: content
     };
 
     var infowindow = new google.maps.InfoWindow(options);
-    foundMap.setCenter(options.position);
-  }
-
-  var foundPetBtn = document.getElementsByClassName("found-pet")[0];
-  if (foundPetBtn !== undefined) {
-    google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
-  }
+    noGeoMap.setCenter(options.position);
+  };
 
   var addLatLongAttr = function(lat, lng) {
     $('.hidden-lat-field').attr('value', lat);
     $('.hidden-lng-field').attr('value', lng);
   };
+
+  var foundPetBtn = document.getElementsByClassName("found-pet")[0];
+
+  if (foundPetBtn !== undefined) {
+    google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
+  }
+
 
 }); // close document ready
