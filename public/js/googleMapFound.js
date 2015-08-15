@@ -71,9 +71,10 @@ $(function(){
     foundMap.setCenter(options.position);
   }
 
-  var foundMapDiv = document.getElementById('found-map-canvas');
   var foundPetBtn = document.getElementsByClassName("found-pet")[0];
-  google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
+  if (foundPetBtn !== undefined) {
+    google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
+  }
 
   var addLatLongAttr = function(lat, lng) {
     $('.hidden-lat-field').attr('value', lat);

@@ -87,7 +87,9 @@ $(function(){
   }
 
   var reportBtn = document.getElementsByClassName("report-btn")[0];
-  google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
+  if (reportBtn !== undefined) {
+    google.maps.event.addDomListener(reportBtn, 'click', initializeReport);
+  }
 
 
 
