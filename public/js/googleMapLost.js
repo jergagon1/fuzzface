@@ -72,9 +72,10 @@ $(function(){
     lostMap.setCenter(options.position);
   }
 
-  var lostMapDiv = document.getElementById('lost-map-canvas');
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
-  google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
+  if (lostPetBtn !== undefined) {
+    google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
+  }
 
   var addLatLongAttr = function(lat, lng) {
     $('.hidden-lat-field').attr('value', lat);
