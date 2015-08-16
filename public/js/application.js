@@ -7,6 +7,7 @@ $(function() {
   window.checkForElement = function(element){
     return ($(element).length > 0) ? true : false;
   }
+
   // Pages: All
   // Toggle display of hamburger side menu
   $("#menu-toggle").click(function(event) {
