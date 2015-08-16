@@ -3,7 +3,7 @@ $(function(){
 	//------------------------- Model -------------------------------//
 
 	// Model: lost pet form submission
-	var lostPetFormSubmit = function($dataFromForm){
+	var lostPetFormSubmit = function($dataFromForm, $lostForm){
 		console.log($dataFromForm);
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
@@ -13,12 +13,32 @@ $(function(){
 		})
 		.done(function(response){
 			console.log(response);
-			resetViewOnFormSubmit(); // maybe move this to event listener in controller?
+			resetViewOnFormSubmit($lostForm);
 		})
 		.fail(function(){
 			console.log('lost pet form submission failed');
 		})
 	};
+
+	// Model: found pet form submission
+	var foundPetFormSubmit = function($dataFromForm, $foundForm){
+		console.log($dataFromForm);
+		$.ajax({
+			url: "http://localhost:3000/api/v1/reports",
+			type: "post",
+			dataType: "json",
+			data: $dataFromForm
+		})
+		.done(function(response){
+			console.log(response);
+			updateWags(response.wags);
+			resetViewOnFormSubmit($foundForm);
+		})
+		.fail(function(){
+			console.log('found pet form submission failed');
+		})
+	};
+
 
 	//------------------------- View -------------------------------//
 
@@ -74,10 +94,10 @@ $(function(){
 		$("select").prop("selectedIndex", 0);
 	};
 
-	var resetViewOnFormSubmit = function(){
+	var resetViewOnFormSubmit = function($formElement){
 		resetFormInputs();
-		$(".fuzzfinders-buttons").siblings().first().slideUp("slow");
-		$(".fuzzfinders-buttons").removeClass('selected-button');
+		$formElement.parent().slideUp("slow");
+		$formElement.parent().parent().children(":first").removeClass("selected-button");
 	};
 
 	//------------------------- Controller -------------------------------//
@@ -113,10 +133,10 @@ $(function(){
 	var addEventListenerLostPetFormSubmit = function(){
 		$(".lost-pet-form").on("submit", function(event){
 			event.preventDefault();
+			var $form = $(this);
 			var $formData = $(this).serialize();
-			lostPetFormSubmit($formData);
-
-		})
+			lostPetFormSubmit($formData, $form);
+		});
 	};
 
 	// Controller: Remove event listener for lost pet form submit button
@@ -124,49 +144,34 @@ $(function(){
 		$(".lost-pet-form").off("submit");
 	};
 
-
-
-	// found pet form submission
-	var foundPetFormSubmitEventHandler = function(){
+	// Controller: Add event listener for found pet form submit button
+	var addEventListenerFoundPetFormSubmit = function(){
 		$(".found-pet-form").on("submit", function(event){
 			event.preventDefault();
-			var formData = $(this).serialize();
-			console.log(formData);
-			$that = $(this);
-			$.ajax({
-				url: "http://localhost:3000/api/v1/reports",
-				type: "post",
-				dataType: "json",
-				data: formData
-			})
-			.done(function(response){
-				console.log(response);
-				// $("input[type='text']").val("");
-				// $("textarea").val("");
-				// $("select").prop("selectedIndex", 0);
-				resetFormInputs();
-				updateWags(response.wags);
-				$that.parent().slideUp("slow");
-				$that.parent().parent().children(":first").removeClass("selected-button");
-			})
-			.fail(function(){
-				console.log('found pet form submission failed');
-			})
+			var $form = $(this);
+			var $formData = $(this).serialize();
+			foundPetFormSubmit($formData, $form);
 		});
 	};
 
-	// Run functions if on FuzzFinders Page
+	// Controller: Remove event listener for found pet form submit button
+	var removeEventListenerFoundPetFormSubmit = function(){
+		$(".found-pet-form").off("submit");
+	};
+
+	// Controller: initialize event listeners if on FuzzFinders Page
 	var initializeFuzzfinders = (function(){
 		if (checkForElement(".fuzzfinders-buttons")) {
 			hideAllSiblings(".fuzzfinders-buttons");
 			addEventListenerToggleFuzzfindersButtons();
 			addEventListenerShowReportDetails();
 			addEventListenerLostPetFormSubmit();
-			foundPetFormSubmitEventHandler();
+			addEventListenerFoundPetFormSubmit();
 		} else {
 			removeEventListenerToggleFuzzfindersButtons();
 			removeEventListenerShowReportDetails();
 			removeEventListenerLostPetFormSubmit();
+			removeEventListenerFoundPetFormSubmit();
 		}
 	})();
 
