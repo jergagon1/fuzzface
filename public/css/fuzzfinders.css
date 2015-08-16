@@ -52,3 +52,11 @@ h3 {
 .found-report {
   background-color: #2e8df2;
 }
+
+.lost-report-comment {
+  background-color: #E9A890;
+}
+
+.found-report-comment {
+  background-color: #82BBF7;
+}
