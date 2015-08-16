@@ -58,4 +58,3 @@ $(function() {
   });
 
 }); // close document ready
-// console.log("s3upload.js is loaded")
