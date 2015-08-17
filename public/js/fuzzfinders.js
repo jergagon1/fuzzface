@@ -39,7 +39,6 @@ $(function(){
 		})
 	};
 
-
 	//------------------------- View -------------------------------//
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
@@ -66,7 +65,6 @@ $(function(){
 	// View: Slide open or close form and list content adjacent to large buttons
 	var toggleFuzzfindersButtons = function($button){
 	  if ($button.siblings().first().is(":hidden")){
-	    // $button.siblings().first().slideDown("slow");
 	    slideDownRevealButtonSiblingContent($button);
 	    addSelectedClassToButton($button);
 	  } else {

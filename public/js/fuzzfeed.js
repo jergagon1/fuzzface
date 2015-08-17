@@ -1,77 +1,143 @@
 $(function() {
 
-  // View: hide create article form
-  var hideForm = function () {
-    $(".fuzzfeed-buttons").siblings().hide();
-  };
+  //------------------------- Model -------------------------------//
 
-  // Add event listener for large buttons to show or hide form and list content on click
-  $(".fuzzfeed-buttons").on("click", function(event){
-    event.preventDefault();
-    if ($(this).siblings().first().is(":hidden")){
-      $(this).siblings().first().slideDown("slow");
-      $(this).addClass("selected-button");
-    } else {
-      $(this).siblings().first().slideUp();
-      $(this).removeClass("selected-button");
-    }
-  });
-
-  // retrieve articles to populate feed
-  var populateArticles = function() {
+  // Model: retrieve articles for feed
+  var getArticles = function() {
     $.ajax({
      url: 'http://localhost:3000/api/v1/articles',
      type: 'GET'
     })
     .done(function(response){
       console.log(response);
-      var context = { articles: response };
-      var $source =  $('#article-template').html();
-      var template = Handlebars.compile($source);
-      var html = template(context);
-      $('.articles-list').append(html);
+      renderTemplates(
+        { articles: response },
+        $('#article-template'),
+        $('.articles-list')
+      );
     })
     .fail(function(){
       console.log("Error loading articles!");
     });
   };
 
-  // create new article
-  $('.new-article').on('submit', function(event) {
-    event.preventDefault();
-    $that = $(this);
-    var link = $that.attr("action");
-    var method = $that.attr("method");
-    var formData = $that.serialize();
+  // Model: create new article
+  var newArticleSubmit = function($dataFromForm, $articleForm){
     $.ajax({
-      url: link,
-      type: method,
+      url: $articleForm.attr("action"),
+      type: $articleForm.attr("method"),
       dataType: 'JSON',
-      data: formData
+      data: $dataFromForm
     })
     .done(function(response) {
       console.log(response);
-      var context = { articles: [response["article"]] };
-      var $source =  $('#article-template').html();
-      var template = Handlebars.compile($source);
-      var html = template(context);
-      $('.articles-list').prepend(html);
-      $(".new-article")[0].reset();
-      $that.slideUp("slow");
-      $that.parent().children(":first").removeClass("selected-button");
+      renderTemplates(
+        { articles: [response["article"]] },
+        $('#article-template'),
+        $('.articles-list'),
+        true
+      );
+      resetArticleForm($articleForm);
     })
     .fail(function() {
-      console.log("error");
+      console.log("error creating article");
     })
-  });
+  };
 
-  // Controller:
+  //------------------------- View -------------------------------//
+
+  // View: Hide/collapse the lost or found forms or reports list if open on page load
+  var hideAllSiblings = function(element) {
+    $(element).siblings().hide();
+  };
+
+  var addSelectedClassToButton = function($buttonToSelect){
+    $buttonToSelect.addClass("selected-button");
+  };
+
+  var removeSelectedClassFromButton = function($buttonToDeselect){
+    $buttonToDeselect.removeClass("selected-button");
+  };
+
+  var slideDownRevealButtonSiblingContent = function($adjacentButton){
+    $adjacentButton.siblings().first().slideDown("slow");
+  };
+
+  var slideUpHideButtonSiblingContent = function($adjacentButton){
+    $adjacentButton.siblings().first().slideUp();
+  };
+
+  // View: Slide open or close form and list content adjacent to large buttons
+  var toggleFuzzfeedButtons = function($button){
+    if ($button.siblings().first().is(":hidden")){
+      slideDownRevealButtonSiblingContent($button);
+      addSelectedClassToButton($button);
+    } else {
+      slideUpHideButtonSiblingContent($button);
+      removeSelectedClassFromButton($button);
+    }
+  };
+
+  // View: render handlebars templates
+  var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
+   prepend = prepend || false;
+   var source =  $templateLocation.html();
+   var template = Handlebars.compile(source);
+   var html = template(context);
+   if (prepend) {
+    $listLocation.prepend(html);
+   } else {
+    $listLocation.append(html);
+   }
+  };
+
+  // View: reset the new article form
+  var resetArticleForm = function($form){
+    $(".new-article")[0].reset();
+    $form.slideUp("slow");
+    $form.parent().children(":first").removeClass("selected-button");
+  };
+
+  //------------------------- Controller -------------------------------//
+
+  var addEventListenerToggleFuzzfeedButtons = function(){
+    $(".fuzzfeed-buttons").on("click", function(event){
+      event.preventDefault();
+      var $clickedButton = $(this);
+      toggleFuzzfeedButtons($clickedButton);
+    });
+  };
+
+  var removeEventListenerToggleFuzzfeedButtons = function(){
+    $(".fuzzfeed-buttons").off("click");
+  };
+
+  // Controller: add event listener for new article submit button
+  var addEventListenerNewArticleSubmit = function(){
+    $(".new-article").on("submit", function(event) {
+      event.preventDefault();
+      var $form = $(this);
+      var $formData = $(this).serialize();
+      newArticleSubmit($formData, $form);
+    });
+  };
+
+  var removeEventListenerNewArticleSubmit = function(){
+    $(".new-article").off("submit")
+  };
+
+  // Controller: initialize functions and eventlisteners if on fuzzfeed page
   var initializeFuzzfeed = (function(){
     if (checkForElement(".fuzzfeed-buttons")) {
-      hideForm();
-      populateArticles();
+      // on fuzzfeed page
+      hideAllSiblings(".fuzzfeed-buttons");
+      getArticles();
+      addEventListenerToggleFuzzfeedButtons();
+      addEventListenerNewArticleSubmit();
     } else {
-
+      // not on fuzzfeed page
+      removeEventListenerToggleFuzzfeedButtons();
+      removeEventListenerNewArticleSubmit();
     }
   })();
 
