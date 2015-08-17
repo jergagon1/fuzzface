@@ -78,13 +78,6 @@ $(function(){
 		$(".wags").text(value);
 	};
 
-	// View: in reports list - show add'l info for a report w/ comments
-	var showReportDetails = function($report){
-		$report.find('.more-report-info').toggle();
-		var $id = $report.data().reportid;
-		$('.comment-div-'+$id).toggle();
-	};
-
 	// View: reset form input controls
 	var resetFormInputs = function(){
 		$("input[type='text']").val('');
@@ -92,6 +85,7 @@ $(function(){
 		$("select").prop("selectedIndex", 0);
 	};
 
+	// View: reset inputs and buttons on form submittal
 	var resetViewOnFormSubmit = function($formElement){
 		resetFormInputs();
 		$formElement.parent().slideUp("slow");
@@ -112,19 +106,6 @@ $(function(){
 	// Controller: Remove event listener for large buttons to show or hide forms
 	var removeEventListenerToggleFuzzfindersButtons = function(){
 		$(".fuzzfinders-buttons").off("click");
-	};
-
-	// Controller: Add delegated event listener to reports in reports list on click
-	var addEventListenerShowReportDetails = function(){
-		$('body').on('click', '.report', function() {
-			$clickedReport = $(this);
-			showReportDetails($clickedReport);
-		});
-	};
-
-	// Controller: Remove delegated event listener to reports in reports list
-	var removeEventListenerShowReportDetails = function(){
-		$("body").off("click", ".report");
 	};
 
 	// Controller: Add event listener for lost pet form submit button
@@ -162,12 +143,10 @@ $(function(){
 		if (checkForElement(".fuzzfinders-buttons")) {
 			hideAllSiblings(".fuzzfinders-buttons");
 			addEventListenerToggleFuzzfindersButtons();
-			addEventListenerShowReportDetails();
 			addEventListenerLostPetFormSubmit();
 			addEventListenerFoundPetFormSubmit();
 		} else {
 			removeEventListenerToggleFuzzfindersButtons();
-			removeEventListenerShowReportDetails();
 			removeEventListenerLostPetFormSubmit();
 			removeEventListenerFoundPetFormSubmit();
 		}
