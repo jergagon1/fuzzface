@@ -260,7 +260,7 @@ $(function(){
     $('.comment-list-' + reportId).append(html);
   };
 
-  var renderReports = function(context, $templateLocation, $listLocation) {
+  var renderTemplates = function(context, $templateLocation, $listLocation) {
     var source =  $templateLocation.html();
     var template = Handlebars.compile(source);
     var html = template(context);
@@ -278,7 +278,7 @@ $(function(){
       $(".report").remove();
       createMarkers(response);
       updateTimestamps(response, "updated_at");
-      renderReports({ reports: response }, $('#report-template'), $('.reports-list'));
+      renderTemplates({ reports: response }, $('#report-template'), $('.reports-list'));
     })
     .fail(function(){
       console.log("reports request fail!");
