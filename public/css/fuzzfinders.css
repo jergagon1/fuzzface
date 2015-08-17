@@ -39,6 +39,11 @@ h3 {
   text-align: center;
 }
 
+.report {
+  margin-bottom: 3%;
+  border-radius: 3px;
+}
+
 .reports-list {
   list-style: none;
   list-style-position: inside;
@@ -59,4 +64,34 @@ h3 {
 
 .found-report-comment {
   background-color: #82BBF7;
+}
+
+.report-img-thumb {
+  width: 100%;
+}
+
+.report-summary {
+  height: 6em;
+}
+
+.report-summary p {
+  /*color: black;*/
+}
+
+li {
+  overflow: auto;
+  padding-bottom: 1rem;
+}
+
+.report-image-big {
+  width: 100%;
+}
+
+.submit-comment {
+  width: 100%;
+}
+
+.comment-text-input {
+  height: 6rem;
+  width: 100%;
 }
