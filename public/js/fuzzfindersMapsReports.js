@@ -1,22 +1,26 @@
 $(function(){
 
+  // Model: create variables to store map objects
   var lostMap, foundMap, reportMap;
 
-  //if current location does not work, then map defaults to San Francisco
+  // handle user agents that don't allow/support geolocation or if geolocation fails
   var handleNoGeolocation = function(errorFlag, noGeoMap) {
+    // error flag indicates geolocation service failed
+    // no error flag indicates broswer doesn't support geolocation
     if (errorFlag) {
       var content = 'Error: The Geolocation service failed.';
     } else {
       var content = 'Error: Your browser doesn\'t support geolocation.';
     }
-
+    // set options for map infowindow
     var options = {
       map: noGeoMap,
       position: new google.maps.LatLng(37.7848676, -122.3978871),
       content: content
     };
-
+    // create new map infowindow
     var infowindow = new google.maps.InfoWindow(options);
+    // center map to default san francisco location
     noGeoMap.setCenter(options.position);
   };
 
@@ -37,8 +41,7 @@ $(function(){
     //User's Current Location
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = new google.maps.LatLng(position.coords.latitude,
-                                         position.coords.longitude);
+        var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         lat = position.coords.latitude;
         lng = position.coords.longitude;
 
@@ -156,7 +159,7 @@ $(function(){
       // if browser doesn't support Geolocation
       handleNoGeolocation(false, reportMap);
     }
-  }
+  };
 
   var createMarkers = function(reports) {
     for(var i = 0; i < reports.length; i++ ) {
@@ -248,6 +251,7 @@ $(function(){
     });
   };
 
+  // View:
   var renderComments = function(comment, reportId) {
     var context = { comments: comment };
     var source =  $('#comment-template').html();
@@ -285,20 +289,22 @@ $(function(){
   var foundPetBtn = document.getElementsByClassName("found-pet")[0];
   var reportBtn = document.getElementsByClassName("report-btn")[0];
 
-  // Controller: initialize lost report map
+  // Controller: Add maps DOM listener to initialize lost report map on lost a pet button click
   var addEventListenerInitializeLostMap = function(){
     google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
   };
 
+  // Controller: Remove DOM listener to lost a pet button
   var removeEventListenerInitializeLostMap = function(){
     google.maps.event.removeListener(lostPetBtn, 'click', initializeLostMap);
   }
 
-  // Controller: initialize
+  // Controller: Add maps DOM listener to initialize found report map on found a pet button click
   var addEventListenerInitializeFoundMap = function(){
     google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
   };
 
+  // Controller: Remove DOM listener to found a pet button
   var removeEventListenerInitializeFoundMap = function(){
     google.maps.event.removeListener(foundPetBtn, 'click', initializeFoundMap);
   };
