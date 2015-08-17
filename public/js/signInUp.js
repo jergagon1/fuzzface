@@ -13,7 +13,6 @@ $(function(){
     $(".signUp").toggle();
   };
 
-
   //------------------------- Controller -------------------------------//
 
   // Controller: add event listener to link to toggle sign in and sign up form
