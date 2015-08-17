@@ -1,9 +1,9 @@
 $(function() {
 
+  // View: hide create article form
   var hideForm = function () {
     $(".fuzzfeed-buttons").siblings().hide();
   };
-  hideForm();
 
   // Add event listener for large buttons to show or hide form and list content on click
   $(".fuzzfeed-buttons").on("click", function(event){
@@ -18,7 +18,7 @@ $(function() {
   });
 
   // retrieve articles to populate feed
-  var populateArticles = (function() {
+  var populateArticles = function() {
     $.ajax({
      url: 'http://localhost:3000/api/v1/articles',
      type: 'GET'
@@ -34,7 +34,7 @@ $(function() {
     .fail(function(){
       console.log("Error loading articles!");
     });
-  })();
+  };
 
   // create new article
   $('.new-article').on('submit', function(event) {
@@ -64,5 +64,15 @@ $(function() {
       console.log("error");
     })
   });
+
+  // Controller:
+  var initializeFuzzfeed = (function(){
+    if (checkForElement(".fuzzfeed-buttons")) {
+      hideForm();
+      populateArticles();
+    } else {
+
+    }
+  })();
 
 }); // close document ready
