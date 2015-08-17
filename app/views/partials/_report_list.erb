@@ -6,38 +6,82 @@
     <script id="report-template" type="text/x-handlebars-template">
       {{#each reports}}
         <li class="report {{report_type}}-report" data-reportid="{{id}}">
-          <img class="report_img" src="{{img_url}}">
-          {{#if pet_name}} <p class="pet_name">Name: {{pet_name}}</p>{{/if}}
-          <p class="animal_type">Animal type: {{animal_type}}</p>
+          <div class="report-summary padded">
+            <div class="report-thumbnail-column col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
+            </div>
+            <div class="report-summary-text-column col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <p>{{report_type}} {{#if animal_type}}{{animal_type}}{{else}}pet{{/if}} {{#if pet_name}}{{pet_name}}{{/if}}</p>
+              <p>{{updated_at}}</p>
+            </div>
+          </div>
+          <div class="report-detail">
+            {{#if img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <img src="{{img_url}}" class="report-image-big">
+            </div>{{/if}}
+            <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              {{#if size}}
+                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
+                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{size}}</p>
+              {{/if}}
+              {{#if color}}
+                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
+                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{color}}</p>
+              {{/if}}
+              {{#if breed}}
+                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
+                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{breed}}</p>
+              {{/if}}
+              {{#if sex}}
+                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
+                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{sex}}</p>
+              {{/if}}
+              {{#if age}}
+                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
+                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{age}}</p>
+              {{/if}}
+              {{#if notes}}
+                  <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
+                  <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{notes}}</p>
+              {{/if}}
+            </div>
+          </div>
+          <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
+            <ul class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag1</p>
+              </li>
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag2</p>
+              </li>
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag3</p>
+              </li>
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag4</p>
+              </li>
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag5</p>
+              </li>
+              <li style="float: left;">
+                <p class="btn btn-default btn-xs">tag6</p>
+              </li>
+            </ul>
+          </div>
+          <div class="comments-list">
 
-          <div class='more-report-info-{{id}} more-report-info' style="display: none">
-            <p class="last_seen">Reported date: {{updated_at}}</p>
-            {{#if img_url}} <p class="pet_img_url">Photo: <img src='{{img_url}}'></p>{{/if}}
-            {{#if age}} <p class="pet_age">Age: {{age}}</p>{{/if}}
-            {{#if breed}} <p class="pet_breed">Breed: {{breed}}</p>{{/if}}
-            {{#if color}} <p class="pet_color">Color: {{color}}</p>{{/if}}
-            {{#if sex}} <p class="pet_sex">Sex: {{sex}}</p>{{/if}}
-            {{#if size}} <p class="pet_age">Age: {{age}}</p>{{/if}}
-            {{#if notes}} <p class="pet_notes">Details: {{notes}}</p>{{/if}}
+          </div>
+          <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form>
+              <input type="hidden" name="comment[{{id}}]" class='report-id'>
+              <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
+              <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}} comment-text-input'></textarea><br>
+              <button data-id={{id}} type="button" class="submit-comment btn btn-default">Comment</button>
+            </form>
           </div>
         </li>
-        <div class="comment-div-{{id}} comment-div {{report_type}}-report-comment">
-          <div class="comment-list-{{id}}">
-          </div>
-          Comment:<br>
-          <input type="hidden" name="comment[{{id}}]" class='report-id'>
-          <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
-          <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}}'></textarea><br>
-          <button data-id={{id}} type="button" class="submit-comment">Submit</button>
-        </div>
       {{/each}}
     </script>
   </ul>
-
-  <script id="comment-template" type="text/x-handlebars-template">
-    {{#each comments}}
-      <p class='comment-list'>{{comment_user_email}} says "{{content}}" <br/> {{updated_at}}</p>
-    {{/each}}
-  </script>
-
 </div>
