@@ -260,11 +260,16 @@ $(function(){
     $('.comment-list-' + reportId).append(html);
   };
 
-  var renderTemplates = function(context, $templateLocation, $listLocation) {
+  var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
+    prepend = prepend || false;
     var source =  $templateLocation.html();
     var template = Handlebars.compile(source);
     var html = template(context);
-    $listLocation.append(html);
+    if(prepend){
+      $listLocation.prepend(html);
+    } else {
+      $listLocation.append(html);
+    }
   };
 
   var mostRecentReportsAjax = function(sw, ne) {
