@@ -4,6 +4,7 @@ get "/fuzzfile" do
     @user_id = session[:user]["id"]
     # p session[:user]["email"]
     # p session[:user]["password_hash"]
+    @user = session[:user]
     retrieve_wags
     erb :fuzzfile
   else
