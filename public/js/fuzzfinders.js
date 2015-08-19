@@ -42,8 +42,12 @@ $(function(){
 	//------------------------- View -------------------------------//
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
-	var hideAllSiblings = function (element) {
+	var hideAllSiblings = function(element) {
 		$(element).siblings().hide();
+	};
+
+	var slideCloseAllSiblings = function(element) {
+		$(element).siblings().slideUp("slow");
 	};
 
 	var addSelectedClassToButton = function($buttonToSelect){
@@ -64,6 +68,8 @@ $(function(){
 
 	// View: Slide open or close form and list content adjacent to large buttons
 	var toggleFuzzfindersButtons = function($button){
+		slideCloseAllSiblings(".fuzzfinders-buttons");
+		removeSelectedClassFromButton($(".fuzzfinders-buttons"));
 	  if ($button.siblings().first().is(":hidden")){
 	    slideDownRevealButtonSiblingContent($button);
 	    addSelectedClassToButton($button);
@@ -90,6 +96,8 @@ $(function(){
 		resetFormInputs();
 		$formElement.parent().slideUp("slow");
 		$formElement.parent().parent().children(":first").removeClass("selected-button");
+		slideCloseAllSiblings(".fuzzfinders-buttons");
+		removeSelectedClassFromButton($(".fuzzfinders-buttons"));
 	};
 
 	//------------------------- Controller -------------------------------//
