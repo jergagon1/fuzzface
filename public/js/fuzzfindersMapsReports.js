@@ -14,8 +14,21 @@ $(function(){
   // Model: convert a UTC/Zulu timestamp to local time
   var convertUtcToLocal = function(utcTimestamp) {
     var localTimestamp = new Date(utcTimestamp);
-    return localTimestamp.toString();
+    var weekday = [
+      "Sun.",
+      "Mon.",
+      "Tue.",
+      "Wed.",
+      "Thu.",
+      "Fri.",
+      "Sat."
+    ];
+    var dateIndex = localTimestamp.getDay();
+    var day = weekday[dateIndex];
+    return day + " " + localTimestamp.toLocaleString();
   };
+
+
 
   // Model: iterate through array of records and update timestamps in specific field
   var updateTimestamps = function(recordArray, fieldToUpdate) {
