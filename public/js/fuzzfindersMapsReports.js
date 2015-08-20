@@ -28,8 +28,6 @@ $(function(){
     return day + " " + localTimestamp.toLocaleString();
   };
 
-
-
   // Model: iterate through array of records and update timestamps in specific field
   var updateTimestamps = function(recordArray, fieldToUpdate) {
     for (var i = 0; i < recordArray.length; i++) {
@@ -102,10 +100,10 @@ $(function(){
 
   //------------------------- View -------------------------------//
 
+  // View: Cache DOM elements
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
   var foundPetBtn = document.getElementsByClassName("found-pet")[0];
   var reportBtn = document.getElementsByClassName("report-btn")[0];
-
 
   var createMarkers = function(reports) {
     for(var i = 0; i < reports.length; i++ ) {
