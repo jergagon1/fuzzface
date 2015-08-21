@@ -73,12 +73,12 @@ $(function(){
 	var $foundLastSeenPlaceholder = $("#found-last-seen-placeholder");
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
-	var hideAllFormsLists = function() {
+	var hideAllForms = function() {
 		$fuzzfindersButtons.siblings().hide();
 	};
 
 	// View: Slide closed the lost form, the found form and the report list if open
-	var slideCloseAllSiblings = function() {
+	var slideUpAllForms = function() {
 		$fuzzfindersButtons.siblings().slideUp("slow");
 	};
 
@@ -93,24 +93,24 @@ $(function(){
 	};
 
 	// View: Reveal the sibling content -form or list - of the passed-in button
-	var slideDownRevealButtonSiblingContent = function($adjacentButton){
-		$adjacentButton.siblings().first().slideDown("slow");
+	var slideDownButtonForm = function($button){
+		$button.siblings().first().slideDown("slow");
 	};
 
 	// View: Slide closed the form or list adjacent to the passed-in button
-	var slideUpHideButtonSiblingContent = function($adjacentButton){
-	  $adjacentButton.siblings().first().slideUp();
+	var slideUpButtonForm = function($button){
+	  $button.siblings().first().slideUp();
 	};
 
 	// View: Slide open or closed form and list content adjacent to large buttons
 	var toggleFuzzfindersButtons = function($button){
-		slideCloseAllSiblings();
+		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
 	  if (checkIfFormSectionHidden($button)){
-	    slideDownRevealButtonSiblingContent($button);
+	    slideDownButtonForm($button);
 	    addSelectedClassToButton($button);
 	  } else {
-	    slideUpHideButtonSiblingContent($button);
+	    slideUpButtonForm($button);
 	    removeSelectedClassFromButton($button);
 	  }
 	};
@@ -139,7 +139,7 @@ $(function(){
 	// View: reset inputs and buttons on form submittal
 	var resetViewOnFormSubmit = function($formElement){
 		resetFormInputs();
-		slideCloseAllSiblings();
+		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
 	};
 
@@ -285,7 +285,14 @@ $(function(){
 	var addEventListenerLostButtonClick = function(){
 		$lostPetButton.on("click", function(event){
 			event.preventDefault();
-			bindEventsLost();
+			// determine if open or closed
+			if(checkIfFormSectionHidden($foundPetButton)){
+				// bind events
+				bindEventsLost();
+			}	else {
+				// remove events
+				removeEventsLost();
+			}
 		});
 	};
 
@@ -296,32 +303,31 @@ $(function(){
 
 	//----------------------- found button -------------------------//
 
-	// bind events on click of found pet form button
+	// bind events for found pet form section
 	var bindEventsFound = function(){
 		addEventListenerFoundPetFormSubmit();
 		addEventListenerFocusFoundLastSeenPlaceholderInput();
 		addEventListenerBlurFoundLastSeenInput();
 	};
 
-	// remove event listeners for found pet form button
+	// remove events for found pet form section
 	var removeEventsFound = function(){
 		removeEventListenerFoundPetFormSubmit();
 		removeEventListenerFocusFoundLastSeenPlaceholderInput();
 		removeEventListenerBlurFoundLastSeenInput();
 	};
 
+	// add event listener on click of found pet form button
 	var addEventListenerFoundButtonClick = function(){
 		$foundPetButton.on("click", function(event){
 			event.preventDefault();
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
-				// toggle display
-				// if toggled open
 				// bind events
 				bindEventsFound();
 			}	else {
-				// else
 				// remove events
+				removeEventsFound();
 			}
 		});
 	};
@@ -349,16 +355,16 @@ $(function(){
 	var initializeFuzzfinders = (function(){
 		if (checkForElement(".fuzzfinders-buttons")) {
 			// on fuzzfinders page
-			hideAllFormsLists();
+			hideAllForms();
 			addEventListenerToggleFuzzfindersButtons();
 			addEventListenerLostButtonClick();
-
+			addEventListenerFoundButtonClick();
 		} else {
 			// not on fuzzfinders page
 			removeEventListenerToggleFuzzfindersButtons();
 			removeEventsLost();
 			removeEventListenerLostButtonClick();
-
+			removeEventListenerFoundButtonClick();
 		}
 	})();
 
