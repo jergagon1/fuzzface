@@ -1,6 +1,6 @@
 $(function(){
 
-	//------------------------- Model -------------------------------//
+	//========================== Model =============================//
 
 	// Model: lost pet form submission
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
@@ -39,6 +39,7 @@ $(function(){
 		})
 	};
 
+	// Model: Adjust time value from local time to utc
 	var adjustLocalTimeToUtc = function($formInput){
 		// Todo
 		// read form input value
@@ -47,9 +48,21 @@ $(function(){
 		// write utc output value to form input value
 	};
 
-	//------------------------- View -------------------------------//
+	// Model: check if a form input element has a value set
+	var checkForValueInFormInput = function($input){
+		if($input.val() === ""){
+			return false
+		} else {
+			return true
+		}
+	};
+
+	//========================== View =============================//
 
 	// Cache DOM Elements
+	var $lostPetButton = $(".lost-pet");
+	var $foundPetButton = $(".found-pet");
+	var $reportButton = $(".report-btn");
 	var $fuzzfindersButtons = $(".fuzzfinders-buttons");
 	var $lostPetForm = $(".lost-pet-form");
 	var $foundPetForm = $(".found-pet-form");
@@ -60,7 +73,7 @@ $(function(){
 	var $foundLastSeenPlaceholder = $("#found-last-seen-placeholder");
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
-	var hideAllSiblings = function() {
+	var hideAllFormsLists = function() {
 		$fuzzfindersButtons.siblings().hide();
 	};
 
@@ -93,13 +106,22 @@ $(function(){
 	var toggleFuzzfindersButtons = function($button){
 		slideCloseAllSiblings();
 		removeSelectedClassFromButton($fuzzfindersButtons);
-	  if ($button.siblings().first().is(":hidden")){
+	  if (checkIfFormSectionHidden($button)){
 	    slideDownRevealButtonSiblingContent($button);
 	    addSelectedClassToButton($button);
 	  } else {
 	    slideUpHideButtonSiblingContent($button);
 	    removeSelectedClassFromButton($button);
 	  }
+	};
+
+	// View: determine if button form section is hidden
+	var checkIfFormSectionHidden = function($button){
+		if ($button.siblings().first().is(":hidden")){
+			return true
+		}	else {
+			return false
+		}
 	};
 
 	// View: update the user wags text to display argument value
@@ -130,8 +152,10 @@ $(function(){
 		}
 	};
 
-	//------------------------- Controller -------------------------------//
+	//========================== Controller ==========================//
 
+
+	// confirm still need this!!!
 	// Controller: Add event listener for large buttons to show or hide form and list content on click
 	var addEventListenerToggleFuzzfindersButtons = function(){
 		$fuzzfindersButtons.on("click", function(event){
@@ -179,7 +203,6 @@ $(function(){
 	// Controller: Add event listener on focus in lost form last seen field
 	var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
 		$lostLastSeenPlaceholder.on("focus", function(event){
-			// console.log("in focus!");
 			toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
 			removeEventListenerFocusLostLastSeenPlaceholderInput();
 		});
@@ -190,6 +213,7 @@ $(function(){
 		$lostLastSeenPlaceholder.off("focus");
 	};
 
+	// Controller: Add Event Listener on focus in the found form last seen input field
 	var addEventListenerFocusFoundLastSeenPlaceholderInput = function(){
 		$foundLastSeenPlaceholder.on("focus", function(event){
 			// console.log("in focus!");
@@ -198,80 +222,143 @@ $(function(){
 		});
 	};
 
+	// Controller: Remove Event Listener for focus in found form last seen input field
 	var removeEventListenerFocusFoundLastSeenPlaceholderInput = function(){
 		$foundLastSeenPlaceholder.off("focus");
 	};
 
-	var checkForInputValue = function($input){
-		if($input.val() === ""){
-			return false
-		} else {
-			return true
-		}
-	};
-
+	// Controller: Add event listener for blur out off Lost form last seen input field
+	// if there is not a value in the datetime-local input field,
+	// toggle display of the placeholder text input field
+	// else retain datetime-local display and value
 	var addEventListenerBlurLostLastSeenInput = function(){
 		$lostLastSeen.on("blur", function(){
 			console.log("in blur!");
-			// check if input has value
-			if(checkForInputValue($lostLastSeen) === false){
-				// if doesn't have value, toggle display of placeholder
+			if(checkForValueInFormInput($lostLastSeen) === false){
 				toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
 				addEventListenerFocusLostLastSeenPlaceholderInput();
 			}
-			// if has value do nothing
 		});
 	};
 
+	// Controller: Remove event listener for blur out of Lost form last seen input field
 	var removeEventListenerBlurLostLastSeenInput = function(){
 		$lostLastSeen.off("blur");
 	};
 
+	// Controller: Add event listener for blur out off Found form last seen input field
+	// if there is not a value in the datetime-local input field,
+	// toggle display of the placeholder text input field
+	// else retain datetime-local display and value
 	var addEventListenerBlurFoundLastSeenInput = function(){
 		$foundLastSeen.on("blur", function(){
 			console.log("in blur!");
-			// check if input has value
-			if(checkForInputValue($foundLastSeen) === false){
-				// if doesn't have value, toggle display of placeholder
+			if(checkForValueInFormInput($foundLastSeen) === false){
 				toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
 				addEventListenerFocusFoundLastSeenPlaceholderInput();
 			}
-			// if has value do nothing
 		});
 	};
 
+	// Controller: Remove event listener for blur out of Found form last seen input field
 	var removeEventListenerBlurFoundLastSeenInput = function(){
 		$foundLastSeen.off("blur");
 	};
 
-	// // bind events on click of lost pet form button
-	// var bindEventsLostForm = function(){
+	//--------------------- lost button ---------------------------//
+	// Controller: bind events for lost pet form section
+	var bindEventsLost = function(){
+		addEventListenerLostPetFormSubmit();
+		addEventListenerFocusLostLastSeenPlaceholderInput();
+		addEventListenerBlurLostLastSeenInput();
+	};
 
-	// };
+	// Controller: remove event listeners for lost pet form section
+	var removeEventsLost = function(){
+		// remove lost events
+		removeEventListenerLostPetFormSubmit();
+		removeEventListenerFocusLostLastSeenPlaceholderInput();
+		removeEventListenerBlurLostLastSeenInput();
+	};
 
-	// // remove event listeners for lost pet form button
-	// var removeEventsLostForm = function(){
+	// Controller: Add event listener to lost button click
+	var addEventListenerLostButtonClick = function(){
+		$lostPetButton.on("click", function(event){
+			event.preventDefault();
+			bindEventsLost();
+		});
+	};
 
-	// };
+	// Controller: remove event listener for lost button click
+	var removeEventListenerLostButtonClick = function(){
+		$lostPetButton.off("click");
+	};
+
+	//----------------------- found button -------------------------//
+
+	// bind events on click of found pet form button
+	var bindEventsFound = function(){
+		addEventListenerFoundPetFormSubmit();
+		addEventListenerFocusFoundLastSeenPlaceholderInput();
+		addEventListenerBlurFoundLastSeenInput();
+	};
+
+	// remove event listeners for found pet form button
+	var removeEventsFound = function(){
+		removeEventListenerFoundPetFormSubmit();
+		removeEventListenerFocusFoundLastSeenPlaceholderInput();
+		removeEventListenerBlurFoundLastSeenInput();
+	};
+
+	var addEventListenerFoundButtonClick = function(){
+		$foundPetButton.on("click", function(event){
+			event.preventDefault();
+			// determine if open or closed
+			if(checkIfFormSectionHidden($foundPetButton)){
+				// toggle display
+				// if toggled open
+				// bind events
+				bindEventsFound();
+			}	else {
+				// else
+				// remove events
+			}
+		});
+	};
+
+	var removeEventListenerFoundButtonClick = function(){
+		$foundPetButton.off("click");
+	};
+
+	//--------------------- reports button -------------------------//
+
+	// add event listeners for reports button
+	var bindEventsReports = function(){
+
+	};
+
+	// remove event listeners for reports button
+	var removeEventsReports = function(){
+
+	};
+
+
+	//----------------------- page load ---------------------------//
 
 	// Controller: initialize event listeners if on FuzzFinders Page
 	var initializeFuzzfinders = (function(){
 		if (checkForElement(".fuzzfinders-buttons")) {
 			// on fuzzfinders page
-			hideAllSiblings();
+			hideAllFormsLists();
 			addEventListenerToggleFuzzfindersButtons();
-			addEventListenerLostPetFormSubmit();
-			addEventListenerFoundPetFormSubmit();
-			addEventListenerFocusLostLastSeenPlaceholderInput();
-			addEventListenerFocusFoundLastSeenPlaceholderInput();
-			addEventListenerBlurLostLastSeenInput();
-			addEventListenerBlurFoundLastSeenInput();
+			addEventListenerLostButtonClick();
+
 		} else {
 			// not on fuzzfinders page
 			removeEventListenerToggleFuzzfindersButtons();
-			removeEventListenerLostPetFormSubmit();
-			removeEventListenerFoundPetFormSubmit();
-			removeEventListenerFocusLastSeenPlaceholderInput();
+			removeEventsLost();
+			removeEventListenerLostButtonClick();
+
 		}
 	})();
 
