@@ -288,6 +288,7 @@ $(function(){
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
 				// bind events
+				// removeEventsFound();
 				bindEventsLost();
 			}	else {
 				// remove events
@@ -324,6 +325,7 @@ $(function(){
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
 				// bind events
+				// removeEventsLost();
 				bindEventsFound();
 			}	else {
 				// remove events
@@ -338,16 +340,7 @@ $(function(){
 
 	//--------------------- reports button -------------------------//
 
-	// add event listeners for reports button
-	var bindEventsReports = function(){
-
-	};
-
-	// remove event listeners for reports button
-	var removeEventsReports = function(){
-
-	};
-
+	// see fuzzfindersMapsReports.js
 
 	//----------------------- page load ---------------------------//
 
@@ -364,6 +357,7 @@ $(function(){
 			removeEventListenerToggleFuzzfindersButtons();
 			removeEventsLost();
 			removeEventListenerLostButtonClick();
+			removeEventsFound();
 			removeEventListenerFoundButtonClick();
 		}
 	})();
