@@ -100,10 +100,15 @@ $(function(){
 
   //------------------------- View -------------------------------//
 
-  // View: Cache DOM elements
+  // View: DOM elements for google maps
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
   var foundPetBtn = document.getElementsByClassName("found-pet")[0];
   var reportBtn = document.getElementsByClassName("report-btn")[0];
+  // View: cached DOM
+  var $lostPetButton = $(".lost-pet");
+  var $foundPetButton = $(".found-pet");
+  var $reportButton = $(".report-btn");
+  var $fuzzfindersButtons = $(".fuzzfinders-buttons");
 
   var createMarkers = function(reports) {
     for(var i = 0; i < reports.length; i++ ) {
@@ -166,6 +171,15 @@ $(function(){
       $listLocation.prepend(html);
     } else {
       $listLocation.append(html);
+    }
+  };
+
+  // View: determine if button form section is hidden
+  var checkIfFormSectionHidden = function($button){
+    if ($button.siblings().first().is(":hidden")){
+      return true
+    } else {
+      return false
     }
   };
 
@@ -366,6 +380,75 @@ $(function(){
   var removeEventListenerShowReportDetails = function(){
     $("body").off("click", ".report");
   };
+
+  //--------------------- lost button ---------------------------//
+    // Controller: bind events for lost pet form section
+    var bindEventsLost = function(){
+
+    };
+
+    // Controller: remove event listeners for lost pet form section
+    var removeEventsLost = function(){
+      // remove lost events
+
+    };
+
+    // Controller: Add event listener to lost button click
+    var addEventListenerLostButtonClick = function(){
+      $lostPetButton.on("click", function(event){
+        event.preventDefault();
+        // determine if open or closed
+        if(checkIfFormSectionHidden($foundPetButton)){
+          // bind events
+          bindEventsLost();
+        } else {
+          // remove events
+          removeEventsLost();
+        }
+      });
+    };
+
+    // Controller: remove event listener for lost button click
+    var removeEventListenerLostButtonClick = function(){
+      $lostPetButton.off("click");
+    };
+
+    //----------------------- found button -------------------------//
+
+    // bind events for found pet form section
+    var bindEventsFound = function(){
+
+    };
+
+    // remove events for found pet form section
+    var removeEventsFound = function(){
+
+    };
+
+    // add event listener on click of found pet form button
+    var addEventListenerFoundButtonClick = function(){
+      $foundPetButton.on("click", function(event){
+        event.preventDefault();
+        // determine if open or closed
+        if(checkIfFormSectionHidden($foundPetButton)){
+          // bind events
+          bindEventsFound();
+        } else {
+          // remove events
+          removeEventsFound();
+        }
+      });
+    };
+
+    var removeEventListenerFoundButtonClick = function(){
+      $foundPetButton.off("click");
+    };
+
+    //--------------------- reports button -------------------------//
+
+    // see fuzzfindersMapsReports.js
+
+    //----------------------- page load ---------------------------//
 
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
