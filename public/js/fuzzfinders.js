@@ -40,12 +40,11 @@ $(function(){
 	};
 
 	var adjustLocalTimeToUtc = function($formInput){
-
+		// Todo
 		// read form input value
 		// determine timezone offset
 		// convert localtime input to utc
 		// write utc output value to form input value
-
 	};
 
 	//------------------------- View -------------------------------//
@@ -126,6 +125,9 @@ $(function(){
 	var toggleDisplayLastSeenFormInputFields = function($lastSeen, $lastSeenPlaceholder){
 		$lastSeen.toggle();
 		$lastSeenPlaceholder.toggle();
+		if($lastSeenPlaceholder.is(":hidden")){
+			$lastSeen.focus();
+		}
 	};
 
 	//------------------------- Controller -------------------------------//
@@ -174,21 +176,23 @@ $(function(){
 		$foundPetForm.off("submit");
 	};
 
+	// Controller: Add event listener on focus in lost form last seen field
 	var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
 		$lostLastSeenPlaceholder.on("focus", function(event){
-			console.log("in focus!");
+			// console.log("in focus!");
 			toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
 			removeEventListenerFocusLostLastSeenPlaceholderInput();
 		});
 	};
 
+	// Controller: Remove event listener for focus in lost form last seen field
 	var removeEventListenerFocusLostLastSeenPlaceholderInput = function(){
 		$lostLastSeenPlaceholder.off("focus");
 	};
 
 	var addEventListenerFocusFoundLastSeenPlaceholderInput = function(){
 		$foundLastSeenPlaceholder.on("focus", function(event){
-			console.log("in focus!");
+			// console.log("in focus!");
 			toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
 			removeEventListenerFocusFoundLastSeenPlaceholderInput();
 		});
@@ -196,6 +200,48 @@ $(function(){
 
 	var removeEventListenerFocusFoundLastSeenPlaceholderInput = function(){
 		$foundLastSeenPlaceholder.off("focus");
+	};
+
+	var checkForInputValue = function($input){
+		if($input.val() === ""){
+			return false
+		} else {
+			return true
+		}
+	};
+
+	var addEventListenerBlurLostLastSeenInput = function(){
+		$lostLastSeen.on("blur", function(){
+			console.log("in blur!");
+			// check if input has value
+			if(checkForInputValue($lostLastSeen) === false){
+				// if doesn't have value, toggle display of placeholder
+				toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
+				addEventListenerFocusLostLastSeenPlaceholderInput();
+			}
+			// if has value do nothing
+		});
+	};
+
+	var removeEventListenerBlurLostLastSeenInput = function(){
+		$lostLastSeen.off("blur");
+	};
+
+	var addEventListenerBlurFoundLastSeenInput = function(){
+		$foundLastSeen.on("blur", function(){
+			console.log("in blur!");
+			// check if input has value
+			if(checkForInputValue($foundLastSeen) === false){
+				// if doesn't have value, toggle display of placeholder
+				toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
+				addEventListenerFocusFoundLastSeenPlaceholderInput();
+			}
+			// if has value do nothing
+		});
+	};
+
+	var removeEventListenerBlurFoundLastSeenInput = function(){
+		$foundLastSeen.off("blur");
 	};
 
 	// // bind events on click of lost pet form button
@@ -218,6 +264,8 @@ $(function(){
 			addEventListenerFoundPetFormSubmit();
 			addEventListenerFocusLostLastSeenPlaceholderInput();
 			addEventListenerFocusFoundLastSeenPlaceholderInput();
+			addEventListenerBlurLostLastSeenInput();
+			addEventListenerBlurFoundLastSeenInput();
 		} else {
 			// not on fuzzfinders page
 			removeEventListenerToggleFuzzfindersButtons();
