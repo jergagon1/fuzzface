@@ -90,7 +90,7 @@ $(function(){
     .done(function(response){
       $(".report").remove();
       createMarkers(response);
-      updateTimestamps(response, "updated_at");
+      updateTimestamps(response, "created_at");
       renderTemplates({ reports: response }, $('#report-template'), $('.reports-list'));
     })
     .fail(function(){
@@ -158,6 +158,7 @@ $(function(){
   // View: in reports list - show add'l info for a report w/ comments
   var showReportDetails = function($report){
     console.log("showReportDetails");
+    debugger
     $report.find('.report-detail').toggle();
     var $id = $report.data().reportid;
     // $('.comment-div-'+$id).toggle();
@@ -459,12 +460,10 @@ $(function(){
 
   // Controller: bind events for found pet form section
   var bindEventsReports = function(){
-    addEventListenerShowReportDetails();
   };
 
   // Controller: remove events for found pet form section
   var removeEventsReports = function(){
-    removeEventListenerShowReportDetails();
   };
 
   // Controller: add event listener on click of found pet form button
@@ -494,6 +493,7 @@ $(function(){
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
     if (checkForElement(".fuzzfinders-buttons")) {
+      addEventListenerShowReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
@@ -502,6 +502,7 @@ $(function(){
       addEventListenerReportButtonClick();
 
     } else {
+      removeEventListenerShowReportDetails();
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();
