@@ -50,6 +50,7 @@ $(function(){
 
 	// Model: check if a form input element has a value set
 	var checkForValueInFormInput = function($input){
+		console.log("checkForValueInFormInput");
 		if($input.val() === ""){
 			return false
 		} else {
@@ -74,11 +75,13 @@ $(function(){
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
 	var hideAllForms = function() {
+		console.log("hideAllForms");
 		$fuzzfindersButtons.siblings().hide();
 	};
 
 	// View: Slide closed the lost form, the found form and the report list if open
 	var slideUpAllForms = function() {
+		console.log("slideUpAllForms");
 		$fuzzfindersButtons.siblings().slideUp("slow");
 	};
 
@@ -104,6 +107,7 @@ $(function(){
 
 	// View: Slide open or closed form and list content adjacent to large buttons
 	var toggleFuzzfindersButtons = function($button){
+		console.log("toggleFuzzfindersButtons");
 		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
 	  if (checkIfFormSectionHidden($button)){
@@ -117,9 +121,12 @@ $(function(){
 
 	// View: determine if button form section is hidden
 	var checkIfFormSectionHidden = function($button){
+		console.log("checkIfFormSectionHidden");
 		if ($button.siblings().first().is(":hidden")){
+			console.log("hidden");
 			return true
 		}	else {
+			console.log("not hidden");
 			return false
 		}
 	};
@@ -131,6 +138,7 @@ $(function(){
 
 	// View: reset form input controls
 	var resetFormInputs = function(){
+		console.log("resetFormInputs");
 		$("input[type='text']").val('');
 		$("textarea").val("");
 		$("select").prop("selectedIndex", 0);
@@ -138,6 +146,7 @@ $(function(){
 
 	// View: reset inputs and buttons on form submittal
 	var resetViewOnFormSubmit = function($formElement){
+		console.log("resetViewOnFormSubmit");
 		resetFormInputs();
 		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
@@ -145,30 +154,16 @@ $(function(){
 
 	// View: toggle display of last-seen-placeholder and last-seen input fields
 	var toggleDisplayLastSeenFormInputFields = function($lastSeen, $lastSeenPlaceholder){
+		console.log("toggleDisplayLastSeenFormInputFields");
 		$lastSeen.toggle();
 		$lastSeenPlaceholder.toggle();
 		if($lastSeenPlaceholder.is(":hidden")){
+			console.log("lastSeenPlaceholder is hidden");
 			$lastSeen.focus();
 		}
 	};
 
 	//========================== Controller ==========================//
-
-
-	// confirm still need this!!!
-	// Controller: Add event listener for large buttons to show or hide form and list content on click
-	var addEventListenerToggleFuzzfindersButtons = function(){
-		$fuzzfindersButtons.on("click", function(event){
-			event.preventDefault();
-			var $clickedButton = $(this);
-			toggleFuzzfindersButtons($clickedButton);
-		});
-	};
-
-	// Controller: Remove event listener for large buttons to show or hide forms
-	var removeEventListenerToggleFuzzfindersButtons = function(){
-		$fuzzfindersButtons.off("click");
-	};
 
 	// Controller: Add event listener for lost pet form submit button
 	var addEventListenerLostPetFormSubmit = function(){
@@ -286,14 +281,17 @@ $(function(){
 		$lostPetButton.on("click", function(event){
 			event.preventDefault();
 			// determine if open or closed
-			if(checkIfFormSectionHidden($foundPetButton)){
+			if(checkIfFormSectionHidden($lostPetButton)){
 				// bind events
-				// removeEventsFound();
+				removeEventsFound();
+				removeEventsReports();
 				bindEventsLost();
 			}	else {
+
 				// remove events
 				removeEventsLost();
 			}
+			toggleFuzzfindersButtons($lostPetButton);
 		});
 	};
 
@@ -325,12 +323,14 @@ $(function(){
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
 				// bind events
-				// removeEventsLost();
+				removeEventsLost();
+				removeEventsReports();
 				bindEventsFound();
 			}	else {
 				// remove events
 				removeEventsFound();
 			}
+			toggleFuzzfindersButtons($foundPetButton);
 		});
 	};
 
@@ -340,7 +340,37 @@ $(function(){
 
 	//--------------------- reports button -------------------------//
 
-	// see fuzzfindersMapsReports.js
+  // bind events for found pet form section
+  var bindEventsReports = function(){
+  	// reports buttonevents
+  };
+
+  // remove events for found pet form section
+  var removeEventsReports = function(){
+  	// remove reports button events
+  };
+
+  // add event listener on click of found pet form button
+  var addEventListenerReportButtonClick = function(){
+    $reportButton.on("click", function(event){
+      event.preventDefault();
+      // determine if open or closed
+      if(checkIfFormSectionHidden($reportButton)){
+        // bind events
+        removeEventsLost();
+        removeEventsFound();
+        bindEventsReports();
+      } else {
+        // remove events
+        removeEventsReports();
+      }
+			toggleFuzzfindersButtons($reportButton);
+    });
+  };
+
+  var removeEventListenerReportButtonClick = function(){
+    $reportButton.off("click");
+  };
 
 	//----------------------- page load ---------------------------//
 
@@ -349,16 +379,17 @@ $(function(){
 		if (checkForElement(".fuzzfinders-buttons")) {
 			// on fuzzfinders page
 			hideAllForms();
-			addEventListenerToggleFuzzfindersButtons();
 			addEventListenerLostButtonClick();
 			addEventListenerFoundButtonClick();
+			addEventListenerReportButtonClick();
 		} else {
 			// not on fuzzfinders page
-			removeEventListenerToggleFuzzfindersButtons();
 			removeEventsLost();
 			removeEventListenerLostButtonClick();
 			removeEventsFound();
 			removeEventListenerFoundButtonClick();
+			removeEventsReports();
+			removeEventListenerReportButtonClick();
 		}
 	})();
 
