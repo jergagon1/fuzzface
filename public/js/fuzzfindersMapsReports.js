@@ -157,9 +157,10 @@ $(function(){
 
   // View: in reports list - show add'l info for a report w/ comments
   var showReportDetails = function($report){
-    $report.find('.more-report-info').toggle();
+    console.log("showReportDetails");
+    $report.find('.report-detail').toggle();
     var $id = $report.data().reportid;
-    $('.comment-div-'+$id).toggle();
+    // $('.comment-div-'+$id).toggle();
   };
 
   // View: Render handlebars templates
@@ -177,7 +178,9 @@ $(function(){
 
   // View: determine if button form section is hidden
   var checkIfFormSectionHidden = function($button){
+    console.log("checkIfFormSectionHidden");
     if ($button.siblings().first().is(":hidden")){
+      console.log("hidden");
       return true
     } else {
       return false
@@ -373,7 +376,8 @@ $(function(){
 
   // Controller: Add delegated event listener to reports in reports list on click
   var addEventListenerShowReportDetails = function(){
-    $body.on('click', '.report', function() {
+    $body.on("click", ".report", function() {
+      console.log("report clicked");
       $clickedReport = $(this);
       showReportDetails($clickedReport);
     });
@@ -419,17 +423,17 @@ $(function(){
 
   //----------------------- found button -------------------------//
 
-  // bind events for found pet form section
+  // Controller: bind events for found pet form section
   var bindEventsFound = function(){
     // events for found button click
   };
 
-  // remove events for found pet form section
+  // Controller: remove events for found pet form section
   var removeEventsFound = function(){
     // remove events for found button click
   };
 
-  // add event listener on click of found pet form button
+  // Controller: add event listener on click of found pet form button
   var addEventListenerFoundButtonClick = function(){
     $foundPetButton.on("click", function(event){
       event.preventDefault();
@@ -446,23 +450,24 @@ $(function(){
     });
   };
 
+  // Controller: remove event listener from found button
   var removeEventListenerFoundButtonClick = function(){
     $foundPetButton.off("click");
   };
 
   //--------------------- reports button -------------------------//
 
-  // bind events for found pet form section
+  // Controller: bind events for found pet form section
   var bindEventsReports = function(){
     addEventListenerShowReportDetails();
   };
 
-  // remove events for found pet form section
+  // Controller: remove events for found pet form section
   var removeEventsReports = function(){
     removeEventListenerShowReportDetails();
   };
 
-  // add event listener on click of found pet form button
+  // Controller: add event listener on click of found pet form button
   var addEventListenerReportButtonClick = function(){
     $reportButton.on("click", function(event){
       event.preventDefault();
@@ -479,6 +484,7 @@ $(function(){
     });
   };
 
+  // Controller: remove event listener for report button click
   var removeEventListenerReportButtonClick = function(){
     $reportButton.off("click");
   };
@@ -494,6 +500,7 @@ $(function(){
       addEventListenerLostButtonClick();
       addEventListenerFoundButtonClick();
       addEventListenerReportButtonClick();
+
     } else {
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
