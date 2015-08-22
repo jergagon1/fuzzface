@@ -1,6 +1,6 @@
 $(function(){
 
-  //------------------------- Model -------------------------------//
+  //========================== Model ==========================//
 
   // Model: create variables to store map objects
   var lostMap, foundMap, reportMap;
@@ -98,7 +98,7 @@ $(function(){
     });
   };
 
-  //------------------------- View -------------------------------//
+  //========================== View ==========================//
 
   // View: DOM elements for google maps
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
@@ -183,7 +183,7 @@ $(function(){
     }
   };
 
-  //------------------------- Controller -------------------------------//
+  //========================== Controller ==========================//
 
   // Controller: handle user agents that don't allow/support geolocation or if geolocation fails
   var handleNoGeolocation = function(errorFlag, noGeoMap) {
@@ -382,73 +382,103 @@ $(function(){
   };
 
   //--------------------- lost button ---------------------------//
-    // Controller: bind events for lost pet form section
-    var bindEventsLost = function(){
+  // Controller: bind events for lost pet form section
+  var bindEventsLost = function(){
 
-    };
+  };
 
-    // Controller: remove event listeners for lost pet form section
-    var removeEventsLost = function(){
-      // remove lost events
+  // Controller: remove event listeners for lost pet form section
+  var removeEventsLost = function(){
 
-    };
+  };
 
-    // Controller: Add event listener to lost button click
-    var addEventListenerLostButtonClick = function(){
-      $lostPetButton.on("click", function(event){
-        event.preventDefault();
-        // determine if open or closed
-        if(checkIfFormSectionHidden($foundPetButton)){
-          // bind events
-          bindEventsLost();
-        } else {
-          // remove events
-          removeEventsLost();
-        }
-      });
-    };
+  // Controller: Add event listener to lost button click
+  var addEventListenerLostButtonClick = function(){
+    $lostPetButton.on("click", function(event){
+      event.preventDefault();
+      // determine if open or closed
+      if(checkIfFormSectionHidden($foundPetButton)){
+        // bind events
+        bindEventsLost();
+      } else {
+        // remove events
+        removeEventsLost();
+      }
+    });
+  };
 
-    // Controller: remove event listener for lost button click
-    var removeEventListenerLostButtonClick = function(){
-      $lostPetButton.off("click");
-    };
+  // Controller: remove event listener for lost button click
+  var removeEventListenerLostButtonClick = function(){
+    $lostPetButton.off("click");
+  };
 
-    //----------------------- found button -------------------------//
+  //----------------------- found button -------------------------//
 
-    // bind events for found pet form section
-    var bindEventsFound = function(){
+  // bind events for found pet form section
+  var bindEventsFound = function(){
+    // events for found button click
+  };
 
-    };
+  // remove events for found pet form section
+  var removeEventsFound = function(){
+    // remove events for found button click
+  };
 
-    // remove events for found pet form section
-    var removeEventsFound = function(){
+  // add event listener on click of found pet form button
+  var addEventListenerFoundButtonClick = function(){
+    $foundPetButton.on("click", function(event){
+      event.preventDefault();
+      // determine if open or closed
+      if(checkIfFormSectionHidden($foundPetButton)){
+        // bind events
+        removeEventsLost();
+        removeEventsReports();
+        bindEventsFound();
+      } else {
+        // remove events
+        removeEventsFound();
+      }
+    });
+  };
 
-    };
+  var removeEventListenerFoundButtonClick = function(){
+    $foundPetButton.off("click");
+  };
 
-    // add event listener on click of found pet form button
-    var addEventListenerFoundButtonClick = function(){
-      $foundPetButton.on("click", function(event){
-        event.preventDefault();
-        // determine if open or closed
-        if(checkIfFormSectionHidden($foundPetButton)){
-          // bind events
-          bindEventsFound();
-        } else {
-          // remove events
-          removeEventsFound();
-        }
-      });
-    };
+  //--------------------- reports button -------------------------//
 
-    var removeEventListenerFoundButtonClick = function(){
-      $foundPetButton.off("click");
-    };
+  // bind events for found pet form section
+  var bindEventsReports = function(){
 
-    //--------------------- reports button -------------------------//
+  };
 
-    // see fuzzfindersMapsReports.js
+  // remove events for found pet form section
+  var removeEventsReports = function(){
 
-    //----------------------- page load ---------------------------//
+  };
+
+  // add event listener on click of found pet form button
+  var addEventListenerReportButtonClick = function(){
+    $reportButton.on("click", function(event){
+      event.preventDefault();
+      // determine if open or closed
+      if(checkIfFormSectionHidden($reportButton)){
+        // bind events
+        removeEventsLost();
+        removeEventsFound();
+        bindEventsReports();
+      } else {
+        // remove events
+        removeEventsReports();
+      }
+    });
+  };
+
+  var removeEventListenerReportButtonClick = function(){
+    $reportButton.off("click");
+  };
+
+  //----------------------- page load ---------------------------//
 
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
@@ -462,6 +492,7 @@ $(function(){
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();
       removeEventListenerShowReportDetails();
+      removeEventListenerReportButtonClick();
     }
   })();
 
