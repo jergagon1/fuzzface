@@ -109,6 +109,7 @@ $(function(){
   var $foundPetButton = $(".found-pet");
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
+  var $body = $('body');
 
   var createMarkers = function(reports) {
     for(var i = 0; i < reports.length; i++ ) {
@@ -360,17 +361,19 @@ $(function(){
     google.maps.event.removeListener(foundPetBtn, 'click', initializeFoundMap);
   };
 
+  // Controller: Add DOM listener to initialize report map on report button click
   var addEventListenerInitializeReportMap = function(){
     google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
   };
 
+  // Controller: Remove DOM listener to initialize report map on report button click
   var removeEventListenerInitializeReportMap = function(){
     google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
   var addEventListenerShowReportDetails = function(){
-    $('body').on('click', '.report', function() {
+    $body.on('click', '.report', function() {
       $clickedReport = $(this);
       showReportDetails($clickedReport);
     });
@@ -378,18 +381,18 @@ $(function(){
 
   // Controller: Remove delegated event listener to reports in reports list
   var removeEventListenerShowReportDetails = function(){
-    $("body").off("click", ".report");
+    $body.off("click", ".report");
   };
 
   //--------------------- lost button ---------------------------//
   // Controller: bind events for lost pet form section
   var bindEventsLost = function(){
-
+    // add lost button events
   };
 
   // Controller: remove event listeners for lost pet form section
   var removeEventsLost = function(){
-
+    // remove lost button events
   };
 
   // Controller: Add event listener to lost button click
@@ -399,6 +402,8 @@ $(function(){
       // determine if open or closed
       if(checkIfFormSectionHidden($foundPetButton)){
         // bind events
+        removeEventsFound();
+        removeEventsReports();
         bindEventsLost();
       } else {
         // remove events
@@ -449,12 +454,12 @@ $(function(){
 
   // bind events for found pet form section
   var bindEventsReports = function(){
-
+    addEventListenerShowReportDetails();
   };
 
   // remove events for found pet form section
   var removeEventsReports = function(){
-
+    removeEventListenerShowReportDetails();
   };
 
   // add event listener on click of found pet form button
@@ -486,12 +491,15 @@ $(function(){
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
-      addEventListenerShowReportDetails();
+      addEventListenerLostButtonClick();
+      addEventListenerFoundButtonClick();
+      addEventListenerReportButtonClick();
     } else {
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();
-      removeEventListenerShowReportDetails();
+      removeEventListenerLostButtonClick();
+      removeEventListenerFoundButtonClick();
       removeEventListenerReportButtonClick();
     }
   })();
