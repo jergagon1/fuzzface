@@ -304,6 +304,7 @@ $(function(){
 
 	// bind events for found pet form section
 	var bindEventsFound = function(){
+		console.log("bindEventsFound");
 		addEventListenerFoundPetFormSubmit();
 		addEventListenerFocusFoundLastSeenPlaceholderInput();
 		addEventListenerBlurFoundLastSeenInput();
@@ -311,6 +312,7 @@ $(function(){
 
 	// remove events for found pet form section
 	var removeEventsFound = function(){
+		console.log("removeEventsFound");
 		removeEventListenerFoundPetFormSubmit();
 		removeEventListenerFocusFoundLastSeenPlaceholderInput();
 		removeEventListenerBlurFoundLastSeenInput();
@@ -320,6 +322,7 @@ $(function(){
 	var addEventListenerFoundButtonClick = function(){
 		$foundPetButton.on("click", function(event){
 			event.preventDefault();
+			console.log("FoundButtonClick");
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
 				// bind events
