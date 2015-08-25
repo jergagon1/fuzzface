@@ -98,6 +98,7 @@ $(function(){
     });
   };
 
+  // Model: retrieve report details, tags and comments
   var getReportDetails = function($reportLi, $id){
     console.log("getReportDetails");
     $.ajax({
@@ -108,8 +109,16 @@ $(function(){
     })
     .done(function(response){
       console.log(response);
+      // debugger
       // adjust time data to local time from utc
       // render handlebars template
+      renderTemplates({
+        report: response["report"],
+        tags: response["tags"],
+        comments: response["comments"] },
+        $('#report-detail-template'),
+        $reportLi
+      );
     })
     .fail(function(){
       console.log("report detail request failed");

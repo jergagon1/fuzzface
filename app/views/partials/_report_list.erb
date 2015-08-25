@@ -23,60 +23,49 @@
 
 <script id="report-detail-template" type="text/x-handlebars-template">
   <div class="report-detail">
-    {{#if img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <img src="{{img_url}}" class="report-image-big">
+    {{#if report.img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <img src="{{report.img_url}}" class="report-image-big">
     </div>{{/if}}
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      {{#if size}}
+      {{#if report.size}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{size}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.size}}</p>
       {{/if}}
-      {{#if color}}
+      {{#if report.color}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{color}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.color}}</p>
       {{/if}}
-      {{#if breed}}
+      {{#if report.breed}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{breed}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.breed}}</p>
       {{/if}}
-      {{#if sex}}
+      {{#if report.sex}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{sex}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.sex}}</p>
       {{/if}}
-      {{#if age}}
+      {{#if report.age}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{age}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.age}}</p>
       {{/if}}
-      {{#if notes}}
+      {{#if report.notes}}
           <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
-          <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{notes}}</p>
+          <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.notes}}</p>
       {{/if}}
     </div>
   </div>
+  {{#if tags}}
   <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
-    <ul class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag1</p>
-      </li>
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag2</p>
-      </li>
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag3</p>
-      </li>
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag4</p>
-      </li>
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag5</p>
-      </li>
-      <li style="float: left;">
-        <p class="btn btn-default btn-xs">tag6</p>
-      </li>
+    <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
+      {{#each tags}}
+        <li style="float: left;">
+          <p class="btn btn-default btn-xs">{{this.name}}</p>
+        </li>
+      {{/each}}
     </ul>
   </div>
-  <div class="comments-list" style="display: none">
+  {{/if}}
+  <div class="comments-list">
   </div>
   <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
     <form>
