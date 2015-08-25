@@ -35,49 +35,49 @@ $(function(){
     }
   };
 
-  // Model: retrieve comments for a particular report based on report ID
-  var getReportComments = function(reportId) {
-    $.ajax({
-      url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
-      type: "get",
-      dataType: "json",
-    })
-    .done(function(commentResponse) {
-      updateTimestamps(commentResponse, "updated_at");
-      renderComments(commentResponse, reportId);
-      $('.comment-div').hide();
-    })
-    .fail(function(){
-      console.log("Error loading comments");
-    });
-  };
+  // // Model: retrieve comments for a particular report based on report ID
+  // var getReportComments = function(reportId) {
+  //   $.ajax({
+  //     url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
+  //     type: "get",
+  //     dataType: "json",
+  //   })
+  //   .done(function(commentResponse) {
+  //     updateTimestamps(commentResponse, "updated_at");
+  //     renderComments(commentResponse, reportId);
+  //     $('.comment-div').hide();
+  //   })
+  //   .fail(function(){
+  //     console.log("Error loading comments");
+  //   });
+  // };
 
-  // Model: New comment submission
-  var commentFormSubmitEventListener = function(){
-    $(document).on("click", ".submit-comment", function(event){
-      event.preventDefault();
-      var currentUserId = $('.reports-list').data().currentid;
-      var reportId = $(this).data().id;
-      var formData = $('.comment-'+ reportId).val();
-      $.ajax({
-        url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
-        type: "post",
-        dataType: "json",
-        data: {
-          comment: {
-            user_id: currentUserId,
-            content: formData
-          }
-        }
-      })
-      .done(function(response){
-        renderComment([response], reportId);
-      })
-      .fail(function(){
-        console.log("create comment fail");
-      });
-    });
-  };
+  // // Model: New comment submission
+  // var commentFormSubmitEventListener = function(){
+  //   $(document).on("click", ".submit-comment", function(event){
+  //     event.preventDefault();
+  //     var currentUserId = $('.reports-list').data().currentid;
+  //     var reportId = $(this).data().id;
+  //     var formData = $('.comment-'+ reportId).val();
+  //     $.ajax({
+  //       url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
+  //       type: "post",
+  //       dataType: "json",
+  //       data: {
+  //         comment: {
+  //           user_id: currentUserId,
+  //           content: formData
+  //         }
+  //       }
+  //     })
+  //     .done(function(response){
+  //       renderComment([response], reportId);
+  //     })
+  //     .fail(function(){
+  //       console.log("create comment fail");
+  //     });
+  //   });
+  // };
 
   // Model: Retrieve reports in map area
   var mostRecentReportsAjax = function(sw, ne) {
@@ -91,11 +91,29 @@ $(function(){
       $(".report").remove();
       createMarkers(response);
       updateTimestamps(response, "created_at");
-      renderTemplates({ reports: response }, $('#report-template'), $('.reports-list'));
+      renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
     })
     .fail(function(){
       console.log("reports request fail!");
     });
+  };
+
+  var getReportDetails = function($reportLi, $id){
+    console.log("getReportDetails");
+    $.ajax({
+      url: "http://localhost:3000/api/v1/reports/" + $id + "",
+      type: "GET",
+      crossDomain: true,
+      dataType: 'json'
+    })
+    .done(function(response){
+      console.log(response);
+      // adjust time data to local time from utc
+      // render handlebars template
+    })
+    .fail(function(){
+      console.log("report detail request failed");
+    })
   };
 
   //========================== View ==========================//
@@ -146,23 +164,23 @@ $(function(){
     }
   };
 
-  // View: Render handlebars templates for comments
-  var renderComments = function(comment, reportId) {
-    var context = { comments: comment };
-    var source =  $('#comment-template').html();
-    var template = Handlebars.compile(source);
-    var html = template(context);
-    $('.comment-list-' + reportId).append(html);
-  };
+  // // View: Render handlebars templates for comments
+  // var renderComments = function(comment, reportId) {
+  //   var context = { comments: comment };
+  //   var source =  $('#comment-template').html();
+  //   var template = Handlebars.compile(source);
+  //   var html = template(context);
+  //   $('.comment-list-' + reportId).append(html);
+  // };
 
-  // View: in reports list - show add'l info for a report w/ comments
-  var showReportDetails = function($report){
-    console.log("showReportDetails");
-    debugger
-    $report.find('.report-detail').toggle();
-    var $id = $report.data().reportid;
-    // $('.comment-div-'+$id).toggle();
-  };
+  // // View: in reports list - show add'l info for a report w/ comments
+  // var showReportDetails = function($report){
+  //   console.log("showReportDetails");
+  //   debugger
+  //   $report.find('.report-detail').toggle();
+  //   var $id = $report.data().reportid;
+  //   // $('.comment-div-'+$id).toggle();
+  // };
 
   // View: Render handlebars templates
   var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
@@ -376,16 +394,19 @@ $(function(){
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
-  var addEventListenerShowReportDetails = function(){
+  var addEventListenerGetReportDetails = function(){
     $body.on("click", ".report", function() {
       console.log("report clicked");
       $clickedReport = $(this);
-      showReportDetails($clickedReport);
+      $reportId = $clickedReport.data("reportid");
+      console.log($clickedReport);
+      console.log($reportId);
+      getReportDetails($clickedReport, $reportId);
     });
   };
 
   // Controller: Remove delegated event listener to reports in reports list
-  var removeEventListenerShowReportDetails = function(){
+  var removeEventListenerGetReportDetails = function(){
     $body.off("click", ".report");
   };
 
@@ -493,7 +514,7 @@ $(function(){
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
     if (checkForElement(".fuzzfinders-buttons")) {
-      addEventListenerShowReportDetails();
+      addEventListenerGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
@@ -502,7 +523,7 @@ $(function(){
       addEventListenerReportButtonClick();
 
     } else {
-      removeEventListenerShowReportDetails();
+      removeEventListenerGetReportDetails();
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();

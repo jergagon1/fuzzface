@@ -3,7 +3,7 @@
     <h3>Reports in Your Area</h3>
   </div>
   <ul class="reports-list" data-currentId= "<%= @user_id %>" >
-    <script id="report-template" type="text/x-handlebars-template">
+    <script id="report-list-template" type="text/x-handlebars-template">
       {{#each reports}}
         <li class="report {{report_type}}-report" data-reportid="{{id}}">
           <div class="report-summary padded">
@@ -15,72 +15,75 @@
               <p>Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
             </div>
           </div>
-          <div class="report-detail" style="display: none">
-            {{#if img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <img src="{{img_url}}" class="report-image-big">
-            </div>{{/if}}
-            <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              {{#if size}}
-                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
-                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{size}}</p>
-              {{/if}}
-              {{#if color}}
-                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
-                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{color}}</p>
-              {{/if}}
-              {{#if breed}}
-                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
-                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{breed}}</p>
-              {{/if}}
-              {{#if sex}}
-                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
-                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{sex}}</p>
-              {{/if}}
-              {{#if age}}
-                <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
-                <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{age}}</p>
-              {{/if}}
-              {{#if notes}}
-                  <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
-                  <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{notes}}</p>
-              {{/if}}
-            </div>
-          </div>
-          <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
-            <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
-            <ul class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag1</p>
-              </li>
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag2</p>
-              </li>
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag3</p>
-              </li>
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag4</p>
-              </li>
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag5</p>
-              </li>
-              <li style="float: left;">
-                <p class="btn btn-default btn-xs">tag6</p>
-              </li>
-            </ul>
-          </div>
-          <div class="comments-list" style="display: none">
-          </div>
-          <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
-            <form>
-              <input type="hidden" name="comment[{{id}}]" class='report-id'>
-              <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
-              <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}} comment-text-input'></textarea><br>
-              <button data-id={{id}} type="button" class="submit-comment btn btn-default">Comment</button>
-            </form>
-          </div>
         </li>
       {{/each}}
     </script>
   </ul>
 </div>
+
+<script id="report-detail-template" type="text/x-handlebars-template">
+  <div class="report-detail">
+    {{#if img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <img src="{{img_url}}" class="report-image-big">
+    </div>{{/if}}
+    <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      {{#if size}}
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{size}}</p>
+      {{/if}}
+      {{#if color}}
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{color}}</p>
+      {{/if}}
+      {{#if breed}}
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{breed}}</p>
+      {{/if}}
+      {{#if sex}}
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{sex}}</p>
+      {{/if}}
+      {{#if age}}
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{age}}</p>
+      {{/if}}
+      {{#if notes}}
+          <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
+          <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{notes}}</p>
+      {{/if}}
+    </div>
+  </div>
+  <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
+    <ul class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag1</p>
+      </li>
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag2</p>
+      </li>
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag3</p>
+      </li>
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag4</p>
+      </li>
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag5</p>
+      </li>
+      <li style="float: left;">
+        <p class="btn btn-default btn-xs">tag6</p>
+      </li>
+    </ul>
+  </div>
+  <div class="comments-list" style="display: none">
+  </div>
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
+    <form>
+      <input type="hidden" name="comment[{{id}}]" class='report-id'>
+      <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
+      <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}} comment-text-input'></textarea><br>
+      <button data-id={{id}} type="button" class="submit-comment btn btn-default">Comment</button>
+    </form>
+  </div>
+</script>
