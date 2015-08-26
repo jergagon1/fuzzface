@@ -345,8 +345,6 @@ $(function(){
       console.log("report clicked");
       $clickedReport = $(this);
       $reportId = $clickedReport.data("reportid");
-      console.log($clickedReport);
-      console.log($reportId);
       getReportDetails($clickedReport, $reportId);
     });
   };
