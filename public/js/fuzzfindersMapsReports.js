@@ -86,18 +86,17 @@ $(function(){
   var lostPetBtn = document.getElementsByClassName("lost-pet")[0];
   var foundPetBtn = document.getElementsByClassName("found-pet")[0];
   var reportBtn = document.getElementsByClassName("report-btn")[0];
-  // View: cached DOM
+  // View: cached DOM jQuery selections
   var $lostPetButton = $(".lost-pet");
   var $foundPetButton = $(".found-pet");
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
   var $body = $('body');
 
+  // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
     for(var i = 0; i < reports.length; i++ ) {
-      if (reports[i].report_type === 'lost') {
-        setMarkerType(reports[i]);
-      } else if (reports[i].report_type === 'found') {
+      if (reports[i].report_type !== "") {
         setMarkerType(reports[i]);
       } else {
         console.log('no report type');
@@ -105,6 +104,7 @@ $(function(){
     };
   };
 
+  // View: create a marker for a report
   var setMarkerType = function(report) {
     report_lat = report.lat;
     report_lng = report.lng;
@@ -126,6 +126,11 @@ $(function(){
     } else {
       console.log('no report type');
     }
+  };
+
+  // View: remove the report detail section for report li
+  var removeReportDetails = function($reportLi){
+
   };
 
   // View: Render handlebars templates
@@ -286,7 +291,7 @@ $(function(){
         //get bounds of map
         google.maps.event.addListener(reportMap, 'bounds_changed', function() {
           boundary = reportMap.getBounds();
-          console.log(boundary);
+          // console.log(boundary);
           ne_bounds = boundary.getNorthEast();
           sw_bounds = boundary.getSouthWest();
           ne_string = ne_bounds.toString();
@@ -294,9 +299,9 @@ $(function(){
 
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
-          console.log("googleMapReports.js line 56")
-          console.log(ne);
-          console.log(sw);
+          // console.log("googleMapReports.js line 56");
+          // console.log(ne);
+          // console.log(sw);
           mostRecentReportsAjax(sw, ne);
         });
         reportMap.setCenter(pos);
@@ -465,7 +470,6 @@ $(function(){
       addEventListenerLostButtonClick();
       addEventListenerFoundButtonClick();
       addEventListenerReportButtonClick();
-
     } else {
       removeEventListenerGetReportDetails();
       removeEventListenerInitializeLostMap();
