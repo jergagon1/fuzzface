@@ -35,50 +35,6 @@ $(function(){
     }
   };
 
-  // // Model: retrieve comments for a particular report based on report ID
-  // var getReportComments = function(reportId) {
-  //   $.ajax({
-  //     url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
-  //     type: "get",
-  //     dataType: "json",
-  //   })
-  //   .done(function(commentResponse) {
-  //     updateTimestamps(commentResponse, "updated_at");
-  //     renderComments(commentResponse, reportId);
-  //     $('.comment-div').hide();
-  //   })
-  //   .fail(function(){
-  //     console.log("Error loading comments");
-  //   });
-  // };
-
-  // // Model: New comment submission
-  // var commentFormSubmitEventListener = function(){
-  //   $(document).on("click", ".submit-comment", function(event){
-  //     event.preventDefault();
-  //     var currentUserId = $('.reports-list').data().currentid;
-  //     var reportId = $(this).data().id;
-  //     var formData = $('.comment-'+ reportId).val();
-  //     $.ajax({
-  //       url: "http://localhost:3000/api/v1/reports/"+ reportId +"/comments",
-  //       type: "post",
-  //       dataType: "json",
-  //       data: {
-  //         comment: {
-  //           user_id: currentUserId,
-  //           content: formData
-  //         }
-  //       }
-  //     })
-  //     .done(function(response){
-  //       renderComment([response], reportId);
-  //     })
-  //     .fail(function(){
-  //       console.log("create comment fail");
-  //     });
-  //   });
-  // };
-
   // Model: Retrieve reports in map area
   var mostRecentReportsAjax = function(sw, ne) {
     $.ajax({
@@ -171,24 +127,6 @@ $(function(){
       console.log('no report type');
     }
   };
-
-  // // View: Render handlebars templates for comments
-  // var renderComments = function(comment, reportId) {
-  //   var context = { comments: comment };
-  //   var source =  $('#comment-template').html();
-  //   var template = Handlebars.compile(source);
-  //   var html = template(context);
-  //   $('.comment-list-' + reportId).append(html);
-  // };
-
-  // // View: in reports list - show add'l info for a report w/ comments
-  // var showReportDetails = function($report){
-  //   console.log("showReportDetails");
-  //   debugger
-  //   $report.find('.report-detail').toggle();
-  //   var $id = $report.data().reportid;
-  //   // $('.comment-div-'+$id).toggle();
-  // };
 
   // View: Render handlebars templates
   var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
