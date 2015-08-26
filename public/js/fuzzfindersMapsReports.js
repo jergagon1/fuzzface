@@ -91,6 +91,7 @@ $(function(){
       $(".report").remove();
       createMarkers(response);
       updateTimestamps(response, "created_at");
+      updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
     })
     .fail(function(){
@@ -109,8 +110,6 @@ $(function(){
     })
     .done(function(response){
       console.log(response);
-      // debugger
-      // adjust time data to local time from utc
       // render handlebars template
       renderTemplates({
         report: response["report"],

@@ -39,15 +39,6 @@ $(function(){
 		})
 	};
 
-	// Model: Adjust time value from local time to utc
-	var adjustLocalTimeToUtc = function($formInput){
-		// Todo
-		// read form input value
-		// determine timezone offset
-		// convert localtime input to utc
-		// write utc output value to form input value
-	};
-
 	// Model: check if a form input element has a value set
 	var checkForValueInFormInput = function($input){
 		console.log("checkForValueInFormInput");
@@ -56,6 +47,22 @@ $(function(){
 		} else {
 			return true
 		}
+	};
+
+	// Model: return the last_seen object from the serialized form array
+	var retrieveLastSeenObject = function($formDataArray){
+		for (var i = 0; i < $formDataArray.length; i++) {
+			if($formDataArray[i].name === "report[last_seen]"){
+				return $formDataArray[i];
+			}
+		};
+	};
+
+	// Model: convert local time string to utc string
+	var convertLocalToUtc = function(localDateTimeString){
+		var localTimeObj = moment(localDateTimeString);
+		var utcTimeObj = localTimeObj.utc();
+		return utcTimeObj.format();
 	};
 
 	//========================== View =============================//
@@ -170,7 +177,10 @@ $(function(){
 		$lostPetForm.on("submit", function(event){
 			event.preventDefault();
 			var $form = $(this);
-			var $formData = $form.serialize();
+			var $formData = $form.serializeArray();
+			var lastSeenObject = retrieveLastSeenObject($formData);
+			var utcTime = convertLocalToUtc(lastSeenObject.value);
+			lastSeenObject.value = utcTime;
 			lostPetFormSubmit($formData, $form);
 		});
 	};
@@ -185,7 +195,10 @@ $(function(){
 		$foundPetForm.on("submit", function(event){
 			event.preventDefault();
 			var $form = $(this);
-			var $formData = $form.serialize();
+			var $formData = $form.serializeArray();
+			var lastSeenObject = retrieveLastSeenObject($formData);
+			var utcTime = convertLocalToUtc(lastSeenObject.value);
+			lastSeenObject.value = utcTime;
 			foundPetFormSubmit($formData, $form);
 		});
 	};
