@@ -54,20 +54,31 @@
     </div>
   </div>
   {{#if tags}}
-  <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
-    <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
-      {{#each tags}}
-        <li style="float: left;">
-          <p class="btn btn-default btn-xs">{{this.name}}</p>
+    <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
+      <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        {{#each tags}}
+          <li class="tags">
+            <p class="btn btn-default btn-xs">{{lowercase this.name}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+  <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ul class="comment-list">
+      {{#each comments}}
+        <li class="comment">
+          <div class="comment-username col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+          </div>
+          <div class="comment-content">
+          </div>
         </li>
       {{/each}}
     </ul>
   </div>
-  {{/if}}
-  <div class="comments-list">
-  </div>
-  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <form>
       <input type="hidden" name="comment[{{id}}]" class='report-id'>
       <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
