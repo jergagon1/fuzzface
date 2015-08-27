@@ -12,7 +12,9 @@
             </div>
             <div class="report-summary-text-column col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
-              <p>Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
+              <p class="report-summary-text">Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
+              <p class="report-summary-text">Posted By:
+              </p>
             </div>
           </div>
         </li>
