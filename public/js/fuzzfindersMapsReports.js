@@ -31,7 +31,9 @@ $(function(){
   // Model: iterate through array of records and update timestamps in specific field
   var updateTimestamps = function(recordArray, fieldToUpdate) {
     for (var i = 0; i < recordArray.length; i++) {
-      recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
+      if(recordArray[i][fieldToUpdate] !== null){
+        recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
+      }
     }
   };
 
@@ -130,7 +132,7 @@ $(function(){
 
   // View: remove the report detail section for report li
   var removeReportDetails = function($reportLi){
-
+    $reportLi.find(".report-summary").siblings().remove();
   };
 
   // View: Render handlebars templates

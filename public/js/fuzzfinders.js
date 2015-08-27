@@ -179,8 +179,10 @@ $(function(){
 			var $form = $(this);
 			var $formData = $form.serializeArray();
 			var lastSeenObject = retrieveLastSeenObject($formData);
-			var utcTime = convertLocalToUtc(lastSeenObject.value);
-			lastSeenObject.value = utcTime;
+			if(lastSeenObject.value !== ""){
+				var utcTime = convertLocalToUtc(lastSeenObject.value);
+				lastSeenObject.value = utcTime;
+			}
 			lostPetFormSubmit($formData, $form);
 		});
 	};
@@ -197,8 +199,10 @@ $(function(){
 			var $form = $(this);
 			var $formData = $form.serializeArray();
 			var lastSeenObject = retrieveLastSeenObject($formData);
-			var utcTime = convertLocalToUtc(lastSeenObject.value);
-			lastSeenObject.value = utcTime;
+			if(lastSeenObject.value !== ""){
+				var utcTime = convertLocalToUtc(lastSeenObject.value);
+				lastSeenObject.value = utcTime;
+			}
 			foundPetFormSubmit($formData, $form);
 		});
 	};

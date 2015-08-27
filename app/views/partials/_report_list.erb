@@ -11,7 +11,7 @@
               <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
             </div>
             <div class="report-summary-text-column col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <h4>{{report_type}} {{#if animal_type}}{{animal_type}}{{else}}pet{{/if}} {{#if pet_name}}"{{pet_name}}"{{/if}}</h4>
+              <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
               <p>Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
             </div>
           </div>
@@ -29,23 +29,23 @@
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
       {{#if report.size}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.size}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.size}}</p>
       {{/if}}
       {{#if report.color}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.color}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.color}}</p>
       {{/if}}
       {{#if report.breed}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.breed}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.breed}}</p>
       {{/if}}
       {{#if report.sex}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.sex}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.sex}}</p>
       {{/if}}
       {{#if report.age}}
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.age}}</p>
+        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.age}}</p>
       {{/if}}
       {{#if report.notes}}
           <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
@@ -54,20 +54,31 @@
     </div>
   </div>
   {{#if tags}}
-  <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
-    <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8" style="list-style: none; list-style-position: inside; display: inline">
-      {{#each tags}}
-        <li style="float: left;">
-          <p class="btn btn-default btn-xs">{{this.name}}</p>
+    <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
+      <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        {{#each tags}}
+          <li class="tags">
+            <p class="btn btn-default btn-xs">{{lowercase this.name}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+  <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ul class="comment-list">
+      {{#each comments}}
+        <li class="comment">
+          <div class="comment-username col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+          </div>
+          <div class="comment-content">
+          </div>
         </li>
       {{/each}}
     </ul>
   </div>
-  {{/if}}
-  <div class="comments-list">
-  </div>
-  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none">
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <form>
       <input type="hidden" name="comment[{{id}}]" class='report-id'>
       <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
