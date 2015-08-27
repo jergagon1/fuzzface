@@ -130,7 +130,7 @@ $(function(){
 
   // View: remove the report detail section for report li
   var removeReportDetails = function($reportLi){
-
+    $reportLi.find(".report-summary").siblings().remove();
   };
 
   // View: Render handlebars templates
