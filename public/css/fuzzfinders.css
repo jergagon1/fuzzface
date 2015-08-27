@@ -97,5 +97,12 @@ li {
 }
 
 .tag-list {
+  list-style: none;
+  list-style-position: inside;
+  display: inline
+}
 
+.tags {
+  float: left;
+  padding-right: 0.5rem;
 }
