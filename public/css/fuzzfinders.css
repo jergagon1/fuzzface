@@ -112,12 +112,21 @@ li {
   list-style: none;
   list-style-position: inside;
   padding-left: 0;
-  padding-top: 1rem;
+  padding-top: 0;
   border-top: 1px solid #6d6e71;
   margin-bottom: 1rem;
 }
 
 .comment {
   border-bottom: 1px solid #6d6e71;
+  padding-top: 1rem;
   color: #333;
+}
+
+.comments-list-div h4 {
+  text-align: center;
+}
+
+.new-comments-form-div h4 {
+  text-align: center;
 }

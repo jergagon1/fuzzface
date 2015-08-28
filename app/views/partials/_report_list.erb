@@ -67,24 +67,30 @@
       </ul>
     </div>
   {{/if}}
-  <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <ul class="comment-list">
-      {{#each comments}}
-        <li class="comment" data-commentid="{{this.id}}" data-reportid="{{this.report_id}}" data-userid="{{this.user_id}}">
-          <p class="comment-content">{{this.content}}
-          </p>
-          <p class="comment-data">Comment By: {{this.comment_username}}
-          </p>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
+  {{#if comments}}
+    <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h4>Comments</h4>
+      <ul class="comment-list">
+        {{#each comments}}
+          <li class="comment" data-commentid="{{this.id}}" data-reportid="{{this.report_id}}" data-userid="{{this.user_id}}">
+            <p class="comment-content">{{this.content}}
+            </p>
+            <p class="comment-data">Comment By: {{this.comment_username}}
+            </p>
+            <p class="comment-date">Posted: {{this.created_at}}
+            </p>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
   <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <form>
-      <input type="hidden" name="comment[{{id}}]" class='report-id'>
-      <input type="hidden" name="comment[{{user_id}}]" class='current-user-id'>
-      <textarea data-reportId={{id}} name='comment[content]' class='comment-{{id}} comment-text-input'></textarea><br>
-      <button data-id={{id}} type="button" class="submit-comment btn btn-default">Comment</button>
+    <h4>Create Comment</h4>
+    <form class="new-comment-form">
+      <input type="hidden" name="comment[report_id]" value="{{report.id}}">
+      <input type="hidden" name="comment[user_id]" value="<%= @user_id %>">
+      <textarea data-reportId={{report.id}} name="comment[content]" class='comment-text-input'></textarea><br>
+      <button data-reportid={{report.id}} type="button" class="submit-comment btn btn-default">Comment</button>
     </form>
   </div>
 </script>
