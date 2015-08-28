@@ -74,8 +74,8 @@ h3 {
   height: 6em;
 }
 
-.report-summary p {
-  /*color: black;*/
+.report-summary-text {
+  font-size: 1.2rem;
 }
 
 li {
@@ -85,6 +85,7 @@ li {
 
 .report-image-big {
   width: 100%;
+  padding-bottom: 1rem;
 }
 
 .submit-comment {
