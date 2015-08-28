@@ -70,12 +70,11 @@
   <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <ul class="comment-list">
       {{#each comments}}
-        <li class="comment">
-          <div class="comment-username col-xs-4 col-sm-4 col-md-4 col-lg-4">
-
-          </div>
-          <div class="comment-content">
-          </div>
+        <li class="comment" data-commentid="{{this.id}}" data-reportid="{{this.report_id}}" data-userid="{{this.user_id}}">
+          <p class="comment-content">{{this.content}}
+          </p>
+          <p class="comment-data">Comment By: {{this.comment_username}}
+          </p>
         </li>
       {{/each}}
     </ul>

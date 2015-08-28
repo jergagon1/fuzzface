@@ -107,3 +107,17 @@ li {
   float: left;
   padding-right: 0.5rem;
 }
+
+.comment-list {
+  list-style: none;
+  list-style-position: inside;
+  padding-left: 0;
+  padding-top: 1rem;
+  border-top: 1px solid #6d6e71;
+  margin-bottom: 1rem;
+}
+
+.comment {
+  border-bottom: 1px solid #6d6e71;
+  color: #333;
+}
