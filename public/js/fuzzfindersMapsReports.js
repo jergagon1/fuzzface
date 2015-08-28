@@ -61,6 +61,7 @@ $(function(){
     .done(function(response){
       console.log(response);
       // render handlebars template
+      updateTimestamps(response["comments"], "created_at");
       renderTemplates({
         report: response["report"],
         tags: response["tags"],
