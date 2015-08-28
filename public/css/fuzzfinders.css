@@ -130,3 +130,14 @@ li {
 .new-comments-form-div h4 {
   text-align: center;
 }
+
+.report-detail-xout {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+
+.glyphicon.glyphicon-minus {
+    font-size: 2rem;
+    color: #333;
+}

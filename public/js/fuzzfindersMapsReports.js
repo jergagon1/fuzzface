@@ -50,6 +50,8 @@ $(function(){
   // Model: retrieve report details, tags and comments
   var getReportDetails = function($reportLi, $id){
     console.log("getReportDetails");
+    removeReportDetails($reportLi);
+    // var $currentReportSummary = $reportLi.find(".report-summary");
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/" + $id + "",
       type: "GET",
@@ -59,6 +61,7 @@ $(function(){
     .done(function(response){
       console.log(response);
       // render handlebars template
+      updateTimestamps(response["comments"], "created_at");
       renderTemplates({
         report: response["report"],
         tags: response["tags"],
@@ -66,6 +69,8 @@ $(function(){
         $('#report-detail-template'),
         $reportLi
       );
+      removeUnselectedClass($reportLi);
+      toggleXOut($reportLi);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -147,6 +152,11 @@ $(function(){
     } else {
       return false
     }
+  };
+
+  // View: toggle display of report x out glyphicon
+  var toggleXOut = function($reportListItem){
+    $reportListItem.find(".report-detail-xout").toggle();
   };
 
   //========================== Controller ==========================//
@@ -337,9 +347,9 @@ $(function(){
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
-  var addEventListenerGetReportDetails = function(){
-    $body.on("click", ".report", function() {
-      console.log("report clicked");
+  var addEventListenerAllGetReportDetails = function(){
+    $(".reports-list").on("click", ".unselected", function() {
+      console.log("report summary clicked");
       $clickedReport = $(this);
       $reportId = $clickedReport.data("reportid");
       getReportDetails($clickedReport, $reportId);
@@ -347,9 +357,37 @@ $(function(){
   };
 
   // Controller: Remove delegated event listener to reports in reports list
-  var removeEventListenerGetReportDetails = function(){
-    $body.off("click", ".report");
+  var removeEventListenerAllGetReportDetails = function(){
+    $(".reports-list").off("click", ".unselected");
   };
+
+  // Controller: unselected class adds delegated event listener to show report details
+  var addUnselectedClass = function($reportListItem){
+    console.log("unselected class added");
+    $reportListItem.addClass("unselected");
+  };
+
+  // Controller: remove unselected class to disable delegated event listener to show report details
+  var removeUnselectedClass = function($reportListItem){
+    console.log("unselected class removed");
+    $reportListItem.removeClass("unselected");
+  }
+
+  var addEventListenerReportXOut = function(){
+    $(".reports-list").on("click", ".report-detail-xout", function() {
+      console.log("report xout clicked");
+      $clickedReport = $(this).parent().parent().parent();
+      console.log($clickedReport);
+      removeReportDetails($clickedReport);
+      addUnselectedClass($clickedReport);
+      toggleXOut($clickedReport);
+    });
+  };
+
+  var removeEventListenerReportXOut = function(){
+    $(".report-list").off("click", ".report-detail-xout");
+  };
+
 
   //--------------------- lost button ---------------------------//
   // Controller: bind events for lost pet form section
@@ -455,21 +493,23 @@ $(function(){
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
     if (checkForElement(".fuzzfinders-buttons")) {
-      addEventListenerGetReportDetails();
+      addEventListenerAllGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
       addEventListenerLostButtonClick();
       addEventListenerFoundButtonClick();
       addEventListenerReportButtonClick();
+      addEventListenerReportXOut();
     } else {
-      removeEventListenerGetReportDetails();
+      removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();
       removeEventListenerLostButtonClick();
       removeEventListenerFoundButtonClick();
       removeEventListenerReportButtonClick();
+      removeEventListenerReportXOut();
     }
   })();
 
