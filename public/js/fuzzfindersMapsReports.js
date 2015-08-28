@@ -156,7 +156,14 @@ $(function(){
 
   // View: toggle display of report x out glyphicon
   var toggleXOut = function($reportListItem){
-    $reportListItem.find(".report-detail-xout").toggle();
+    $reportListItem.find(".report-detail-hide").toggle();
+  };
+
+  // View: reset report summary
+  var resetReport = function($reportListItem){
+    removeReportDetails($reportListItem);
+    addUnselectedClass($reportListItem);
+    toggleXOut($reportListItem);
   };
 
   //========================== Controller ==========================//
@@ -371,21 +378,20 @@ $(function(){
   var removeUnselectedClass = function($reportListItem){
     console.log("unselected class removed");
     $reportListItem.removeClass("unselected");
-  }
+  };
 
+  // Controller: add event listener to remove
   var addEventListenerReportXOut = function(){
-    $(".reports-list").on("click", ".report-detail-xout", function() {
-      console.log("report xout clicked");
+    $(".reports-list").on("click", ".report-detail-hide", function() {
+      console.log("report hide clicked");
       $clickedReport = $(this).parent().parent().parent();
       console.log($clickedReport);
-      removeReportDetails($clickedReport);
-      addUnselectedClass($clickedReport);
-      toggleXOut($clickedReport);
+      resetReport($clickedReport);
     });
   };
 
   var removeEventListenerReportXOut = function(){
-    $(".report-list").off("click", ".report-detail-xout");
+    $(".report-list").off("click", ".report-detail-hide");
   };
 
 
