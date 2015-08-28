@@ -3,18 +3,16 @@
   bottom: 0;
   right: 0;
   z-index: 10000;
-
   font-size: 13px;
-
   width: 100%;
-
   background-color: whiteSmoke;
   border: 1px solid #EEE;
   margin-bottom: 0;
   -webkit-border-radius: 6px 6px 6px 6px;
   -moz-border-radius: 6px 6px 6px 6px;
   border-radius: 6px 6px 6px 6px;
-  padding-left: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .pusher-chat-widget input {
@@ -37,7 +35,10 @@
 }
 
 .pusher-chat-widget-current-user-image {
-  float: left;
+  /*float: left;*/
+  position: absolute;
+  left: 15px;
+  top: 6px;
   height: 32px;
   overflow: hidden;
   width: 32px;
@@ -47,6 +48,7 @@
 .pusher-chat-widget-current-user-name {
   text-align: center;
   /*margin-left: 42px;*/
+  float: none;
   font-weight: bold;
   font-size: 20px;
   line-height: 40px;
@@ -101,7 +103,7 @@
   background-color: white;
   min-height: 100px;
   max-height: 400px;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 }
 
 .pusher-chat-widget ul.activity-stream li.waiting {
