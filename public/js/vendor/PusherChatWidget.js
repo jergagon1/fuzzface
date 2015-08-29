@@ -73,7 +73,7 @@ PusherChatWidget.prototype._chatMessageReceived = function(data) {
   var self = this;
 
   if ($('.pusher-chat-body').css('display') === 'none') {
-    $('.pusher-chat-widget-header').css('backgroundColor', 'red');
+    $('.pusher-chat-widget-header').css('backgroundColor', '#f37057');
   }
 
   if(this._itemCount === 0) {
@@ -182,11 +182,9 @@ PusherChatWidget._createHTML = function(appendTo) {
       '<div class="pusher-chat-widget-messages">' +
         '<ul class="activity-stream">' +
           '<li class="waiting">No chat messages available</li>' +
-        '</ul>' +
       '</div>' +
       '<div class="pusher-chat-widget-input">' +
-        '<label for="message">Message</label>' +
-        '<textarea name="message"></textarea>' +
+        '<textarea class="pusher-chat-textarea" name="message" placeholder="Enter Message"></textarea>' +
         '<button class="pusher-chat-widget-send-btn">Send</button>' +
       '</div>' +
       '<div class="pusher-chat-widget-footer">' +

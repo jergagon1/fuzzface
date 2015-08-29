@@ -63,12 +63,12 @@
 }
 
 .pusher-chat-widget textarea {
-  width: 230px;
+  width: 70%;
   height: 40px;
 }
 
 .pusher-chat-widget-send-btn {
-  width: 50px;
+  width: 30%;
   height: 40px;
 
   font-size: 11px;
@@ -189,3 +189,4 @@
 .pusher-chat-widget ul.activity-stream li .activity-actions span b {
   font-weight: normal;
 }
+
