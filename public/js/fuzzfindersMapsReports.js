@@ -63,14 +63,14 @@ $(function(){
       // render handlebars template
       updateTimestamps(response["comments"], "created_at");
       renderTemplates({
-        report: response["report"],
-        tags: response["tags"],
-        comments: response["comments"] },
+        report:     response["report"],
+        tags:       response["tags"],
+        comments:   response["comments"] },
         $('#report-detail-template'),
         $reportLi
       );
       removeUnselectedClass($reportLi);
-      toggleXOut($reportLi);
+      toggleHideIcon($reportLi);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -88,7 +88,7 @@ $(function(){
   var $foundPetButton = $(".found-pet");
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
-  var $body = $('body');
+  var $reportsList = $(".reports-list");
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -154,8 +154,8 @@ $(function(){
     }
   };
 
-  // View: toggle display of report x out glyphicon
-  var toggleXOut = function($reportListItem){
+  // View: toggle display of report hide glyphicon
+  var toggleHideIcon = function($reportListItem){
     $reportListItem.find(".report-detail-hide").toggle();
   };
 
@@ -163,7 +163,7 @@ $(function(){
   var resetReport = function($reportListItem){
     removeReportDetails($reportListItem);
     addUnselectedClass($reportListItem);
-    toggleXOut($reportListItem);
+    toggleHideIcon($reportListItem);
   };
 
   //========================== Controller ==========================//
@@ -355,7 +355,7 @@ $(function(){
 
   // Controller: Add delegated event listener to reports in reports list on click
   var addEventListenerAllGetReportDetails = function(){
-    $(".reports-list").on("click", ".unselected", function() {
+    $reportsList.on("click", ".unselected", function() {
       console.log("report summary clicked");
       $clickedReport = $(this);
       $reportId = $clickedReport.data("reportid");
@@ -365,7 +365,7 @@ $(function(){
 
   // Controller: Remove delegated event listener to reports in reports list
   var removeEventListenerAllGetReportDetails = function(){
-    $(".reports-list").off("click", ".unselected");
+    $reportsList.off("click", ".unselected");
   };
 
   // Controller: unselected class adds delegated event listener to show report details
@@ -380,9 +380,9 @@ $(function(){
     $reportListItem.removeClass("unselected");
   };
 
-  // Controller: add event listener to remove
-  var addEventListenerReportXOut = function(){
-    $(".reports-list").on("click", ".report-detail-hide", function() {
+  // Controller: add event listener to hide icon in selected report
+  var addEventListenerReportHideDetail = function(){
+    $reportsList.on("click", ".report-detail-hide", function() {
       console.log("report hide clicked");
       $clickedReport = $(this).parent().parent().parent();
       console.log($clickedReport);
@@ -390,10 +390,48 @@ $(function(){
     });
   };
 
-  var removeEventListenerReportXOut = function(){
-    $(".report-list").off("click", ".report-detail-hide");
+  // Controller: remove event listener from hide icon in selected report
+  var removeEventListenerReportHideDetail = function(){
+    $reportsList.off("click", ".report-detail-hide");
   };
 
+  // Controller: add delegated event listener for comment form submission
+  var addEventListenerSubmitComment = function(){
+    $reportsList.on("submit", ".new-comment-form", function(event){
+      event.preventDefault();
+      var $currentForm = $(this);
+      var $currentFormData = $currentForm.serialize();
+      var $currentReportId = $currentForm.children().last().data("reportid");
+      console.log($currentForm);
+      console.log($currentFormData);
+      console.log($currentReportId);
+      // call commentSubmit function
+      submitComment($currentForm, $currentFormData, $currentReportId);
+    });
+  };
+
+  // Model: submit comment data to server api
+  var submitComment = function($form, $formData, $reportId){
+    var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments"
+    $.ajax({
+      url: apiLink,
+      type: "post",
+      crossDomain: true,
+      dataType: "json",
+      data: $formData
+    })
+    .done(function(response){
+      console.log(response);
+    })
+    .fail(function(){
+      console.log("comment creation failed");
+    });
+  };
+
+  // Controller: remove delegated event listener for comment form submission
+  var removeEventListenerSubmitComment = function(){
+    $reportsList.off("submit", ".new-comment-form");
+  };
 
   //--------------------- lost button ---------------------------//
   // Controller: bind events for lost pet form section
@@ -506,7 +544,8 @@ $(function(){
       addEventListenerLostButtonClick();
       addEventListenerFoundButtonClick();
       addEventListenerReportButtonClick();
-      addEventListenerReportXOut();
+      addEventListenerReportHideDetail();
+      addEventListenerSubmitComment();
     } else {
       removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
@@ -515,7 +554,8 @@ $(function(){
       removeEventListenerLostButtonClick();
       removeEventListenerFoundButtonClick();
       removeEventListenerReportButtonClick();
-      removeEventListenerReportXOut();
+      removeEventListenerReportHideDetail();
+      removeEventListenerSubmitComment();
     }
   })();
 
