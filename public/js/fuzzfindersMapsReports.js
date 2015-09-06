@@ -77,6 +77,42 @@ $(function(){
     })
   };
 
+  // Model: submit comment data to server api
+  var submitComment = function($form, $formData, $reportId){
+    var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments"
+    var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
+    var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
+    $.ajax({
+      url: apiLink,
+      type: "post",
+      crossDomain: true,
+      dataType: "json",
+      data: $formData
+    })
+    .done(function(response){
+      console.log(response);
+      updateTimestamps([response], "created_at");
+      showCommentsListDivIfHidden($commentListDiv);
+      renderTemplates(
+        { comment: response },
+        $("#comment-template"),
+        $commentList
+      );
+      resetFormInputs();
+    })
+    .fail(function(){
+      console.log("comment creation failed");
+    });
+  };
+
+  // Model: reset the form inputs
+  var resetFormInputs = function(){
+    console.log("resetFormInputs");
+    $("input[type='text']").val('');
+    $("textarea").val("");
+    $("select").prop("selectedIndex", 0);
+  };
+
   //========================== View ==========================//
 
   // View: DOM elements for google maps
@@ -89,6 +125,27 @@ $(function(){
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
   var $reportsList = $(".reports-list");
+
+  // View: check if the div containing the report comments is hidden
+  var checkIfCommentsListDivHidden = function($commentDiv){
+    if($commentDiv.is(":hidden")){
+      return true
+    } else {
+      return false
+    }
+  };
+
+  // View: show the report comments div if it is hidden
+  var showCommentsListDivIfHidden = function($commentsDiv){
+    if(checkIfCommentsListDivHidden($commentsDiv)) {
+      console.log("hidden");
+      // if hidden display comments div
+      $commentsDiv.show();
+    } else {
+      console.log("not hidden");
+    }
+  };
+
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -410,30 +467,13 @@ $(function(){
     });
   };
 
-  // Model: submit comment data to server api
-  var submitComment = function($form, $formData, $reportId){
-    var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments"
-    $.ajax({
-      url: apiLink,
-      type: "post",
-      crossDomain: true,
-      dataType: "json",
-      data: $formData
-    })
-    .done(function(response){
-      console.log(response);
-    })
-    .fail(function(){
-      console.log("comment creation failed");
-    });
-  };
-
   // Controller: remove delegated event listener for comment form submission
   var removeEventListenerSubmitComment = function(){
     $reportsList.off("submit", ".new-comment-form");
   };
 
   //--------------------- lost button ---------------------------//
+
   // Controller: bind events for lost pet form section
   var bindEventsLost = function(){
     // add lost button events
