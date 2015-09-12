@@ -11,6 +11,12 @@ $(function(){
     $('.hidden-lng-field').attr('value', lng);
   };
 
+  // Model: set recent reports form hidden input values for SW and NE coordinates
+  var setRecentReportsHiddenFormInputFields = function(southWestCoord,northEastCoord){
+    $("input[name='sw']").attr('value', southWestCoord);
+    $("input[name='ne']").attr('value', northEastCoord);
+  };
+
   // Model: convert a UTC/Zulu timestamp to local time
   var convertUtcToLocal = function(utcTimestamp) {
     var time = moment.utc(utcTimestamp);
@@ -365,6 +371,7 @@ $(function(){
 
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
+          setRecentReportsHiddenFormInputFields(sw,ne);
           mostRecentReportsAjax(sw, ne);
         });
         reportMap.setCenter(pos);
