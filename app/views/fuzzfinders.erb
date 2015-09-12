@@ -34,13 +34,7 @@
         <input id="pac-input" class="controls" type="text" placeholder="Search near a location">
         <div id="report-map-canvas" class="map-canvas">
         </div>
-        <div class="reports-filter">
-          <button class="btn btn-block btn-default filter-btn">Filter</button>
-          <form class="recent-reports-form">
-            <input type="hidden" name="sw" value="">
-            <input type="hidden" name="ne" value="">
-          </form>
-        </div>
+        <%= erb :'partials/_report_filter', :layout => false %>
         <%= erb :'partials/_report_list', :layout => false %>
       </div>
     </div>
