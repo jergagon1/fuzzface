@@ -365,9 +365,6 @@ $(function(){
 
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
-          // console.log("googleMapReports.js line 56");
-          // console.log(ne);
-          // console.log(sw);
           mostRecentReportsAjax(sw, ne);
         });
         reportMap.setCenter(pos);
