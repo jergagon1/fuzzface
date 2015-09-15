@@ -34,7 +34,7 @@ $(function(){
   };
 
   // Model: Retrieve reports in map area
-  var mostRecentReportsAjax = function(sw, ne) {
+  var getRecentReports = function(sw, ne) {
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
       type: "GET",
@@ -131,6 +131,7 @@ $(function(){
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
   var $reportsList = $(".reports-list");
+  var $recentReportsForm = $(".recent-reports-form");
 
   // View: check if the div containing the report comments is hidden
   var checkIfCommentsListDivHidden = function($commentDiv){
@@ -372,7 +373,7 @@ $(function(){
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
           setRecentReportsHiddenFormInputFields(sw,ne);
-          mostRecentReportsAjax(sw, ne);
+          getRecentReports(sw, ne);
         });
         reportMap.setCenter(pos);
       }, function() {
@@ -389,7 +390,7 @@ $(function(){
     google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
   };
 
-  // Controller: Remove DOM listener to lost a pet button
+  // Controller: Remove DOM listener from lost a pet button
   var removeEventListenerInitializeLostMap = function(){
     google.maps.event.removeListener(lostPetBtn, 'click', initializeLostMap);
   }
@@ -415,7 +416,7 @@ $(function(){
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
-  var addEventListenerAllGetReportDetails = function(){
+  var addEventListenerToAllGetReportDetails = function(){
     $reportsList.on("click", ".unselected", function() {
       console.log("report summary clicked");
       $clickedReport = $(this);
@@ -581,7 +582,7 @@ $(function(){
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
     if (checkForElement(".fuzzfinders-buttons")) {
-      addEventListenerAllGetReportDetails();
+      addEventListenerToAllGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
