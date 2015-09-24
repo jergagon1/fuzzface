@@ -2,12 +2,9 @@
   <input type="hidden" name="report[report_type]" value="<%= form_type %>">
   <input type="hidden" class="img_url" name="report[img_url]" value="">
   <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
-
   <div class="padded">
     <input type="file" class="directUpload">
   </div>
-
-
   <div class="form-group">
     <select name="report[animal_type]" class="form-control">
       <option value="">Pet Type</option>
@@ -49,7 +46,6 @@
   <div class="form-group">
     <input type="text" class="form-control" id="<%= form_type %>-pet-color" placeholder="Pet Color" name="report[color]">
   </div>
-
   <% if form_type == "lost" %>
     <!-- include name field if lost report -->
     <div class="form-group">
@@ -64,16 +60,13 @@
       <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[all_tags]">
     </div>
   <% end %>
-
   <div class="padded">
     <input placeholder="Last Seen" class="form-control" type="text" id="<%= form_type %>-last-seen-placeholder">
     <input class="form-control" type="datetime-local" id="<%= form_type %>-last-seen" name="report[last_seen]" style="display: none">
   </div>
-
   <div class="padded">
     <textarea name="report[notes]" class="form-control" id="<%= form_type %>-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
   </div>
-
   <div class="form-group">
     <input class="hidden-lat-field" type="hidden" name="report[lat]" value="">
   </div>
@@ -82,9 +75,7 @@
   </div>
   <div id="<%= form_type %>-map-canvas" class="map-canvas">
   </div>
-
   <div class="padded">
     <button type="submit" class="btn btn-default">Submit</button>
   </div>
-
 </form>
