@@ -132,6 +132,7 @@ $(function(){
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
   var $reportsList = $(".reports-list");
   var $recentReportsForm = $(".recent-reports-form");
+  var $filterReportsButton = $(".filter-btn");
 
   // View: check if the div containing the report comments is hidden
   var checkIfCommentsListDivHidden = function($commentDiv){
@@ -577,6 +578,19 @@ $(function(){
     $reportButton.off("click");
   };
 
+  //-------------------- filter reports button ---------------------------//
+
+  var addEventListenerFilterButtonClick = function(){
+    $filterReportsButton.on("click", function(event){
+      event.preventDefault();
+      console.log("Filter Button Clicked");
+    });
+  };
+
+  var removeEventListenerFilterButtonClick = function(){
+    $filterReportsButton.off("click");
+  };
+
   //----------------------- page load ---------------------------//
 
   // Controller: enable or disable event listeners if on fuzzfinders page
@@ -591,6 +605,7 @@ $(function(){
       addEventListenerReportButtonClick();
       addEventListenerReportHideDetail();
       addEventListenerSubmitComment();
+      addEventListenerFilterButtonClick();
     } else {
       removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
@@ -601,6 +616,7 @@ $(function(){
       removeEventListenerReportButtonClick();
       removeEventListenerReportHideDetail();
       removeEventListenerSubmitComment();
+      removeEventListenerFilterButtonClick();
     }
   })();
 
