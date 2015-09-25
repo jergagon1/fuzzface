@@ -57,6 +57,14 @@ $(function(){
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
+      // remove any options from filter dropdown breed menu
+      var breedArray = createArrayUniqueValues(response, "breed");
+      console.log(breedArray);
+      // get array of unique breed values from response
+      // append unique breed values to filter dropdown menu
+      // remove any options from filter dropdown color menu
+      // get array of unique color values from response
+      // append unique color values to filter dropdown menu
     })
     .fail(function(){
       console.log("reports request fail!");
@@ -127,6 +135,22 @@ $(function(){
     $("input[type='text']").val('');
     $("textarea").val("");
     $("select").prop("selectedIndex", 0);
+  };
+
+  var appendUniqueValuesToSelectDropdown = function(valueArray, $inputDropdown){
+    // loop through array
+    // append each value to select dropdown menu
+  };
+
+  var createArrayUniqueValues = function(recordsArray, fieldKey){
+    var valuesArray = [];
+    $.each(recordsArray, function (i, j) {
+      if ($.inArray(j[fieldKey].toLowerCase(), valuesArray) == -1 && j[fieldKey] != "") {
+        console.log(j[fieldKey].toLowerCase());
+        valuesArray.push(j[fieldKey].toLowerCase());
+      }
+    })
+    return valuesArray.sort();
   };
 
   //========================== View ==========================//
