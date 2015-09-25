@@ -489,6 +489,18 @@ $(function(){
     $reportsList.off("submit", ".new-comment-form");
   };
 
+  // Controller: Add event listener for on change event of report filter controls
+  var addEventListenerOnChangeReportFilterControls = function(){
+    $(".filter-control").on("change", function(event){
+      event.preventDefault();
+      getRecentReports();
+    });
+  };
+
+  var removeEventListenerOnChangeReportFilterControls = function(){
+    $(".filter-control").off("change");
+  };
+
   //--------------------- lost button ---------------------------//
 
   // Controller: bind events for lost pet form section
@@ -617,6 +629,7 @@ $(function(){
       addEventListenerReportHideDetail();
       addEventListenerSubmitComment();
       addEventListenerFilterButtonClick();
+      addEventListenerOnChangeReportFilterControls();
     } else {
       removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
@@ -628,6 +641,7 @@ $(function(){
       removeEventListenerReportHideDetail();
       removeEventListenerSubmitComment();
       removeEventListenerFilterButtonClick();
+      removeEventListenerOnChangeReportFilterControls();
     }
   })();
 
