@@ -4,6 +4,7 @@ $(function(){
 
   // Model: create variables to store map objects
   var lostMap, foundMap, reportMap;
+  var reportMapMarkers = [];
 
   // Model: Add lat and lng value of marker to hidden form input field for submission with report
   var addLatLongAttr = function(lat, lng) {
@@ -33,6 +34,13 @@ $(function(){
     }
   };
 
+  var removeReportMapMarkers = function(markerArray){
+    console.log(markerArray);
+    for(i=0; i<markerArray.length; i++){
+      markerArray[i].setMap(null);
+    }
+  };
+
   // Model: Retrieve reports in map area
   var getRecentReports = function(sw, ne) {
     $.ajax({
@@ -43,7 +51,8 @@ $(function(){
     })
     .done(function(response){
       $(".report").remove();
-      createMarkers(response);
+      removeReportMapMarkers(reportMapMarkers);
+      createMarkers(response, reportMapMarkers);
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
@@ -177,6 +186,7 @@ $(function(){
       icon: selectIcon(report.report_type),
       title: report.pet_name
     })
+    reportMapMarkers.push(marker);
   };
 
   // View: returns image icon url for lost or found reports based on reportType argument passed in
