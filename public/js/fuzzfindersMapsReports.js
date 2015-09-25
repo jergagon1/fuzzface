@@ -146,7 +146,7 @@ $(function(){
     var valuesArray = [];
     $.each(recordsArray, function (i, j) {
       if ($.inArray(j[fieldKey].toLowerCase(), valuesArray) == -1 && j[fieldKey] != "") {
-        console.log(j[fieldKey].toLowerCase());
+        // console.log(j[fieldKey].toLowerCase());
         valuesArray.push(j[fieldKey].toLowerCase());
       }
     })
