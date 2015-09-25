@@ -42,12 +42,13 @@ $(function(){
   };
 
   // Model: Retrieve reports in map area
-  var getRecentReports = function(sw, ne) {
+  var getRecentReports = function() {
     $.ajax({
-      url: "http://localhost:3000/api/v1/reports/mapquery?sw="+ sw +"&ne="+ ne +"",
+      url: "http://localhost:3000/api/v1/reports/mapquery",
       type: "GET",
       crossDomain: true,
-      dataType: 'json'
+      dataType: 'json',
+      data: $recentReportsForm.serialize()
     })
     .done(function(response){
       $(".report").remove();
@@ -384,7 +385,7 @@ $(function(){
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
           setRecentReportsHiddenFormInputFields(sw,ne);
-          getRecentReports(sw, ne);
+          getRecentReports();
         });
         reportMap.setCenter(pos);
       }, function() {
