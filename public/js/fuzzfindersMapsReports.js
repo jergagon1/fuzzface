@@ -501,6 +501,20 @@ $(function(){
     $(".filter-control").off("change");
   };
 
+  var addEventListenerResetFilterFormControls = function(){
+    console.log("addEventListenerResetFilterFormControls");
+    $(".reset-filter-button").on("click", function(event){
+      event.preventDefault();
+      console.log("reset button clicked");
+      resetFormInputs();
+      getRecentReports();
+    });
+  };
+
+  var removeEventListenerResetFilterFormControls = function(){
+    $(".reset-filter-button").off("click");
+  };
+
   //--------------------- lost button ---------------------------//
 
   // Controller: bind events for lost pet form section
@@ -630,6 +644,7 @@ $(function(){
       addEventListenerSubmitComment();
       addEventListenerFilterButtonClick();
       addEventListenerOnChangeReportFilterControls();
+      addEventListenerResetFilterFormControls();
     } else {
       removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
@@ -642,6 +657,7 @@ $(function(){
       removeEventListenerSubmitComment();
       removeEventListenerFilterButtonClick();
       removeEventListenerOnChangeReportFilterControls();
+      removeEventListenerResetFilterFormControls();
     }
   })();
 
