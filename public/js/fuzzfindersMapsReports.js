@@ -58,14 +58,14 @@ $(function(){
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-      // remove any options from filter dropdown breed menu
-      var breedArray = createArrayUniqueValues(response, "breed");
-      console.log(breedArray);
       // get array of unique breed values from response
-      // append unique breed values to filter dropdown menu
-      // remove any options from filter dropdown color menu
+      var breedArray = createArrayUniqueValues(response, "breed");
+      // write breed values to breed dropdown data-values tag
+      writeArrayValuesToDataTag($(".breed-select"), breedArray);
       // get array of unique color values from response
-      // append unique color values to filter dropdown menu
+      var colorArray = createArrayUniqueValues(response, "color");
+      // write color values to color dropdown data-values tag
+      writeArrayValuesToDataTag($(".color-select"), colorArray);
     })
     .fail(function(){
       console.log("reports request fail!");
@@ -130,28 +130,20 @@ $(function(){
     });
   };
 
-  // Model: reset the form inputs
-  var resetFormInputs = function(){
-    console.log("resetFormInputs");
-    $("input[type='text']").val('');
-    $("textarea").val("");
-    $("select").prop("selectedIndex", 0);
-  };
-
-  var appendUniqueValuesToSelectDropdown = function(valueArray, $inputDropdown){
-    // loop through array
-    // append each value to select dropdown menu
-  };
-
+  // Model: loop through an array of records and create a unique sorted array of a specific field value
   var createArrayUniqueValues = function(recordsArray, fieldKey){
     var valuesArray = [];
     $.each(recordsArray, function (i, j) {
-      if ($.inArray(j[fieldKey].toLowerCase(), valuesArray) == -1 && j[fieldKey] != "") {
-        // console.log(j[fieldKey].toLowerCase());
-        valuesArray.push(j[fieldKey].toLowerCase());
+      if ($.inArray(j[fieldKey], valuesArray) == -1 && j[fieldKey] != "") {
+        valuesArray.push(j[fieldKey]);
       }
     })
     return valuesArray.sort();
+  };
+
+  // Model: Write array values to datatag
+  var writeArrayValuesToDataTag = function($inputDropdown, valuesArray){
+    $inputDropdown.attr("data-values", valuesArray);
   };
 
   //========================== View ==========================//
@@ -168,6 +160,30 @@ $(function(){
   var $reportsList = $(".reports-list");
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
+
+  // View: reset the form inputs
+  var resetFormInputs = function(){
+    console.log("resetFormInputs");
+    $("input[type='text']").val('');
+    $("textarea").val("");
+    $("select").prop("selectedIndex", 0);
+  };
+
+  // // View: Remove the option values from a select dropdown menu
+  // var removeValuesFromSelectDropdown = function($inputDropdown){
+  //   $inputDropdown.children().slice(1).remove();
+  // };
+
+  // // View: Append array values as options in select dropdown menu
+  // var appendValuesFromDataTagToSelectDropdown = function($inputDropdown){
+  //   var valueArray = $inputDropdown.data("values").split(",");
+  //   console.log(valueArray);
+  //   var seloptions = "";
+  //   $.each(valueArray,function(i){
+  //       seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i]+'</option>';
+  //   });
+  //   $inputDropdown.append(seloptions);
+  // };
 
   // View: check if the div containing the report comments is hidden
   var checkIfCommentsListDivHidden = function($commentDiv){
@@ -537,34 +553,6 @@ $(function(){
 
   var removeEventListenerResetFilterFormControls = function(){
     $(".reset-filter-button").off("click");
-  };
-
-  var addEventListenerOnFocusDynamicFilterControls = function(){
-    $(".dynamic-filter-control").on("focus", function(event){
-      console.log("in dynamic filter control");
-      var $currentControl = $(this);
-      console.log($currentControl);
-      // clear current options list
-      removeValuesFromSelectDropdown($currentControl);
-      // append options from datatag
-      appendValuesFromDataTagToSelectDropdown($currentControl);
-      addEventListenerOnChangeDynamicFilterControls();
-    });
-  };
-
-  var removeEventListenerOnFocusDynamicFilterControls = function(){
-    $(".dynamic-filter-control").off("focus");
-  };
-
-  var addEventListenerOnChangeDynamicFilterControls = function(){
-    $(".dynamic-filter-control").on("change", function(event){
-      event.preventDefault();
-      getRecentReports();
-    })
-  };
-
-  var removeEventListenerOnChangeDynamicFilterControls = function(){
-    $(".dynamic-filter-control").off("change");
   };
 
   //-------------------- filter reports button ---------------------------//
