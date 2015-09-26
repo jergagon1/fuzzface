@@ -36,7 +36,7 @@ $(function(){
 
   // Model: Remove the markers from the map
   var removeReportMapMarkers = function(markerArray){
-    console.log(markerArray);
+    // console.log(markerArray);
     for(i=0; i<markerArray.length; i++){
       markerArray[i].setMap(null);
     }
