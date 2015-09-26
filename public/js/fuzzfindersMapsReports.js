@@ -34,6 +34,7 @@ $(function(){
     }
   };
 
+  // Model: Remove the markers from the map
   var removeReportMapMarkers = function(markerArray){
     console.log(markerArray);
     for(i=0; i<markerArray.length; i++){
@@ -57,14 +58,14 @@ $(function(){
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-      // remove any options from filter dropdown breed menu
-      var breedArray = createArrayUniqueValues(response, "breed");
-      console.log(breedArray);
       // get array of unique breed values from response
-      // append unique breed values to filter dropdown menu
-      // remove any options from filter dropdown color menu
+      var breedArray = createArrayUniqueValues(response, "breed");
+      // write breed values to breed dropdown data-values tag
+      writeArrayValuesToDataTag($(".breed-select"), breedArray);
       // get array of unique color values from response
-      // append unique color values to filter dropdown menu
+      var colorArray = createArrayUniqueValues(response, "color");
+      // write color values to color dropdown data-values tag
+      writeArrayValuesToDataTag($(".color-select"), colorArray);
     })
     .fail(function(){
       console.log("reports request fail!");
@@ -129,28 +130,20 @@ $(function(){
     });
   };
 
-  // Model: reset the form inputs
-  var resetFormInputs = function(){
-    console.log("resetFormInputs");
-    $("input[type='text']").val('');
-    $("textarea").val("");
-    $("select").prop("selectedIndex", 0);
-  };
-
-  var appendUniqueValuesToSelectDropdown = function(valueArray, $inputDropdown){
-    // loop through array
-    // append each value to select dropdown menu
-  };
-
+  // Model: loop through an array of records and create a unique sorted array of a specific field value
   var createArrayUniqueValues = function(recordsArray, fieldKey){
     var valuesArray = [];
     $.each(recordsArray, function (i, j) {
-      if ($.inArray(j[fieldKey].toLowerCase(), valuesArray) == -1 && j[fieldKey] != "") {
-        // console.log(j[fieldKey].toLowerCase());
-        valuesArray.push(j[fieldKey].toLowerCase());
+      if ($.inArray(j[fieldKey], valuesArray) == -1 && j[fieldKey] != "") {
+        valuesArray.push(j[fieldKey]);
       }
     })
     return valuesArray.sort();
+  };
+
+  // Model: Write array values to datatag
+  var writeArrayValuesToDataTag = function($inputDropdown, valuesArray){
+    $inputDropdown.attr("data-values", valuesArray);
   };
 
   //========================== View ==========================//
@@ -167,6 +160,30 @@ $(function(){
   var $reportsList = $(".reports-list");
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
+
+  // View: reset the form inputs
+  var resetFormInputs = function(){
+    console.log("resetFormInputs");
+    $("input[type='text']").val('');
+    $("textarea").val("");
+    $("select").prop("selectedIndex", 0);
+  };
+
+  // // View: Remove the option values from a select dropdown menu
+  // var removeValuesFromSelectDropdown = function($inputDropdown){
+  //   $inputDropdown.children().slice(1).remove();
+  // };
+
+  // // View: Append array values as options in select dropdown menu
+  // var appendValuesFromDataTagToSelectDropdown = function($inputDropdown){
+  //   var valueArray = $inputDropdown.data("values").split(",");
+  //   console.log(valueArray);
+  //   var seloptions = "";
+  //   $.each(valueArray,function(i){
+  //       seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i]+'</option>';
+  //   });
+  //   $inputDropdown.append(seloptions);
+  // };
 
   // View: check if the div containing the report comments is hidden
   var checkIfCommentsListDivHidden = function($commentDiv){
@@ -187,7 +204,6 @@ $(function(){
       console.log("not hidden");
     }
   };
-
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -539,6 +555,19 @@ $(function(){
     $(".reset-filter-button").off("click");
   };
 
+  //-------------------- filter reports button ---------------------------//
+
+  var addEventListenerFilterButtonClick = function(){
+    $filterReportsButton.on("click", function(event){
+      event.preventDefault();
+      console.log("Filter Button Clicked");
+    });
+  };
+
+  var removeEventListenerFilterButtonClick = function(){
+    $filterReportsButton.off("click");
+  };
+
   //--------------------- lost button ---------------------------//
 
   // Controller: bind events for lost pet form section
@@ -637,19 +666,6 @@ $(function(){
   // Controller: remove event listener for report button click
   var removeEventListenerReportButtonClick = function(){
     $reportButton.off("click");
-  };
-
-  //-------------------- filter reports button ---------------------------//
-
-  var addEventListenerFilterButtonClick = function(){
-    $filterReportsButton.on("click", function(event){
-      event.preventDefault();
-      console.log("Filter Button Clicked");
-    });
-  };
-
-  var removeEventListenerFilterButtonClick = function(){
-    $filterReportsButton.off("click");
   };
 
   //----------------------- page load ---------------------------//
