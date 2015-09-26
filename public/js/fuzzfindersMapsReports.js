@@ -34,6 +34,7 @@ $(function(){
     }
   };
 
+  // Model: Remove the markers from the map
   var removeReportMapMarkers = function(markerArray){
     console.log(markerArray);
     for(i=0; i<markerArray.length; i++){
@@ -187,7 +188,6 @@ $(function(){
       console.log("not hidden");
     }
   };
-
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -539,6 +539,47 @@ $(function(){
     $(".reset-filter-button").off("click");
   };
 
+  var addEventListenerOnFocusDynamicFilterControls = function(){
+    $(".dynamic-filter-control").on("focus", function(event){
+      console.log("in dynamic filter control");
+      var $currentControl = $(this);
+      console.log($currentControl);
+      // clear current options list
+      removeValuesFromSelectDropdown($currentControl);
+      // append options from datatag
+      appendValuesFromDataTagToSelectDropdown($currentControl);
+      addEventListenerOnChangeDynamicFilterControls();
+    });
+  };
+
+  var removeEventListenerOnFocusDynamicFilterControls = function(){
+    $(".dynamic-filter-control").off("focus");
+  };
+
+  var addEventListenerOnChangeDynamicFilterControls = function(){
+    $(".dynamic-filter-control").on("change", function(event){
+      event.preventDefault();
+      getRecentReports();
+    })
+  };
+
+  var removeEventListenerOnChangeDynamicFilterControls = function(){
+    $(".dynamic-filter-control").off("change");
+  };
+
+  //-------------------- filter reports button ---------------------------//
+
+  var addEventListenerFilterButtonClick = function(){
+    $filterReportsButton.on("click", function(event){
+      event.preventDefault();
+      console.log("Filter Button Clicked");
+    });
+  };
+
+  var removeEventListenerFilterButtonClick = function(){
+    $filterReportsButton.off("click");
+  };
+
   //--------------------- lost button ---------------------------//
 
   // Controller: bind events for lost pet form section
@@ -637,19 +678,6 @@ $(function(){
   // Controller: remove event listener for report button click
   var removeEventListenerReportButtonClick = function(){
     $reportButton.off("click");
-  };
-
-  //-------------------- filter reports button ---------------------------//
-
-  var addEventListenerFilterButtonClick = function(){
-    $filterReportsButton.on("click", function(event){
-      event.preventDefault();
-      console.log("Filter Button Clicked");
-    });
-  };
-
-  var removeEventListenerFilterButtonClick = function(){
-    $filterReportsButton.off("click");
   };
 
   //----------------------- page load ---------------------------//
