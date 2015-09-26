@@ -280,6 +280,7 @@ $(function(){
 	//--------------------- lost button ---------------------------//
 	// Controller: bind events for lost pet form section
 	var bindEventsLost = function(){
+		console.log("fuzzfinders.js bindEventsLost");
 		addEventListenerLostPetFormSubmit();
 		addEventListenerFocusLostLastSeenPlaceholderInput();
 		addEventListenerBlurLostLastSeenInput();
@@ -287,6 +288,7 @@ $(function(){
 
 	// Controller: remove event listeners for lost pet form section
 	var removeEventsLost = function(){
+		console.log("fuzzfinders.js removeEventsLost");
 		// remove lost events
 		removeEventListenerLostPetFormSubmit();
 		removeEventListenerFocusLostLastSeenPlaceholderInput();
@@ -295,6 +297,7 @@ $(function(){
 
 	// Controller: Add event listener to lost button click
 	var addEventListenerLostButtonClick = function(){
+		console.log("fuzzfinders.js addEventListenerLostButtonClick");
 		$lostPetButton.on("click", function(event){
 			event.preventDefault();
 			// determine if open or closed
@@ -304,7 +307,6 @@ $(function(){
 				removeEventsReports();
 				bindEventsLost();
 			}	else {
-
 				// remove events
 				removeEventsLost();
 			}
@@ -314,6 +316,7 @@ $(function(){
 
 	// Controller: remove event listener for lost button click
 	var removeEventListenerLostButtonClick = function(){
+		console.log("fuzzfinders.js removeEventListenerLostButtonClick");
 		$lostPetButton.off("click");
 	};
 
@@ -321,7 +324,7 @@ $(function(){
 
 	// bind events for found pet form section
 	var bindEventsFound = function(){
-		console.log("bindEventsFound");
+		console.log("fuzzfinders.js bindEventsFound");
 		addEventListenerFoundPetFormSubmit();
 		addEventListenerFocusFoundLastSeenPlaceholderInput();
 		addEventListenerBlurFoundLastSeenInput();
@@ -329,7 +332,7 @@ $(function(){
 
 	// remove events for found pet form section
 	var removeEventsFound = function(){
-		console.log("removeEventsFound");
+		console.log("fuzzfinders.js removeEventsFound");
 		removeEventListenerFoundPetFormSubmit();
 		removeEventListenerFocusFoundLastSeenPlaceholderInput();
 		removeEventListenerBlurFoundLastSeenInput();
@@ -362,16 +365,19 @@ $(function(){
 
   // bind events for found pet form section
   var bindEventsReports = function(){
+  	console.log("fuzzfinders.js bindEventsReports");
   	// reports buttonevents
   };
 
   // remove events for found pet form section
   var removeEventsReports = function(){
+  	console.log("fuzzfinders.js removeEventsReports");
   	// remove reports button events
   };
 
   // add event listener on click of found pet form button
   var addEventListenerReportButtonClick = function(){
+  	console.log("fuzzfinders.js addEventListenerReportButtonClick");
     $reportButton.on("click", function(event){
       event.preventDefault();
       // determine if open or closed
@@ -389,6 +395,7 @@ $(function(){
   };
 
   var removeEventListenerReportButtonClick = function(){
+  	console.log("fuzzfinders.js removeEventListenerReportButtonClick");
     $reportButton.off("click");
   };
 
