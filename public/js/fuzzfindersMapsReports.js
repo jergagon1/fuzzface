@@ -573,118 +573,6 @@ $(function(){
     $filterReportsButton.off("click");
   };
 
-  //--------------------- lost button ---------------------------//
-
-  // Controller: bind events for lost pet form section
-  var bindEventsLost = function(){
-    console.log("fuzzfindersMapsReports.js bindEventsLost");
-    // add lost button events
-  };
-
-  // Controller: remove event listeners for lost pet form section
-  var removeEventsLost = function(){
-    console.log("fuzzfindersMapsReports.js removeEventsLost");
-    // remove lost button events
-  };
-
-  // Controller: Add event listener to lost button click
-  var addEventListenerLostButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js addEventListenerLostButtonClick");
-    $lostPetButton.on("click", function(event){
-      event.preventDefault();
-      // determine if open or closed
-      if(checkIfFormSectionHidden($foundPetButton)){
-        // bind events
-        removeEventsFound();
-        removeEventsReports();
-        bindEventsLost();
-      } else {
-        // remove events
-        removeEventsLost();
-      }
-    });
-  };
-
-  // Controller: remove event listener for lost button click
-  var removeEventListenerLostButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js removeEventListenerLostButtonClick");
-    $lostPetButton.off("click");
-  };
-
-  //----------------------- found button -------------------------//
-
-  // Controller: bind events for found pet form section
-  var bindEventsFound = function(){
-    console.log("fuzzfindersMapsReports.js bindEventsFound");
-    // events for found button click
-  };
-
-  // Controller: remove events for found pet form section
-  var removeEventsFound = function(){
-    console.log("fuzzfindersMapsReports.js removeEventsFound");
-    // remove events for found button click
-  };
-
-  // Controller: add event listener on click of found pet form button
-  var addEventListenerFoundButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js addEventListenerFoundButtonClick");
-    $foundPetButton.on("click", function(event){
-      event.preventDefault();
-      // determine if open or closed
-      if(checkIfFormSectionHidden($foundPetButton)){
-        // bind events
-        removeEventsLost();
-        removeEventsReports();
-        bindEventsFound();
-      } else {
-        // remove events
-        removeEventsFound();
-      }
-    });
-  };
-
-  // Controller: remove event listener from found button
-  var removeEventListenerFoundButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js removeEventListenerFoundButtonClick");
-    $foundPetButton.off("click");
-  };
-
-  //--------------------- reports button -------------------------//
-
-  // Controller: bind events for found pet form section
-  var bindEventsReports = function(){
-    console.log("fuzzfindersMapsReports.js bindEventsReports");
-  };
-
-  // Controller: remove events for found pet form section
-  var removeEventsReports = function(){
-    console.log("fuzzfindersMapsReports.js removeEventsReports");
-  };
-
-  // Controller: add event listener on click of found pet form button
-  var addEventListenerReportButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js addEventListenerReportButtonClick");
-    $reportButton.on("click", function(event){
-      event.preventDefault();
-      // determine if open or closed
-      if(checkIfFormSectionHidden($reportButton)){
-        // bind events
-        removeEventsLost();
-        removeEventsFound();
-        bindEventsReports();
-      } else {
-        // remove events
-        removeEventsReports();
-      }
-    });
-  };
-
-  // Controller: remove event listener for report button click
-  var removeEventListenerReportButtonClick = function(){
-    console.log("fuzzfindersMapsReports.js removeEventListenerReportButtonClick");
-    $reportButton.off("click");
-  };
-
   //----------------------- page load ---------------------------//
 
   // Controller: enable or disable event listeners if on fuzzfinders page
@@ -694,9 +582,6 @@ $(function(){
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
-      addEventListenerLostButtonClick();
-      addEventListenerFoundButtonClick();
-      addEventListenerReportButtonClick();
       addEventListenerReportHideDetail();
       addEventListenerSubmitComment();
       addEventListenerFilterButtonClick();
@@ -707,9 +592,6 @@ $(function(){
       removeEventListenerInitializeLostMap();
       removeEventListenerInitializeFoundMap();
       removeEventListenerInitializeReportMap();
-      removeEventListenerLostButtonClick();
-      removeEventListenerFoundButtonClick();
-      removeEventListenerReportButtonClick();
       removeEventListenerReportHideDetail();
       removeEventListenerSubmitComment();
       removeEventListenerFilterButtonClick();
