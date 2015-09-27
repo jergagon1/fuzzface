@@ -124,11 +124,13 @@ $(function(){
 	var toggleFuzzfindersButtons = function($button){
 		console.log("fuzzfinders.js toggleFuzzfindersButtons");
 	  if (checkIfFormSectionHidden($button)){
+			slideUpAllForms();
+			removeSelectedClassFromButton($fuzzfindersButtons);
 	    slideDownButtonForm($button);
 	    addSelectedClassToButton($button);
 	  } else {
-	    slideUpButtonForm($button);
-	    removeSelectedClassFromButton($button);
+	  	slideUpAllForms();
+			removeSelectedClassFromButton($fuzzfindersButtons);
 	  }
 	};
 
