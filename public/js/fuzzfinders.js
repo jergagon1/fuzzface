@@ -4,6 +4,7 @@ $(function(){
 
 	// Model: lost pet form submission
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
+		console.log("fuzzfinders.js lostPetFormSubmit");
 		console.log($dataFromForm);
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
@@ -22,6 +23,7 @@ $(function(){
 
 	// Model: found pet form submission
 	var foundPetFormSubmit = function($dataFromForm, $foundForm){
+		console.log("fuzzfinders.js foundPetFormSubmit");
 		console.log($dataFromForm);
 		$.ajax({
 			url: "http://localhost:3000/api/v1/reports",
@@ -41,7 +43,7 @@ $(function(){
 
 	// Model: check if a form input element has a value set
 	var checkForValueInFormInput = function($input){
-		console.log("checkForValueInFormInput");
+		console.log("fuzzfinders.js checkForValueInFormInput");
 		if($input.val() === ""){
 			return false
 		} else {
@@ -51,6 +53,7 @@ $(function(){
 
 	// Model: return the last_seen object from the serialized form array
 	var retrieveLastSeenObject = function($formDataArray){
+		console.log("fuzzfinders.js retrieveLastSeenObject");
 		for (var i = 0; i < $formDataArray.length; i++) {
 			if($formDataArray[i].name === "report[last_seen]"){
 				return $formDataArray[i];
@@ -60,6 +63,7 @@ $(function(){
 
 	// Model: convert local time string to utc string
 	var convertLocalToUtc = function(localDateTimeString){
+		console.log("fuzzfinders.js convertLocalToUtc");
 		var localTimeObj = moment(localDateTimeString);
 		var utcTimeObj = localTimeObj.utc();
 		return utcTimeObj.format();
@@ -82,53 +86,57 @@ $(function(){
 
 	// View: Hide/collapse the lost or found forms or reports list if open on page load
 	var hideAllForms = function() {
-		console.log("hideAllForms");
+		console.log("fuzzfinders.js hideAllForms");
 		$fuzzfindersButtons.siblings().hide();
 	};
 
 	// View: Slide closed the lost form, the found form and the report list if open
 	var slideUpAllForms = function() {
-		console.log("slideUpAllForms");
+		console.log("fuzzfinders.js slideUpAllForms");
 		$fuzzfindersButtons.siblings().slideUp("slow");
 	};
 
 	// View: Add the selected-button class to the passed-in button
 	var addSelectedClassToButton = function($buttonToSelect){
+		console.log("fuzzfinders.js addSelectedClassToButton");
 		$buttonToSelect.addClass("selected-button");
 	};
 
 	// View: Remove the selected-button class from the passed-in button
 	var removeSelectedClassFromButton = function($buttonToDeselect){
+		console.log("fuzzfinders.js removeSelectedClassFromButton");
 		$buttonToDeselect.removeClass("selected-button");
 	};
 
 	// View: Reveal the sibling content -form or list - of the passed-in button
 	var slideDownButtonForm = function($button){
+		console.log("fuzzfinders.js slideDownButtonForm");
 		$button.siblings().first().slideDown("slow");
 	};
 
 	// View: Slide closed the form or list adjacent to the passed-in button
 	var slideUpButtonForm = function($button){
+		console.log("fuzzfinders.js slideUpButtonForm");
 	  $button.siblings().first().slideUp();
 	};
 
 	// View: Slide open or closed form and list content adjacent to large buttons
 	var toggleFuzzfindersButtons = function($button){
-		console.log("toggleFuzzfindersButtons");
-		slideUpAllForms();
-		removeSelectedClassFromButton($fuzzfindersButtons);
+		console.log("fuzzfinders.js toggleFuzzfindersButtons");
 	  if (checkIfFormSectionHidden($button)){
+			slideUpAllForms();
+			removeSelectedClassFromButton($fuzzfindersButtons);
 	    slideDownButtonForm($button);
 	    addSelectedClassToButton($button);
 	  } else {
-	    slideUpButtonForm($button);
-	    removeSelectedClassFromButton($button);
+	  	slideUpAllForms();
+			removeSelectedClassFromButton($fuzzfindersButtons);
 	  }
 	};
 
 	// View: determine if button form section is hidden
 	var checkIfFormSectionHidden = function($button){
-		console.log("checkIfFormSectionHidden");
+		console.log("fuzzfinders.js checkIfFormSectionHidden");
 		if ($button.siblings().first().is(":hidden")){
 			console.log("hidden");
 			return true
@@ -140,12 +148,13 @@ $(function(){
 
 	// View: update the user wags text to display argument value
 	var updateWags = function(value) {
+		console.log("fuzzfinders.js updateWags");
 		$wags.text(value);
 	};
 
 	// View: reset form input controls
 	var resetFormInputs = function(){
-		console.log("resetFormInputs");
+		console.log("fuzzfinders.js resetFormInputs");
 		$("input[type='text']").val('');
 		$("textarea").val("");
 		$("select").prop("selectedIndex", 0);
@@ -153,7 +162,7 @@ $(function(){
 
 	// View: reset inputs and buttons on form submittal
 	var resetViewOnFormSubmit = function($formElement){
-		console.log("resetViewOnFormSubmit");
+		console.log("fuzzfinders.js resetViewOnFormSubmit");
 		resetFormInputs();
 		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
@@ -161,7 +170,7 @@ $(function(){
 
 	// View: toggle display of last-seen-placeholder and last-seen input fields
 	var toggleDisplayLastSeenFormInputFields = function($lastSeen, $lastSeenPlaceholder){
-		console.log("toggleDisplayLastSeenFormInputFields");
+		console.log("fuzzfinders.js toggleDisplayLastSeenFormInputFields");
 		$lastSeen.toggle();
 		$lastSeenPlaceholder.toggle();
 		if($lastSeenPlaceholder.is(":hidden")){
@@ -174,6 +183,7 @@ $(function(){
 
 	// Controller: Add event listener for lost pet form submit button
 	var addEventListenerLostPetFormSubmit = function(){
+		console.log("fuzzfinders.js addEventListenerLostPetFormSubmit");
 		$lostPetForm.on("submit", function(event){
 			event.preventDefault();
 			var $form = $(this);
@@ -189,11 +199,13 @@ $(function(){
 
 	// Controller: Remove event listener for lost pet form submit button
 	var removeEventListenerLostPetFormSubmit = function(){
+		console.log("fuzzfinders.js removeEventListenerLostPetFormSubmit");
 		$lostPetForm.off("submit");
 	};
 
 	// Controller: Add event listener for found pet form submit button
 	var addEventListenerFoundPetFormSubmit = function(){
+		console.log("fuzzfinders.js addEventListenerFoundPetFormSubmit");
 		$foundPetForm.on("submit", function(event){
 			event.preventDefault();
 			var $form = $(this);
