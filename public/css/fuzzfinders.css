@@ -163,3 +163,16 @@ li {
 .recent-reports-form {
   padding-top: 15px;
 }
+
+.info-window-thumb {
+  display: inline-block;
+  width: 8rem;
+  float: left;
+}
+
+.info-window-text {
+  display: inline-block;
+  float: left;
+  width: 7rem;
+  margin-left: 1rem;
+}
