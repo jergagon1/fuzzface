@@ -34,7 +34,7 @@ $(function(){
 
   // Controller: initialize event handlers if on signin/signup page
   var initializeSignInUp = (function(){
-    if (checkForElement(".sign-in-form-container")) {
+    if (myApp.checkForElement(".sign-in-form-container")) {
       // add initializers and event listeners
       hideSignUpForm();
       addEventListenerToggleSignInSignUpForm();

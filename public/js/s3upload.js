@@ -60,7 +60,7 @@ $(function() {
   };
 
   var initializeDirectUpload = (function(){
-    if (checkForElement(".directUpload")) {
+    if (myApp.checkForElement(".directUpload")) {
       // on page with direct image uploads
       createDirectUploadForms();
     }

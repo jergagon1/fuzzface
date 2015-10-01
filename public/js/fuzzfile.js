@@ -12,7 +12,7 @@ $(function() {
 
 
   var initializeFuzzfile = (function(){
-    if (checkForElement(".fuzzfile")) {
+    if (myApp.checkForElement(".fuzzfile")) {
       // on fuzzfile page
     } else {
       // not on fuzzfile page

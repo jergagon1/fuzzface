@@ -1,3 +1,7 @@
+var myApp = myApp || {};
+myApp.fuzzfinders = myApp.fuzzfinders || {};
+myApp.fuzzfinders.model = myApp.fuzzfinders.model || {};
+
 $(function() {
 
   //========================== Model ==========================//
@@ -14,7 +18,7 @@ $(function() {
 
   // Controller: check if element occurs on a page
   // global namespace to make available to other js files
-  window.checkForElement = function(element){
+  myApp.checkForElement = function(element){
     return ($(element).length > 0) ? true : false;
   }
 
@@ -52,12 +56,13 @@ $(function() {
       var message = fuzzflash.message;
       $('div.notification').text(message);
       clearFuzzflash();
+      myApp.fuzzfinders.model.getRecentReports();
     });
   };
 
   // Controller: determine page and assign or remove event listeners
   var checkIfOnSignInUpPage = (function(){
-    if(checkForElement(".sign-in-form-container")){
+    if(myApp.checkForElement(".sign-in-form-container")){
       // on signInUp page
       removeEventListenerToggleDisplaySidebarMenu();
     } else {

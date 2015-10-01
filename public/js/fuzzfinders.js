@@ -415,7 +415,7 @@ $(function(){
 
 	// Controller: initialize event listeners if on FuzzFinders Page
 	var initializeFuzzfinders = (function(){
-		if (checkForElement(".fuzzfinders-buttons")) {
+		if (myApp.checkForElement(".fuzzfinders-buttons")) {
 			// on fuzzfinders page
 			hideAllForms();
 			addEventListenerLostButtonClick();
