@@ -152,10 +152,6 @@ $(function(){
     return valuesArray.sort();
   };
 
-  // Model: Write array values to datatag
-  var writeArrayValuesToDataTag = function($inputDropdown, valuesArray){
-    $inputDropdown.attr("data-values", valuesArray);
-  };
 
   //========================== View ==========================//
 
