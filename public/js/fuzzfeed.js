@@ -1,6 +1,6 @@
 $(function() {
 
-  //------------------------- Model -------------------------------//
+  //========================== Model ==========================//
 
   // Model: retrieve articles for feed
   var getArticles = function() {
@@ -44,7 +44,7 @@ $(function() {
     })
   };
 
-  //------------------------- View -------------------------------//
+  //========================== View ==========================//
 
   // View: Hide/collapse the lost or found forms or reports list if open on page load
   var hideAllSiblings = function(element) {
@@ -98,7 +98,7 @@ $(function() {
     $form.parent().children(":first").removeClass("selected-button");
   };
 
-  //------------------------- Controller -------------------------------//
+  //======================== Controller ========================//
 
   var addEventListenerToggleFuzzfeedButtons = function(){
     $(".fuzzfeed-buttons").on("click", function(event){
