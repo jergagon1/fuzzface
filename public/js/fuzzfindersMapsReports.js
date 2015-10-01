@@ -8,18 +8,21 @@ $(function(){
 
   // Model: Add lat and lng value of marker to hidden form input field for submission with report
   var addLatLongAttr = function(lat, lng) {
+    console.log("fuzzfindersMapsReports.js addLatLongAttr");
     $('.hidden-lat-field').attr('value', lat);
     $('.hidden-lng-field').attr('value', lng);
   };
 
   // Model: set recent reports form hidden input values for SW and NE coordinates
   var setRecentReportsHiddenFormInputFields = function(southWestCoord,northEastCoord){
+    console.log("fuzzfindersMapsReports.js setRecentReportsHiddenFormInputFields");
     $("input[name='sw']").attr('value', southWestCoord);
     $("input[name='ne']").attr('value', northEastCoord);
   };
 
   // Model: convert a UTC/Zulu timestamp to local time
   var convertUtcToLocal = function(utcTimestamp) {
+    console.log("fuzzfindersMapsReports.js convertUtcToLocal");
     var time = moment.utc(utcTimestamp);
     var timeString = time.local().format("ddd MM/DD/YYYY h:mm a");
     return timeString;
@@ -27,6 +30,7 @@ $(function(){
 
   // Model: iterate through array of records and update timestamps in specific field
   var updateTimestamps = function(recordArray, fieldToUpdate) {
+    console.log("fuzzfindersMapsReports.js updateTimestamps");
     for (var i = 0; i < recordArray.length; i++) {
       if(recordArray[i][fieldToUpdate] !== null){
         recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
@@ -36,7 +40,7 @@ $(function(){
 
   // Model: Remove the markers from the map
   var removeReportMapMarkers = function(markerArray){
-    // console.log(markerArray);
+    console.log("fuzzfindersMapsReports.js removeReportMapMarkers");
     for(i=0; i<markerArray.length; i++){
       markerArray[i].setMap(null);
     }
@@ -74,7 +78,7 @@ $(function(){
 
   // Model: retrieve report details, tags and comments
   var getReportDetails = function($reportLi, $id){
-    console.log("getReportDetails");
+    console.log("fuzzfindersMapsReports.js getReportDetails");
     removeReportDetails($reportLi);
     // var $currentReportSummary = $reportLi.find(".report-summary");
     $.ajax({
@@ -104,6 +108,7 @@ $(function(){
 
   // Model: submit comment data to server api
   var submitComment = function($form, $formData, $reportId){
+    console.log("fuzzfindersMapsReports.js submitComment");
     var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments"
     var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
     var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
@@ -132,6 +137,7 @@ $(function(){
 
   // Model: loop through an array of records and create a unique sorted array of a specific field value
   var createArrayUniqueValues = function(recordsArray, fieldKey){
+    console.log("fuzzfindersMapsReports.js createArrayUniqueValues");
     var valuesArray = [];
     $.each(recordsArray, function (i, j) {
       if ($.inArray(j[fieldKey], valuesArray) == -1 && j[fieldKey] != "") {
@@ -163,35 +169,37 @@ $(function(){
 
   // View: reset the form inputs
   var resetFormInputs = function(){
-    console.log("resetFormInputs");
+    console.log("fuzzfindersMapsReports.js resetFormInputs");
     $("input[type='text']").val('');
     $("textarea").val("");
     $("select").prop("selectedIndex", 0);
   };
 
-  // // View: Remove the option values from a select dropdown menu
-  // var removeValuesFromSelectDropdown = function($inputDropdown){
-  //   $inputDropdown.children().slice(1).remove();
-  // };
+  // View: Remove the option values from a select dropdown menu
+  var removeValuesFromSelectDropdown = function($inputDropdown){
+    $inputDropdown.children().slice(1).remove();
+  };
 
-  // // View: Append array values as options in select dropdown menu
-  // var appendValuesFromDataTagToSelectDropdown = function($inputDropdown){
-  //   var valueArray = $inputDropdown.data("values").split(",");
-  //   console.log(valueArray);
-  //   var seloptions = "";
-  //   $.each(valueArray,function(i){
-  //       seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i]+'</option>';
-  //   });
-  //   $inputDropdown.append(seloptions);
-  // };
+  // View: Append array values as options in select dropdown menu
+  var appendValuesToSelectDropdown = function($inputDropdown, valueArray){
+    // var valueArray = $inputDropdown.data("values").split(",");
+    // console.log(valueArray);
+    var seloptions = "";
+    $.each(valueArray,function(i){
+        seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i]+'</option>';
+    });
+    $inputDropdown.append(seloptions);
+  };
 
   // View: hide the reports filter form
   var hideReportFilterForm = function(){
+    console.log("fuzzfindersMapsReports.js hideReportFilterForm");
     $(".recent-reports-form").hide();
   };
 
   // View: check if the div containing the report comments is hidden
   var checkIfCommentsListDivHidden = function($commentDiv){
+    console.log("fuzzfindersMapsReports.js checkIfCommentsListDivHidden");
     if($commentDiv.is(":hidden")){
       return true
     } else {
@@ -201,6 +209,7 @@ $(function(){
 
   // View: show the report comments div if it is hidden
   var showCommentsListDivIfHidden = function($commentsDiv){
+    console.log("fuzzfindersMapsReports.js showCommentsListDivIfHidden");
     if(checkIfCommentsListDivHidden($commentsDiv)) {
       console.log("hidden");
       // if hidden display comments div
@@ -212,6 +221,7 @@ $(function(){
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
+    console.log("fuzzfindersMapsReports.js createMarkers");
     for(var i = 0; i < reports.length; i++ ) {
       if (reports[i].report_type !== "") {
         setMarkerType(reports[i]);
@@ -223,6 +233,7 @@ $(function(){
 
   // View: create a marker for a report
   var setMarkerType = function(report) {
+    console.log("fuzzfindersMapsReports.js setMarkerType");
     report_lat = report.lat;
     report_lng = report.lng;
     var reportPos = new google.maps.LatLng(report_lat, report_lng);
