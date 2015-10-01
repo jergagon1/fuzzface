@@ -194,17 +194,16 @@ $(function(){
     $inputDropdown.append(seloptions);
   };
 
-
   // View: hide the reports filter form
   var hideReportFilterForm = function(){
     console.log("fuzzfindersMapsReports.js hideReportFilterForm");
-    $(".recent-reports-form").hide();
+    $recentReportsForm.hide();
   };
 
-  // View: check if the div containing the report comments is hidden
-  var checkIfCommentsListDivHidden = function($commentDiv){
-    console.log("fuzzfindersMapsReports.js checkIfCommentsListDivHidden");
-    if($commentDiv.is(":hidden")){
+  // View: check if a div is hidden
+  var checkIfDivHidden = function($div){
+    console.log("fuzzfindersMapsReports.js checkIfDivHidden");
+    if($div.is(":hidden")){
       return true
     } else {
       return false
@@ -214,7 +213,7 @@ $(function(){
   // View: show the report comments div if it is hidden
   var showCommentsListDivIfHidden = function($commentsDiv){
     console.log("fuzzfindersMapsReports.js showCommentsListDivIfHidden");
-    if(checkIfCommentsListDivHidden($commentsDiv)) {
+    if(checkIfDivHidden($commentsDiv)) {
       console.log("hidden");
       // if hidden display comments div
       $commentsDiv.show();
@@ -300,6 +299,22 @@ $(function(){
     removeReportDetails($reportListItem);
     addUnselectedClass($reportListItem);
     toggleHideIcon($reportListItem);
+  };
+
+  var slideDownReportFilterForm = function(){
+    $recentReportsForm.slideDown("slow");
+  };
+
+  var slideUpReportFilterForm = function(){
+    $recentReportsForm.slideUp("slow");
+  };
+
+  var addSelectedClassToFilterButton = function(){
+    $filterReportsButton.addClass("selected-button");
+  };
+
+  var removeSelectedClassFromFilterButton = function(){
+    $filterReportsButton.removeClass("selected-button");
   };
 
   //========================== Controller ==========================//
@@ -587,6 +602,19 @@ $(function(){
     $filterReportsButton.on("click", function(event){
       event.preventDefault();
       console.log("Filter Button Clicked");
+      if(checkIfDivHidden($recentReportsForm)){
+        console.log("filter form hidden");
+        // slide down slow
+        slideDownReportFilterForm();
+        // add selected class
+        addSelectedClassToFilterButton();
+      } else {
+        console.log("filter form shown");
+        // slide up slow
+        slideUpReportFilterForm();
+        // remove selected class
+        removeSelectedClassFromFilterButton();
+      }
     });
   };
 
@@ -599,6 +627,7 @@ $(function(){
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
     if (checkForElement(".fuzzfinders-buttons")) {
+      hideReportFilterForm();
       addEventListenerToAllGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
