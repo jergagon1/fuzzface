@@ -181,16 +181,19 @@ $(function(){
     $inputDropdown.children().slice(1).remove();
   };
 
+  String.prototype.capitalize = function() {
+    return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+  };
+
   // View: Append array values as options in select dropdown menu
   var appendValuesToSelectDropdown = function($inputDropdown, valueArray){
-    // var valueArray = $inputDropdown.data("values").split(",");
-    // console.log(valueArray);
     var seloptions = "";
     $.each(valueArray,function(i){
-        seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i]+'</option>';
+        seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i].capitalize()+'</option>';
     });
     $inputDropdown.append(seloptions);
   };
+
 
   // View: hide the reports filter form
   var hideReportFilterForm = function(){
