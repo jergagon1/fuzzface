@@ -47,7 +47,8 @@ $(function(){
   };
 
   // Model: Retrieve reports in map area
-  var getRecentReports = function() {
+  var getRecentReports = function($dynamicFilter) {
+    console.log("fuzzfindersMapsReports.js getRecentReports");
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/mapquery",
       type: "GET",
@@ -62,14 +63,18 @@ $(function(){
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-      // get array of unique breed values from response
       var breedArray = createArrayUniqueValues(response, "breed");
-      // write breed values to breed dropdown data-values tag
-      writeArrayValuesToDataTag($(".breed-select"), breedArray);
-      // get array of unique color values from response
+      removeValuesFromSelectDropdown($(".breed-select"));
+      appendValuesToSelectDropdown($(".breed-select"), breedArray);
       var colorArray = createArrayUniqueValues(response, "color");
-      // write color values to color dropdown data-values tag
-      writeArrayValuesToDataTag($(".color-select"), colorArray);
+      removeValuesFromSelectDropdown($(".color-select"));
+      appendValuesToSelectDropdown($(".color-select"), colorArray);
+      if($dynamicFilter){
+        console.log("dynamic filter used");
+        $dynamicFilter.prop("selectedIndex", 1)
+      } else {
+        console.log("dynamic filter not used");
+      }
     })
     .fail(function(){
       console.log("reports request fail!");
@@ -549,7 +554,13 @@ $(function(){
   var addEventListenerOnChangeReportFilterControls = function(){
     $(".filter-control").on("change", function(event){
       event.preventDefault();
-      getRecentReports();
+      var $currentControl = $(this);
+      console.log($currentControl);
+      if ($currentControl.hasClass("breed-select") || $currentControl.hasClass("color-select")){
+        getRecentReports($currentControl);
+      } else {
+        getRecentReports();
+      }
     });
   };
 
