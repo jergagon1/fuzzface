@@ -1,10 +1,10 @@
 $(function(){
 
-  //------------------------- Model -------------------------------//
+  //========================== Model ==========================//
 
 
 
-  //------------------------- View -------------------------------//
+  //========================== View ==========================//
 
   // View: hide the sign up form
   var hideSignUpForm = function(){
@@ -17,7 +17,7 @@ $(function(){
     $(".signUp").toggle();
   };
 
-  //------------------------- Controller -------------------------------//
+  //======================= Controller =======================//
 
   // Controller: add event listener to link to toggle sign in and sign up form
   var addEventListenerToggleSignInSignUpForm = function(){

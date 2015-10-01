@@ -1,16 +1,16 @@
 $(function() {
 
-  //------------------------- Model -------------------------------//
+  //========================== Model ==========================//
 
 
-  //------------------------- View -------------------------------//
+  //========================== View ==========================//
 
   // View: Toggle display of hamburger side menu
   var toggleDisplaySidebarMenu = function(){
     $("#wrapper").toggleClass("toggled");
   };
 
-  //---------------------- Controller ----------------------------//
+  //======================= Controller =======================//
 
   // Controller: check if element occurs on a page
   // global namespace to make available to other js files
