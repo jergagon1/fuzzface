@@ -237,6 +237,7 @@ $(function(){
   // View: create a marker for a report
   var setMarkerType = function(report) {
     console.log("fuzzfindersMapsReports.js setMarkerType");
+    var infoWin = createMarkerInfoWindow(report);
     report_lat = report.lat;
     report_lng = report.lng;
     var reportPos = new google.maps.LatLng(report_lat, report_lng);
@@ -246,6 +247,12 @@ $(function(){
       icon: selectIcon(report.report_type),
       title: report.pet_name
     })
+    marker.addListener('mouseover', function() {
+      infoWin.open(reportMap, marker);
+    });
+    marker.addListener('mouseout', function(){
+      infoWin.close();
+    });
     reportMapMarkers.push(marker);
   };
 
@@ -258,6 +265,28 @@ $(function(){
     } else {
       console.log('no report type');
     }
+  };
+
+  // View: create an info window for a report marker
+  var createMarkerInfoWindow = function(report){
+    var caption = report.report_type.capitalize();
+    if (report.animal_type) {
+      caption = caption + " " + report.animal_type.capitalize();
+    } else {
+      caption = caption + " " + "Pet"
+    }
+    if (report.pet_name) {
+      caption = caption + " " + report.pet_name.capitalize();
+    }
+    var infoWindowContent =
+      '<div class="info-window-content" data-reportid="' + report.id + '">' +
+        '<img class="info-window-thumb" src="' + report.img_url + '">' +
+        '<p class="info-window-text">' + caption + '</p>' +
+      '</div>';
+    var infowindow = new google.maps.InfoWindow({
+      content: infoWindowContent
+    });
+    return infowindow;
   };
 
   // View: remove the report detail section for report li
