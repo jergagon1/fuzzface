@@ -128,7 +128,7 @@ $(function() {
 
   // Controller: initialize functions and eventlisteners if on fuzzfeed page
   var initializeFuzzfeed = (function(){
-    if (checkForElement(".fuzzfeed-buttons")) {
+    if (myApp.checkForElement(".fuzzfeed-buttons")) {
       // on fuzzfeed page
       hideAllSiblings(".fuzzfeed-buttons");
       getArticles();

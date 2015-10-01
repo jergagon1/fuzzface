@@ -84,6 +84,7 @@ body {
 	text-align: center;
 	font-size: 2em;
 	padding-bottom: .3em;
+	z-index: 9998;
 }
 
 

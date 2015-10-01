@@ -47,8 +47,8 @@ $(function(){
   };
 
   // Model: Retrieve reports in map area
-  var getRecentReports = function($dynamicFilter) {
-    console.log("fuzzfindersMapsReports.js getRecentReports");
+  myApp.fuzzfinders.model.getRecentReports = function($dynamicFilter) {
+    console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.model.getRecentReports");
     $.ajax({
       url: "http://localhost:3000/api/v1/reports/mapquery",
       type: "GET",
@@ -460,7 +460,7 @@ $(function(){
           ne = ne_bounds.toString().substr(1, ne_string.length-2);
           sw = sw_bounds.toString().substr(1, sw_string.length-2);
           setRecentReportsHiddenFormInputFields(sw,ne);
-          getRecentReports();
+          myApp.fuzzfinders.model.getRecentReports();
         });
         reportMap.setCenter(pos);
       }, function() {
@@ -571,9 +571,9 @@ $(function(){
       var $currentControl = $(this);
       console.log($currentControl);
       if ($currentControl.hasClass("breed-select") || $currentControl.hasClass("color-select")){
-        getRecentReports($currentControl);
+        myApp.fuzzfinders.model.getRecentReports($currentControl);
       } else {
-        getRecentReports();
+        myApp.fuzzfinders.model.getRecentReports();
       }
     });
   };
@@ -588,7 +588,7 @@ $(function(){
       event.preventDefault();
       console.log("reset button clicked");
       resetFormInputs();
-      getRecentReports();
+      myApp.fuzzfinders.model.getRecentReports();
     });
   };
 
@@ -626,7 +626,7 @@ $(function(){
 
   // Controller: enable or disable event listeners if on fuzzfinders page
   var initializeFuzzfindersMapsReports = (function(){
-    if (checkForElement(".fuzzfinders-buttons")) {
+    if (myApp.checkForElement(".fuzzfinders-buttons")) {
       hideReportFilterForm();
       addEventListenerToAllGetReportDetails();
       addEventListenerInitializeLostMap();
