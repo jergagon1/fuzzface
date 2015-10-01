@@ -141,3 +141,25 @@ li {
     font-size: 2rem;
     color: #333;
 }
+
+/* styles for report map legend */
+
+.report-map-legend {
+  padding-top: 15px;
+}
+
+.report-map-legend ul {
+  padding: 0;
+  width: 100%;
+}
+
+.report-map-legend ul li {
+  display: inline-block;
+  width: 48%;
+  padding: 0;
+  /*padding-right: 1rem;*/
+}
+
+.recent-reports-form {
+  padding-top: 15px;
+}
