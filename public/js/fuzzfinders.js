@@ -183,11 +183,13 @@ $(function(){
 
 	// View: Remove preview images for image upload
 	var removeImageUploadPreviews = function(){
+		console.log("fuzzfinders.js removeImageUploadPreviews");
 		$(".image-upload-preview").children().remove();
 	};
 
 	// View: reset image upload button progress bar and text
 	var resetImageUpload = function(){
+		console.log("fuzzfinders.js resetImageUpload");
 		$(".bar").remove();
 	}
 
@@ -233,11 +235,13 @@ $(function(){
 
 	// Controller: Remove event listener for found pet form submit button
 	var removeEventListenerFoundPetFormSubmit = function(){
+		console.log("fuzzfinders.js removeEventListenerFoundPetFormSubmit");
 		$foundPetForm.off("submit");
 	};
 
 	// Controller: Add event listener on focus in lost form last seen field
 	var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
+		console.log("fuzzfinders.js addEventListenerFocusLostLastSeenPlaceholderInput");
 		$lostLastSeenPlaceholder.on("focus", function(event){
 			toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
 			removeEventListenerFocusLostLastSeenPlaceholderInput();
@@ -246,11 +250,13 @@ $(function(){
 
 	// Controller: Remove event listener for focus in lost form last seen field
 	var removeEventListenerFocusLostLastSeenPlaceholderInput = function(){
+		console.log("fuzzfinders.js removeEventListenerFocusLostLastSeenPlaceholderInput");
 		$lostLastSeenPlaceholder.off("focus");
 	};
 
 	// Controller: Add Event Listener on focus in the found form last seen input field
 	var addEventListenerFocusFoundLastSeenPlaceholderInput = function(){
+		console.log("fuzzfinders.js addEventListenerFocusFoundLastSeenPlaceholderInput");
 		$foundLastSeenPlaceholder.on("focus", function(event){
 			// console.log("in focus!");
 			toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
@@ -260,6 +266,7 @@ $(function(){
 
 	// Controller: Remove Event Listener for focus in found form last seen input field
 	var removeEventListenerFocusFoundLastSeenPlaceholderInput = function(){
+		console.log("fuzzfinders.js removeEventListenerFocusFoundLastSeenPlaceholderInput");
 		$foundLastSeenPlaceholder.off("focus");
 	};
 
@@ -268,6 +275,7 @@ $(function(){
 	// toggle display of the placeholder text input field
 	// else retain datetime-local display and value
 	var addEventListenerBlurLostLastSeenInput = function(){
+		console.log("fuzzfinders.js addEventListenerBlurLostLastSeenInput");
 		$lostLastSeen.on("blur", function(){
 			console.log("in blur!");
 			if(checkForValueInFormInput($lostLastSeen) === false){
@@ -279,6 +287,7 @@ $(function(){
 
 	// Controller: Remove event listener for blur out of Lost form last seen input field
 	var removeEventListenerBlurLostLastSeenInput = function(){
+		console.log("fuzzfinders.js removeEventListenerBlurLostLastSeenInput");
 		$lostLastSeen.off("blur");
 	};
 
@@ -287,6 +296,7 @@ $(function(){
 	// toggle display of the placeholder text input field
 	// else retain datetime-local display and value
 	var addEventListenerBlurFoundLastSeenInput = function(){
+		console.log("fuzzfinders.js addEventListenerBlurFoundLastSeenInput");
 		$foundLastSeen.on("blur", function(){
 			console.log("in blur!");
 			if(checkForValueInFormInput($foundLastSeen) === false){
@@ -298,6 +308,7 @@ $(function(){
 
 	// Controller: Remove event listener for blur out of Found form last seen input field
 	var removeEventListenerBlurFoundLastSeenInput = function(){
+		console.log("fuzzfinders.js removeEventListenerBlurFoundLastSeenInput");
 		$foundLastSeen.off("blur");
 	};
 
@@ -364,6 +375,7 @@ $(function(){
 
 	// add event listener on click of found pet form button
 	var addEventListenerFoundButtonClick = function(){
+		console.log("fuzzfinders.js addEventListenerFoundButtonClick");
 		$foundPetButton.on("click", function(event){
 			event.preventDefault();
 			console.log("FoundButtonClick");
@@ -382,6 +394,7 @@ $(function(){
 	};
 
 	var removeEventListenerFoundButtonClick = function(){
+		console.log("fuzzfiners.js removeEventListenerFoundButtonClick");
 		$foundPetButton.off("click");
 	};
 

@@ -11,6 +11,7 @@ $(function() {
 
   // View: Toggle display of hamburger side menu
   var toggleDisplaySidebarMenu = function(){
+    console.log("application.js toggleDisplaySidebarMenu");
     $("#wrapper").toggleClass("toggled");
   };
 
@@ -19,11 +20,13 @@ $(function() {
   // Controller: check if element occurs on a page
   // global namespace to make available to other js files
   myApp.checkForElement = function(element){
+    console.log("application.js myApp.checkForElement");
     return ($(element).length > 0) ? true : false;
   }
 
   // Controller: add event listener to sidebar menu button
   var addEventListenerToggleDisplaySidebarMenu = function(){
+    console.log("application.js addEventListenerToggleDisplaySidebarMenu");
     $("#menu-toggle").click(function(event) {
       event.preventDefault();
       toggleDisplaySidebarMenu();
@@ -32,11 +35,13 @@ $(function() {
 
   // Controller: remove event listener to sidebar menu button
   var removeEventListenerToggleDisplaySidebarMenu = function(){
+    console.log("application.js removeEventListenerToggleDisplaySidebarMenu");
     $("#menu-toggle").off()
   };
 
   // Controller: Instantiate chat widget
   var instantiateChatWidget = function(){
+    console.log("application.js instantiateChatWidget");
     var pusher = new Pusher(gon.pusher_key);
     var chatWidget = new PusherChatWidget(pusher, {
       channelName: gon.channel_name,
@@ -45,6 +50,7 @@ $(function() {
 
   // Controller: Initialize FuzzFlash - Notification when new lost or found pet report created
   var initializeFuzzFlash = function(){
+    console.log("application.js initializeFuzzFlash");
     var clearFuzzflash = function() {
       setTimeout(function() {
         $('div.notification').text("");

@@ -166,6 +166,7 @@ $(function(){
 
   // View: Set dropdown values for dynamic report dropdown filters
   var populateDynamicReportsFilters = function(reportsArray){
+    console.log("fuzzfindersMapsReports.js populateDynamicReportsFilters");
     var breedArray = createArrayUniqueValues(reportsArray, "breed");
     removeValuesFromSelectDropdown($(".breed-select"));
     appendValuesToSelectDropdown($(".breed-select"), breedArray);
@@ -176,6 +177,7 @@ $(function(){
 
   // View: if dynamic filter used set display value to filtered value
   var setDynamicFilterDropdownValue = function($dropdown){
+    console.log("fuzzfindersMapsReports.js setDynamicFilterDropdownValue");
     $dropdown.prop("selectedIndex", 1);
   };
 
@@ -189,6 +191,7 @@ $(function(){
 
   // View: Remove the option values from a select dropdown menu
   var removeValuesFromSelectDropdown = function($inputDropdown){
+    console.log("fuzzfindersMapsReports.js removeValuesFromSelectDropdown");
     $inputDropdown.children().slice(1).remove();
   };
 
@@ -198,6 +201,7 @@ $(function(){
 
   // View: Append array values as options in select dropdown menu
   var appendValuesToSelectDropdown = function($inputDropdown, valueArray){
+    console.log("fuzzfindersMapsReports.js appendValuesToSelectDropdown");
     var seloptions = "";
     $.each(valueArray,function(i){
         seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i].capitalize()+'</option>';
@@ -269,6 +273,7 @@ $(function(){
 
   // View: returns image icon url for lost or found reports based on reportType argument passed in
   var selectIcon = function(reportType) {
+    console.log("fuzzfindersMapsReports.js selectIcon");
     if (reportType === 'lost') {
       return '/images/FuzzFinders_icon_orange.png'
     } else if (reportType === 'found') {
@@ -280,6 +285,7 @@ $(function(){
 
   // View: create an info window for a report marker
   var createMarkerInfoWindow = function(report){
+    console.log("fuzzfindersMapsReports createMarkerInfoWindow");
     var caption = report.report_type.capitalize();
     if (report.animal_type) {
       caption = caption + " " + report.animal_type.capitalize();
@@ -302,11 +308,13 @@ $(function(){
 
   // View: remove the report detail section for report li
   var removeReportDetails = function($reportLi){
+    console.log("fuzzfindersMapsReports.js removeReportDetails");
     $reportLi.find(".report-summary").siblings().remove();
   };
 
   // View: Render handlebars templates
   var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
+    console.log("fuzzfindersMapsReports.js renderTemplates");
     prepend = prepend || false;
     var source =  $templateLocation.html();
     var template = Handlebars.compile(source);
@@ -320,7 +328,7 @@ $(function(){
 
   // View: determine if button form section is hidden
   var checkIfFormSectionHidden = function($button){
-    console.log("checkIfFormSectionHidden");
+    console.log("fuzzfindersMapsReport.js checkIfFormSectionHidden");
     if ($button.siblings().first().is(":hidden")){
       console.log("hidden");
       return true
@@ -331,11 +339,13 @@ $(function(){
 
   // View: toggle display of report hide glyphicon
   var toggleHideIcon = function($reportListItem){
+    console.log("fuzzfindersMapsReports.js toggleHideIcon");
     $reportListItem.find(".report-detail-hide").toggle();
   };
 
   // View: reset report summary
   var resetReport = function($reportListItem){
+    console.log("fuzzfindersMapsReports.js resetReport");
     removeReportDetails($reportListItem);
     addUnselectedClass($reportListItem);
     toggleHideIcon($reportListItem);
@@ -534,16 +544,19 @@ $(function(){
 
   // Controller: Add DOM listener to initialize report map on report button click
   var addEventListenerInitializeReportMap = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerInitializeReportMap");
     google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Remove DOM listener to initialize report map on report button click
   var removeEventListenerInitializeReportMap = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerInitializeReportMap");
     google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
   var addEventListenerToAllGetReportDetails = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerToAllGetReportDetails");
     $reportsList.on("click", ".unselected", function() {
       console.log("report summary clicked");
       $clickedReport = $(this);
@@ -554,23 +567,25 @@ $(function(){
 
   // Controller: Remove delegated event listener to reports in reports list
   var removeEventListenerAllGetReportDetails = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerAllGetReportDetails");
     $reportsList.off("click", ".unselected");
   };
 
   // Controller: unselected class adds delegated event listener to show report details
   var addUnselectedClass = function($reportListItem){
-    console.log("unselected class added");
+    console.log("fuzzfindersMapsReports.js addUnselectedClass");
     $reportListItem.addClass("unselected");
   };
 
   // Controller: remove unselected class to disable delegated event listener to show report details
   var removeUnselectedClass = function($reportListItem){
-    console.log("unselected class removed");
+    console.log("fuzzfindersMapsReports.js removeUnselectedClass");
     $reportListItem.removeClass("unselected");
   };
 
   // Controller: add event listener to hide icon in selected report
   var addEventListenerReportHideDetail = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerReportHideDetail");
     $reportsList.on("click", ".report-detail-hide", function() {
       console.log("report hide clicked");
       $clickedReport = $(this).parent().parent().parent();
@@ -581,11 +596,13 @@ $(function(){
 
   // Controller: remove event listener from hide icon in selected report
   var removeEventListenerReportHideDetail = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerReportHideDetail");
     $reportsList.off("click", ".report-detail-hide");
   };
 
   // Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
     $reportsList.on("submit", ".new-comment-form", function(event){
       event.preventDefault();
       var $currentForm = $(this);
@@ -601,11 +618,13 @@ $(function(){
 
   // Controller: remove delegated event listener for comment form submission
   var removeEventListenerSubmitComment = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerSubmitComment");
     $reportsList.off("submit", ".new-comment-form");
   };
 
   // Controller: Add event listener for on change event of report filter controls
   var addEventListenerOnChangeReportFilterControls = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerOnChangeReportFilterControls");
     $(".filter-control").on("change", function(event){
       event.preventDefault();
       var $currentControl = $(this);
@@ -619,11 +638,12 @@ $(function(){
   };
 
   var removeEventListenerOnChangeReportFilterControls = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerOnChangeReportFilterControls");
     $(".filter-control").off("change");
   };
 
   var addEventListenerResetFilterFormControls = function(){
-    console.log("addEventListenerResetFilterFormControls");
+    console.log("fuzzfindersMapsReports.js addEventListenerResetFilterFormControls");
     $(".reset-filter-button").on("click", function(event){
       event.preventDefault();
       console.log("reset button clicked");
@@ -633,12 +653,14 @@ $(function(){
   };
 
   var removeEventListenerResetFilterFormControls = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerResetFilterFormControls");
     $(".reset-filter-button").off("click");
   };
 
   //-------------------- filter reports button ---------------------------//
 
   var addEventListenerFilterButtonClick = function(){
+    console.log("fuzzfindersMapsReports addEventListenerFilterButtonClick");
     $filterReportsButton.on("click", function(event){
       event.preventDefault();
       console.log("Filter Button Clicked");
@@ -659,6 +681,7 @@ $(function(){
   };
 
   var removeEventListenerFilterButtonClick = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerFilterButtonClick");
     $filterReportsButton.off("click");
   };
 
