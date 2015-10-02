@@ -166,6 +166,8 @@ $(function(){
 		resetFormInputs();
 		slideUpAllForms();
 		removeSelectedClassFromButton($fuzzfindersButtons);
+		removeImageUploadPreviews();
+		resetImageUpload();
 	};
 
 	// View: toggle display of last-seen-placeholder and last-seen input fields
@@ -178,6 +180,16 @@ $(function(){
 			$lastSeen.focus();
 		}
 	};
+
+	// View: Remove preview images for image upload
+	var removeImageUploadPreviews = function(){
+		$(".image-upload-preview").children().remove();
+	};
+
+	// View: reset image upload button progress bar and text
+	var resetImageUpload = function(){
+		$(".bar").remove();
+	}
 
 	//========================== Controller ==========================//
 

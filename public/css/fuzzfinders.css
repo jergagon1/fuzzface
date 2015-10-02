@@ -176,3 +176,8 @@ li {
   width: 7rem;
   margin-left: 1rem;
 }
+
+.upload-preview-image {
+  display: block;
+  width: 100%;
+}
