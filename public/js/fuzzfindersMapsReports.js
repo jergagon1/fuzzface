@@ -57,6 +57,7 @@ $(function(){
       data: $recentReportsForm.serialize()
     })
     .done(function(response){
+      console.log(response);
       $(".report").remove();
       removeReportMapMarkers(reportMapMarkers);
       createMarkers(response, reportMapMarkers);
