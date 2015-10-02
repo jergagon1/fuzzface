@@ -63,15 +63,10 @@ $(function(){
       updateTimestamps(response, "created_at");
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-      var breedArray = createArrayUniqueValues(response, "breed");
-      removeValuesFromSelectDropdown($(".breed-select"));
-      appendValuesToSelectDropdown($(".breed-select"), breedArray);
-      var colorArray = createArrayUniqueValues(response, "color");
-      removeValuesFromSelectDropdown($(".color-select"));
-      appendValuesToSelectDropdown($(".color-select"), colorArray);
+      populateDynamicReportsFilters(response);
       if($dynamicFilter){
         console.log("dynamic filter used");
-        $dynamicFilter.prop("selectedIndex", 1)
+        setDynamicFilterDropdownValue($dynamicFilter);
       } else {
         console.log("dynamic filter not used");
       }
@@ -80,6 +75,7 @@ $(function(){
       console.log("reports request fail!");
     });
   };
+
 
   // Model: retrieve report details, tags and comments
   var getReportDetails = function($reportLi, $id){
@@ -167,6 +163,21 @@ $(function(){
   var $reportsList = $(".reports-list");
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
+
+  // View: Set dropdown values for dynamic report dropdown filters
+  var populateDynamicReportsFilters = function(reportsArray){
+    var breedArray = createArrayUniqueValues(reportsArray, "breed");
+    removeValuesFromSelectDropdown($(".breed-select"));
+    appendValuesToSelectDropdown($(".breed-select"), breedArray);
+    var colorArray = createArrayUniqueValues(reportsArray, "color");
+    removeValuesFromSelectDropdown($(".color-select"));
+    appendValuesToSelectDropdown($(".color-select"), colorArray);
+  };
+
+  // View: if dynamic filter used set display value to filtered value
+  var setDynamicFilterDropdownValue = function($dropdown){
+    $dropdown.prop("selectedIndex", 1);
+  };
 
   // View: reset the form inputs
   var resetFormInputs = function(){
