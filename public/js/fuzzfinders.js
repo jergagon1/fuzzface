@@ -191,7 +191,8 @@ $(function(){
 	var resetImageUpload = function(){
 		console.log("fuzzfinders.js resetImageUpload");
 		$(".bar").remove();
-	}
+		$("input.img_url").val("");
+	};
 
 	//========================== Controller ==========================//
 
