@@ -149,6 +149,25 @@ $(function(){
     return valuesArray.sort();
   };
 
+  var createArrayUniqueTagValues = function(recordsArray, fieldKey){
+    console.log("fuzzfindersMapsReports.js createArrayUniqueTagValues");
+    var resultsArray = [];
+    var unsortedArray = [];
+    $.each(recordsArray, function (i, j) {
+      if(j[fieldKey] != "") {
+        var subArray = j[fieldKey].replace(/\s*,\s*/gm,',').split(",");
+        unsortedArray = unsortedArray.concat(subArray);
+      }
+    })
+    // console.log(unsortedArray)
+    $.each(unsortedArray, function (k, l) {
+      if ($.inArray(l, resultsArray) == -1 && l != ""){
+        resultsArray.push(l);
+      }
+    })
+    // console.log(resultsArray);
+    return resultsArray.sort();
+  }
 
   //========================== View ==========================//
 
@@ -174,6 +193,7 @@ $(function(){
     var colorArray = createArrayUniqueValues(reportsArray, "color");
     removeValuesFromSelectDropdown($(".color-select"));
     appendValuesToSelectDropdown($(".color-select"), colorArray);
+    var tagArray = createArrayUniqueTagValues(reportsArray, "report_taggings");
   };
 
   // View: if dynamic filter used set display value to filtered value
