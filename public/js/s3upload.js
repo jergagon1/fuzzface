@@ -7,6 +7,7 @@ $(function() {
       var submitButton = form.find('input[type="submit"]');
       var progressBar = $("<div class='bar'></div>");
       var barContainer = $("<div class='progress'></div>").append(progressBar);
+      var imagePreviewDiv = form.find(".image-upload-preview");
       fileInput.after(barContainer);
       // console.log(gon);
       fileInput.fileupload({
@@ -48,6 +49,9 @@ $(function() {
             value: url
           })
           form.append(input);
+          var imagePreview = '<img class="upload-preview-image" src="' + url + '">'
+          console.log(imagePreview);
+          imagePreviewDiv.append(imagePreview);
         },
         fail: function(e, data) {
           submitButton.prop('disabled', false);
