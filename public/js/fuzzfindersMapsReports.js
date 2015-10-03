@@ -416,7 +416,8 @@ $(function(){
     var mapOptions = {
       zoom: 14,
       center: new google.maps.LatLng(37.7848676, -122.3978871),
-      streetViewControl: false
+      streetViewControl: false,
+      mapTypeControl: false,
     };
     mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
@@ -479,7 +480,8 @@ $(function(){
   var initializeReportMap = function() {
     var reportMapOptions = {
       zoom: 13,
-      streetViewControl: false
+      streetViewControl: false,
+      mapTypeControl: false,
     };
 
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
