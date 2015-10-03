@@ -373,18 +373,22 @@ $(function(){
   };
 
   var slideDownReportFilterForm = function(){
+    console.log("fuzzfindersMapsReports slideDownReportFilterForm");
     $recentReportsForm.slideDown("slow");
   };
 
   var slideUpReportFilterForm = function(){
+    console.log("fuzzfindersMapsReports slideUpReportFilterForm");
     $recentReportsForm.slideUp("slow");
   };
 
   var addSelectedClassToFilterButton = function(){
+    console.log("fuzzfindersMapsReports.js addSelectedClassToFilterButton");
     $filterReportsButton.addClass("selected-button");
   };
 
   var removeSelectedClassFromFilterButton = function(){
+    console.log("fuzzfindersMapsReports.js removeSelectedClassFromFilterButton");
     $filterReportsButton.removeClass("selected-button");
   };
 
@@ -392,6 +396,7 @@ $(function(){
 
   // Controller: handle user agents that don't allow/support geolocation or if geolocation fails
   var handleNoGeolocation = function(errorFlag, noGeoMap) {
+    console.log("fuzzfindersMapsReports.js handleNoGeolocation");
     // error flag indicates geolocation service failed
     // no error flag indicates broswer doesn't support geolocation
     if (errorFlag) {
@@ -413,6 +418,7 @@ $(function(){
 
   // Controller: Generic report submit map initialize
   var initializeMap = function(mapName, canvasDivId, iconUrl) {
+    console.log("fuzzfindersMapsReports.js initializeMap");
     var mapOptions = {
       zoom: 14,
       center: new google.maps.LatLng(37.7848676, -122.3978871),
@@ -468,16 +474,19 @@ $(function(){
 
   // Controller: initialize map for lost pet report submission
   var initializeLostMap = function(){
+    console.log("fuzzfindersMapsReports.js initializeLostMap");
     initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png');
   };
 
   // Controller: initialize map for found pet report submission
   var initializeFoundMap = function(){
+    console.log("fuzzfindersMapsReports.js initializeFoundMap");
     initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png')
   };
 
   // Controller: initialize map for reports in area section
   var initializeReportMap = function() {
+    console.log("fuzzfindersMapsReports.js initializeReportMap");
     var reportMapOptions = {
       zoom: 13,
       streetViewControl: false,
@@ -549,21 +558,25 @@ $(function(){
 
   // Controller: Add maps DOM listener to initialize lost report map on lost a pet button click
   var addEventListenerInitializeLostMap = function(){
+    console.log("fuzzfindersMapsReports addEventListenerInitializeLostMap");
     google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
   };
 
   // Controller: Remove DOM listener from lost a pet button
   var removeEventListenerInitializeLostMap = function(){
+    console.log("fuzzfindersMapsReports removeEventListenerInitializeLostMap");
     google.maps.event.removeListener(lostPetBtn, 'click', initializeLostMap);
   }
 
   // Controller: Add maps DOM listener to initialize found report map on found a pet button click
   var addEventListenerInitializeFoundMap = function(){
+    console.log("fuzzfindersMapsReports addEventListenerInitializeFoundMap");
     google.maps.event.addDomListener(foundPetBtn, 'click', initializeFoundMap);
   };
 
   // Controller: Remove DOM listener to found a pet button
   var removeEventListenerInitializeFoundMap = function(){
+    console.log("fuzzfindersMapsReports removeEventListenerInitializeFoundMap");
     google.maps.event.removeListener(foundPetBtn, 'click', initializeFoundMap);
   };
 
