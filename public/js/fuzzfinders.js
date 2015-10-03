@@ -209,6 +209,7 @@ $(function(){
 				lastSeenObject.value = utcTime;
 			}
 			lostPetFormSubmit($formData, $form);
+			removeEventsLost();
 		});
 	};
 
@@ -231,6 +232,7 @@ $(function(){
 				lastSeenObject.value = utcTime;
 			}
 			foundPetFormSubmit($formData, $form);
+			removeEventsFound();
 		});
 	};
 
@@ -339,6 +341,7 @@ $(function(){
 			// determine if open or closed
 			if(checkIfFormSectionHidden($lostPetButton)){
 				// bind events
+				removeEventsLost();
 				removeEventsFound();
 				removeEventsReports();
 				bindEventsLost();
@@ -383,6 +386,7 @@ $(function(){
 			// determine if open or closed
 			if(checkIfFormSectionHidden($foundPetButton)){
 				// bind events
+				removeEventsFound();
 				removeEventsLost();
 				removeEventsReports();
 				bindEventsFound();
@@ -421,6 +425,7 @@ $(function(){
       // determine if open or closed
       if(checkIfFormSectionHidden($reportButton)){
         // bind events
+        removeEventsReports();
         removeEventsLost();
         removeEventsFound();
         bindEventsReports();

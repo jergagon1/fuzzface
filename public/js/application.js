@@ -48,6 +48,20 @@ $(function() {
     });
   };
 
+  // Controller: Boolean to check if on fuzzfinders page and if the reports list is open
+  var checkIfOnFuzzfindersPageAndReportsListOpen = function(){
+    console.log("application.js checkIfOnFuzzfindersPageAndReportsListOpen");
+    if(myApp.checkForElement(".fuzzfinders-buttons")){
+      if($(".report-lists").is( ":hidden" )){
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
   // Controller: Initialize FuzzFlash - Notification when new lost or found pet report created
   var initializeFuzzFlash = function(){
     console.log("application.js initializeFuzzFlash");
@@ -62,9 +76,12 @@ $(function() {
       var message = fuzzflash.message;
       $('div.notification').text(message);
       clearFuzzflash();
-      myApp.fuzzfinders.model.getRecentReports();
+      if(checkIfOnFuzzfindersPageAndReportsListOpen()){
+        myApp.fuzzfinders.model.getRecentReports();
+      }
     });
   };
+
 
   // Controller: determine page and assign or remove event listeners
   var checkIfOnSignInUpPage = (function(){
