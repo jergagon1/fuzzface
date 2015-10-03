@@ -415,7 +415,8 @@ $(function(){
   var initializeMap = function(mapName, canvasDivId, iconUrl) {
     var mapOptions = {
       zoom: 14,
-      center: new google.maps.LatLng(37.7848676, -122.3978871)
+      center: new google.maps.LatLng(37.7848676, -122.3978871),
+      streetViewControl: false
     };
     mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
@@ -477,7 +478,8 @@ $(function(){
   // Controller: initialize map for reports in area section
   var initializeReportMap = function() {
     var reportMapOptions = {
-      zoom: 13
+      zoom: 13,
+      streetViewControl: false
     };
 
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
