@@ -372,15 +372,18 @@ $(function(){
     toggleHideIcon($reportListItem);
   };
 
+  // View: slide down report filter form
   var slideDownReportFilterForm = function(){
     console.log("fuzzfindersMapsReports slideDownReportFilterForm");
     $recentReportsForm.slideDown("slow");
   };
 
+  // View: slide up report filter form
   var slideUpReportFilterForm = function(){
     console.log("fuzzfindersMapsReports slideUpReportFilterForm");
     $recentReportsForm.slideUp("slow");
   };
+
 
   var addSelectedClassToFilterButton = function(){
     console.log("fuzzfindersMapsReports.js addSelectedClassToFilterButton");
@@ -390,6 +393,18 @@ $(function(){
   var removeSelectedClassFromFilterButton = function(){
     console.log("fuzzfindersMapsReports.js removeSelectedClassFromFilterButton");
     $filterReportsButton.removeClass("selected-button");
+  };
+
+  var openReportFilterForm = function(){
+    console.log("fuzzfindersMapsReports.js openReportFilterForm");
+    slideDownReportFilterForm();
+    addSelectedClassToFilterButton();
+  };
+
+  myApp.fuzzfinders.view.closeReportFilterForm = function(){
+    console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.view.closeReportFilterForm");
+    slideUpReportFilterForm();
+    removeSelectedClassFromFilterButton();
   };
 
   //========================== Controller ==========================//
@@ -704,16 +719,10 @@ $(function(){
       console.log("Filter Button Clicked");
       if(checkIfDivHidden($recentReportsForm)){
         console.log("filter form hidden");
-        // slide down slow
-        slideDownReportFilterForm();
-        // add selected class
-        addSelectedClassToFilterButton();
+        openReportFilterForm();
       } else {
         console.log("filter form shown");
-        // slide up slow
-        slideUpReportFilterForm();
-        // remove selected class
-        removeSelectedClassFromFilterButton();
+        myApp.fuzzfinders.view.closeReportFilterForm();
       }
     });
   };
