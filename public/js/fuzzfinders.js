@@ -415,6 +415,7 @@ $(function(){
   var removeEventsReports = function(){
   	console.log("fuzzfinders.js removeEventsReports");
   	// remove reports button events
+  	myApp.fuzzfinders.view.closeReportFilterForm();
   };
 
   // add event listener on click of found pet form button

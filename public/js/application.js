@@ -1,6 +1,8 @@
 var myApp = myApp || {};
 myApp.fuzzfinders = myApp.fuzzfinders || {};
 myApp.fuzzfinders.model = myApp.fuzzfinders.model || {};
+myApp.fuzzfinders.controller = myApp.fuzzfinders.controller || {};
+myApp.fuzzfinders.view = myApp.fuzzfinders.view || {};
 
 $(function() {
 
