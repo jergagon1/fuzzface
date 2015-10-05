@@ -415,7 +415,6 @@ $(function(){
   var removeEventsReports = function(){
   	console.log("fuzzfinders.js removeEventsReports");
   	// remove reports button events
-  	myApp.fuzzfinders.view.closeReportFilterForm();
   };
 
   // add event listener on click of found pet form button
@@ -427,13 +426,15 @@ $(function(){
       if(checkIfFormSectionHidden($reportButton)){
         // bind events
         removeEventsReports();
+  			myApp.fuzzfinders.view.closeReportFilterForm();
         removeEventsLost();
         removeEventsFound();
         bindEventsReports();
       } else {
         // remove events
         removeEventsReports();
-      }
+  			myApp.fuzzfinders.view.closeReportFilterForm();
+       }
 			toggleFuzzfindersButtons($reportButton);
     });
   };
