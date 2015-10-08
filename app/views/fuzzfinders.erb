@@ -3,31 +3,31 @@
 </div>
 <div class="container">
   <div class='notification'>
-  </div>
+  </div><!-- class="notification" -->
   <div class="row first-panel">
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    </div>
+    </div><!-- class="col-xs-2 col-sm-2 col-md-2 col-lg-2" -->
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
       <img src="/images/FuzzFinders_Logo_med.png" alt="Fuzz Finders" id="main-logo">
-    </div>
+    </div><!-- class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section" -->
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
       <p>Wags</p>
       <p class="wags"><%= @wags %></p>
-    </div>
-  </div>
+    </div><!-- class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section" -->
+  </div><!-- class="row first-panel" -->
   <div class="option-buttons">
     <div class="row">
       <button class="btn-block main-buttons fuzzfinders-buttons lost-pet">Lost a Pet</button>
       <div id="lost-pet">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
-      </div>
-    </div>
+      </div><!-- id="lost-pet" -->
+    </div><!-- class="row" -->
     <div class="row">
       <button class="btn-block main-buttons fuzzfinders-buttons found-pet">Found a Pet</button>
       <div id="found-pet">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
-      </div>
-    </div>
+      </div><!-- id="found-pet" -->
+    </div><!-- class="row" -->
     <div class="row">
       <button class="btn-block main-buttons fuzzfinders-buttons report-btn">Reports</button>
       <div id="reports-map-container">
@@ -40,14 +40,13 @@
               <img src="/images/FuzzFinders_icon_blue.png" alt="Fuzzfinders found pet icon"> Found Pet Report
             </li>
           </ul>
-        </div>
-        <!-- <input id="pac-input" class="controls" type="text" placeholder="Search near a location"> -->
+        </div><!-- class="report-map-legend" -->
         <div id="report-map-canvas" class="map-canvas">
-        </div>
+        </div><!-- id="report-map-canvas" class="map-canvas" -->
         <%= erb :'partials/_report_filter', :layout => false %>
         <%= erb :'partials/_report_list', :layout => false %>
-      </div>
-    </div>
-  </div>
+      </div><!-- id="reports-map-container" -->
+    </div><!-- class="row" -->
+  </div><!-- class="option-buttons" -->
   <%= @user %>
-</div>
+</div><!-- class="container" -->
