@@ -258,6 +258,8 @@ $(function(){
     }
   };
 
+  //----------------- google maps markers ---------------------//
+
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
     console.log("fuzzfindersMapsReports.js createMarkers");
@@ -371,6 +373,8 @@ $(function(){
     addUnselectedClass($reportListItem);
     toggleHideIcon($reportListItem);
   };
+
+
 
   // View: slide down report filter form
   var slideDownReportFilterForm = function(){
@@ -710,7 +714,7 @@ $(function(){
     $(".reset-filter-button").off("click");
   };
 
-  //-------------------- filter reports button ---------------------------//
+  //------------------ filter reports button ----------------------//
 
   var addEventListenerFilterButtonClick = function(){
     console.log("fuzzfindersMapsReports addEventListenerFilterButtonClick");
