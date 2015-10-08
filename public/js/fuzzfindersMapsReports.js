@@ -194,6 +194,30 @@ $(function(){
     removeValuesFromSelectDropdown($(".color-select"));
     appendValuesToSelectDropdown($(".color-select"), colorArray);
     var tagArray = createArrayUniqueTagValues(reportsArray, "report_taggings");
+    addTagsToAutocomplete($(".tags-filter") ,tagArray);
+  };
+
+  // View: Add tag values to autocomplete input element
+  var addTagsToAutocomplete = function($input, tagsArray){
+    console.log("fuzzfindersMapsReport.js addTagsToAutocomplete");
+    $input.tokenfield('destroy');
+    $input.tokenfield({
+      autocomplete: {
+        source: tagsArray,
+        delay: 100
+      },
+      showAutocompleteOnFocus: true
+    })
+  };
+
+  // View: add array of tag values to hidden form input the filters report query by tags
+  var addTagsToHiddenInput = function(tagValues){
+    $(".hidden-tags").val(tagValues);
+  };
+
+  // View: remove tag values from hidden form input
+  var removeTagsFromHiddenInput = function(){
+    $(".hidden-tags").val("");
   };
 
   // View: if dynamic filter used set display value to filtered value
