@@ -77,7 +77,6 @@ $(function(){
     });
   };
 
-
   // Model: retrieve report details, tags and comments
   var getReportDetails = function($reportLi, $id){
     console.log("fuzzfindersMapsReports.js getReportDetails");
@@ -111,7 +110,7 @@ $(function(){
   // Model: submit comment data to server api
   var submitComment = function($form, $formData, $reportId){
     console.log("fuzzfindersMapsReports.js submitComment");
-    var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments"
+    var apiLink = "http://localhost:3000/api/v1/reports/" + $reportId + "/comments";
     var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
     var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
     $.ajax({
@@ -149,13 +148,14 @@ $(function(){
     return valuesArray.sort();
   };
 
-  var createArrayUniqueTagValues = function(recordsArray, fieldKey){
-    console.log("fuzzfindersMapsReports.js createArrayUniqueTagValues");
+  // Model: loop through array of records and create unique array of field containing an array value
+  var createArrayUniqueNestedArrayValues = function(recordsArray, fieldKey){
+    console.log("fuzzfindersMapsReports.js createArrayUniqueNestedArrayValues");
     var resultsArray = [];
     var unsortedArray = [];
     $.each(recordsArray, function (i, j) {
       if(j[fieldKey] != "") {
-        var subArray = j[fieldKey].replace(/\s*,\s*/gm,',').split(",");
+        var subArray = j[fieldKey]
         unsortedArray = unsortedArray.concat(subArray);
       }
     })
@@ -193,7 +193,7 @@ $(function(){
     var colorArray = createArrayUniqueValues(reportsArray, "color");
     removeValuesFromSelectDropdown($(".color-select"));
     appendValuesToSelectDropdown($(".color-select"), colorArray);
-    var tagArray = createArrayUniqueTagValues(reportsArray, "report_taggings");
+    var tagArray = createArrayUniqueNestedArrayValues(reportsArray, "report_taggings");
     addTagsToAutocomplete($(".tags-filter") ,tagArray);
   };
 
