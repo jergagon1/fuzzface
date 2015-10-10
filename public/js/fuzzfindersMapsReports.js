@@ -183,6 +183,7 @@ $(function(){
   var $reportsList = $(".reports-list");
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
+  var $tagsFilter = $(".tags-filter");
 
   // View: Set dropdown values for dynamic report dropdown filters
   var populateDynamicReportsFilters = function(reportsArray){
@@ -194,13 +195,13 @@ $(function(){
     removeValuesFromSelectDropdown($(".color-select"));
     appendValuesToSelectDropdown($(".color-select"), colorArray);
     var tagArray = createArrayUniqueNestedArrayValues(reportsArray, "report_taggings");
-    addTagsToAutocomplete($(".tags-filter") ,tagArray);
+    console.log(tagArray);
+    addTagsToAutocomplete($tagsFilter, tagArray);
   };
 
   // View: Add tag values to autocomplete input element
   var addTagsToAutocomplete = function($input, tagsArray){
     console.log("fuzzfindersMapsReport.js addTagsToAutocomplete");
-    $input.tokenfield('destroy');
     $input.tokenfield({
       autocomplete: {
         source: tagsArray,
@@ -208,6 +209,7 @@ $(function(){
       },
       showAutocompleteOnFocus: true
     })
+    $input.data('bs.tokenfield').$input.autocomplete({source: tagsArray});
   };
 
   // View: add array of tag values to hidden form input the filters report query by tags
@@ -398,8 +400,6 @@ $(function(){
     toggleHideIcon($reportListItem);
   };
 
-
-
   // View: slide down report filter form
   var slideDownReportFilterForm = function(){
     console.log("fuzzfindersMapsReports slideDownReportFilterForm");
@@ -538,25 +538,6 @@ $(function(){
 
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
         reportMapOptions);
-
-    // var input = /** @type {HTMLInputElement} */(
-    //     document.getElementById('pac-input'));
-
-    // var autocomplete = new google.maps.places.Autocomplete(input);
-    // autocomplete.bindTo('bounds', reportMap);
-
-    //  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    //   var result = autocomplete.getPlace();
-    //   var newLocationLat = result.geometry.location.A;
-    //   var newLocationLng = result.geometry.location.F;
-    //   var latLng = new google.maps.LatLng(newLocationLat, newLocationLng);
-    //   var newSearchLocation = reportMap.setCenter(latLng);
-    //     var currentLocationMarker = new google.maps.Marker({
-    //       map: reportMap,
-    //       position: latLng,
-    //       title: "Current location"
-    //     });
-    // });
 
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -729,6 +710,10 @@ $(function(){
       event.preventDefault();
       console.log("reset button clicked");
       resetFormInputs();
+      addTagsToHiddenInput("");
+      // $tagsFilter.tokenfield('setTokens', '');
+      // debugger
+      $(".token").remove();
       myApp.fuzzfinders.model.getRecentReports();
     });
   };
@@ -737,6 +722,64 @@ $(function(){
     console.log("fuzzfindersMapsReports.js removeEventListenerResetFilterFormControls");
     $(".reset-filter-button").off("click");
   };
+
+  //------------------------ Tokenfield ----------------------------//
+
+  // Controller: Tokenfield Prevent duplicate tags from being added to tag filter input
+  var addEventListenerTokenfieldPreventDuplicateTagEntry = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerTokenfieldPreventDuplicateTagEntry");
+    $tagsFilter.on('tokenfield:createtoken', function (event) {
+      var existingTokens = $(this).tokenfield('getTokens');
+      $.each(existingTokens, function(index, token) {
+        if (token.value === event.attrs.value) {
+          event.preventDefault();
+        }
+      });
+    });
+  };
+
+  // Controller: Tokenfield remove event listener to prevent duplicate tag entry
+  var removeEventListenerTokenfieldPreventDuplicateTagEntry = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerTokenfieldPreventDuplicateTagEntry");
+    $tagsFilter.off('tokenfield:createtoken');
+  };
+
+  // Controller: Tokenfield Add event listener for tag creation completion by Tokenfield input
+  var addEventListenerTokenfieldTagAdded = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerTokenfieldTagAdded");
+    $tagsFilter.on('tokenfield:createdtoken', function (event) {
+      event.preventDefault();
+      console.log("Tokenfield: Tag Added!");
+      var currentTagList = $(this).tokenfield('getTokensList');
+      console.log(currentTagList);
+      addTagsToHiddenInput(currentTagList);
+      myApp.fuzzfinders.model.getRecentReports();
+    });
+  };
+
+  // Controller: Tokenfield remove
+  var removeEventListenerTokenfieldTagAdded = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerTokenfieldTagAdded");
+    $tagsFilter.off('tokenfield:createdtoken');
+  };
+
+  // Controller: add event listener for tag removal completion from Tokenfield input
+  var addEventListenerTokenfieldTagRemoved = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerTokenfieldTagRemoved");
+    $tagsFilter.on('tokenfield:removedtoken', function(event){
+      console.log("Tag Removed!");
+      var currentTagList = $(this).tokenfield('getTokensList');
+      console.log(currentTagList);
+      addTagsToHiddenInput(currentTagList);
+      myApp.fuzzfinders.model.getRecentReports();
+    });
+  };
+
+  var removeEventListenerTokenfieldTagRemoved = function(){
+    console.log("fuzzfindersMapsReports.js removeEventListenerTokenfieldTagRemoved");
+    $tagsFilter.off('tokenfield:removedtoken');
+  };
+
 
   //------------------ filter reports button ----------------------//
 
@@ -775,6 +818,9 @@ $(function(){
       addEventListenerFilterButtonClick();
       addEventListenerOnChangeReportFilterControls();
       addEventListenerResetFilterFormControls();
+      addEventListenerTokenfieldPreventDuplicateTagEntry();
+      addEventListenerTokenfieldTagAdded();
+      addEventListenerTokenfieldTagRemoved();
     } else {
       removeEventListenerAllGetReportDetails();
       removeEventListenerInitializeLostMap();
@@ -785,6 +831,9 @@ $(function(){
       removeEventListenerFilterButtonClick();
       removeEventListenerOnChangeReportFilterControls();
       removeEventListenerResetFilterFormControls();
+      removeEventListenerTokenfieldPreventDuplicateTagEntry();
+      removeEventListenerTokenfieldTagAdded();
+      removeEventListenerTokenfieldTagRemoved();
     }
   })();
 
