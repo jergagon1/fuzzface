@@ -130,6 +130,7 @@ $(function(){
         $commentList
       );
       resetFormInputs();
+      myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
     })
     .fail(function(){
       console.log("comment creation failed");
