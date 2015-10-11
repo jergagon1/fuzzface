@@ -67,17 +67,18 @@ $(function() {
   // Controller: Initialize FuzzFlash - Notification when new lost or found pet report created
   var initializeFuzzFlash = function(){
     console.log("application.js initializeFuzzFlash");
-    var clearFuzzflash = function() {
+    var clearFuzzflash = function(reportId) {
       setTimeout(function() {
-        $('div.notification').text("");
+        $('.fuzzflash_' + reportId).text("");
       }, 10000);
     };
     var pusher = new Pusher(gon.pusher_key);
     var fuzzflashChannel = pusher.subscribe('fuzzflash');
     fuzzflashChannel.bind('report_created', function(fuzzflash){
       var message = fuzzflash.message;
-      $('div.notification').text(message);
-      clearFuzzflash();
+      var reportId = fuzzflash.report_id;
+      $('div.notification ul').prepend('<li class="fuzzflash_' + reportId + '">' + message + '</li>');
+      clearFuzzflash(reportId);
       if(checkIfOnFuzzfindersPageAndReportsListOpen()){
         myApp.fuzzfinders.model.getRecentReports();
       }

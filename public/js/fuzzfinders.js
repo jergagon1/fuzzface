@@ -2,6 +2,19 @@ $(function(){
 
 	//========================== Model =============================//
 
+  var subscribeReportComments = function(reportId) {
+    var pusher = new Pusher(gon.pusher_key);
+    var reportCommentsChannel = pusher.subscribe('report_comments_' + reportId);
+    reportCommentsChannel.bind('report_commented', function(notification){
+      var message = notification.message;
+      var commentId = notification.comment_id;
+      $('div.notification ul').prepend('<li class="report_comment_' + commentId + '">' + message + '</li>');
+      setTimeout(function() {
+        $('.report_comment_' + commentId).remove();
+      }, 10000);
+    });
+  }
+
 	// Model: lost pet form submission
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
 		console.log("fuzzfinders.js lostPetFormSubmit");
@@ -15,6 +28,7 @@ $(function(){
 		.done(function(response){
 			console.log(response);
 			resetViewOnFormSubmit($lostForm);
+      subscribeReportComments(response.report.id);
 		})
 		.fail(function(){
 			console.log('lost pet form submission failed');
@@ -35,6 +49,7 @@ $(function(){
 			console.log(response);
 			updateWags(response.wags);
 			resetViewOnFormSubmit($foundForm);
+      subscribeReportComments(response.report.id);
 		})
 		.fail(function(){
 			console.log('found pet form submission failed');

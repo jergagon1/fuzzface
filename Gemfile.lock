@@ -118,6 +118,3 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   uuid
-
-BUNDLED WITH
-   1.10.4
