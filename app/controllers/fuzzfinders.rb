@@ -24,7 +24,7 @@ end
 
 # method to retrieve user wags
 def retrieve_wags
-  wags_data = HTTParty.get("http://localhost:3000/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
+  wags_data = HTTParty.get(ENV['SERVER_URL'] + "/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   @wags = JSON.parse(wags_data.body)["wags"]
 end
 
@@ -58,7 +58,7 @@ end
 put "/sign_in" do
   setup_s3
   options = params
-  response = HTTParty.put("http://localhost:3000/api/v1/log_in?email=#{params[:email]}&password_hash=#{Digest::SHA1.hexdigest(params[:password_hash])}")
+  response = HTTParty.put(ENV['SERVER_URL'] + "/api/v1/log_in?email=#{params[:email]}&password_hash=#{Digest::SHA1.hexdigest(params[:password_hash])}")
   handle_auth_response(response)
 end
 
@@ -69,13 +69,13 @@ end
 
 # sign up action
 post "/sign_up" do
-  response = HTTParty.post("http://localhost:3000/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
+  response = HTTParty.post(ENV['SERVER_URL'] + "/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
   handle_auth_response(response)
 end
 
 # sign out action
 get '/sign_out' do
-	HTTParty.put("http://localhost:3000/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
+	HTTParty.put(ENV['SERVER_URL'] + "/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   session.clear
   redirect "/sign_in"
 end
