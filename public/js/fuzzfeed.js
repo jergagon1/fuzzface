@@ -6,7 +6,7 @@ $(function() {
   var getArticles = function() {
     console.log("fuzzfeed.js getArticles");
     $.ajax({
-     url: 'http://localhost:3000/api/v1/articles',
+     url: 'http://fuzzfinders-api.herokuapp.com/api/v1/articles',
      type: 'GET'
     })
     .done(function(response){
