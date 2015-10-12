@@ -14,7 +14,8 @@ end
 
 # setup method for image file upload to Amazon S3 bucket
 def setup_s3
-  @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+  user_id = session[:user] ? session[:user]["id"].to_s + "-" : "none-"
+  @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{ user_id + SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
   @s3_hash = Hash.new
   @s3_hash['url'] = @s3_direct_post.url
   @s3_hash['urlstring'] = @s3_direct_post.url.to_s
