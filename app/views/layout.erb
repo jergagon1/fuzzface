@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/css/sign-in.css">
     <link rel="stylesheet" href="/css/pusher-chat-widget.css">
     <!-- vendor js -->
+    <title>
+        <%= @page_title %>
+    </title>
+    <%= include_gon %>
+  </head>
+  <body>
+    <%= yield %>
     <script src="//js.pusher.com/2.2/pusher.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
@@ -31,13 +38,6 @@
     <script src="/vendor/js/jquery.iframe-transport.js"></script>
     <script src="/vendor/js/jquery.fileupload.js"></script>
     <script src="/vendor/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>
-    <title>
-        <%= @page_title %>
-    </title>
-    <%= include_gon %>
-  </head>
-  <body>
-    <%= yield %>
     <script src="/js/application.js"></script>
     <script src="/js/signInUp.js"></script>
     <script src="/js/fuzzfinders.js"></script>
