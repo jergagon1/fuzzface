@@ -4,6 +4,11 @@ myApp.fuzzfinders.model = myApp.fuzzfinders.model || {};
 myApp.fuzzfinders.controller = myApp.fuzzfinders.controller || {};
 myApp.fuzzfinders.view = myApp.fuzzfinders.view || {};
 
+// set server api variable for local development
+// myApp.serverURL = 'http://localhost:3000';
+// set server api variable for deployment
+myApp.serverUrl = 'http://fuzzfinders-api.herokuapp.com';
+
 $(function() {
 
   //========================== Model ==========================//
