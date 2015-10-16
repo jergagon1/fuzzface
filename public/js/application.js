@@ -9,6 +9,9 @@ myApp.fuzzfinders.view = myApp.fuzzfinders.view || {};
 // set server api variable for deployment - leave uncommented in master branch
 myApp.fuzzfindersApiUrl = "http://fuzzfinders-api.herokuapp.com";
 
+// Variable to set display length of pusher notifications in milliseconds
+myApp.fuzzflashDisplayLength = 15000;
+
 
 $(function() {
 
@@ -76,7 +79,7 @@ $(function() {
     var clearFuzzflash = function(reportId) {
       setTimeout(function() {
         $('.fuzzflash_' + reportId).text("");
-      }, 10000);
+      }, myApp.fuzzflashDisplayLength);
     };
     var pusher = new Pusher(gon.pusher_key);
     var fuzzflashChannel = pusher.subscribe('fuzzflash');

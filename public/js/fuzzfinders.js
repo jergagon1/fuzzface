@@ -17,7 +17,7 @@ $(function(){
         $('div.notification ul').prepend('<li class="report_comment_' + commentId + '">' + message + '</li>');
         setTimeout(function() {
           $('.report_comment_' + commentId).remove();
-        }, 10000);
+        }, myApp.fuzzflashDisplayLength);
       });
     }
   };
