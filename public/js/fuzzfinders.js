@@ -2,8 +2,10 @@ $(function(){
 
 	//========================== Model =============================//
 
+	// Model: Array to hold report comment subscriptions for pusher notifications
   myApp.fuzzfinders.model.subscribedReportComments = [];
 
+  // Model: Subscribe to a channel for notifications of comments on a report
   myApp.fuzzfinders.model.subscribeReportComments = function(reportId) {
     if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(reportId) === -1) {
       myApp.fuzzfinders.model.subscribedReportComments.push(reportId);
@@ -18,14 +20,15 @@ $(function(){
         }, 10000);
       });
     }
-  }
+  };
 
 	// Model: lost pet form submission
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
 		console.log("fuzzfinders.js lostPetFormSubmit");
 		console.log($dataFromForm);
+		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
 		$.ajax({
-			url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports",
+			url: link,
 			type: "post",
 			dataType: "json",
 			data: $dataFromForm
@@ -44,8 +47,9 @@ $(function(){
 	var foundPetFormSubmit = function($dataFromForm, $foundForm){
 		console.log("fuzzfinders.js foundPetFormSubmit");
 		console.log($dataFromForm);
+		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
 		$.ajax({
-			url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports",
+			url: link,
 			type: "post",
 			dataType: "json",
 			data: $dataFromForm
