@@ -7,7 +7,7 @@ myApp.fuzzfinders.view = myApp.fuzzfinders.view || {};
 // set server api variable for local development - don't push to master branch
 // myApp.serverURL = 'http://localhost:3000';
 // set server api variable for deployment - leave uncommented in master branch
-myApp.serverUrl = 'http://fuzzfinders-api.herokuapp.com';
+// myApp.serverUrl = 'http://fuzzfinders-api.herokuapp.com';
 
 $(function() {
 
