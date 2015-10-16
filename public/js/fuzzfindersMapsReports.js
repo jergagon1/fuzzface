@@ -49,8 +49,9 @@ $(function(){
   // Model: Retrieve reports in map area
   myApp.fuzzfinders.model.getRecentReports = function($dynamicFilter) {
     console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.model.getRecentReports");
+    var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports/mapquery";
     $.ajax({
-      url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports/mapquery",
+      url: link,
       type: "GET",
       crossDomain: true,
       dataType: 'json',
@@ -81,8 +82,9 @@ $(function(){
   var getReportDetails = function($reportLi, $id){
     console.log("fuzzfindersMapsReports.js getReportDetails");
     removeReportDetails($reportLi);
+    var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports/" + $id + "";
     $.ajax({
-      url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports/" + $id + "",
+      url: link,
       type: "GET",
       crossDomain: true,
       dataType: 'json'

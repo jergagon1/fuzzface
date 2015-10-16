@@ -20,14 +20,15 @@ $(function(){
         }, 10000);
       });
     }
-  }
+  };
 
 	// Model: lost pet form submission
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
 		console.log("fuzzfinders.js lostPetFormSubmit");
 		console.log($dataFromForm);
+		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
 		$.ajax({
-			url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports",
+			url: link,
 			type: "post",
 			dataType: "json",
 			data: $dataFromForm
@@ -46,8 +47,9 @@ $(function(){
 	var foundPetFormSubmit = function($dataFromForm, $foundForm){
 		console.log("fuzzfinders.js foundPetFormSubmit");
 		console.log($dataFromForm);
+		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
 		$.ajax({
-			url: "http://fuzzfinders-api.herokuapp.com/api/v1/reports",
+			url: link,
 			type: "post",
 			dataType: "json",
 			data: $dataFromForm
