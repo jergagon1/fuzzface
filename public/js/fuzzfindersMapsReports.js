@@ -49,7 +49,7 @@ $(function(){
   // Model: Retrieve reports in map area
   myApp.fuzzfinders.model.getRecentReports = function($dynamicFilter) {
     console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.model.getRecentReports");
-    var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports/mapquery";
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/mapquery";
     $.ajax({
       url: link,
       type: "GET",
@@ -82,7 +82,7 @@ $(function(){
   var getReportDetails = function($reportLi, $id){
     console.log("fuzzfindersMapsReports.js getReportDetails");
     removeReportDetails($reportLi);
-    var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports/" + $id + "";
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $id + "";
     $.ajax({
       url: link,
       type: "GET",
@@ -111,11 +111,11 @@ $(function(){
   // Model: submit comment data to server api
   var submitComment = function($form, $formData, $reportId){
     console.log("fuzzfindersMapsReports.js submitComment");
-    var apiLink = "http://fuzzfinders-api.herokuapp.com/api/v1/reports/" + $reportId + "/comments";
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $reportId + "/comments";
     var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
     var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
     $.ajax({
-      url: apiLink,
+      url: link,
       type: "post",
       crossDomain: true,
       dataType: "json",

@@ -5,7 +5,7 @@ $(function() {
   // Model: retrieve articles for feed
   var getArticles = function() {
     console.log("fuzzfeed.js getArticles");
-    var link = "http://fuzzfinders-api.herokuapp.com/api/v1/articles";
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/articles";
     $.ajax({
      url: link,
      type: 'GET'

@@ -26,7 +26,7 @@ $(function(){
 	var lostPetFormSubmit = function($dataFromForm, $lostForm){
 		console.log("fuzzfinders.js lostPetFormSubmit");
 		console.log($dataFromForm);
-		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
+		var link = myApp.fuzzfindersApiUrl + "/api/v1/reports";
 		$.ajax({
 			url: link,
 			type: "post",
@@ -47,7 +47,7 @@ $(function(){
 	var foundPetFormSubmit = function($dataFromForm, $foundForm){
 		console.log("fuzzfinders.js foundPetFormSubmit");
 		console.log($dataFromForm);
-		var link = "http://fuzzfinders-api.herokuapp.com/api/v1/reports";
+		var link = myApp.fuzzfindersApiUrl + "/api/v1/reports";
 		$.ajax({
 			url: link,
 			type: "post",
