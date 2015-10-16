@@ -2,8 +2,10 @@ $(function(){
 
 	//========================== Model =============================//
 
+	// Model: Array to hold report comment subscriptions for pusher notifications
   myApp.fuzzfinders.model.subscribedReportComments = [];
 
+  // Model: Subscribe to a channel for notifications of comments on a report
   myApp.fuzzfinders.model.subscribeReportComments = function(reportId) {
     if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(reportId) === -1) {
       myApp.fuzzfinders.model.subscribedReportComments.push(reportId);
