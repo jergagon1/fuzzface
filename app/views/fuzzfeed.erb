@@ -18,7 +18,7 @@
   <div class="feed">
     <div class="row">
       <button class="btn-block main-buttons fuzzfeed-buttons create-article-form">Create Article</button>
-      <form class="new-article" action=<%= ENV['SERVER_URL'] %>"/api/v1/articles" method="post">
+      <form class="new-article" action=<%= ENV['SERVER_URL'] %> + "/api/v1/articles" method="post">
         <input type="hidden" name="article[user_id]" value="<%= @user_id %>">
         <div class="padded">
           <input type="text" class="form-control" name="article[title]" placeholder="Enter a title">
