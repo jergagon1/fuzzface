@@ -190,3 +190,17 @@
   font-weight: normal;
 }
 
+/* tablet */
+@media (min-width: 768px) {
+
+}
+
+/* desktop */
+@media (min-width: 992px) {
+
+}
+
+/* large desktop */
+@media (min-width: 1200px) {
+
+}

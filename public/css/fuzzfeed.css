@@ -19,3 +19,18 @@
   width 100%;
   border-bottom: 1px solid #9d9fa2;
 }
+
+/* tablet */
+@media (min-width: 768px) {
+
+}
+
+/* desktop */
+@media (min-width: 992px) {
+
+}
+
+/* large desktop */
+@media (min-width: 1200px) {
+
+}

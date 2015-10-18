@@ -6,3 +6,18 @@
   display: inline-block !important;
   width: 49% !important;
 }
+
+/* tablet */
+@media (min-width: 768px) {
+
+}
+
+/* desktop */
+@media (min-width: 992px) {
+
+}
+
+/* large desktop */
+@media (min-width: 1200px) {
+
+}
