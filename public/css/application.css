@@ -1,3 +1,8 @@
+/* Color Palette */
+/* #f37057 - logo orange */
+/* #6d6e71 - logo dark gray */
+/* #9d9fa2 - logo light gray */
+
 * {
 	font-family: helvetica;
 }
@@ -17,7 +22,8 @@ body {
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
-	width: 90%;
+	padding-top: 2rem;
+	max-width: 90%;
 }
 
 .sidebar-container {
@@ -110,4 +116,19 @@ button[type='submit'] {
 /* bootstrap container override to provide padding for chat widget*/
 .container {
 	padding-bottom: 6rem;
+}
+
+/* tablet */
+@media (min-width: 768px) {
+
+}
+
+/* desktop */
+@media (min-width: 992px) {
+
+}
+
+/* large desktop */
+@media (min-width: 1200px) {
+
 }
