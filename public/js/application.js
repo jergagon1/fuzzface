@@ -78,7 +78,7 @@ $(function() {
     console.log("application.js initializeFuzzFlash");
     var clearFuzzflash = function(reportId) {
       setTimeout(function() {
-        $('.fuzzflash_' + reportId).text("");
+        $('.fuzzflash_' + reportId).remove();
       }, myApp.fuzzflashDisplayLength);
     };
     var pusher = new Pusher(gon.pusher_key);
