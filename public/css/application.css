@@ -18,8 +18,8 @@ a {
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
-	padding-top: 2rem;
-	max-width: 90%;
+	padding-top: 50px;
+	max-width: 75%;
 }
 
 .sidebar-container {
@@ -28,25 +28,15 @@ a {
 }
 
 .logo-section {
-	/*padding-top: 11%;*/
-	z-index: -1000;
-	text-align: center;
-	line-height: 200px;
-}
-
-.wags-section {
-	padding-top: 13%;
 	z-index: -1000;
 	text-align: center;
 }
-
 
 .first-panel {
-	height: 150px;
+	margin-top: 30px;
 }
 
 #menu-toggle {
-	/*margin-top: 102%;*/
 	z-index: 9999;
 	margin-top: 20%;
 	margin-left: 20%;
@@ -79,14 +69,29 @@ a {
 	background-color: transparent;
 	position: fixed;
 	top: 0;
+	left: 0;
 	width: 100%;
 	font-weight: bold;
 	text-align: center;
-	font-size: 2em;
-	padding-bottom: .3em;
+	font-size: 1.8em;
 	z-index: 9998;
 }
 
+.notification ul {
+	padding-left: 0;
+}
+
+.notification li {
+	padding: 0;
+}
+
+.notification li.lost {
+	background-color: rgba(253, 109, 62, 0.75);
+}
+
+.notification li.found {
+	background-color: rgba(46, 141, 242, 0.75);
+}
 
 /* Form Styles */
 
@@ -112,17 +117,58 @@ button[type='submit'] {
 	padding-bottom: 6rem;
 }
 
+nav .container {
+	padding-bottom: 0;
+}
+
+.topbar-container {
+	display: none;
+}
+
+.navbar {
+	max-height: 50px;
+	margin-bottom: 0;
+}
+
+.navbar-inverse {
+	background-color: #6d6e71;
+}
+
 /* tablet */
 @media (min-width: 768px) {
-
+	.topbar-container {
+		display: none;
+	}
 }
 
 /* desktop */
 @media (min-width: 992px) {
-
+	.sidebar-container {
+		display: none;
+	}
+	.topbar-container {
+		display: block;
+	}
+	.first-panel {
+		margin-top: 50px;
+	}
+	.notification {
+		top: 50px;
+	}
 }
 
 /* large desktop */
 @media (min-width: 1200px) {
-
+	.sidebar-container {
+		display: none;
+	}
+	.topbar-container {
+		display: block;
+	}
+	.first-panel {
+		margin-top: 50px;
+	}
+	.notification {
+		top: 50px;
+	}
 }
