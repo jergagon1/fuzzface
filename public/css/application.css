@@ -2,6 +2,8 @@
 /* #f37057 - logo orange */
 /* #6d6e71 - logo dark gray */
 /* #9d9fa2 - logo light gray */
+/* rgb(223, 131, 97) - main buttons unselected */
+/* rgb(253, 109, 62) - main buttons selected */
 
 * {
 	font-family: helvetica;
