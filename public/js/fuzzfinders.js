@@ -173,7 +173,7 @@ $(function(){
 	// View: update the user wags text to display argument value
 	var updateWags = function(value) {
 		console.log("fuzzfinders.js updateWags");
-		$wags.text(value);
+		$wags.text("Wags: " + value);
 	};
 
 	// View: reset form input controls
