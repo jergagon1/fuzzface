@@ -14,13 +14,7 @@ a {
 	text-decoration: none;
 }
 
-body {
-	margin: 0;
-	padding: 0;
-}
-
-
-/*main page FIRST PANEL*/
+/* main page FIRST PANEL */
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
@@ -62,10 +56,8 @@ body {
 /*main page SECOND PANEL*/
 
 .option-buttons {
-	/*margin-top: 10%;*/
 	margin: 10% 15px 0 15px;
 }
-
 
 .main-buttons {
 	margin-bottom: 3%;
