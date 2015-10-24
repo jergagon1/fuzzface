@@ -14,17 +14,26 @@ a {
 	text-decoration: none;
 }
 
+/* Sidebar nav menu styles and overrides */
+
+/* link containing sidebar button glyphicon */
+#menu-toggle {
+	z-index: 9999;
+	margin-top: 20%;
+	margin-left: 20%;
+}
+
+.sidebar-container {
+	width: 50px;
+	height: 0px;
+}
+
 /* main page FIRST PANEL */
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
 	padding-top: 50px;
 	max-width: 60%;
-}
-
-.sidebar-container {
-	width: 50px;
-	height: 0px;
 }
 
 .logo-section {
@@ -35,13 +44,6 @@ a {
 .first-panel {
 	margin-top: 30px;
 }
-
-#menu-toggle {
-	z-index: 9999;
-	margin-top: 20%;
-	margin-left: 20%;
-}
-
 
 /*main page SECOND PANEL*/
 
@@ -112,7 +114,7 @@ button[type='submit'] {
 	cursor: pointer;
 }
 
-/* bootstrap container override to provide padding for chat widget*/
+/* bootstrap container override to provide padding for chat widget */
 .container {
 	padding-bottom: 6rem;
 }
@@ -139,6 +141,9 @@ nav .container {
 	.topbar-container {
 		display: none;
 	}
+	.option-buttons {
+		margin-top: 5%;
+	}
 }
 
 /* desktop */
@@ -155,6 +160,9 @@ nav .container {
 	.notification {
 		top: 50px;
 	}
+	.option-buttons {
+		margin-top: 5%;
+	}
 }
 
 /* large desktop */
@@ -170,5 +178,8 @@ nav .container {
 	}
 	.notification {
 		top: 50px;
+	}
+	.option-buttons {
+		margin-top: 5%;
 	}
 }
