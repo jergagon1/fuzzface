@@ -139,8 +139,15 @@ li {
 
 .report-map-legend ul li {
   display: inline-block;
-  width: 48%;
+  width: 49%;
   padding: 0;
+  margin: 0;
+}
+
+.report-map-legend ul li p {
+  display: inline-block;
+  padding-left: 1em;
+  font-size: 3vw;
 }
 
 .recent-reports-form {
@@ -167,15 +174,21 @@ li {
 
 /* tablet */
 @media (min-width: 768px) {
-
+  .report-map-legend ul li p {
+    font-size: 1.2em;
+  }
 }
 
 /* desktop */
 @media (min-width: 992px) {
-
+  .report-map-legend ul li p {
+    font-size: 1.2em;
+  }
 }
 
 /* large desktop */
 @media (min-width: 1200px) {
-
+  .report-map-legend ul li p {
+    font-size: 1.2em;
+  }
 }
