@@ -10,41 +10,47 @@
 </div><!-- notification -->
 <div class="container">
   <div class="row first-panel">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 logo-section">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFinders_Logo_med.png" alt="Fuzz Finders" id="main-logo">
     </div>
   </div><!-- row first-panel -->
   <div class="option-buttons">
     <div class="row">
-      <button class="btn-block main-buttons fuzzfinders-buttons lost-pet">Lost a Pet</button>
-      <div id="lost-pet">
-        <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
-      </div><!-- #lost-pet -->
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <button class="btn-block main-buttons fuzzfinders-buttons lost-pet">Lost a Pet</button>
+        <div id="lost-pet">
+          <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
+        </div><!-- #lost-pet -->
+      </div><!-- col -->
     </div><!-- row -->
     <div class="row">
-      <button class="btn-block main-buttons fuzzfinders-buttons found-pet">Found a Pet</button>
-      <div id="found-pet">
-        <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
-      </div><!-- #found-pet -->
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <button class="btn-block main-buttons fuzzfinders-buttons found-pet">Found a Pet</button>
+        <div id="found-pet">
+          <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
+        </div><!-- #found-pet -->
+      </div><!-- col -->
     </div><!-- row -->
     <div class="row">
-      <button class="btn-block main-buttons fuzzfinders-buttons report-btn">Reports</button>
-      <div id="reports-map-container">
-        <div class="report-map-legend">
-          <ul>
-            <li>
-              <img src="/images/FuzzFinders_icon_orange.png" alt="Fuzzfinders lost pet icon"><p>Lost Pet Report</p>
-            </li>
-            <li>
-              <img src="/images/FuzzFinders_icon_blue.png" alt="Fuzzfinders found pet icon"><p>Found Pet Report</p>
-            </li>
-          </ul>
-        </div><!-- report-map-legend -->
-        <div id="report-map-canvas" class="map-canvas">
-        </div><!-- #report-map-canvas map-canvas -->
-        <%= erb :'partials/_report_filter', :layout => false %>
-        <%= erb :'partials/_report_list', :layout => false %>
-      </div><!-- #reports-map-container -->
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <button class="btn-block main-buttons fuzzfinders-buttons report-btn">Reports</button>
+        <div id="reports-map-container">
+          <div class="report-map-legend">
+            <ul>
+              <li>
+                <img src="/images/FuzzFinders_icon_orange.png" alt="Fuzzfinders lost pet icon"><p>Lost Pet Report</p>
+              </li>
+              <li>
+                <img src="/images/FuzzFinders_icon_blue.png" alt="Fuzzfinders found pet icon"><p>Found Pet Report</p>
+              </li>
+            </ul>
+          </div><!-- report-map-legend -->
+          <div id="report-map-canvas" class="map-canvas">
+          </div><!-- #report-map-canvas map-canvas -->
+          <%= erb :'partials/_report_filter', :layout => false %>
+          <%= erb :'partials/_report_list', :layout => false %>
+        </div><!-- #reports-map-container -->
+      </div><!-- col -->
     </div><!-- row -->
   </div><!-- option-buttons -->
   <%= @user %>
