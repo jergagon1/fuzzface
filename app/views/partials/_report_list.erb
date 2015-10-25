@@ -6,12 +6,11 @@
     <script id="report-list-template" type="text/x-handlebars-template">
       {{#each reports}}
         <li class="report {{report_type}}-report unselected" data-reportid="{{id}}">
-          <div class="report-summary padded">
+          <div class="report-summary padded hide-on-detail-show">
             <div class="report-thumbnail-column col-xs-4 col-sm-4 col-md-4 col-lg-4">
               <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
             </div>
             <div class="report-summary-text-column col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <span class="report-detail-hide glyphicon glyphicon-minus" style="display: none;"></span>
               <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
               <p class="report-summary-text">Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
               <p class="report-summary-text">Posted By: {{report_username}}
@@ -26,33 +25,75 @@
 
 <script id="report-detail-template" type="text/x-handlebars-template">
   <div class="report-detail">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <span class="report-detail-hide glyphicon glyphicon-minus" style="display: none;"></span>
+    </div>
     {{#if report.img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <img src="{{report.img_url}}" class="report-image-big">
     </div>{{/if}}
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h4>{{titleize report.report_type}} {{#if report.animal_type}}{{titleize report.animal_type}}{{else}}Pet{{/if}} {{#if report.pet_name}}"{{titleize report.pet_name}}"{{/if}}</h4>
       {{#if report.pet_size}}
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Size:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.pet_size}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Size:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{titleize report.pet_size}}</p>
+        </div>
       {{/if}}
       {{#if report.color}}
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Color:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.color}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Color:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{titleize report.color}}</p>
+        </div>
       {{/if}}
       {{#if report.breed}}
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Breed:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.breed}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Breed:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{titleize report.breed}}</p>
+        </div>
       {{/if}}
       {{#if report.sex}}
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Sex:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.sex}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Sex:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{titleize report.sex}}</p>
+        </div>
       {{/if}}
       {{#if report.age}}
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Age:</p>
-        <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{titleize report.age}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Age:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{titleize report.age}}</p>
+        </div>
       {{/if}}
       {{#if report.notes}}
-          <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Notes:</p>
-          <p class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{report.notes}}</p>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Notes:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{report.notes}}</p>
+        </div>
+      {{/if}}
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Last Seen:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{#if report.last_seen}}{{report.last_seen}}{{else}}{{report.created_at}}{{/if}}</p>
+        </div>
+      {{#if report.report_username}}
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+          <p>Posted By:</p>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <p>{{report.report_username}}</p>
+        </div>
       {{/if}}
     </div>
   </div>
