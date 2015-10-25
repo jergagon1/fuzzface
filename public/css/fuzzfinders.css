@@ -70,6 +70,7 @@ li {
 .report-image-big {
   width: 100%;
   padding-bottom: 1rem;
+  margin-top: 15px;
 }
 
 .submit-comment {
@@ -116,13 +117,15 @@ li {
 }
 
 .report-detail-hide {
-  position: absolute;
+/*  position: absolute;
   top: 0;
-  right: 15px;
+  right: 15px;*/
+  float: right;
+  padding-top: 15px;
 }
 
 .glyphicon.glyphicon-minus {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #333;
 }
 
@@ -170,6 +173,10 @@ li {
 .upload-preview-image {
   display: block;
   width: 100%;
+}
+
+.negative-left-margin {
+  margin-left: -15px;
 }
 
 /* tablet */

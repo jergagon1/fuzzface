@@ -92,7 +92,10 @@ $(function(){
     .done(function(response){
       console.log(response);
       // render handlebars template
+      updateTimestamps([response["report"]], "last_seen");
+      updateTimestamps([response["report"]], "created_at");
       updateTimestamps(response["comments"], "created_at");
+      // console.log(response);
       renderTemplates({
         report:     response["report"],
         tags:       response["tags"],
@@ -102,6 +105,7 @@ $(function(){
       );
       removeUnselectedClass($reportLi);
       toggleHideIcon($reportLi);
+      hideReportSummaryOnDetailShow($reportLi);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -186,6 +190,17 @@ $(function(){
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
   var $tagsFilter = $(".tags-filter");
+
+  // View: In reports list, hide the report summary when show the detailed report
+  var hideReportSummaryOnDetailShow = function($li){
+    console.log("fuzzfindersMapsReports.js hideReportSummaryOnDetailShow");
+    $li.find(".hide-on-detail-show").hide();
+  };
+
+  // View: In reports list, show the report summary when close out the report details
+  var showReportSummaryOnDetailClose = function($li){
+    $li.find(".hide-on-detail-show").show();
+  };
 
   // View: Set dropdown values for dynamic report dropdown filters
   var populateDynamicReportsFilters = function(reportsArray){
@@ -361,6 +376,7 @@ $(function(){
   var removeReportDetails = function($reportLi){
     console.log("fuzzfindersMapsReports.js removeReportDetails");
     $reportLi.find(".report-summary").siblings().remove();
+    showReportSummaryOnDetailClose($reportLi);
   };
 
   // View: Render handlebars templates
@@ -400,6 +416,7 @@ $(function(){
     removeReportDetails($reportListItem);
     addUnselectedClass($reportListItem);
     toggleHideIcon($reportListItem);
+    showReportSummaryOnDetailClose($reportListItem);
   };
 
   // View: slide down report filter form
