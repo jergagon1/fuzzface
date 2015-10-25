@@ -1,53 +1,54 @@
-<div class="sidebar-container">
-  <%= erb :'partials/_sidebar' %>
+<div class="topbar-container">
+  <%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
 </div>
+<div class="sidebar-container">
+  <%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
+</div>
+<div class="notification">
+  <ul>
+  </ul>
+</div><!-- notification -->
 <div class="container">
-  <div class='notification'>
-  </div>
   <div class="row first-panel">
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    </div>
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFeed_Logo_med.png" alt="FuzzFeed" id="main-logo">
     </div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
-      <p>Wags</p>
-      <p class="wags"><%= @wags %></p>
-    </div>
-  </div>
+  </div><!-- row first-panel -->
   <div class="feed">
     <div class="row">
-      <button class="btn-block main-buttons fuzzfeed-buttons create-article-form">Create Article</button>
-      <form class="new-article" action="<%= ENV['SERVER_URL'] %>/api/v1/articles" method="post">
-        <input type="hidden" name="article[user_id]" value="<%= @user_id %>">
-        <div class="padded">
-          <input type="text" class="form-control" name="article[title]" placeholder="Enter a title">
-        </div>
-        <div class="padded">
-          <textarea name="article[content]" class="form-control" cols="30" rows="7" placeholder="Enter article content here"></textarea>
-        </div>
-        <div class="padded">
-          <input type="text" class="form-control" name="article[tag_list]" placeholder="Additional Tags, grooming, photo, dog">
-        </div>
-        <div class="padded">
-          <button type="submit" class="btn btn-default">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div class="row">
-      <ul class="articles-list">
-        <script id="article-template" type="text/x-handlebars-template">
-          {{#each articles}}
-            <li class="article" data-article_id="{{id}}" data-user_id="{{user_id}}">
-              <h4 class="title">{{title}}</h4>
-              <p class="content">{{content}}</p>
-            </li>
-          {{/each}}
-        </script>
-      </ul>
-    </div>
-    <script id="remark-template" type="text/x-handlebars-template">
-      <p>{{content}}</p>
-    </script>
-  </div>
-</div>
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <button class="btn-block main-buttons fuzzfeed-buttons create-article-form">Create Article</button>
+        <form class="new-article" action="<%= ENV['SERVER_URL'] %>/api/v1/articles" method="post">
+          <input type="hidden" name="article[user_id]" value="<%= @user_id %>">
+          <div class="padded">
+            <input type="text" class="form-control" name="article[title]" placeholder="Enter a title">
+          </div>
+          <div class="padded">
+            <textarea name="article[content]" class="form-control" cols="30" rows="7" placeholder="Enter article content here"></textarea>
+          </div>
+          <div class="padded">
+            <input type="text" class="form-control" name="article[tag_list]" placeholder="Additional Tags, grooming, photo, dog">
+          </div>
+          <div class="padded">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+      </div><!-- row -->
+      <div class="row">
+        <ul class="articles-list">
+          <script id="article-template" type="text/x-handlebars-template">
+            {{#each articles}}
+              <li class="article" data-article_id="{{id}}" data-user_id="{{user_id}}">
+                <h4 class="title">{{title}}</h4>
+                <p class="content">{{content}}</p>
+              </li>
+            {{/each}}
+          </script>
+        </ul>
+      </div><!-- row -->
+      <script id="remark-template" type="text/x-handlebars-template">
+        <p>{{content}}</p>
+      </script>
+    </div><!-- row -->
+  </div><!-- feed -->
+</div><!-- container -->
