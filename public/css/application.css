@@ -33,6 +33,12 @@ a {
 	height: 0px;
 }
 
+.row-no-negative-margins {
+	margin-right: 0;
+	margin-left: 0;
+}
+
+
 /* main page FIRST PANEL */
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
