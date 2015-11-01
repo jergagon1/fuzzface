@@ -1,26 +1,35 @@
 <div class="report-lists" >
-  <div class="padded">
-    <h3>Reports in Your Area</h3>
-  </div>
-  <ul class="reports-list" data-currentId= "<%= @user_id %>" >
-    <script id="report-list-template" type="text/x-handlebars-template">
-      {{#each reports}}
-        <li class="report {{report_type}}-report unselected" data-reportid="{{id}}">
-          <div class="report-summary padded hide-on-detail-show">
-            <div class="report-thumbnail-column col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
-            </div>
-            <div class="report-summary-text-column col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
-              <p class="report-summary-text">Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
-              <p class="report-summary-text">Posted By: {{report_username}}
-              </p>
-            </div>
-          </div>
-        </li>
-      {{/each}}
-    </script>
-  </ul>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h3 class="padded">Reports in Your Area</h3>
+    </div><!-- col -->
+  </div><!-- row -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <ul class="reports-list" data-currentId= "<%= @user_id %>" >
+        <script id="report-list-template" type="text/x-handlebars-template">
+          {{#each reports}}
+            <li class="report {{report_type}}-report unselected" data-reportid="{{id}}">
+              <div class="report-summary padded hide-on-detail-show">
+                <div class="row row-eq-height row-no-negative-margins">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
+                  </div>
+                  <div class="col-xs-6 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-1 report-summary-text-column">
+                    <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
+                    <p class="report-summary-text">Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
+                    <p class="report-summary-text">Posted By: {{report_username}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- report details go here -->
+            </li>
+          {{/each}}
+        </script>
+      </ul>
+    </div><!-- col -->
+  </div><!-- row -->
 </div>
 
 <script id="report-detail-template" type="text/x-handlebars-template">
