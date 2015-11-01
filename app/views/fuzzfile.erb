@@ -1,22 +1,14 @@
-<div class="sidebar-container">
-  <%= erb :'partials/_sidebar' %>
-</div>
+<%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
+<%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
+<%= erb :'partials/_notification', :layout => false %>
 <div class="container">
-  <div class='notification'>
-  </div>
   <div class="row first-panel">
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    </div>
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 logo-section">
-      <img src="/images/FuzzFile_Logo_med.png" alt="FuzzFile" id="main-logo">
-    </div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 wags-section">
-      <p>Wags</p>
-      <p class="wags"><%= @wags %></p>
-    </div>
-  </div>
-  <div class="fuzzfile">
-    <div class="row user-info">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
+      <img src="/images/FuzzFile_Logo_med.png" alt="FuzzFile Logo" id="main-logo">
+    </div><!-- col logo-section -->
+  </div><!-- row first-panel -->
+  <div class="row second-panel">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <p>Username: <%= @user["username"] %></p>
       <p>Email: <%= @user["email"] %></p>
       <p>Zipcode: <%= @user["zipcode"] %></p>
