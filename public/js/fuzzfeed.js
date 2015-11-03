@@ -5,7 +5,7 @@ $(function() {
   // Model: retrieve articles for feed
   var getArticles = function() {
     console.log("fuzzfeed.js getArticles");
-    var link = myApp.fuzzfindersApiUrl + "/api/v1/articles";
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/articles.json?user_email=" + gon.email + "&user_token=" + gon.auth_token;
     $.ajax({
      url: link,
      type: 'GET'
@@ -27,7 +27,7 @@ $(function() {
   var newArticleSubmit = function($dataFromForm, $articleForm){
     console.log("fuzzfeed.js newArticleSubmit");
     $.ajax({
-      url: $articleForm.attr("action"),
+      url: $articleForm.attr("action") + "?user_email=" + gon.email + "&user_token=" + gon.auth_token,
       type: $articleForm.attr("method"),
       dataType: 'JSON',
       data: $dataFromForm
