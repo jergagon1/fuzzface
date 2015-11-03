@@ -56,7 +56,7 @@ get '/' do
     @user_id = session[:user]['id']
     # p session[:user]["email"]
     # p session[:user]["password_hash"]
-    # retrieve_wags
+    retrieve_wags
 		erb :fuzzfinders
 	else
 		redirect '/sign_in'
