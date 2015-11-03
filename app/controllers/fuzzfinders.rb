@@ -1,20 +1,26 @@
-enable :sessions
 require 'digest/sha1'
+
+enable :sessions
+
+# we need store user's email and authentication token in session
+# after users signin or signup
 
 # gon gem gives access to variables from js
 before do
-  gon.pusher_key = ENV["PUSHER_KEY"]
-  gon.channel_name = ENV["PUSHER_CHANNEL_NAME"]
-  if session[:user] != nil
-    gon.username = session[:user]["username"]
+  gon.pusher_key = ENV['PUSHER_KEY']
+  gon.channel_name = ENV['PUSHER_CHANNEL_NAME']
+  if session[:user].is_a? Hash
+    gon.username = session[:user]['username']
+    gon.email = session[:user]['email']
+    gon.auth_token = session[:user]['authentication_token']
   else
-    gon.username = "guest"
+    gon.username = 'guest'
   end
 end
 
 # setup method for image file upload to Amazon S3 bucket
 def setup_s3
-  user_id = session[:user] ? session[:user]["id"].to_s + "-" : "none-"
+  user_id = session[:user] ? session[:user]['id'].to_s + '-' : 'none-'
   @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{ user_id + SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
   @s3_hash = Hash.new
   @s3_hash['url'] = @s3_direct_post.url
@@ -25,58 +31,54 @@ end
 
 # method to retrieve user wags
 def retrieve_wags
-  wags_data = HTTParty.get(ENV['SERVER_URL'] + "/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
-  @wags = JSON.parse(wags_data.body)["wags"]
+  if session[:user]
+    @wags = User.wags(session[:user]['email'], session[:user]['authentication_token'])
+  end
+  # wags_data = HTTParty.get(ENV['SERVER_URL'] + "/api/v1/wags?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
+  # @wags = JSON.parse(wags_data.body)['wags']
 end
 
-# shared method to handle log in and sign up response data from HTTParty
 def handle_auth_response response_data
-  unless response_data.body.empty?
-    @user = JSON.parse(response_data.body)
-    session[:user] = @user
-    redirect "/"
+  # TODO: handle errors
+  if response_data.present? && !response_data[:error]
+    session[:user] = JSON.parse response_data.body
+
+    redirect '/'
   else
-    redirect "/sign_in"
+    redirect '/sign_in'
   end
 end
 
-# render root/FuzzFinders page
-get "/" do
+get '/' do
   if session[:user]
     setup_s3
-    @page_title = "FuzzFinders"
-    @user_id = session[:user]["id"]
+    @page_title = 'FuzzFinders'
+    @user_id = session[:user]['id']
     # p session[:user]["email"]
     # p session[:user]["password_hash"]
-    retrieve_wags
+    # retrieve_wags
 		erb :fuzzfinders
 	else
-		redirect "/sign_in"
+		redirect '/sign_in'
 	end
 end
 
 # log in action
-put "/sign_in" do
+put '/sign_in' do
   setup_s3
-  options = params
-  response = HTTParty.put(ENV['SERVER_URL'] + "/api/v1/log_in?email=#{params[:email]}&password_hash=#{Digest::SHA1.hexdigest(params[:password_hash])}")
-  handle_auth_response(response)
+  handle_auth_response User.sign_in(params[:email], params[:password])
 end
 
-# render sign in page
-get "/sign_in" do
+get '/sign_in' do
 	erb :sign_in
 end
 
-# sign up action
-post "/sign_up" do
-  response = HTTParty.post(ENV['SERVER_URL'] + "/api/v1/users?user[username]=#{params[:username]}&user[email]=#{params[:email]}&user[password_hash]=#{Digest::SHA1.hexdigest(params[:password_hash])}&user[zipcode]=#{params[:zip]}")
-  handle_auth_response(response)
+post '/sign_up' do
+  handle_auth_response User.sign_up(params)
 end
 
 # sign out action
 get '/sign_out' do
-	HTTParty.put(ENV['SERVER_URL'] + "/api/v1/log_out?email=#{session[:user]["email"]}&password_hash=#{session[:user]["password_hash"]}")
   session.clear
-  redirect "/sign_in"
+  redirect '/sign_in'
 end
