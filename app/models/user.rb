@@ -10,6 +10,7 @@ class User
   def self.sign_in(email, password)
     HTTParty.post(
       "#{ENV['SERVER_URL']}/api/v1/users/sign_in.json",
+      format: :json,
       body: {
         user: {
           email: email,
@@ -22,11 +23,12 @@ class User
   def self.sign_up(params)
     username = params[:username]
     email = params[:email]
-    password = password_confirmation = params[:password_hash]
+    password = password_confirmation = params[:password]
     zipcode = params[:zipcode]
 
     HTTParty.post(
       "#{ENV['SERVER_URL']}/api/v1/users.json",
+      format: :json,
       body: {
         user: {
           username: username,

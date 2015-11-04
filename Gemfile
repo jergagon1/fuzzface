@@ -23,6 +23,9 @@ gem 'httparty'
 gem 'uuid'
 gem 'json'
 
+gem 'coffee-script'
+gem 'therubyracer'
+
 gem 'pusher', '~> 0.14.5'
 
 
@@ -31,6 +34,7 @@ group :test do
   gem 'rack-test'
   gem 'rspec'
   gem 'capybara'
+  gem 'capybara-webkit'
 end
 
 group :test, :development do

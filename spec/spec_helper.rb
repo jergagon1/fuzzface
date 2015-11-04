@@ -12,10 +12,14 @@ require 'shoulda-matchers'
 require 'rack/test'
 require 'capybara'
 require 'capybara/rspec'
+require 'capybara-webkit'
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 end
+
+# Capybara.default_driver = :webkit
+Capybara.javascript_driver = :webkit
 
 def app
   Sinatra::Application
