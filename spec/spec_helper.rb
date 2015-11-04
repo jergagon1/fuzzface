@@ -24,3 +24,5 @@ Capybara.javascript_driver = :webkit
 def app
   Sinatra::Application
 end
+
+Capybara.app = app
