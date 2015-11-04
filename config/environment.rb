@@ -8,6 +8,8 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 # Require gems we care about
 require 'rubygems'
 
+require 'coffee_script'
+
 require 'uri'
 require 'pathname'
 
@@ -16,7 +18,7 @@ require 'active_record'
 require 'logger'
 
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'sinatra/reloader' if development?
 
 require 'erb'
 require 'httparty'
@@ -56,7 +58,7 @@ configure do
   set :session_secret, ENV['SESSION_SECRET'] || 'this is a secret shhhhh'
 
   # Set the views to
-  set :views, File.join(Sinatra::Application.root, "app", "views")
+  set :views, File.join(Sinatra::Application.root, 'app', 'views')
 end
 
 # Set up the controllers and helpers

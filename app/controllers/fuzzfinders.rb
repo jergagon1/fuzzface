@@ -38,14 +38,26 @@ def retrieve_wags
   # @wags = JSON.parse(wags_data.body)['wags']
 end
 
+# TODO: spec me
 def handle_auth_response response_data
-  # TODO: handle errors
-  if response_data.present? && !response_data[:error]
-    session[:user] = JSON.parse response_data.body
+  response_data = JSON.parse response_data.body
 
-    redirect '/'
+  if response_data.present? && !response_data['error'] && !response_data['errors']
+    session[:user] = response_data
+
+    setup_s3
+  end
+
+  if request.xhr?
+    content_type :json
+
+    response_data.to_json
   else
-    redirect '/sign_in'
+    if session[:user]
+      redirect '/'
+    else
+      redirect '/sign_in'
+    end
   end
 end
 
@@ -54,27 +66,30 @@ get '/' do
     setup_s3
     @page_title = 'FuzzFinders'
     @user_id = session[:user]['id']
-    # p session[:user]["email"]
-    # p session[:user]["password_hash"]
+
     retrieve_wags
-		erb :fuzzfinders
-	else
-		redirect '/sign_in'
-	end
+
+    erb :fuzzfinders
+  else
+    redirect '/sign_in'
+  end
 end
 
-# log in action
-put '/sign_in' do
-  setup_s3
+get '/app.js' do
+  coffee :app
+end
+
+post '/sign_in' do
   handle_auth_response User.sign_in(params[:email], params[:password])
-end
-
-get '/sign_in' do
-	erb :sign_in
 end
 
 post '/sign_up' do
   handle_auth_response User.sign_up(params)
+end
+
+# log in action
+get '/sign_in' do
+  erb :sign_in
 end
 
 # sign out action
