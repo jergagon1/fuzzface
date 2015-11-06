@@ -478,6 +478,19 @@ $(function(){
     noGeoMap.setCenter(options.position);
   };
 
+  var updateUserCoordinates = function(latitude, longitude, callback) {
+    // update users coodinates
+    $.ajax({
+      url: '/update_coodinates' + "?user_email=" + gon.email + "&user_token=" + gon.auth_token,
+      type: "POST",
+      dataType: 'json',
+      data: { latitude: latitude, longitude: longitude }
+    })
+    .done(function(response){
+      callback(response);
+    });
+  }
+
   // Controller: Generic report submit map initialize
   var initializeMap = function(mapName, canvasDivId, iconUrl) {
     console.log("fuzzfindersMapsReports.js initializeMap");
@@ -489,48 +502,56 @@ $(function(){
     };
     mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
+    var success = function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+
+      updateUserCoordinates(lat, lng, function(data) {});
+
+      var marker = new google.maps.Marker({
+        map: mapName,
+        position: pos,
+        icon: iconUrl,
+        draggable: true,
+      });
+
+      var markerLat;
+      var markerLong;
+      markerLat = marker.position.A  //marker latitude
+      markerLong = marker.position.F  //marker longitude
+
+      var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
+
+      var infowindow = new google.maps.InfoWindow({
+        map: mapName,
+        position: posInfoWindow,
+        content: 'Current location. Drag to location pet was last seen.'
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function(){
+        lat = this.getPosition().lat();
+        lng = this.getPosition().lng();
+        addLatLongAttr(lat,lng);
+        infowindow.close();
+      });
+
+      mapName.setCenter(pos);
+      addLatLongAttr(lat,lng);
+    }
+
+    var failure = function(error) {
+      console.log(canvasDivId, error);
+      handleNoGeolocation(false, mapName);
+    };
+
     //User's Current Location
     if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
-
-        var marker = new google.maps.Marker({
-          map: mapName,
-          position: pos,
-          icon: iconUrl,
-          draggable: true,
-        });
-
-        var markerLat;
-        var markerLong;
-        markerLat = marker.position.A  //marker latitude
-        markerLong = marker.position.F  //marker longitude
-
-        var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
-
-        var infowindow = new google.maps.InfoWindow({
-          map: mapName,
-          position: posInfoWindow,
-          content: 'Current location. Drag to location pet was last seen.'
-        });
-
-        google.maps.event.addListener(marker, 'dragend', function(){
-            lat = this.getPosition().lat();
-            lng = this.getPosition().lng();
-            addLatLongAttr(lat,lng);
-            infowindow.close();
-        });
-
-        mapName.setCenter(pos);
-        addLatLongAttr(lat,lng);
-      }, function() {
-        handleNoGeolocation(true, mapName);
+      navigator.geolocation.getCurrentPosition(success, function() {
+        geolocator.locateByIP(success, failure, 1);
       });
     } else {
-      // Browser doesn't support Geolocation
-      handleNoGeolocation(false, mapName);
+      geolocator.locateByIP(success, failure, 1);
     }
   };
 
@@ -546,6 +567,12 @@ $(function(){
     initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png')
   };
 
+  // var getUsersLocation = function() {
+  //   var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
+  //   var ipFallbackIndex = 1; // Geo plugin
+  //   geolocator.locate(onGeoSuccess, onGeoError, ipFallbackIndex, html5Options, 'map-canvas');
+  // };
+
   // Controller: initialize map for reports in area section
   var initializeReportMap = function() {
     console.log("fuzzfindersMapsReports.js initializeReportMap");
@@ -558,44 +585,52 @@ $(function(){
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
         reportMapOptions);
 
+    var success = function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+
+      // TODO: update only if coordinates was changed
+      updateUserCoordinates(lat, lng, function(data) {});
+
+      var currentLocationMarker = new google.maps.Marker({
+        map: reportMap,
+        position: pos,
+        title: "Current location"
+      });
+
+      var boundary;
+      var ne;
+      var sw;
+
+      //get bounds of map
+      google.maps.event.addListener(reportMap, 'bounds_changed', function() {
+        boundary = reportMap.getBounds();
+        // console.log(boundary);
+        ne_bounds = boundary.getNorthEast();
+        sw_bounds = boundary.getSouthWest();
+        ne_string = ne_bounds.toString();
+        sw_string = sw_bounds.toString();
+
+        ne = ne_bounds.toString().substr(1, ne_string.length-2);
+        sw = sw_bounds.toString().substr(1, sw_string.length-2);
+        setRecentReportsHiddenFormInputFields(sw,ne);
+        myApp.fuzzfinders.model.getRecentReports();
+      });
+      reportMap.setCenter(pos);
+    };
+
+    var failure = function(error) {
+      handleNoGeolocation(false, reportMap);
+    };
+
     if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = new google.maps.LatLng(position.coords.latitude,
-                                         position.coords.longitude);
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
-
-        var currentLocationMarker = new google.maps.Marker({
-          map: reportMap,
-          position: pos,
-          title: "Current location"
-        });
-
-        var boundary;
-        var ne;
-        var sw;
-
-        //get bounds of map
-        google.maps.event.addListener(reportMap, 'bounds_changed', function() {
-          boundary = reportMap.getBounds();
-          // console.log(boundary);
-          ne_bounds = boundary.getNorthEast();
-          sw_bounds = boundary.getSouthWest();
-          ne_string = ne_bounds.toString();
-          sw_string = sw_bounds.toString();
-
-          ne = ne_bounds.toString().substr(1, ne_string.length-2);
-          sw = sw_bounds.toString().substr(1, sw_string.length-2);
-          setRecentReportsHiddenFormInputFields(sw,ne);
-          myApp.fuzzfinders.model.getRecentReports();
-        });
-        reportMap.setCenter(pos);
-      }, function() {
-        handleNoGeolocation(true, reportMap);
+      navigator.geolocation.getCurrentPosition(success, function() {
+        geolocator.locateByIP(success, failure, 1);
       });
     } else {
-      // if browser doesn't support Geolocation
-      handleNoGeolocation(false, reportMap);
+      geolocator.locateByIP(success, failure, 1);
     }
   };
 

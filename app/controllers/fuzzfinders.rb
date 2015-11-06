@@ -10,9 +10,12 @@ before do
   gon.pusher_key = ENV['PUSHER_KEY']
   gon.channel_name = ENV['PUSHER_CHANNEL_NAME']
   if session[:user].is_a? Hash
-    gon.username = session[:user]['username']
-    gon.email = session[:user]['email']
-    gon.auth_token = session[:user]['authentication_token']
+    u = session[:user]
+    gon.username = u['username']
+    gon.email = u['email']
+    gon.auth_token = u['authentication_token']
+    gon.latitude = u['latitude']
+    gon.longitude = u['longitude']
   else
     gon.username = 'guest'
   end
@@ -59,6 +62,29 @@ def handle_auth_response response_data
       redirect '/sign_in'
     end
   end
+end
+
+post '/update_coodinates' do
+  if session[:user]
+    response_data = User.update_coordinates(params[:latitude], params[:longitude], params[:user_email], params[:user_token])
+
+    if response_data.present?
+      obj = JSON.parse(response_data.body)
+
+      if obj['error'].nil?
+        user = session[:user]
+        user['latitude'] = params[:latitude]
+        user['longitude'] = params[:longitude]
+
+        gon.latitude = params[:latitude]
+        gon.longitude = params[:longitude]
+
+        session[:user] = user
+      end
+    end
+  end
+
+  { status: 'ok' }.to_json
 end
 
 get '/' do
