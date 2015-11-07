@@ -86,7 +86,9 @@ $(function() {
     fuzzflashChannel.bind('report_created', function(fuzzflash){
       distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
 
-      if (distanceInMiles < 20) {
+      settingsDistance = Cookies.get('distance') || 5;
+
+      if (distanceInMiles < settingsDistance) {
         var message = fuzzflash.message;
         var reportId = fuzzflash.report_id;
         var reportType = fuzzflash.report_type;

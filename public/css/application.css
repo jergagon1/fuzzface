@@ -203,3 +203,18 @@ nav .container {
 		max-width: 50%;
 	}
 }
+
+.adjust-distance span.title {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 600;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+  font-size: 110%;
+}
+
+.dropdown-menu.adjust-distance {
+  background-color: #666;
+}

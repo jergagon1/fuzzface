@@ -19,8 +19,38 @@ window.distance = (lat1, lon1, lat2, lon2) ->
 $signInForm = $('form.signIn')
 $signUpForm = $('form.signUp')
 
+Cookies.set('distance', '1.5') unless Cookies.get('distance')
+
+updateMenu = ->
+  $.each($('.adjust-distance > li').find('a'), (el) ->
+    miles = $(@).parent().data('miles')
+
+    $(@).html("#{miles} miles")
+  )
+
+  $('.adjust-distance > li[data-miles="' + Cookies.get('distance') + '"]').find('a').html(
+    "#{Cookies.get('distance')} miles <span class='glyphicon glyphicon-ok'></span>"
+  )
+
+
+updateDistance = (distance) ->
+  Cookies.set('distance', distance)
+  updateMenu()
 
 $ ->
+  $('.selectpicker').selectpicker()
+
+  updateMenu()
+
+  $('.adjust-distance a').click ->
+    miles = $(@).parent().data('miles')
+    updateDistance(miles)
+
+    false
+
+
+  # $('.dropdown-toggle').dropdown()
+
   if $signInForm || $signUpForm
     if $signUpForm
       $signUpForm.submit ->
