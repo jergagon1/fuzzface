@@ -84,11 +84,18 @@ $(function() {
     var pusher = new Pusher(gon.pusher_key);
     var fuzzflashChannel = pusher.subscribe('fuzzflash');
     fuzzflashChannel.bind('report_created', function(fuzzflash){
-      var message = fuzzflash.message;
-      var reportId = fuzzflash.report_id;
-      var reportType = fuzzflash.report_type;
-      $('div.notification ul').prepend('<li class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>');
-      clearFuzzflash(reportId);
+      distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
+
+      settingsDistance = Cookies.get('distance') || 5;
+
+      if (distanceInMiles < settingsDistance) {
+        var message = fuzzflash.message;
+        var reportId = fuzzflash.report_id;
+        var reportType = fuzzflash.report_type;
+        $('div.notification ul').prepend('<li class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>');
+        clearFuzzflash(reportId);
+      }
+
       if(checkIfOnFuzzfindersPageAndReportsListOpen()){
         myApp.fuzzfinders.model.getRecentReports();
       }

@@ -8,7 +8,7 @@ $(function(){
 
   // View: hide the sign up form
   var hideSignUpForm = function(){
-  	$(".signUp").hide();
+    $(".signUp").hide();
   };
 
   // View: toggle the sign in and sign up forms
@@ -21,10 +21,10 @@ $(function(){
 
   // Controller: add event listener to link to toggle sign in and sign up form
   var addEventListenerToggleSignInSignUpForm = function(){
-  	$(".sign-form-swap").on("click", function(event){
-  	  event.preventDefault();
-  	  toggleSignInSignUpForm();
-  	});
+    $(".sign-form-swap").on("click", function(event){
+      event.preventDefault();
+      toggleSignInSignUpForm();
+    });
   };
 
   // Controller: remove event listener to link to toggle sign in and sign up form
