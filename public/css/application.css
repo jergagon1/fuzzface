@@ -9,9 +9,17 @@
 	font-family: helvetica;
 }
 
+/*html, body {
+	height: 100%;
+}*/
+
 a {
 	color: black;
 	text-decoration: none;
+}
+
+.chat-padding {
+	padding-bottom: 6rem;
 }
 
 .container {
@@ -126,13 +134,13 @@ button[type='submit'] {
 }
 
 /* bootstrap container override to provide padding for chat widget */
-.container {
+/*.container {
 	padding-bottom: 6rem;
-}
+}*/
 
-nav .container {
+/*nav .container {
 	padding-bottom: 0;
-}
+}*/
 
 .topbar-container {
 	display: none;

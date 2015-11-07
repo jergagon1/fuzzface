@@ -1,14 +1,5 @@
-<div class="container">
-  <div class="row">
-    <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 logo-section'>
-      <img src="/images/FuzzFinders_Logo_med.png" alt="Fuzz Finders" id="main-logo">
-    </div><!-- logo-section -->
-  </div><!-- row -->
-  <div class="row">
-    <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3'>
-      <p class="tagline">Leveraging the power of community, technology and social media to get pets home</p>
-    </div><!-- col -->
-  </div><!-- row -->
+<div class="container chat-padding">
+  <%= erb :'partials/_public_logo', :layout => false %>
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <div class='sign-in-form-container'>
@@ -21,7 +12,6 @@
           <div class="form-group">
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd" name="password" required="true">
-
             <div id="signInErrors"></div>
           </div>
           <div class="checkbox">
@@ -49,7 +39,6 @@
           <div class="form-group">
             <label for="zip">Enter your Zip Code:</label>
             <input type="text" class="form-control" name="zip">
-
             <div id="signUpErrors"></div>
           </div>
           <div class="checkbox">
@@ -63,4 +52,5 @@
       </div><!-- sign-in-form-container -->
     </div><!-- col -->
   </div><!-- row -->
-</div><!-- container -->
+  <%= erb :'partials/_public_footer', :layout => false %>
+</div>
