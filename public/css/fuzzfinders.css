@@ -67,9 +67,9 @@ h3 {
   background-color: white;
 }*/
 
-li {
-  /* overflow: auto; */
-  /* padding-bottom: 1rem; */
+li.report {
+   overflow: auto;
+   padding-bottom: 1rem;
 }
 
 .report-image-big {
