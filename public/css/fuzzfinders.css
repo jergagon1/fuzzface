@@ -67,9 +67,10 @@ h3 {
   background-color: white;
 }*/
 
+/* Reports list li styles */
 li.report {
-   overflow: auto;
-   padding-bottom: 1rem;
+  overflow: auto;
+  padding-bottom: 1rem;
 }
 
 .report-image-big {
