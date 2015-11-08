@@ -267,85 +267,85 @@ $(function(){
   };
 
   // Controller: Add event listener on focus in lost form last seen field
-  var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
-    console.log("fuzzfinders.js addEventListenerFocusLostLastSeenPlaceholderInput");
-    $lostLastSeenPlaceholder.on("focus", function(event){
-      toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
-      removeEventListenerFocusLostLastSeenPlaceholderInput();
-    });
-  };
+  // var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
+  //   console.log("fuzzfinders.js addEventListenerFocusLostLastSeenPlaceholderInput");
+  //   $lostLastSeenPlaceholder.on("focus", function(event){
+  //     toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
+  //     removeEventListenerFocusLostLastSeenPlaceholderInput();
+  //   });
+  // };
 
   // Controller: Remove event listener for focus in lost form last seen field
-  var removeEventListenerFocusLostLastSeenPlaceholderInput = function(){
-    console.log("fuzzfinders.js removeEventListenerFocusLostLastSeenPlaceholderInput");
-    $lostLastSeenPlaceholder.off("focus");
-  };
+  // var removeEventListenerFocusLostLastSeenPlaceholderInput = function(){
+  //   console.log("fuzzfinders.js removeEventListenerFocusLostLastSeenPlaceholderInput");
+  //   $lostLastSeenPlaceholder.off("focus");
+  // };
 
   // Controller: Add Event Listener on focus in the found form last seen input field
-  var addEventListenerFocusFoundLastSeenPlaceholderInput = function(){
-    console.log("fuzzfinders.js addEventListenerFocusFoundLastSeenPlaceholderInput");
-    $foundLastSeenPlaceholder.on("focus", function(event){
-      // console.log("in focus!");
-      toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
-      removeEventListenerFocusFoundLastSeenPlaceholderInput();
-    });
-  };
+  // var addEventListenerFocusFoundLastSeenPlaceholderInput = function(){
+  //   console.log("fuzzfinders.js addEventListenerFocusFoundLastSeenPlaceholderInput");
+  //   $foundLastSeenPlaceholder.on("focus", function(event){
+  //     // console.log("in focus!");
+  //     toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
+  //     removeEventListenerFocusFoundLastSeenPlaceholderInput();
+  //   });
+  // };
 
   // Controller: Remove Event Listener for focus in found form last seen input field
-  var removeEventListenerFocusFoundLastSeenPlaceholderInput = function(){
-    console.log("fuzzfinders.js removeEventListenerFocusFoundLastSeenPlaceholderInput");
-    $foundLastSeenPlaceholder.off("focus");
-  };
+  // var removeEventListenerFocusFoundLastSeenPlaceholderInput = function(){
+  //   console.log("fuzzfinders.js removeEventListenerFocusFoundLastSeenPlaceholderInput");
+  //   $foundLastSeenPlaceholder.off("focus");
+  // };
 
   // Controller: Add event listener for blur out off Lost form last seen input field
   // if there is not a value in the datetime-local input field,
   // toggle display of the placeholder text input field
   // else retain datetime-local display and value
-  var addEventListenerBlurLostLastSeenInput = function(){
-    console.log("fuzzfinders.js addEventListenerBlurLostLastSeenInput");
-    $lostLastSeen.on("blur", function(){
-      console.log("in blur!");
-      if(checkForValueInFormInput($lostLastSeen) === false){
-        toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
-        addEventListenerFocusLostLastSeenPlaceholderInput();
-      }
-    });
-  };
+  // var addEventListenerBlurLostLastSeenInput = function(){
+  //   console.log("fuzzfinders.js addEventListenerBlurLostLastSeenInput");
+  //   $lostLastSeen.on("blur", function(){
+  //     console.log("in blur!");
+  //     if(checkForValueInFormInput($lostLastSeen) === false){
+  //       toggleDisplayLastSeenFormInputFields($lostLastSeen, $lostLastSeenPlaceholder);
+  //       addEventListenerFocusLostLastSeenPlaceholderInput();
+  //     }
+  //   });
+  // };
 
   // Controller: Remove event listener for blur out of Lost form last seen input field
-  var removeEventListenerBlurLostLastSeenInput = function(){
-    console.log("fuzzfinders.js removeEventListenerBlurLostLastSeenInput");
-    $lostLastSeen.off("blur");
-  };
+  // var removeEventListenerBlurLostLastSeenInput = function(){
+  //   console.log("fuzzfinders.js removeEventListenerBlurLostLastSeenInput");
+  //   $lostLastSeen.off("blur");
+  // };
 
   // Controller: Add event listener for blur out off Found form last seen input field
   // if there is not a value in the datetime-local input field,
   // toggle display of the placeholder text input field
   // else retain datetime-local display and value
-  var addEventListenerBlurFoundLastSeenInput = function(){
-    console.log("fuzzfinders.js addEventListenerBlurFoundLastSeenInput");
-    $foundLastSeen.on("blur", function(){
-      console.log("in blur!");
-      if(checkForValueInFormInput($foundLastSeen) === false){
-        toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
-        addEventListenerFocusFoundLastSeenPlaceholderInput();
-      }
-    });
-  };
+  // var addEventListenerBlurFoundLastSeenInput = function(){
+  //   console.log("fuzzfinders.js addEventListenerBlurFoundLastSeenInput");
+  //   $foundLastSeen.on("blur", function(){
+  //     console.log("in blur!");
+  //     if(checkForValueInFormInput($foundLastSeen) === false){
+  //       toggleDisplayLastSeenFormInputFields($foundLastSeen, $foundLastSeenPlaceholder);
+  //       addEventListenerFocusFoundLastSeenPlaceholderInput();
+  //     }
+  //   });
+  // };
 
   // Controller: Remove event listener for blur out of Found form last seen input field
-  var removeEventListenerBlurFoundLastSeenInput = function(){
-    console.log("fuzzfinders.js removeEventListenerBlurFoundLastSeenInput");
-    $foundLastSeen.off("blur");
-  };
+  // var removeEventListenerBlurFoundLastSeenInput = function(){
+  //   console.log("fuzzfinders.js removeEventListenerBlurFoundLastSeenInput");
+  //   $foundLastSeen.off("blur");
+  // };
 
   //--------------------- lost button ---------------------------//
   // Controller: bind events for lost pet form section
   var bindEventsLost = function(){
     console.log("fuzzfinders.js bindEventsLost");
     addEventListenerLostPetFormSubmit();
-    addEventListenerFocusLostLastSeenPlaceholderInput();
-    addEventListenerBlurLostLastSeenInput();
+    // addEventListenerFocusLostLastSeenPlaceholderInput();
+    // addEventListenerBlurLostLastSeenInput();
   };
 
   // Controller: remove event listeners for lost pet form section
@@ -353,8 +353,8 @@ $(function(){
     console.log("fuzzfinders.js removeEventsLost");
     // remove lost events
     removeEventListenerLostPetFormSubmit();
-    removeEventListenerFocusLostLastSeenPlaceholderInput();
-    removeEventListenerBlurLostLastSeenInput();
+    // removeEventListenerFocusLostLastSeenPlaceholderInput();
+    // removeEventListenerBlurLostLastSeenInput();
   };
 
   // Controller: Add event listener to lost button click
@@ -389,16 +389,16 @@ $(function(){
   var bindEventsFound = function(){
     console.log("fuzzfinders.js bindEventsFound");
     addEventListenerFoundPetFormSubmit();
-    addEventListenerFocusFoundLastSeenPlaceholderInput();
-    addEventListenerBlurFoundLastSeenInput();
+    // addEventListenerFocusFoundLastSeenPlaceholderInput();
+    // addEventListenerBlurFoundLastSeenInput();
   };
 
   // remove events for found pet form section
   var removeEventsFound = function(){
     console.log("fuzzfinders.js removeEventsFound");
     removeEventListenerFoundPetFormSubmit();
-    removeEventListenerFocusFoundLastSeenPlaceholderInput();
-    removeEventListenerBlurFoundLastSeenInput();
+    // removeEventListenerFocusFoundLastSeenPlaceholderInput();
+    // removeEventListenerBlurFoundLastSeenInput();
   };
 
   // add event listener on click of found pet form button
