@@ -105,7 +105,7 @@ $(function() {
 
   // Controller: determine page and assign or remove event listeners
   var checkIfOnSignInUpPage = (function(){
-    if(myApp.checkForElement(".sign-in-form-container")){
+    if(myApp.checkForElement(".public-page")){
       // on signInUp page
       removeEventListenerToggleDisplaySidebarMenu();
     } else {

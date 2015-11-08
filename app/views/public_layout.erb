@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/vendor/jquery-ui-1.11.4.custom/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css" href="" title="" type="" />
+    <link rel="stylesheet" href="/vendor/css/pusher-chat-widget.css">
+    <link rel="stylesheet" href="/vendor/css/simple-sidebar.css">
     <!-- app styles -->
     <link rel="stylesheet" href="/css/application.css">
     <link rel="stylesheet" href="/css/sign-in.css">
@@ -16,14 +19,22 @@
     </title>
     <%= include_gon %>
   </head>
-  <body>
+  <body class="public-page">
     <%= yield %>
     <!-- vendor js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="//js.pusher.com/2.2/pusher.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/vendor/js/moment.js"></script>
+    <!-- // <script src="/vendor/js/PusherChatWidget.js"></script> -->
     <script src="/vendor/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
     <script src="/vendor/js/jquery.iframe-transport.js"></script>
+    <script src="/vendor/js/jquery.fileupload.js"></script>
+    <script src="/vendor/geolocator/geolocator.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/vendor/js.cookie/js.cookie.js" type="text/javascript" charset="utf-8"></script>
     <script src="/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/application.js"></script>
     <script src="/js/signInUp.js"></script>
