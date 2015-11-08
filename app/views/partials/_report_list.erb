@@ -40,11 +40,20 @@
     {{#if report.img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <img src="{{report.img_url}}" class="report-image-big">
     </div>{{/if}}
+
+    {{#if report.lat}}
+      {{#if report.lng}}
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="report-detail-map-canvas map-canvas">
+          </div><!-- map-canvas -->
+        </div><!-- col -->
+      {{/if}}
+    {{/if}}
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <h4>{{titleize report.report_type}} {{#if report.animal_type}}{{titleize report.animal_type}}{{else}}Pet{{/if}} {{#if report.pet_name}}"{{titleize report.pet_name}}"{{/if}}</h4>
       {{#if report.pet_size}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Size:</p>
+          <p><strong>Size:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{titleize report.pet_size}}</p>
@@ -52,7 +61,7 @@
       {{/if}}
       {{#if report.color}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Color:</p>
+          <p><strong>Color:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{titleize report.color}}</p>
@@ -60,7 +69,7 @@
       {{/if}}
       {{#if report.breed}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Breed:</p>
+          <p><strong>Breed:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{titleize report.breed}}</p>
@@ -68,7 +77,7 @@
       {{/if}}
       {{#if report.sex}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Sex:</p>
+          <p><strong>Sex:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{titleize report.sex}}</p>
@@ -76,7 +85,7 @@
       {{/if}}
       {{#if report.age}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Age:</p>
+          <p><strong>Age:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{titleize report.age}}</p>
@@ -84,21 +93,21 @@
       {{/if}}
       {{#if report.notes}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Notes:</p>
+          <p><strong>Notes:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{report.notes}}</p>
         </div>
       {{/if}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Last Seen:</p>
+          <p><strong>Last Seen:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{#if report.last_seen}}{{report.last_seen}}{{else}}{{report.created_at}}{{/if}}</p>
         </div>
       {{#if report.report_username}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p>Posted By:</p>
+          <p><strong>Posted By:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <p>{{report.report_username}}</p>
@@ -107,8 +116,8 @@
     </div>
   </div>
   {{#if tags}}
-    <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4">Tags</p>
+    <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin">
+      <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
       <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
         {{#each tags}}
           <li class="tags">

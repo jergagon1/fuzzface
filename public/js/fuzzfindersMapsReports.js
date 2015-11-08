@@ -83,6 +83,7 @@ $(function(){
     console.log("fuzzfindersMapsReports.js getReportDetails");
     removeReportDetails($reportLi);
     var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+    console.log(11, link);
     $.ajax({
       url: link,
       type: "GET",
@@ -103,6 +104,12 @@ $(function(){
         $('#report-detail-template'),
         $reportLi
       );
+
+      if (response['report']['lng'] && response['report']['lat']) {
+        createMapOnReportDatails(response['report']);
+      }
+
+
       removeUnselectedClass($reportLi);
       toggleHideIcon($reportLi);
       hideReportSummaryOnDetailShow($reportLi);
@@ -313,6 +320,32 @@ $(function(){
         console.log('no report type');
       }
     };
+  };
+
+  var createMapOnReportDatails = function(report) {
+    var mapOptions = {
+      zoom: 14,
+      center: new google.maps.LatLng(report.lat, report.lng),
+      streetViewControl: false,
+      mapTypeControl: false,
+      draggable: false,
+      scrollwheel: false,
+      panControl: false,
+    };
+
+    map = new google.maps.Map(
+      $('.report-detail-map-canvas', $('li.report[data-reportid="' + report.id + '"]'))[0],
+      mapOptions
+    );
+
+    // var infoWin = createMarkerInfoWindow(report);
+    var reportPos = new google.maps.LatLng(report.lat, report.lng);
+    var marker = new google.maps.Marker({
+      map: map,
+      position: reportPos,
+      icon: selectIcon(report.report_type),
+      title: report.pet_name
+    })
   };
 
   // View: create a marker for a report
