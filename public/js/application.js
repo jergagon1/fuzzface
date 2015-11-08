@@ -7,7 +7,7 @@ myApp.fuzzfinders.view = myApp.fuzzfinders.view || {};
 // set server api variable for local development - don't push to master branch
 // myApp.fuzzfindersApiUrl = "http://localhost:3000";
 // set server api variable for deployment - leave uncommented in master branch
-myApp.fuzzfindersApiUrl = "http://fuzzfinders-api.herokuapp.com";
+myApp.fuzzfindersApiUrl = "https://fuzzfinders-api.herokuapp.com";
 
 // Variable to set display length of pusher notifications in milliseconds
 myApp.fuzzflashDisplayLength = 15000;
