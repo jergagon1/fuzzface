@@ -16,6 +16,7 @@ before do
     gon.auth_token = u['authentication_token']
     gon.latitude = u['latitude']
     gon.longitude = u['longitude']
+    gon.user_id = u['id']
   else
     gon.username = 'guest'
   end

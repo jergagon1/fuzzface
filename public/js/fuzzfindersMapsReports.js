@@ -511,19 +511,6 @@ $(function(){
     noGeoMap.setCenter(options.position);
   };
 
-  var updateUserCoordinates = function(latitude, longitude, callback) {
-    // update users coodinates
-    $.ajax({
-      url: '/update_coodinates' + "?user_email=" + gon.email + "&user_token=" + gon.auth_token,
-      type: "POST",
-      dataType: 'json',
-      data: { latitude: latitude, longitude: longitude }
-    })
-    .done(function(response){
-      callback(response);
-    });
-  }
-
   // Controller: Generic report submit map initialize
   var initializeMap = function(mapName, canvasDivId, iconUrl) {
     console.log("fuzzfindersMapsReports.js initializeMap");
@@ -540,7 +527,7 @@ $(function(){
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
-      updateUserCoordinates(lat, lng, function(data) {});
+      // updateUserCoordinates(lat, lng);
 
       var marker = new google.maps.Marker({
         map: mapName,
@@ -579,12 +566,20 @@ $(function(){
     };
 
     //User's Current Location
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, function() {
-        geolocator.locateByIP(success, failure, 1);
-      });
+    if (gon.latitude && gon.longitude) {
+      success(
+        {
+          coords: { latitude: gon.latitude, longitude: gon.longitude }
+        }
+      )
     } else {
-      geolocator.locateByIP(success, failure, 1);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, function() {
+          geolocator.locateByIP(success, failure, 1);
+        });
+      } else {
+        geolocator.locateByIP(success, failure, 1);
+      }
     }
   };
 
@@ -624,9 +619,6 @@ $(function(){
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
-      // TODO: update only if coordinates was changed
-      updateUserCoordinates(lat, lng, function(data) {});
-
       var currentLocationMarker = new google.maps.Marker({
         map: reportMap,
         position: pos,
@@ -658,12 +650,21 @@ $(function(){
       handleNoGeolocation(false, reportMap);
     };
 
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, function() {
-        geolocator.locateByIP(success, failure, 1);
-      });
+
+    if (gon.latitude && gon.longitude) {
+      success(
+        {
+          coords: { latitude: gon.latitude, longitude: gon.longitude }
+        }
+      )
     } else {
-      geolocator.locateByIP(success, failure, 1);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, function() {
+          geolocator.locateByIP(success, failure, 1);
+        });
+      } else {
+        geolocator.locateByIP(success, failure, 1);
+      }
     }
   };
 
