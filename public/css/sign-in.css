@@ -64,21 +64,21 @@
 
 /* tablet */
 @media (min-width: 768px) {
-  .sidebar-container {
+  .public-sidebar {
     display: none;
   }
 }
 
 /* desktop */
 @media (min-width: 992px) {
-  .sidebar-container {
+  .public-sidebar {
     display: none;
   }
 }
 
 /* large desktop */
 @media (min-width: 1200px) {
-  .sidebar-container {
+  .public-sidebar {
     display: none;
   }
 }
