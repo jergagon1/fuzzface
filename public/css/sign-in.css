@@ -29,22 +29,56 @@
   margin-top: 2rem;
 }
 
+.sign-in-form-container > h2 {
+  color: #f37057;
+}
 .sign-form-swap {
   display: block;
   padding-top: 2rem;
 }
 
+.inline-photo{
+  width: 75%;
+  padding: 1rem 0;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.copyright {
+  font-size: 0.8rem;
+  float: left;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.4rem;
+}
+
+.navbar-fixed-bottom {
+  max-height: 85px;
+}
+
+#footer-body {
+  background-color: white;
+  font-size: 1rem;
+}
+
 /* tablet */
 @media (min-width: 768px) {
-
+  .sidebar-container {
+    display: none;
+  }
 }
 
 /* desktop */
 @media (min-width: 992px) {
-
+  .sidebar-container {
+    display: none;
+  }
 }
 
 /* large desktop */
 @media (min-width: 1200px) {
-
+  .sidebar-container {
+    display: none;
+  }
 }

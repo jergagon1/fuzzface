@@ -115,11 +115,24 @@ end
 
 # log in action
 get '/sign_in' do
-  erb :sign_in
+  erb :sign_in, :layout => :public_layout
 end
 
 # sign out action
 get '/sign_out' do
   session.clear
   redirect '/sign_in'
+end
+
+# public info pages
+get '/fuzzfacts' do
+  erb :fuzzfacts, :layout => :public_layout
+end
+
+get '/fuzzfable' do
+  erb :fuzzfable, :layout => :public_layout
+end
+
+get '/fuzzfind_us' do
+  erb :fuzzfind_us, :layout => :public_layout
 end
