@@ -107,7 +107,8 @@ $(function() {
   var checkIfOnSignInUpPage = (function(){
     if(myApp.checkForElement(".public-page")){
       // on signInUp page
-      removeEventListenerToggleDisplaySidebarMenu();
+      // removeEventListenerToggleDisplaySidebarMenu();
+      addEventListenerToggleDisplaySidebarMenu();
     } else {
       // on any other page
       instantiateChatWidget();

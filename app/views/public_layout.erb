@@ -20,7 +20,12 @@
     <%= include_gon %>
   </head>
   <body class="public-page">
-    <%= yield %>
+    <%= erb :'partials/_public_sidebar', :layout => false %>
+    <div class="container chat-padding">
+        <%= erb :'partials/_public_logo', :layout => false %>
+        <%= yield %>
+        <%= erb :'partials/_public_footer', :layout => false %>
+    </div>
     <!-- vendor js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <script src="//js.pusher.com/2.2/pusher.min.js"></script>

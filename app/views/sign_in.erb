@@ -1,56 +1,52 @@
-<div class="container chat-padding">
-  <%= erb :'partials/_public_logo', :layout => false %>
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <div class='sign-in-form-container'>
-        <form class="signIn" action="/sign_in" method="post" role="form">
-          <p>Sign In</p>
-          <div class="form-group">
-            <label for="email">Your Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required="true">
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="password" required="true">
-            <div id="signInErrors"></div>
-          </div>
-          <div class="checkbox">
-            <label><input type="checkbox">Remember me</label>
-          </div>
-          <button type="submit" class="btn btn-default" id="signUpSubmit">Submit</button>
-          <p>
-            <a href="#" class="sign-form-swap">Sign Up</a>
-          </p>
-        </form>
-        <form class="signUp" action="/sign_up" method="post">
-          <p>Sign Up</p>
-          <div class="form-group">
-            <label for="username">Enter a Username:</label>
-            <input type="text" class="form-control" name="username" required="true">
-          </div>
-          <div class="form-group">
-            <label for="email">Your Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required="true">
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="password" required="true">
-          </div>
-          <div class="form-group">
-            <label for="zip">Enter your Zip Code:</label>
-            <input type="text" class="form-control" name="zip">
-            <div id="signUpErrors"></div>
-          </div>
-          <div class="checkbox">
-            <label><input type="checkbox">Remember me</label>
-          </div>
-          <button type="submit" class="btn btn-default" id="signInSubmit">Submit</button>
-          <p>
-            <a href="#" class="sign-form-swap">Sign In</a>
-          </p>
-        </form>
-      </div><!-- sign-in-form-container -->
-    </div><!-- col -->
-  </div><!-- row -->
-  <%= erb :'partials/_public_footer', :layout => false %>
-</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+    <div class='sign-in-form-container'>
+      <form class="signIn" action="/sign_in" method="post" role="form">
+        <p>Sign In</p>
+        <div class="form-group">
+          <label for="email">Your Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required="true">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" name="password" required="true">
+          <div id="signInErrors"></div>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-default" id="signUpSubmit">Submit</button>
+        <p>
+          <a href="#" class="sign-form-swap">Sign Up</a>
+        </p>
+      </form>
+      <form class="signUp" action="/sign_up" method="post">
+        <p>Sign Up</p>
+        <div class="form-group">
+          <label for="username">Enter a Username:</label>
+          <input type="text" class="form-control" name="username" required="true">
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required="true">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" name="password" required="true">
+        </div>
+        <div class="form-group">
+          <label for="zip">Enter your Zip Code:</label>
+          <input type="text" class="form-control" name="zip">
+          <div id="signUpErrors"></div>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-default" id="signInSubmit">Submit</button>
+        <p>
+          <a href="#" class="sign-form-swap">Sign In</a>
+        </p>
+      </form>
+    </div><!-- sign-in-form-container -->
+  </div><!-- col -->
+</div><!-- row -->
