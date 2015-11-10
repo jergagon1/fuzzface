@@ -38,7 +38,13 @@ updateDistance = (distance) ->
   updateMenu()
 
 $ ->
-  $('.selectpicker').selectpicker()
+  $('.datetimepicker').datetimepicker(
+    format: 'm/d/Y H:i A'
+    # formatTime: 'H:i A'
+    step: 30
+    ampm: true
+    maxDate: 0
+  ).inputmask '99/99/9999 [9]9:99 **' # TODO: fix mask for dates
 
   updateMenu()
 
