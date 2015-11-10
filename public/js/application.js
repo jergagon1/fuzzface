@@ -83,12 +83,16 @@ $(function() {
     };
     var pusher = new Pusher(gon.pusher_key);
     var fuzzflashChannel = pusher.subscribe('fuzzflash');
+
     fuzzflashChannel.bind('report_created', function(fuzzflash){
-      distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
+      var showAllNotifications = !(gon.latitude && gon.longitude);
+      var didIreportIt = gon.user_id == fuzzflash.user_id;
+      var distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
+      var settingsDistance = Cookies.get('distance') || 5;
 
-      settingsDistance = Cookies.get('distance') || 5;
+      if (didIreportIt) { return };
 
-      if (distanceInMiles < settingsDistance) {
+      if (showAllNotifications || (distanceInMiles < settingsDistance)) {
         var message = fuzzflash.message;
         var reportId = fuzzflash.report_id;
         var reportType = fuzzflash.report_type;
@@ -105,10 +109,9 @@ $(function() {
 
   // Controller: determine page and assign or remove event listeners
   var checkIfOnSignInUpPage = (function(){
-    if(myApp.checkForElement(".public-page")){
+    if(myApp.checkForElement(".sign-in-form-container")){
       // on signInUp page
-      // removeEventListenerToggleDisplaySidebarMenu();
-      addEventListenerToggleDisplaySidebarMenu();
+      removeEventListenerToggleDisplaySidebarMenu();
     } else {
       // on any other page
       instantiateChatWidget();

@@ -32,12 +32,40 @@ updateMenu = ->
     "#{Cookies.get('distance')} miles <span class='glyphicon glyphicon-ok'></span>"
   )
 
+window.updateUserCoordinates = (latitude, longitude) ->
+  # update users coodinates
+  $.ajax(
+    url: '/update_coodinates' + '?user_email=' + gon.email + '&user_token=' + gon.auth_token
+    type: 'POST'
+    dataType: 'json'
+    data:
+      latitude: latitude
+      longitude: longitude
+  ).done (response) ->
+    gon.latitude = latitude
+    gon.longitude = longitude
+    console.log 333, 'coordinates updated'
 
 updateDistance = (distance) ->
   Cookies.set('distance', distance)
   updateMenu()
 
 $ ->
+  if $('._need-notifications').length
+    geolocator.locate ((location) ->
+      console.log 11, location
+
+      window.updateUserCoordinates(
+        location.coords.latitude,
+        location.coords.longitude
+      )
+    ), ((error) ->
+      console.log 22, error
+    ), 1,
+      enableHighAccuracy: true
+      timeout: 6000
+      maximumAge: 0
+
   if $('.datetimepicker').length
     $('.datetimepicker').datetimepicker(
       formatTime: 'h:i a'
