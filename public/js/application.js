@@ -86,7 +86,7 @@ $(function() {
 
     fuzzflashChannel.bind('report_created', function(fuzzflash){
       var showAllNotifications = !(gon.latitude && gon.longitude);
-      var didIreportIt = gon.user_id == fuzzflash.user_id;
+      var didIreportIt = false; // gon.user_id == fuzzflash.user_id;
       var distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
       var settingsDistance = Cookies.get('distance') || 5;
 
