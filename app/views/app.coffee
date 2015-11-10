@@ -39,7 +39,7 @@ updateDistance = (distance) ->
 
 $ ->
   $('.datetimepicker').datetimepicker(
-    format: 'd/m/Y H:i A'
+    format: 'm/d/Y H:i A'
     # formatTime: 'H:i A'
     step: 30
     ampm: true
