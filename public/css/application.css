@@ -114,6 +114,10 @@ a {
 	background-color: rgba(46, 141, 242, 0.75);
 }
 
+.notification li.comment {
+  background-color: rgba(245, 245, 245, 0.75);
+}
+
 /* Form Styles */
 
 .option-buttons .form-group {
