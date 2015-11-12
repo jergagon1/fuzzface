@@ -14,7 +14,7 @@ $(function(){
       reportCommentsChannel.bind('report_commented', function(notification){
         var message = notification.message;
         var commentId = notification.comment_id;
-        $('div.notification ul').prepend('<li class="report_comment_' + commentId + '">' + message + '</li>');
+        $('div.notification ul').prepend('<li class="comment report_comment_' + commentId + '">' + message + '</li>');
         setTimeout(function() {
           $('.report_comment_' + commentId).remove();
         }, myApp.fuzzflashDisplayLength);
