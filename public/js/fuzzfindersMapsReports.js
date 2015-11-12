@@ -519,6 +519,7 @@ $(function(){
       center: new google.maps.LatLng(37.7848676, -122.3978871),
       streetViewControl: false,
       mapTypeControl: false,
+      scrollwheel: false
     };
     mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
@@ -608,6 +609,7 @@ $(function(){
       zoom: 13,
       streetViewControl: false,
       mapTypeControl: false,
+      scrollwheel: false
     };
 
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
