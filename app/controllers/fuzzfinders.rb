@@ -5,7 +5,7 @@ before do
   gon.pusher_key = ENV['PUSHER_KEY']
   gon.channel_name = ENV['PUSHER_CHANNEL_NAME']
 
-  gon.api_server = ENV['SERVER_URL'] || 'http://localhost:3000/'
+  gon.api_server = ENV['SERVER_URL'] || 'http://localhost:3000'
 
   if session[:user].is_a? Hash
     u = session[:user]

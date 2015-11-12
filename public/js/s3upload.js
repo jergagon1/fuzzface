@@ -12,7 +12,7 @@ $(function() {
 
       fileInput.fileupload({
         fileInput: fileInput,
-        url: gon.api_server + 'api/v1/images?user_email=' + gon.email + '&user_token=' + gon.auth_token,
+        url: gon.api_server + '/api/v1/images?user_email=' + gon.email + '&user_token=' + gon.auth_token,
         type: 'post',
         autoUpload: true,
         paramName: 'image',
