@@ -1,3 +1,5 @@
+window.maps = [];
+
 $(function(){
 
   //========================== Model ==========================//
@@ -309,6 +311,23 @@ $(function(){
   };
 
   //----------------- google maps markers ---------------------//
+  $('body').on('mousedown', function(event) {
+    var clickedInsideMap = $(event.target).parents('.map-canvas').length > 0;
+
+    if(!clickedInsideMap) { disableScrollingWithMouseWheel(); }
+  });
+
+  var enableScrollingWithMouseWheel = function () {
+    this.setOptions({ scrollwheel: true, draggable: true });
+  }
+
+  var disableScrollingWithMouseWheel = function () {
+    $.each(maps, function(i, el) {
+      el.setOptions({ draggable: false, scrollwheel: false })
+    });
+  }
+
+  $(window).scroll(disableScrollingWithMouseWheel);
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -337,6 +356,10 @@ $(function(){
       $('.report-detail-map-canvas', $('li.report[data-reportid="' + report.id + '"]'))[0],
       mapOptions
     );
+
+    maps.push(map);
+
+    google.maps.event.addListener(map, 'mousedown', enableScrollingWithMouseWheel);
 
     // var infoWin = createMarkerInfoWindow(report);
     var reportPos = new google.maps.LatLng(report.lat, report.lng);
@@ -522,7 +545,12 @@ $(function(){
       scrollwheel: false,
       draggable: false,
     };
+
     mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
+
+    maps.push(mapName);
+
+    google.maps.event.addListener(mapName, 'mousedown', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -616,6 +644,10 @@ $(function(){
 
     reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
         reportMapOptions);
+
+    maps.push(reportMap);
+
+    google.maps.event.addListener(reportMap, 'mousedown', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
