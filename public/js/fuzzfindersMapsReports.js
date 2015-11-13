@@ -790,6 +790,11 @@ $(function(){
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
     $reportsList.on("submit", ".new-comment-form", function(event){
+      if (!$(this).find('.comment-text-input').val().length) {
+        // prevents submit comment on empty textarea
+        return false;
+      }
+
       event.preventDefault();
       var $currentForm = $(this);
       var $currentFormData = $currentForm.serialize();
