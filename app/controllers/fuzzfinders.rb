@@ -86,8 +86,12 @@ get '/' do
   end
 end
 
-get '/app.js' do
-  coffee :app
+get '/js/app.js' do
+  coffee 'coffee/app'.to_sym
+end
+
+get '/js/utils.js' do
+  coffee 'coffee/utils'.to_sym
 end
 
 post '/sign_in' do
