@@ -806,6 +806,7 @@ $(function(){
   // Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
+    $('body').off('submit', '.new-comment-form');
     $('body').on("submit", ".new-comment-form", function(event){
       if (!$(this).find('.comment-text-input').val().length) {
         // prevents submit comment on empty textarea
