@@ -135,6 +135,8 @@ $(function(){
       data: $formData
     })
     .done(function(response){
+      $('#reportDetailsModal .info').text('Comment has been posted');
+
       console.log(response);
       updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);
@@ -147,6 +149,7 @@ $(function(){
       myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
     })
     .fail(function(){
+      $('#reportDetailsModal .info').text('Error');
       console.log("comment creation failed");
     });
   };
@@ -407,6 +410,8 @@ $(function(){
       $('#reportDetailsModal .modal-content')
         .removeClass('modal-lost').removeClass('modal-found')
         .addClass('modal-' + report.report_type);
+
+      addEventListenerSubmitComment();
 
       $('#reportDetailsModal').modal();
     });
@@ -794,7 +799,7 @@ $(function(){
   // Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
-    $reportsList.on("submit", ".new-comment-form", function(event){
+    $('body').on("submit", ".new-comment-form", function(event){
       if (!$(this).find('.comment-text-input').val().length) {
         // prevents submit comment on empty textarea
         return false;

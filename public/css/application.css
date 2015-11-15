@@ -274,3 +274,6 @@ button[type='submit'] {
   background-color: #2e8df2;
 }
 
+.pusher-chat-widget {
+  z-index: 1000;
+}

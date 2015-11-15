@@ -139,16 +139,19 @@
         {{/each}}
       </ul>
     </div>
-    <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h4>Create Comment</h4>
-      <form class="new-comment-form">
-        <input type="hidden" name="comment[report_id]" value="{{report.id}}">
-        <input type="hidden" name="comment[user_id]" value="<%= @user_id %>">
-        <textarea data-reportId={{report.id}} name="comment[content]" class='comment-text-input'></textarea><br>
-        <input data-reportid={{report.id}} type="submit" class="submit-comment btn btn-default" value="Comment">
-      </form>
-    </div>
   {{/unless}}
+
+  <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
+
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4>Create Comment</h4>
+    <form class="new-comment-form">
+      <input type="hidden" name="comment[report_id]" value="{{report.id}}">
+      <input type="hidden" name="comment[user_id]" value="<%= @user_id %>">
+      <textarea data-reportId={{report.id}} name="comment[content]" class='comment-text-input'></textarea><br>
+      <input data-reportid={{report.id}} type="submit" class="submit-comment btn btn-default" value="Comment">
+    </form>
+  </div>
 </script>
 
 <script id="comment-template" type="text/x-handlebars-template">
