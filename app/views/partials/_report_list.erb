@@ -17,7 +17,7 @@
                   </div>
                   <div class="col-xs-6 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-1 report-summary-text-column">
                     <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
-                    <p class="report-summary-text">Last Seen: {{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</p>
+                    <p class="report-summary-text">Last Seen: <span class="time">{{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</span><span class="time-ago"></span></p>
                     <p class="report-summary-text">Posted By: {{report_username}}
                     </p>
                   </div>
@@ -106,7 +106,7 @@
           <p><strong>Last Seen:</strong></p>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{#if report.last_seen}}{{report.last_seen}}{{else}}{{report.created_at}}{{/if}}</p>
+        <p><span class="time">{{#if report.last_seen}}{{report.last_seen}}{{else}}{{report.created_at}}{{/if}}</span><span class="time-ago"></span></p>
         </div>
       {{#if report.report_username}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
@@ -160,7 +160,7 @@
     </p>
     <p class="comment-data">Comment By: {{comment.comment_username}}
     </p>
-    <p class="comment-date">Posted: {{comment.created_at}}
+    <p class="comment-date">Posted: <span class="time">{{comment.created_at}}</span><span class="time-ago"></span>
     </p>
   </li>
 </script>

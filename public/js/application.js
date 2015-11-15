@@ -36,6 +36,21 @@ $(function() {
     return ($(element).length > 0) ? true : false;
   }
 
+  window.transformTimestamps = function() {
+    $.each($('.time'), function (i, el) {
+      var momentObj = moment($(el).text());
+      var relativeOrAbsoluteTime = null;
+
+      if (Math.abs(momentObj.diff(new Date, 'hours')) <= 24) {
+        relativeOrAbsoluteTime = momentObj.fromNow();
+      } else {
+        relativeOrAbsoluteTime = $(el).text();
+      };
+
+      $(el).siblings().filter('.time-ago').text(relativeOrAbsoluteTime);
+    });
+  };
+
   // Controller: add event listener to sidebar menu button
   var addEventListenerToggleDisplaySidebarMenu = function(){
     console.log("application.js addEventListenerToggleDisplaySidebarMenu");
