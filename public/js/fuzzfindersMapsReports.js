@@ -367,7 +367,7 @@ $(function(){
 
     maps.push(map);
 
-    google.maps.event.addListener(map, 'mousedown', enableScrollingWithMouseWheel);
+    google.maps.event.addListener(map, 'click', enableScrollingWithMouseWheel);
 
     // var infoWin = createMarkerInfoWindow(report);
     var reportPos = new google.maps.LatLng(report.lat, report.lng);
@@ -417,6 +417,8 @@ $(function(){
         .addClass('modal-' + report.report_type);
 
       addEventListenerSubmitComment();
+
+      transformTimestamps();
 
       $('#reportDetailsModal').modal();
     });
@@ -567,7 +569,7 @@ $(function(){
 
     maps.push(mapName);
 
-    google.maps.event.addListener(mapName, 'mousedown', enableScrollingWithMouseWheel);
+    google.maps.event.addListener(mapName, 'click', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -662,7 +664,7 @@ $(function(){
 
     maps.push(reportMap);
 
-    google.maps.event.addListener(reportMap, 'mousedown', enableScrollingWithMouseWheel);
+    google.maps.event.addListener(reportMap, 'click', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
