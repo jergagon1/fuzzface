@@ -68,6 +68,9 @@ $(function(){
       updateTimestamps(response, "last_seen");
       renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
       populateDynamicReportsFilters(response);
+
+      transformTimestamps();
+
       if($dynamicFilter){
         console.log("dynamic filter used");
         setDynamicFilterDropdownValue($dynamicFilter);
@@ -111,6 +114,7 @@ $(function(){
         createMapOnReportDatails(response['report']);
       }
 
+      transformTimestamps();
 
       removeUnselectedClass($reportLi);
       toggleHideIcon($reportLi);
@@ -147,6 +151,7 @@ $(function(){
       );
       resetFormInputs();
       myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
+      transformTimestamps();
     })
     .fail(function(){
       $('#reportDetailsModal .info').text('Error');
