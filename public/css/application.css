@@ -95,7 +95,7 @@ a {
 	font-weight: bold;
 	text-align: center;
 	font-size: 1.8em;
-	z-index: 9998;
+	z-index: 1000;
 }
 
 .notification ul {
@@ -264,4 +264,16 @@ button[type='submit'] {
 .dropdown-menu.adjust-distance {
   /* background-color: #666; */
   background-color: #F36F57;
+}
+
+.modal-content.modal-lost {
+  background-color: rgb(223,131,97);
+}
+
+.modal-content.modal-found {
+  background-color: #2e8df2;
+}
+
+.pusher-chat-widget {
+  z-index: 1000;
 }

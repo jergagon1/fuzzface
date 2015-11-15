@@ -135,6 +135,8 @@ $(function(){
       data: $formData
     })
     .done(function(response){
+      $('#reportDetailsModal .info').text('Comment has been posted');
+
       console.log(response);
       updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);
@@ -147,6 +149,7 @@ $(function(){
       myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
     })
     .fail(function(){
+      $('#reportDetailsModal .info').text('Error');
       console.log("comment creation failed");
     });
   };
@@ -382,14 +385,37 @@ $(function(){
       map: reportMap,
       position: reportPos,
       icon: selectIcon(report.report_type),
-      title: report.pet_name
-    })
+      title: report.pet_name,
+      report: report
+    });
+
+    // marker.report = report;
+
     marker.addListener('mouseover', function() {
       infoWin.open(reportMap, marker);
     });
     marker.addListener('mouseout', function(){
       infoWin.close();
     });
+
+    marker.addListener('click', function () {
+      var report = marker.report;
+
+      var html = Handlebars.compile($('#report-detail-template').html())({ report: report, modal: true });
+      var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
+
+      $('#reportDetailsModal .modal-body .row').html(html);
+      $('#myModalLabel').html(htmlTitle);
+
+      $('#reportDetailsModal .modal-content')
+        .removeClass('modal-lost').removeClass('modal-found')
+        .addClass('modal-' + report.report_type);
+
+      addEventListenerSubmitComment();
+
+      $('#reportDetailsModal').modal();
+    });
+
     reportMapMarkers.push(marker);
   };
 
@@ -408,24 +434,10 @@ $(function(){
   // View: create an info window for a report marker
   var createMarkerInfoWindow = function(report){
     console.log("fuzzfindersMapsReports createMarkerInfoWindow");
-    var caption = report.report_type.capitalize();
-    if (report.animal_type) {
-      caption = caption + " " + report.animal_type.capitalize();
-    } else {
-      caption = caption + " " + "Pet"
-    }
-    if (report.pet_name) {
-      caption = caption + " " + report.pet_name.capitalize();
-    }
-    var infoWindowContent =
-      '<div class="info-window-content" data-reportid="' + report.id + '">' +
-        '<img class="info-window-thumb" src="' + report.img_url + '">' +
-        '<p class="info-window-text">' + caption + '</p>' +
-      '</div>';
-    var infowindow = new google.maps.InfoWindow({
-      content: infoWindowContent
+
+    return new google.maps.InfoWindow({
+      content: Handlebars.compile($('#info-window-template').html())({ report: report })
     });
-    return infowindow;
   };
 
   // View: remove the report detail section for report li
@@ -556,8 +568,6 @@ $(function(){
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       lat = position.coords.latitude;
       lng = position.coords.longitude;
-
-      // updateUserCoordinates(lat, lng);
 
       var marker = new google.maps.Marker({
         map: mapName,
@@ -789,7 +799,7 @@ $(function(){
   // Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
-    $reportsList.on("submit", ".new-comment-form", function(event){
+    $('body').on("submit", ".new-comment-form", function(event){
       if (!$(this).find('.comment-text-input').val().length) {
         // prevents submit comment on empty textarea
         return false;
@@ -841,7 +851,6 @@ $(function(){
       resetFormInputs();
       addTagsToHiddenInput("");
       // $tagsFilter.tokenfield('setTokens', '');
-      // debugger
       $(".token").remove();
       myApp.fuzzfinders.model.getRecentReports();
     });

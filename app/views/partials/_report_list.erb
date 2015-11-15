@@ -43,14 +43,17 @@
 
     {{#if report.lat}}
       {{#if report.lng}}
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <div class="report-detail-map-canvas map-canvas">
-          </div><!-- map-canvas -->
-        </div><!-- col -->
+        {{#unless modal}}
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="report-detail-map-canvas map-canvas">
+            </div><!-- map-canvas -->
+          </div><!-- col -->
+        {{/unless}}
       {{/if}}
     {{/if}}
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h4>{{titleize report.report_type}} {{#if report.animal_type}}{{titleize report.animal_type}}{{else}}Pet{{/if}} {{#if report.pet_name}}"{{titleize report.pet_name}}"{{/if}}</h4>
+      {{#unless modal}} <h4> {{> reportDetailTitle report=report }} </h4> {{/unless}}
+
       {{#if report.pet_size}}
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
           <p><strong>Size:</strong></p>
@@ -127,21 +130,19 @@
       </ul>
     </div>
   {{/if}}
-  <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12" data-reportid="{{report.id}}" {{#if comments}}{{else}}style="display: none"{{/if}}>
-    <h4>Comments</h4>
-    <ul class="comment-list" data-reportid="{{report.id}}">
-      {{#each comments}}
-        <li class="comment" data-commentid="{{this.id}}" data-reportid="{{this.report_id}}" data-userid="{{this.user_id}}">
-          <p class="comment-content">{{this.content}}
-          </p>
-          <p class="comment-data">Comment By: {{this.comment_username}}
-          </p>
-          <p class="comment-date">Posted: {{this.created_at}}
-          </p>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
+  {{#unless modal}}
+    <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12" data-reportid="{{report.id}}" {{#if comments}}{{else}}style="display: none"{{/if}}>
+      <h4>Comments</h4>
+      <ul class="comment-list" data-reportid="{{report.id}}">
+        {{#each comments}}
+          {{> comment comment=this }}
+        {{/each}}
+      </ul>
+    </div>
+  {{/unless}}
+
+  <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
+
   <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <h4>Create Comment</h4>
     <form class="new-comment-form">
@@ -152,6 +153,7 @@
     </form>
   </div>
 </script>
+
 <script id="comment-template" type="text/x-handlebars-template">
   <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}">
     <p class="comment-content">{{comment.content}}
@@ -161,4 +163,26 @@
     <p class="comment-date">Posted: {{comment.created_at}}
     </p>
   </li>
+</script>
+
+<script id="info-window-template" type="text/x-handlebars-template">
+  <div class="info-window-content" data-reportid="{{report.id}}">
+    {{#if report.img_url}}
+      <img class="info-window-thumb" src="{{report.img_url}}">
+    {{/if}}
+
+    <p class="info-window-text">{{> reportDetailTitle report=report}}</p>
+  </div>
+</script>
+
+<script id="report-detail-title-template" type="text/x-handlebars-template">
+  {{titleize report.report_type}}
+  {{#if report.animal_type}}
+    {{titleize report.animal_type}}
+  {{else}}
+    Pet
+  {{/if}}
+  {{#if report.pet_name}}
+    "{{titleize report.pet_name}}"
+  {{/if}}
 </script>
