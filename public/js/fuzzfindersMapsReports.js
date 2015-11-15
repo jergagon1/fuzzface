@@ -418,6 +418,8 @@ $(function(){
 
       addEventListenerSubmitComment();
 
+      transformTimestamps();
+
       $('#reportDetailsModal').modal();
     });
 
