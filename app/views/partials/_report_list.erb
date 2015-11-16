@@ -54,68 +54,34 @@
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
       {{#unless modal}} <h4> {{> reportDetailTitle report=report }} </h4> {{/unless}}
 
-      {{#if report.pet_size}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Size:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{titleize report.pet_size}}</p>
-        </div>
-      {{/if}}
-      {{#if report.color}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Color:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{titleize report.color}}</p>
-        </div>
-      {{/if}}
-      {{#if report.breed}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Breed:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{titleize report.breed}}</p>
-        </div>
-      {{/if}}
-      {{#if report.sex}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Sex:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{titleize report.sex}}</p>
-        </div>
-      {{/if}}
-      {{#if report.age}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Age:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{titleize report.age}}</p>
-        </div>
-      {{/if}}
-      {{#if report.notes}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Notes:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{report.notes}}</p>
-        </div>
-      {{/if}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
+      {{> reportField report=report property='pet_size' key='Size'}}
+      {{> reportField report=report property='color' key='Color'}}
+      {{> reportField report=report property='breed' key='Breed'}}
+      {{> reportField report=report property='sex' key='Sex'}}
+      {{> reportField report=report property='age' key='Age'}}
+      {{> reportField report=report property='notes' key='Notes' notTitleize=true}}
+
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
           <p><strong>Last Seen:</strong></p>
         </div>
+
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-        <p><span class="time">{{#if report.last_seen}}{{report.last_seen}}{{else}}{{report.created_at}}{{/if}}</span><span class="time-ago"></span></p>
+          <p>
+            <span class="time">
+              {{#if report.last_seen}}
+                {{report.last_seen}}
+              {{else}}
+                {{report.created_at}}
+              {{/if}}
+            </span>
+
+            <span class="time-ago"></span>
+          </p>
         </div>
-      {{#if report.report_username}}
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 negative-left-margin">
-          <p><strong>Posted By:</strong></p>
-        </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <p>{{report.report_username}}</p>
-        </div>
-      {{/if}}
+      </div>
+
+      {{> reportField report=report property='report_username' key='Posted By' notTitleize=true}}
     </div>
   </div>
   {{#if tags}}
@@ -158,9 +124,9 @@
   <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}">
     <p class="comment-content">{{comment.content}}
     </p>
-    <p class="comment-data">Comment By: {{comment.comment_username}}
+    <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
     </p>
-    <p class="comment-date">Posted: <span class="time">{{comment.created_at}}</span><span class="time-ago"></span>
+    <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at}}</span><span class="time-ago"></span>
     </p>
   </li>
 </script>
@@ -184,5 +150,23 @@
   {{/if}}
   {{#if report.pet_name}}
     "{{titleize report.pet_name}}"
+  {{/if}}
+</script>
+
+<script id="report-field-template" type="text/x-handlebars-template">
+  {{#if (lookupProp report property)}}
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <p><strong>{{key}}:</strong></p>
+      </div>
+
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        {{#if notTitleize}}
+          {{lookupProp report property}}
+        {{else}}
+          {{titleize (lookupProp report property)}}
+        {{/if}}
+      </div>
+    </div>
   {{/if}}
 </script>
