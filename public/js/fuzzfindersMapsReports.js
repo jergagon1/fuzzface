@@ -110,6 +110,7 @@ $(function(){
         $reportLi
       );
 
+
       if (response['report']['lng'] && response['report']['lat']) {
         createMapOnReportDatails(response['report']);
       }
@@ -119,6 +120,8 @@ $(function(){
       removeUnselectedClass($reportLi);
       toggleHideIcon($reportLi);
       hideReportSummaryOnDetailShow($reportLi);
+
+      myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -144,11 +147,11 @@ $(function(){
       console.log(response);
       updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);
-      renderTemplates(
-        { comment: response },
-        $("#comment-template"),
-        $commentList
-      );
+      // renderTemplates(
+      //   { comment: response },
+      //   $("#comment-template"),
+      //   $commentList
+      // );
       resetFormInputs();
       myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
       transformTimestamps();
@@ -307,7 +310,7 @@ $(function(){
   };
 
   // View: show the report comments div if it is hidden
-  var showCommentsListDivIfHidden = function($commentsDiv){
+  window.showCommentsListDivIfHidden = function($commentsDiv){
     console.log("fuzzfindersMapsReports.js showCommentsListDivIfHidden");
     if(checkIfDivHidden($commentsDiv)) {
       console.log("hidden");

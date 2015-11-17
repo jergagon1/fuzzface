@@ -5,15 +5,47 @@ $(function(){
   // Model: Array to hold report comment subscriptions for pusher notifications
   myApp.fuzzfinders.model.subscribedReportComments = [];
 
+  // myApp.fuzzfinders.model.unSubscribeReportComments = function(reportId) {
+  //
+  // }
   // Model: Subscribe to a channel for notifications of comments on a report
   myApp.fuzzfinders.model.subscribeReportComments = function(reportId) {
     if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(reportId) === -1) {
       myApp.fuzzfinders.model.subscribedReportComments.push(reportId);
       var pusher = new Pusher(gon.pusher_key);
-      var reportCommentsChannel = pusher.subscribe('report_comments_' + reportId);
-      reportCommentsChannel.bind('report_commented', function(notification){
+      // var reportCommentsChannel = pusher.subscribe('report_comments_' + reportId);
+      var reportCommentsChannel = pusher.subscribe('report_commented');
+
+      reportCommentsChannel.bind('report_commented', function(notification) {
+        if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(notification.report_id) === -1) {
+          return;
+        };
+
+        if (!$('li.comment[data-commentid="' + notification.comment.id + '"]').length) {
+          var selectedReportId = notification.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
+          console.log('reportID = ', selectedReportId);
+          var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
+          var $commentList = $('.comment-list');
+          var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
+
+          showCommentsListDivIfHidden($commentListDiv);
+
+          renderTemplates(
+            { comment: notification.comment },
+            $("#comment-template"),
+            $commentList
+          );
+
+          transformTimestamps();
+        }
+
         var message = notification.message;
         var commentId = notification.comment_id;
+
+        if ($('.report_comment_' + commentId).length) {
+          return;
+        };
+
         $('div.notification ul').prepend('<li class="comment report_comment_' + commentId + '">' + message + '</li>');
         setTimeout(function() {
           $('.report_comment_' + commentId).remove();

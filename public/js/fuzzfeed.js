@@ -88,7 +88,7 @@ $(function() {
   };
 
   // View: render handlebars templates
-  var renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
+  window.renderTemplates = function(context, $templateLocation, $listLocation, prepend) {
     console.log("fuzzfeed.js renderTemplates");
     prepend = prepend || false;
     var source =  $templateLocation.html();
