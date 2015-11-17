@@ -6,44 +6,44 @@
 /* rgb(253, 109, 62) - main buttons selected */
 
 * {
-	font-family: helvetica;
+  font-family: helvetica;
 }
 
 /*html, body {
-	height: 100%;
+height: 100%;
 }*/
 
 a {
-	color: black;
-	text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .chat-padding {
-	padding-bottom: 7rem;
+  padding-bottom: 7rem;
 }
 
 .container {
-	margin-left: 5px;
-	margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Sidebar nav menu styles and overrides */
 
 /* link containing sidebar button glyphicon */
 #menu-toggle {
-	z-index: 9999;
-	margin-top: 20%;
-	margin-left: 20%;
+  z-index: 9999;
+  margin-top: 20%;
+  margin-left: 20%;
 }
 
 .sidebar-container {
-	width: 50px;
-	height: 0px;
+  width: 50px;
+  height: 0px;
 }
 
 .row-no-negative-margins {
-	margin-right: 0;
-	margin-left: 0;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 
@@ -51,67 +51,67 @@ a {
 
 /* logo img tag used on FuzzFinders, FuzzFeed, FuzzFile */
 #main-logo {
-	padding-top: 50px;
-	max-width: 60%;
+  padding-top: 50px;
+  max-width: 60%;
 }
 
 .logo-section {
-	z-index: -1000;
-	text-align: center;
+  z-index: -1000;
+  text-align: center;
 }
 
 .first-panel {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 /*main page SECOND PANEL*/
 
 .second-panel {
-	margin-top: 10%;
+  margin-top: 10%;
 }
 
 .main-buttons {
-	margin-bottom: 3%;
-	background: rgb(223,131,97);
-	color: white;
-	font-size: 1.2em;
-	border-radius: 3px;
-	border: none;
-	height: 50px;
+  margin-bottom: 3%;
+  background: rgb(223,131,97);
+  color: white;
+  font-size: 1.2em;
+  border-radius: 3px;
+  border: none;
+  height: 50px;
 }
 
 /* add this class on click of lost/found/report button */
 .selected-button {
-	background: rgb(253, 109, 62) !important;
+  background: rgb(253, 109, 62) !important;
 }
 
 /* notification on lost/found pet report creation */
 .notification {
-	background-color: transparent;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	font-weight: bold;
-	text-align: center;
-	font-size: 1.8em;
-	z-index: 1000;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.8em;
+  z-index: 1000;
 }
 
 .notification ul {
-	padding-left: 0;
+  padding-left: 0;
 }
 
 .notification li {
-	padding: 0;
+  padding: 0;
 }
 
 .notification li.lost {
-	background-color: rgba(253, 109, 62, 0.75);
+  background-color: rgba(253, 109, 62, 0.75);
 }
 
 .notification li.found {
-	background-color: rgba(46, 141, 242, 0.75);
+  background-color: rgba(46, 141, 242, 0.75);
 }
 
 .notification li.comment {
@@ -121,104 +121,113 @@ a {
 /* Form Styles */
 
 .option-buttons .form-group {
-	display: inline-block !important;
-	width: 49% !important;
+  display: inline-block !important;
+  width: 49% !important;
 }
 
 .padded {
-	padding: 15px 0;
+  padding: 15px 0;
 }
 
 button[type='submit'] {
-	width: 100% !important;
+  width: 100% !important;
 }
 
 .report:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /* bootstrap container override to provide padding for chat widget */
 /*.container {
-	padding-bottom: 6rem;
+padding-bottom: 6rem;
 }*/
 
 /*nav .container {
-	padding-bottom: 0;
+padding-bottom: 0;
 }*/
 
 .topbar-container {
-	display: none;
+  display: none;
 }
 
 .navbar {
-	max-height: 50px;
-	margin-bottom: 0;
+  max-height: 30px;
+  margin-bottom: 0;
+  min-height: 30px
+}
+
+.navbar .container {
+  padding: 0;
+}
+
+.navbar-nav > li > a {
+  padding: 3px 10px 10px;
 }
 
 .navbar-inverse {
-	background-color: #F36F57;
+  background-color: #F36F57;
 }
 
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
-    background-color: #F36F57;
-    color: #ffffff;
+  background-color: #F36F57;
+  color: #ffffff;
 }
 
 /* tablet */
 @media (min-width: 768px) {
-	.topbar-container {
-		display: none;
-	}
-	.container {
-		margin-left: auto;
-		margin-right: auto;
-	}
+  .topbar-container {
+    display: none;
+  }
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* desktop */
 @media (min-width: 992px) {
-	.sidebar-container {
-		display: none;
-	}
-	.topbar-container {
-		display: block;
-	}
-	.first-panel {
-		margin-top: 50px;
-	}
-	.notification {
-		top: 60px;
-	}
-	.container {
-		margin-left: auto;
-		margin-right: auto;
-	}
-	#main-logo {
-		max-width: 50%;
-	}
+  .sidebar-container {
+    display: none;
+  }
+  .topbar-container {
+    display: block;
+  }
+  .first-panel {
+    margin-top: 50px;
+  }
+  .notification {
+    top: 60px;
+  }
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #main-logo {
+    max-width: 50%;
+  }
 }
 
 /* large desktop */
 @media (min-width: 1200px) {
-	.sidebar-container {
-		display: none;
-	}
-	.topbar-container {
-		display: block;
-	}
-	.first-panel {
-		margin-top: 50px;
-	}
-	.notification {
-		top: 60px;
-	}
-	.container {
-		margin-left: auto;
-		margin-right: auto;
-	}
-	#main-logo {
-		max-width: 50%;
-	}
+  .sidebar-container {
+    display: none;
+  }
+  .topbar-container {
+    display: block;
+  }
+  .first-panel {
+    margin-top: 50px;
+  }
+  .notification {
+    top: 60px;
+  }
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #main-logo {
+    max-width: 50%;
+  }
 }
 
 .adjust-distance span.title {
@@ -252,7 +261,7 @@ button[type='submit'] {
 }
 
 .sidebar-nav > .sidebar-brand a {
-    color: white;
+  color: white;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
