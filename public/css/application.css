@@ -293,6 +293,19 @@ padding-bottom: 0;
   z-index: 1000;
 }
 
+.pusher-chat-widget textarea {
+  width: 68%;
+}
+
+.pusher-chat-widget-send-btn {
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.pusher-chat-widget ul.activity-stream {
+  max-height: 150px;
+}
+
 .time {
   display: none;
 }
