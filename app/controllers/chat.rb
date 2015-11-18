@@ -23,7 +23,6 @@ post '/chat' do
 
   data = activity.getMessage()
   response = Pusher[channel_name].trigger('chat_message', data)
-
   result = {'activity' => data, 'pusherResponse' => response}
 
   status 200
@@ -48,5 +47,6 @@ def sanitise_input(chat_info)
   options['text'] = escape_html(chat_info['text']).slice(0, 300)
   options['email'] = escape_html(email).slice(0, 100)
   options['get_gravatar'] = true
-  return options
+
+  options
 end
