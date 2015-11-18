@@ -156,12 +156,16 @@ padding-bottom: 0;
   min-height: 30px
 }
 
+.navbar-nav > li > a {
+  line-height: 19px;
+}
+
 .navbar .container {
   padding: 0;
 }
 
 .navbar-nav > li > a {
-  padding: 3px 10px 10px;
+  padding: 5px 10px;
 }
 
 .navbar-inverse {
