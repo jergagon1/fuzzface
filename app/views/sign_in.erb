@@ -1,49 +1,90 @@
-<div class="row">
+<% content_for :scripts do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-sanitize.min.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="/js/fuzzapp/modules/users.js" type="text/javascript" charset="utf-8"></script>
+<% end %>
+
+<style type="text/css" media="all">
+  .ng-hide { display: none }
+</style>
+
+<div class="row" ng-app="usersModule">
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-    <div class='sign-in-form-container'>
-      <form class="signIn" action="/sign_in" method="post" role="form">
+    <div class='sign-in-form-container' ng-controller="UsersController">
+      <form class="signIn" action="/sign_in" method="post" role="form" ng-controller="SignInController" ng-show="currentTab == 'signin'" ng-submit="login($event)">
+        <div ng-show="error.length" class="alert alert-danger ng-hide">{{ error }}</div>
+
         <div class="form-group">
           <label for="email">Your Email:</label>
-          <input type="email" class="form-control" id="email" name="email" required="true">
+          <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
         </div>
+
         <div class="form-group">
           <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd" name="password" required="true">
-          <div id="signInErrors"></div>
+          <input type="password" class="form-control" id="pwd" name="password" required="true" ng-model="password">
+          <br />
         </div>
+
         <button type="submit" class="btn btn-default" id="signUpSubmit">Log In</button>
+
         <div class="checkbox">
           <label><input type="checkbox">Remember me</label>
         </div>
+
         <p>
-          <a href="#" class="sign-form-swap">New Here? Sign Up For a Free Account</a>
+          <a href="#" class="" ng-click="$parent.currentTab = 'signup'">New Here? Sign Up For a Free Account</a>
+          //
+          <a href="#" class="" ng-click="$parent.currentTab = 'restore'">Lost Password?</a>
         </p>
       </form>
-      <form class="signUp" action="/sign_up" method="post" style="display: none">
+
+      <form class="restore ng-hide" action="/restore" method="post" role="form" ng-controller="RestoreController" ng-show="currentTab == 'restore'" ng-submit="restore($event)">
+        <div class="form-group">
+          <div class="error alert alert-danger ng-hide" ng-show="error"> {{ error }} </div>
+          <div class="alert alert alert-success ng-hide" ng-show="message"> {{ message }} </div>
+
+          <label for="email">Your Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
+        </div>
+
+        <button type="submit" class="btn btn-default">Restore Password</button>
+
+        <p><a href="#" class="sign-form-swap" ng-click="$parent.currentTab = 'signup'">New Here? Sign Up For a Free Account</a></p>
+      </form>
+
+      <form class="signUp ng-hide" action="/sign_up" method="post" ng-controller="SignUpController" ng-show="currentTab == 'signup'" ng-submit="signup($event)">
         <p>Sign Up For a Free Account</p>
         <div class="form-group">
           <label for="username">Enter a Username:</label>
-          <input type="text" class="form-control" name="username" required="true">
+          <input type="text" class="form-control" name="username" required="true" ng-model="username">
         </div>
         <div class="form-group">
           <label for="email">Your Email:</label>
-          <input type="email" class="form-control" id="email" name="email" required="true">
+          <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
         </div>
         <div class="form-group">
           <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd" name="password" required="true">
+          <input type="password" class="form-control" id="pwd" name="password" required="true" ng-model="password">
         </div>
         <div class="form-group">
           <label for="zip">Enter your Zip Code:</label>
-          <input type="text" class="form-control" name="zip">
-          <div id="signUpErrors"></div>
+          <input type="text" class="form-control" name="zip" ng-model="zipcode">
+          <ul ng-bind-html="errorText">
+          </ul>
+          <!-- <div ng&#45;show="error.length">{{ error }}</div> -->
         </div>
         <button type="submit" class="btn btn-default" id="signInSubmit">Sign Up</button>
         <div class="checkbox">
           <label><input type="checkbox">Remember me</label>
         </div>
-        <p><a href="#" class="sign-form-swap">Already a Member? Click Here to Log In</a></p>
+
+        <p><a href="#" class="sign-form-swap" ng-click="$parent.currentTab = 'signin'">Already a Member? Click Here to Log In</a></p>
       </form>
-    </div><!-- sign-in-form-container -->
-  </div><!-- col -->
-</div><!-- row -->
+    </div>
+  </div>
+</div>
+
+<!--     </div><!&#45;&#45; sign&#45;in&#45;form&#45;container &#45;&#45;> -->
+<!--   </div><!&#45;&#45; col &#45;&#45;> -->
+<!-- </div><!&#45;&#45; row &#45;&#45;> -->

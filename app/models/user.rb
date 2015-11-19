@@ -1,4 +1,28 @@
 class User
+  def self.change_password(reset_token, password, password_confirmation)
+    HTTParty.put(
+      "#{ENV['SERVER_URL']}/api/v1/users/password",
+      format: :json,
+      body: {
+        user: {
+          reset_password_token: reset_token,
+          password: password,
+          password_confirmation: password_confirmation
+        }
+      }
+    )
+  end
+
+  def self.send_restore_password_instructions(email)
+    HTTParty.post(
+      "#{ENV['SERVER_URL']}/api/v1/users/password",
+      format: :json,
+      body: {
+        user: { email: email }
+      }
+    )
+  end
+
   def self.update_coordinates(latitude, longitude, email, token)
     response = HTTParty.post(
       "#{ENV['SERVER_URL']}/users/update_coordinates.json?user_email=#{email}&user_token=#{token}",
