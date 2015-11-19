@@ -98,6 +98,35 @@ post '/sign_in' do
   handle_auth_response User.sign_in(params[:email], params[:password])
 end
 
+post '/send_instuctions' do
+  content_type :json
+
+  User.send_restore_password_instructions(params[:email]).to_json
+end
+
+get '/restore' do
+  erb :restore, layout: :public_layout
+end
+
+get '/api/v1/users/password/edit' do
+  # link from email
+  redirect "/restore?reset_password_token=#{params[:reset_password_token]}"
+end
+
+post '/restore' do
+  r = User.change_password(params[:reset_password_token], params[:password], params[:password_confirmation])
+
+  @obj = JSON.parse(r.body)
+
+  if @obj['errors']
+    error = (@obj['errors']['reset_password_token'] || @obj['errors']['password'])[0]
+    # redirect "/restore?reset_password_token=#{params[:reset_password_token]}&error=#{error}"
+    erb :restore, layout: :public_layout
+  else
+    redirect '/'
+  end
+end
+
 post '/sign_up' do
   handle_auth_response User.sign_up(params)
 end

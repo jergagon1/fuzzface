@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+    <div class='sign-in-form-container' ng-controller="UsersController">
+      <form class="restorePassword" action="/restore" method="post" role="form">
+
+        <% if @obj && @obj['errors'] %>
+          <div class="alert alert-danger">
+            <% if @obj['errors']['reset_password_token'] %>
+              <p>User not found</p>
+            <% end %>
+
+            <% if @obj['errors']['password'] %>
+              <p>Password length too short (8 minimum)</p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" name="password" required="true" ng-model="password">
+        </div>
+
+        <div class="form-group">
+          <label for="pwd">Password Confirmation:</label>
+          <input type="password" class="form-control" id="pwd2" name="password_confirmation" required="true" ng-model="password">
+        </div>
+
+        <input type="hidden" name="reset_password_token" id="" value="<%= params[:reset_password_token] %>" />
+
+        <button type="submit" class="btn btn-default" id="signUpSubmit">Restore Password</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--     </div><!&#45;&#45; sign&#45;in&#45;form&#45;container &#45;&#45;> -->
+<!--   </div><!&#45;&#45; col &#45;&#45;> -->
+<!-- </div><!&#45;&#45; row &#45;&#45;> -->

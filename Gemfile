@@ -10,7 +10,7 @@ gem 'pg'
 
 # Sinatra driver
 gem 'sinatra'
-gem 'sinatra-contrib'
+gem 'sinatra-contrib', github: 'sinatra/sinatra-contrib'
 
 gem 'activesupport', '~>4.1'
 gem 'activerecord', '~>4.1'
