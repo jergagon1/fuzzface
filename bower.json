@@ -1,0 +1,22 @@
+{
+  "directory": "public/vendor/bower_components",
+  "name": "fuzzface",
+  "homepage": "https://github.com/jergagon1/fuzzface",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-file-upload-shim": "~10.0.2",
+    "angular-sanitize": "~1.4.8",
+    "blockUI": "*"
+  }
+}

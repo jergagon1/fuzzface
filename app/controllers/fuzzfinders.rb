@@ -34,7 +34,11 @@ def handle_auth_response response_data
   response_data = JSON.parse response_data.body
 
   if response_data.present? && !response_data['error'] && !response_data['errors']
-    session[:user] = response_data
+    session[:user] = if response_data['user']
+                       response_data['user']
+                     else
+                       response_data
+                     end
   end
 
   if request.xhr?
@@ -153,4 +157,8 @@ end
 
 get '/fuzzfind_us' do
   erb :fuzzfind_us, :layout => :public_layout
+end
+
+post '/update_session' do
+  handle_auth_response User.update_session(params[:user_id], params[:email], params[:token])
 end
