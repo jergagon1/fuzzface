@@ -1,4 +1,24 @@
 class User
+  def self.update_session(user_id, email, token)
+    HTTParty.put(
+      "#{ENV['SERVER_URL']}/api/v1/users/#{user_id}.json?user_email=#{email}&user_token=#{token}",
+      format: :json,
+      body: {
+        user: { email: email }
+      }
+    )
+  end
+
+  def self.update_user_data(user_id, email, token, user_hash)
+    HTTParty.put(
+      "#{ENV['SERVER_URL']}/api/v1/users/#{user_id}.json?user_email=#{email}&user_token=#{token}",
+      format: :json,
+      body: {
+        user: user_hash
+      }
+    )
+  end
+
   def self.change_password(reset_token, password, password_confirmation)
     HTTParty.put(
       "#{ENV['SERVER_URL']}/api/v1/users/password",

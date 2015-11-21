@@ -1,17 +1,96 @@
+<% content_for :scripts do %>
+  <script src="/vendor/bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="/js/fuzzapp/modules/profile.js" type="text/javascript" charset="utf-8"></script>
+<% end %>
+
+<style type="text/css" media="all">
+  .ng-hide { display: none }
+
+  .thumb {
+    width: 64px;
+    height: 64px;
+    float: none;
+    position: relative;
+    top: 7px;
+    margin: 5px;
+  }
+
+  input.ng-invalid-required { border: 1px solid red; }
+</style>
+
 <%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_notification', :layout => false %>
+
 <div class="container chat-padding _need-notifications">
   <div class="row first-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFile_Logo_med.png" alt="FuzzFile Logo" id="main-logo">
     </div><!-- col logo-section -->
   </div><!-- row first-panel -->
-  <div class="row second-panel">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <p>Username: <%= @user["username"] %></p>
-      <p>Email: <%= @user["email"] %></p>
-      <p>Zipcode: <%= @user["zipcode"] %></p>
+  <div class="row second-panel" ng-app="profileModule">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" ng-controller="ProfileController">
+      <div ng-init='user=<%= @user.to_json %>'></div>
+
+      <hr />
+      <img ng-src="{{ user.image.thumb.url }}" alt="" />
+      <hr />
+
+      <form name="myForm" ng-show="mode == 'edit'" class="ng-hide">
+        <div ng-show="errorText" class="alert ng-hide">
+          <ul ng-bind-html="errorText"></ul>
+        </div>
+
+        <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="20MB">
+
+        <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
+        <br>
+
+        <!-- <span class="progress" ng&#45;show="image.progress >= 0"> -->
+        <!--   <div style="width:{{image.progress}}%" ng&#45;bind="image.progress + '%'"></div> -->
+        <!-- </span> -->
+
+        <!-- <span ng&#45;show="image.result">Upload Successful</span> -->
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+
+        <div class="form-group">
+          <label>Username
+            <input type="text" class="form-control" placeholder="Username" ng-model="user.username">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Password
+            <input type="password" class="form-control" ng-model="user.password">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Password Confirmation
+            <input type="password" class="form-control" ng-model="user.password_confirmation">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Zipcode
+            <input type="text" class="form-control" ng-model="user.zipcode">
+          </label>
+        </div>
+
+        <button ng-click="updateProfile(image)" class="btn btn-default">Submit</button> <button class="btn btn-primary" ng-click="mode = 'show'">Show profile</button>
+      </form>
+
+      <div ng-show="mode !== 'edit'">
+        <p>Username: <span ng-bind="user.username"></span></p>
+        <p>Email: <%= @user["email"] %></p>
+        <p>Zipcode: <%= @user["zipcode"] %></p>
+
+        <p><a href="#" class="btn btn-primary" ng-click="mode = 'edit'">Edit</a></p>
+      </div>
     </div>
   </div>
 </div>
