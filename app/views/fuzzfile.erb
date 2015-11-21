@@ -81,13 +81,18 @@
           </label>
         </div>
 
+        <div class="alert alert-success" role="alert" ng-show="success == true">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          Profile successfully updated
+        </div>
+
         <button ng-click="updateProfile(image)" class="btn btn-default">Submit</button> <button class="btn btn-primary" ng-click="mode = 'show'">Show profile</button>
       </form>
 
       <div ng-show="mode !== 'edit'">
         <p>Username: <span ng-bind="user.username"></span></p>
-        <p>Email: <%= @user["email"] %></p>
-        <p>Zipcode: <%= @user["zipcode"] %></p>
+        <p>Email: <span ng-bind="user.email"></span></p>
+        <p>Zipcode: <span ng-bind="user.zipcode"></span></p>
 
         <p><a href="#" class="btn btn-primary" ng-click="mode = 'edit'">Edit</a></p>
       </div>

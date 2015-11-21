@@ -19,6 +19,8 @@ profileModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$ti
     $.unblockUI();
 
     if (response.data.status == 'Ok') {
+      $scope.success = true;
+
       $scope.updateSession();
 
       $scope.errorText = null;
@@ -26,6 +28,8 @@ profileModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$ti
 
       $('.pusher-chat-widget-current-user-name').text(response.data.user.username);
     } else {
+      $scope.success = false;
+
       $scope.errorText = '';
 
       $.each(response.data.errors, function(key, value) {
