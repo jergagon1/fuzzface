@@ -211,3 +211,7 @@ li.report {
     font-size: 1.2em;
   }
 }
+
+li.comment.highlighted {
+  background-color: coral;
+}

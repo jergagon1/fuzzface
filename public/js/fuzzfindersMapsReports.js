@@ -112,7 +112,7 @@ $(function(){
 
 
       if (response['report']['lng'] && response['report']['lat']) {
-        createMapOnReportDatails(response['report']);
+        createMapOnReportDetails(response['report']);
       }
 
       transformTimestamps();
@@ -352,35 +352,35 @@ $(function(){
     };
   };
 
-  var createMapOnReportDatails = function(report) {
-    var mapOptions = {
-      zoom: 14,
-      center: new google.maps.LatLng(report.lat, report.lng),
-      streetViewControl: false,
-      mapTypeControl: false,
-      draggable: false,
-      scrollwheel: false,
-      panControl: false,
-    };
-
-    map = new google.maps.Map(
-      $('.report-detail-map-canvas', $('li.report[data-reportid="' + report.id + '"]'))[0],
-      mapOptions
-    );
-
-    maps.push(map);
-
-    google.maps.event.addListener(map, 'click', enableScrollingWithMouseWheel);
-
-    // var infoWin = createMarkerInfoWindow(report);
-    var reportPos = new google.maps.LatLng(report.lat, report.lng);
-    var marker = new google.maps.Marker({
-      map: map,
-      position: reportPos,
-      icon: selectIcon(report.report_type),
-      title: report.pet_name
-    })
-  };
+  // var createMapOnReportDetails = function(report) {
+  //   var mapOptions = {
+  //     zoom: 14,
+  //     center: new google.maps.LatLng(report.lat, report.lng),
+  //     streetViewControl: false,
+  //     mapTypeControl: false,
+  //     draggable: false,
+  //     scrollwheel: false,
+  //     panControl: false,
+  //   };
+  //
+  //   map = new google.maps.Map(
+  //     $('.report-detail-map-canvas', $('li.report[data-reportid="' + report.id + '"]'))[0],
+  //     mapOptions
+  //   );
+  //
+  //   maps.push(map);
+  //
+  //   google.maps.event.addListener(map, 'click', enableScrollingWithMouseWheel);
+  //
+  //   // var infoWin = createMarkerInfoWindow(report);
+  //   var reportPos = new google.maps.LatLng(report.lat, report.lng);
+  //   var marker = new google.maps.Marker({
+  //     map: map,
+  //     position: reportPos,
+  //     icon: selectIcon(report.report_type),
+  //     title: report.pet_name
+  //   })
+  // };
 
   // View: create a marker for a report
   var setMarkerType = function(report) {
@@ -429,17 +429,7 @@ $(function(){
     reportMapMarkers.push(marker);
   };
 
-  // View: returns image icon url for lost or found reports based on reportType argument passed in
-  var selectIcon = function(reportType) {
-    console.log("fuzzfindersMapsReports.js selectIcon");
-    if (reportType === 'lost') {
-      return '/images/FuzzFinders_icon_orange.png'
-    } else if (reportType === 'found') {
-      return '/images/FuzzFinders_icon_blue.png'
-    } else {
-      console.log('no report type');
-    }
-  };
+
 
   // View: create an info window for a report marker
   var createMarkerInfoWindow = function(report){
