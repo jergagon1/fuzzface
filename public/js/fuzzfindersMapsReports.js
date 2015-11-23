@@ -22,24 +22,6 @@ $(function(){
     $("input[name='ne']").attr('value', northEastCoord);
   };
 
-  // Model: convert a UTC/Zulu timestamp to local time
-  var convertUtcToLocal = function(utcTimestamp) {
-    console.log("fuzzfindersMapsReports.js convertUtcToLocal");
-    var time = moment.utc(utcTimestamp);
-    var timeString = time.local().format("ddd MM/DD/YYYY h:mm a");
-    return timeString;
-  };
-
-  // Model: iterate through array of records and update timestamps in specific field
-  var updateTimestamps = function(recordArray, fieldToUpdate) {
-    console.log("fuzzfindersMapsReports.js updateTimestamps");
-    for (var i = 0; i < recordArray.length; i++) {
-      if(recordArray[i][fieldToUpdate] !== null){
-        recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
-      }
-    }
-  };
-
   // Model: Remove the markers from the map
   var removeReportMapMarkers = function(markerArray){
     console.log("fuzzfindersMapsReports.js removeReportMapMarkers");

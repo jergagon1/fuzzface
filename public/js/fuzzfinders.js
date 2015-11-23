@@ -122,14 +122,6 @@ $(function(){
     };
   };
 
-  // Model: convert local time string to utc string
-  var convertLocalToUtc = function(localDateTimeString){
-    console.log("fuzzfinders.js convertLocalToUtc");
-    var localTimeObj = moment(localDateTimeString);
-    var utcTimeObj = localTimeObj.utc();
-    return utcTimeObj.format();
-  };
-
   //========================== View =============================//
 
   // Cache DOM Elements
