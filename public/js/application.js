@@ -15,6 +15,119 @@ myApp.fuzzflashDisplayLength = 15000;
 
 
 $(function() {
+  // Model: convert a UTC/Zulu timestamp to local time
+  window.convertUtcToLocal = function(utcTimestamp) {
+    console.log("application.js convertUtcToLocal");
+    var time = moment.utc(utcTimestamp);
+    var timeString = time.local().format("ddd MM/DD/YYYY h:mm a");
+    return timeString;
+  };
+
+  // Model: convert local time string to utc string
+  window.convertLocalToUtc = function(localDateTimeString){
+    console.log("application.js convertLocalToUtc");
+    var localTimeObj = moment(localDateTimeString);
+    var utcTimeObj = localTimeObj.utc();
+    return utcTimeObj.format();
+  };
+
+  // Model: iterate through array of records and update timestamps in specific field
+  window.updateTimestamps = function(recordArray, fieldToUpdate) {
+    console.log("application.js updateTimestamps");
+    for (var i = 0; i < recordArray.length; i++) {
+      if(recordArray[i][fieldToUpdate] !== null){
+        recordArray[i][fieldToUpdate] = convertUtcToLocal(recordArray[i][fieldToUpdate]);
+      }
+    }
+  };
+
+    // View: returns image icon url for lost or found reports based on reportType argument passed in
+  window.selectIcon = function(reportType) {
+    console.log("application.js selectIcon");
+    if (reportType === 'lost') {
+      return '/images/FuzzFinders_icon_orange.png'
+    } else if (reportType === 'found') {
+      return '/images/FuzzFinders_icon_blue.png'
+    } else {
+      console.log('no report type');
+    }
+  };
+
+  window.createMapOnReportDetails = function(report, parentSelector) {
+    var parentSelector = parentSelector;
+
+    if (parentSelector && parentSelector.length) {
+      console.log('true');
+    } else {
+      console.log('false');
+      parentSelector = 'li.report[data-reportid="' + report.id + '"]';
+    };
+
+    var mapOptions = {
+      zoom: 14,
+      center: new google.maps.LatLng(report.lat, report.lng),
+      streetViewControl: false,
+      mapTypeControl: false,
+      draggable: false,
+      scrollwheel: false,
+      panControl: false,
+    };
+
+    map = new google.maps.Map($('.report-detail-map-canvas', $(parentSelector))[0], mapOptions);
+
+    maps.push(map);
+
+    // google.maps.event.addListener(map, 'click', enableScrollingWithMouseWheel);
+
+    // var infoWin = createMarkerInfoWindow(report);
+    var marker = new google.maps.Marker({
+      map: map,
+      position: (new google.maps.LatLng(report.lat, report.lng)),
+      icon: selectIcon(report.report_type),
+      title: report.pet_name
+    })
+  };
+
+
+  window.showModalWithReport = function (reportId, highlightCommentId) {
+    // firstable, we should get report's data
+    $.getJSON(gon.api_server + '/api/v1/reports/' + reportId + '.json?user_email=' + gon.email + '&user_token=' + gon.auth_token)
+      .success(function (response) {
+        $('#reportDetailsModal').modal();
+
+        var report = response.report, tags = response.tags, comments = response.comments;
+
+        updateTimestamps([report], 'last_seen');
+        updateTimestamps([report], 'created_at');
+        updateTimestamps(comments, 'created_at');
+
+        var html = Handlebars.compile($('#notifications-report-detail-template').html())({ report: report, tags: tags, comments: comments });
+        var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
+
+        $('#reportDetailsModal .modal-body .row').html(html);
+        $('#myModalLabel').html(htmlTitle);
+
+        $('#reportDetailsModal .modal-content')
+        .removeClass('modal-lost').removeClass('modal-found')
+        .addClass('modal-' + report.report_type);
+
+        if (highlightCommentId) {
+          $('li.comment[data-commentid="' + highlightCommentId + '"]', $('.modal_report_comments')).addClass('highlighted');
+        };
+
+        // addEventListenerSubmitComment();
+
+        console.log(12, 'createMapOnReportDetails');
+        setTimeout(function () {
+          createMapOnReportDetails(report, '.modal_report_' + report.id);
+        }, 300);
+        console.log(13, 'after createMapOnReportDetails');
+
+        transformTimestamps();
+      })
+      .fail(function (response) {
+      });
+  };
 
   //========================== Model ==========================//
 
@@ -44,6 +157,7 @@ $(function() {
       if (Math.abs(momentObj.diff(new Date, 'hours')) <= 24) {
         relativeOrAbsoluteTime = momentObj.fromNow();
       } else {
+        // relativeOrAbsoluteTime = momentObj.utc().format();
         relativeOrAbsoluteTime = $(el).text();
       };
 
@@ -112,7 +226,12 @@ $(function() {
         var message = fuzzflash.message;
         var reportId = fuzzflash.report_id;
         var reportType = fuzzflash.report_type;
-        $('div.notification ul').prepend('<li class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>');
+        $('div.notification ul').prepend('<li data-report-id=' + fuzzflash.report_id + ' class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>').on('click', function (e) {
+          showModalWithReport($(e.target).data('report-id'));
+
+          console.log('new report notification click', 'hello');
+        });
+
         clearFuzzflash(reportId);
       }
 

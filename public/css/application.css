@@ -104,6 +104,7 @@ a {
 
 .notification li {
   padding: 0;
+  cursor: pointer;
 }
 
 .notification li.lost {

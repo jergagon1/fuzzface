@@ -46,7 +46,12 @@ $(function(){
           return;
         };
 
-        $('div.notification ul').prepend('<li class="comment report_comment_' + commentId + '">' + message + '</li>');
+        $('div.notification ul').prepend('<li data-report-id=' + notification.report_id + ' data-comment-id=' + commentId + ' class="comment report_comment_' + commentId + '">' + message + '</li>').on('click', function (e) {
+          showModalWithReport($(e.target).data('report-id'), $(e.target).data('comment-id'));
+
+          console.log('new comment notification click', 'hello');
+        });
+
         setTimeout(function() {
           $('.report_comment_' + commentId).remove();
         }, myApp.fuzzflashDisplayLength);
@@ -115,14 +120,6 @@ $(function(){
         return $formDataArray[i];
       }
     };
-  };
-
-  // Model: convert local time string to utc string
-  var convertLocalToUtc = function(localDateTimeString){
-    console.log("fuzzfinders.js convertLocalToUtc");
-    var localTimeObj = moment(localDateTimeString);
-    var utcTimeObj = localTimeObj.utc();
-    return utcTimeObj.format();
   };
 
   //========================== View =============================//
