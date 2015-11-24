@@ -739,7 +739,7 @@ $(function(){
   var addEventListenerToAllGetReportDetails = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerToAllGetReportDetails");
 
-    $reportsList.on('click', 'span.glyphicon', function (e) {
+    $reportsList.on('click', 'span.glyphicon.glyphicon-pencil', function (e) {
       // stop event bubbling
 
       e.stopPropagation();
@@ -750,6 +750,8 @@ $(function(){
       $.getJSON(link).done(function (response) {
         // updateTimestamps([response["report"]], "last_seen");
         // updateTimestamps([response["report"]], "created_at");
+
+        $('#reportDetailsModal .modal-body').html('');
 
         renderTemplates(
           { report: response['report'], tags: response['tags'], form_type: 'lost' },
@@ -809,7 +811,7 @@ $(function(){
       });
     });
 
-    $reportsList.on('click', '.unselected:not(.glyphicon)', function() {
+    $reportsList.on('click', '.unselected', function() {
       console.log('report summary clicked');
       $clickedReport = $(this);
       $reportId = $clickedReport.data('reportid');
