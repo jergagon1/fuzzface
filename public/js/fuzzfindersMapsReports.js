@@ -189,6 +189,9 @@ $(function(){
   var $reportButton = $(".report-btn");
   var $fuzzfindersButtons = $(".fuzzfinders-buttons");
   var $reportsList = $(".reports-list");
+
+
+
   var $recentReportsForm = $(".recent-reports-form");
   var $filterReportsButton = $(".filter-btn");
   var $tagsFilter = $(".tags-filter");
@@ -735,10 +738,81 @@ $(function(){
   // Controller: Add delegated event listener to reports in reports list on click
   var addEventListenerToAllGetReportDetails = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerToAllGetReportDetails");
-    $reportsList.on("click", ".unselected", function() {
-      console.log("report summary clicked");
+
+    $reportsList.on('click', 'span.glyphicon', function (e) {
+      // stop event bubbling
+
+      e.stopPropagation();
+
+      var reportId = $(this).parents('.report').data('reportid');
+
+      var link = myApp.fuzzfindersApiUrl + '/api/v1/reports/' + reportId + '?user_email=' + gon.email + "&user_token=" + gon.auth_token;
+      $.getJSON(link).done(function (response) {
+        // updateTimestamps([response["report"]], "last_seen");
+        // updateTimestamps([response["report"]], "created_at");
+
+        renderTemplates(
+          { report: response['report'], tags: response['tags'], form_type: 'lost' },
+          $('#report-form-template'),
+          $('#reportDetailsModal .modal-body')
+        );
+
+        var tags = [];
+
+        $.each(response['tags'], function (i, val) {
+          tags.push(val.name);
+        });
+
+        $('#reportDetailsModal form [name="report[tag_list]"]').val(tags.join(', '));
+
+        $('.datetimepicker').datetimepicker({
+          formatTime: 'h:i a',
+          format: 'm/d/Y h:i a',
+          // formatTime: 'H:i A',
+          step: 30,
+          ampm: true,
+          maxDate: 0,
+        }).inputmask('99/99/9999 99:99 **');
+
+
+        // filling form with data
+        $.each(response['report'], function(name, val){
+          var $el = $('#reportDetailsModal form [name="report[' + name + ']"]'),
+            type = $el.attr('type');
+
+          switch(type){
+            case 'checkbox':
+              $el.attr('checked', 'checked');
+            break;
+            case 'radio':
+              $el.filter('[value="'+val+'"]').attr('checked', 'checked');
+            break;
+            default:
+              $el.val(val);
+          }
+        });
+
+        var momentObj = moment(response['report'].last_seen);
+        $('#reportDetailsModal form [name="report[last_seen]"]').val(momentObj.format('MM/DD/YYYY hh:mm a'));
+
+        $('#reportDetailsModal').modal();
+
+        createDirectUploadForms();
+
+
+                       // if (response['report']['lng'] && response['report']['lat']) {
+                       //   createMapOnReportDetails(response['report']);
+                       // }
+
+                       // transformTimestamps();
+
+      });
+    });
+
+    $reportsList.on('click', '.unselected:not(.glyphicon)', function() {
+      console.log('report summary clicked');
       $clickedReport = $(this);
-      $reportId = $clickedReport.data("reportid");
+      $reportId = $clickedReport.data('reportid');
       getReportDetails($clickedReport, $reportId);
     });
   };

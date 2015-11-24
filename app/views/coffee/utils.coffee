@@ -11,3 +11,10 @@ $ ->
   Handlebars.registerHelper('lookupProp', (obj, prop) ->
     obj[prop]
   )
+
+  Handlebars.registerHelper('if_eq', (a, b, opts) ->
+    if (a == b)
+      opts.fn(@)
+    else
+      opts.inverse(@)
+  )
