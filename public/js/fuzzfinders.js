@@ -442,7 +442,7 @@ $(function(){
         removeEventsFound();
         removeEventsLost();
         removeEventsReports();
-        bindEventsFound();
+        // bindEventsFound();
       }	else {
         // remove events
         removeEventsFound();

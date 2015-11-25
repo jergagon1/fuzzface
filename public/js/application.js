@@ -104,7 +104,8 @@ $(function() {
         var html = Handlebars.compile($('#notifications-report-detail-template').html())({ report: report, tags: tags, comments: comments });
         var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
 
-        $('#reportDetailsModal .modal-body .row').html(html);
+
+        $('#reportDetailsModal .modal-body .row').html('').html(html);
         $('#myModalLabel').html(htmlTitle);
 
         $('#reportDetailsModal .modal-content')

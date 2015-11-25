@@ -1,8 +1,8 @@
 <script id="report-form-template" type="text/x-handlebars-template">
   <form class="{{form_type}}-pet-form" >
-  <input type="text" name="report[report_type]" value="{{form_type}}">
-  <input type="text" class="img_url" name="report[img_url]" value="">
-  <input type="text" name="report[user_id]" value="{{user_id}}">
+  <input type="hidden" name="report[report_type]" value="{{form_type}}">
+  <input type="hidden" class="img_url" name="report[img_url]" value="">
+  <input type="hidden" name="report[user_id]" value="{{user_id}}">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
@@ -149,10 +149,6 @@
       <div class="report-summary padded hide-on-detail-show">
         <div class="row row-eq-height row-no-negative-margins">
 
-        {{#if_eq user_id <%= session[:user]['id'] %> }}
-          <span class="glyphicon glyphicon-pencil"></span>
-        {{/if_eq}}
-
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <img class="report-img-thumb" src="{{#if img_url}}{{img_url}}{{else}}/images/default_thumbnail.jpg{{/if}}">
           </div>
@@ -189,7 +185,9 @@
   <div class="report-detail">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <span class="report-detail-hide glyphicon glyphicon-minus" style="display: none;"></span>
+
     </div>
+
     {{#if report.img_url}}<div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <img src="{{report.img_url}}" class="report-image-big">
     </div>{{/if}}
@@ -206,6 +204,20 @@
     {{/if}}
     <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
       {{#unless modal}} <h4> {{> reportDetailTitle report=report }} </h4> {{/unless}}
+
+
+      {{#if_eq report.user_id <%= session[:user]['id'] %> }}
+        <div class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <p><strong>Edit report:</strong></p>
+          </div>
+
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </div>
+        </div>
+      {{/if_eq}}
+
 
       {{> reportField report=report property='pet_size' key='Size'}}
       {{> reportField report=report property='color' key='Color'}}

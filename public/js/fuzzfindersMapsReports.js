@@ -272,9 +272,13 @@ $(function(){
   var appendValuesToSelectDropdown = function($inputDropdown, valueArray){
     console.log("fuzzfindersMapsReports.js appendValuesToSelectDropdown");
     var seloptions = "";
-    $.each(valueArray,function(i){
-        seloptions += '<option value="'+valueArray[i]+'">'+valueArray[i].capitalize()+'</option>';
+
+    $.each(valueArray, function(i, v) {
+      if (v) {
+        seloptions += '<option value="'+ v + '">' + v.capitalize() + '</option>';
+      }
     });
+
     $inputDropdown.append(seloptions);
   };
 
@@ -397,7 +401,7 @@ $(function(){
       var html = Handlebars.compile($('#report-detail-template').html())({ report: report, modal: true });
       var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
 
-      $('#reportDetailsModal .modal-body .row').html(html);
+      $('#reportDetailsModal .modal-body .row').html('').html(html);
       $('#myModalLabel').html(htmlTitle);
 
       $('#reportDetailsModal .modal-content')
@@ -532,7 +536,7 @@ $(function(){
   };
 
   // Controller: Generic report submit map initialize
-  window.initializeMap = function(mapName, canvasDivId, iconUrl) {
+  initializeMap = function(mapName, canvasDivId, iconUrl, parentSelector) {
     console.log("fuzzfindersMapsReports.js initializeMap");
     var mapOptions = {
       zoom: 14,
@@ -543,7 +547,11 @@ $(function(){
       draggable: false,
     };
 
-    mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
+    if (parentSelector) {
+      mapName = new google.maps.Map($('.map-canvas', $(parentSelector))[0], mapOptions);
+    } else {
+      mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
+    };
 
     maps.push(mapName);
 
@@ -609,15 +617,15 @@ $(function(){
   };
 
   // Controller: initialize map for lost pet report submission
-  var initializeLostMap = function(){
+  var initializeLostMap = function(parentSelector){
     console.log("fuzzfindersMapsReports.js initializeLostMap");
-    initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png');
+    initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
   };
 
   // Controller: initialize map for found pet report submission
-  var initializeFoundMap = function(){
+  var initializeFoundMap = function(parentSelector){
     console.log("fuzzfindersMapsReports.js initializeFoundMap");
-    initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png')
+    initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png', parentSelector)
   };
 
   // var getUsersLocation = function() {
@@ -741,20 +749,24 @@ $(function(){
 
     $reportsList.on('click', 'span.glyphicon.glyphicon-pencil', function (e) {
       // stop event bubbling
-
       e.stopPropagation();
 
       var reportId = $(this).parents('.report').data('reportid');
 
       var link = myApp.fuzzfindersApiUrl + '/api/v1/reports/' + reportId + '?user_email=' + gon.email + "&user_token=" + gon.auth_token;
+
       $.getJSON(link).done(function (response) {
         // updateTimestamps([response["report"]], "last_seen");
         // updateTimestamps([response["report"]], "created_at");
 
         $('#reportDetailsModal .modal-body').html('');
 
+        var reportType = response.report.report_type;
+
+        $('#myModalLabel').text('Editing');
+
         renderTemplates(
-          { report: response['report'], tags: response['tags'], form_type: 'lost' },
+          { report: response['report'], tags: response['tags'], form_type: reportType },
           $('#report-form-template'),
           $('#reportDetailsModal .modal-body')
         );
@@ -801,18 +813,45 @@ $(function(){
 
         createDirectUploadForms();
 
+        setTimeout(function () {
+          // initializeLostMap();
+          if (reportType == 'lost') {
+            initializeLostMap('#reportDetailsModal');
+          } else {
+            initializeFoundMap('#reportDetailsModal');
+          };
+        }, 300);
 
-                       // if (response['report']['lng'] && response['report']['lat']) {
-                       //   createMapOnReportDetails(response['report']);
-                       // }
+        $('#reportDetailsModal form').submit(function () {
+          var data = $(this).serialize();
 
-                       // transformTimestamps();
+          var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + reportId + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
 
+          $.ajax({
+            url: link,
+            type: 'PUT',
+            crossDomain: true,
+            dataType: 'json',
+            data: data
+          })
+          .done(function(response){
+            // console.log(response);
+            transformTimestamps();
+
+            $('#reportDetailsModal').modal('hide');
+
+            getReportDetails($('.report[data-reportid=' + reportId + ']'), reportId);
+
+            myApp.fuzzfinders.model.subscribeReportComments(reportId);
+          }).fail(function(){
+            console.log("report detail request failed");
+          });
+
+          return false;
+        });
       });
+
     });
-
-
-
 
     $reportsList.on('click', '.unselected', function() {
       console.log('report summary clicked');
