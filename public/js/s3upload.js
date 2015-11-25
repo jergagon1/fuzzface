@@ -1,5 +1,5 @@
 $(function() {
-  var createDirectUploadForms = function(){
+  window.createDirectUploadForms = function(){
     $('.directUpload').each(function(i, elem) {
       var fileInput = $(elem);
       var form = $(fileInput.parents('form:first'));
@@ -39,7 +39,7 @@ $(function() {
 
           var url = data.jqXHR.responseJSON.image.normal.url;
 
-          $(".img_url").val(url);
+          $('.img_url').val(url);
 
           // var input = $("<input />", {
           //   type: 'hidden',
@@ -50,6 +50,7 @@ $(function() {
           // form.append(input);
 
           var imagePreview = '<img class="upload-preview-image" src="' + url + '">'
+          imagePreviewDiv.html('');
           imagePreviewDiv.append(imagePreview);
         },
 
@@ -63,7 +64,7 @@ $(function() {
     });
   };
 
-  var initializeDirectUpload = (function(){
+  window.initializeDirectUpload = (function(){
     if (myApp.checkForElement(".directUpload")) {
       // on page with direct image uploads
       createDirectUploadForms();

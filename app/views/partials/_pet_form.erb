@@ -1,13 +1,16 @@
-<form class="<%= form_type %>-pet-form" >
-  <input type="hidden" name="report[report_type]" value="<%= form_type %>">
-  <input type="hidden" class="img_url" name="report[img_url]" value="">
-  <input type="hidden" name="report[user_id]" value="<%= @user_id %>">
+<form class="<%= form_type %>-pet-form" ng-init="report.user_id = <%= @user_id %>; report.report_type = '<%= form_type %>'">
+  <input type="hidden" name="report[report_type]" ng-model="report.report_type" value="<%= form_type %>">
+  <input type="hidden" class="img_url" ng-model="report.img_url" name="report[img_url]" value="">
+  <input type="hidden" name="report[user_id]" ng-model="report.user_id" value="<%= @user_id %>">
+
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <div class="image-upload-preview">
+          <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
         </div><!-- image-upload-preview -->
-        <input type="file" class="directUpload">
+
+        <input type="file" ngf-select  ngf-change="uploadImage($file, report)" ng-model="image" name="file" accept="image/*" ngf-max-size="90MB">
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
@@ -15,7 +18,7 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[animal_type]">Pet Type:</label>
-        <select name="report[animal_type]" class="form-control">
+        <select name="report[animal_type]" class="form-control" ng-model="report.animal_type">
           <option value="">Pet Type</option>
           <option value="dog">Dog</option>
           <option value="cat">Cat</option>
@@ -28,7 +31,7 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[sex]">Gender:</label>
-        <select name="report[sex]" class="form-control">
+        <select name="report[sex]" class="form-control" ng-model="report.sex">
           <option value="">Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
@@ -40,7 +43,7 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[pet_size]">Pet Size:</label>
-        <select name="report[pet_size]" class="form-control">
+        <select name="report[pet_size]" class="form-control" ng-model="report.pet_size">
           <option value="">Size</option>
           <option value="small">Small</option>
           <option value="medium">Medium</option>
@@ -52,7 +55,7 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[age]">Age:</label>
-        <select name="report[age]" class="form-control">
+        <select name="report[age]" class="form-control" ng-model="report.age">
           <option value="">Age</option>
           <option value="Baby">Baby</option>
           <option value="young">Young</option>
@@ -66,13 +69,13 @@
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[breed]">Breed:</label>
-        <input type="text" class="form-control" id="<%= form_type %>-pet-breed" placeholder="Pet Breed" name="report[breed]">
+        <input type="text" class="form-control" id="<%= form_type %>-pet-breed" placeholder="Pet Breed" name="report[breed]" ng-model="report.breed">
       </div><!-- form-group -->
     </div><!-- col -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
         <label class="sr-only" for="report[color]">Color:</label>
-        <input type="text" class="form-control" id="<%= form_type %>-pet-color" placeholder="Pet Color" name="report[color]">
+        <input type="text" class="form-control" id="<%= form_type %>-pet-color" placeholder="Pet Color" name="report[color]" ng-model="report.color">
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
@@ -82,13 +85,13 @@
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
           <label class="sr-only" for="report[tag_list]">Tags:</label>
-          <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tag_list]">
+          <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tag_list]" ng-model="report.tag_list">
         </div><!-- form-group -->
       </div><!-- col -->
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
           <label class="sr-only" for="report[pet_name]">Pet Name:</label>
-          <input type="text" class="form-control" id="<%= form_type %>-pet-name" placeholder="Pet Name" name="report[pet_name]">
+          <input type="text" class="form-control" id="<%= form_type %>-pet-name" placeholder="Pet Name" name="report[pet_name]" ng-model="report.pet_name">
         </div><!-- form-group -->
       </div><!-- col -->
     </div><!-- row -->
@@ -98,7 +101,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="form-group">
           <label class="sr-only" for="report[tag_list]">Tags:</label>
-          <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tag_list]">
+          <input type="text" class="form-control" id="<%= form_type %>-pet-tags" placeholder="Additional Tags, i.e. timid, brown ears" name="report[tag_list]" ng-model="report.tag_list">
         </div><!-- form-group -->
       </div><!-- col -->
     </div><!-- row -->
@@ -107,7 +110,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <label class="sr-only" for="report[last_seen]">Last Seen:</label>
-        <input placeholder="Last Seen" type="text" name="report[last_seen]" id="<%= form_type %>-last-seen" value="" class="form-control datetimepicker" />
+        <input placeholder="Last Seen" type="text" name="report[last_seen]" id="<%= form_type %>-last-seen" value="" class="form-control datetimepicker" ng-model="report.last_seen" />
         <!-- <input placeholder="Last Seen" class="form&#45;control" type="text" id="<%= form_type %>&#45;last&#45;seen&#45;placeholder"> -->
         <!-- <input class="form&#45;control" type="datetime&#45;local" id="<%= form_type %>&#45;last&#45;seen" name="report[last_seen]" style="display: none"> -->
       </div><!-- form-group -->
@@ -117,14 +120,14 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <label class="sr-only" for="report[notes]">Notes:</label>
-        <textarea name="report[notes]" class="form-control" id="<%= form_type %>-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+        <textarea name="report[notes]" class="form-control" id="<%= form_type %>-pet-notes" cols="30" rows="7" placeholder="Describe the incident" ng-model="report.notes"></textarea>
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
-  <input class="hidden-lat-field" type="hidden" name="report[lat]" value="">
-  <input class="hidden-lng-field" type="hidden" name="report[lng]" value="">
+  <input class="hidden-lat-field" type="hidden" name="report[lat]" value="" ng-model="report.lat">
+  <input class="hidden-lng-field" type="hidden" name="report[lng]" value="" ng-model="report.lng">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="<%= form_type %>-map-wrapper">
       <div id="<%= form_type %>-map-canvas" class="map-canvas">
       </div><!-- map-canvas -->
     </div><!-- col -->
@@ -132,7 +135,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default" ng-click="submit(report)">Submit</button>
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
