@@ -14,11 +14,65 @@
   </div>
 </div>
 
+<style type="text/css" media="all">
+  .my-animation {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+  }
+
+  .my-animation.ng-hide {
+    opacity:0;
+  }
+</style>
+
+<% content_for :scripts do %>
+  <script src="/vendor/bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-animate/angular-animate.js" type="text/javascript" charset="utf-8"></script>
+  <!-- <script src="/vendor/bower_components/ng&#45;file&#45;upload/ng&#45;file&#45;upload&#45;all.js" type="text/javascript" charset="utf&#45;8"></script> -->
+  <!-- <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf&#45;8"></script> -->
+
+  <script type="text/javascript" charset="utf-8">
+    var lostMap;
+
+    var fuzzFindersModule = angular.module('fuzzFindersModule', ['ngAnimate']);
+
+    fuzzFindersModule.controller('MenuController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+      $scope.changeSection = function (section) {
+        console.log('MenuController changeSection()')
+        if (section == $scope.currentSection) {
+          $scope.currentSection = null;
+        } else {
+          $scope.currentSection = section;
+        }
+
+        $rootScope.$broadcast('section-changed', $scope.currentSection);
+
+        // if ($scope.currentSection == 'lostSection') {
+        //   google.maps.event.addDomListener(
+        //     lostPetBtn,
+        //     'click',
+        //     $scope.initializeMap(lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png'));
+        //
+        // };
+      };
+    }]);
+
+    fuzzFindersModule.controller('PetController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+      $rootScope.$on('section-changed', function (event, currentSection) {
+        console.log('PetController', 'currentSection = ', currentSection);
+      });
+
+      $scope.submit = function (form) {
+        console.log(form);
+      };
+    }]);
+  </script>
+<% end %>
 
 <%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_notification', :layout => false %>
-<div class="container chat-padding _need-notifications">
+<div class="container chat-padding _need-notifications" ng-app="fuzzFindersModule" ng-controller="MenuController">
   <div class="row first-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFinders_Logo_med.png" alt="FuzzFinders Logo" id="main-logo">
@@ -26,24 +80,24 @@
   </div><!-- row first-panel -->
   <div class="row second-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <button class="btn-block main-buttons fuzzfinders-buttons lost-pet">Lost a Pet</button>
-      <div id="lost-pet">
+      <button class="btn-block main-buttons fuzzfinders-buttons lost-pet" ng-click="changeSection('lostSection')">Lost a Pet</button>
+      <div id="lost-pet" class="my-animation" ng-show="currentSection == 'lostSection'" ng-controller="PetController">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
       </div><!-- #lost-pet -->
     </div><!-- col -->
   </div><!-- row -->
   <div class="row third-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <button class="btn-block main-buttons fuzzfinders-buttons found-pet">Found a Pet</button>
-      <div id="found-pet">
+      <button class="btn-block main-buttons fuzzfinders-buttons found-pet" ng-click="changeSection('foundSection')">Found a Pet</button>
+      <div class="my-animation" id="found-pet" ng-show="currentSection == 'foundSection'" ng-controller="PetController">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
       </div><!-- #found-pet -->
     </div><!-- col -->
   </div><!-- row -->
   <div class="row fourth-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <button class="btn-block main-buttons fuzzfinders-buttons report-btn">Reports</button>
-      <div id="reports-map-container">
+      <button class="btn-block main-buttons fuzzfinders-buttons report-btn" ng-click="changeSection('reportsSection')">Reports</button>
+      <div class="my-animation" id="reports-map-container" ng-show="currentSection == 'reportsSection'">
         <%= erb :'partials/_report_map_legend', :layout => false %>
         <div id="report-map-canvas" class="map-canvas">
         </div><!-- #report-map-canvas map-canvas -->

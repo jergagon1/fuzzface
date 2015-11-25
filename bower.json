@@ -17,6 +17,7 @@
   "dependencies": {
     "ng-file-upload-shim": "~10.0.2",
     "angular-sanitize": "~1.4.8",
-    "blockUI": "*"
+    "blockUI": "*",
+    "angular-animate": "~1.4.8"
   }
 }

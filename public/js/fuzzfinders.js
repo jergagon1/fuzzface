@@ -397,12 +397,12 @@ $(function(){
         removeEventsLost();
         removeEventsFound();
         removeEventsReports();
-        bindEventsLost();
+        // bindEventsLost();
       }	else {
         // remove events
         removeEventsLost();
       }
-      toggleFuzzfindersButtons($lostPetButton);
+      // toggleFuzzfindersButtons($lostPetButton);
     });
   };
 
@@ -447,7 +447,7 @@ $(function(){
         // remove events
         removeEventsFound();
       }
-      toggleFuzzfindersButtons($foundPetButton);
+      // toggleFuzzfindersButtons($foundPetButton);
     });
   };
 
@@ -488,7 +488,7 @@ $(function(){
         removeEventsReports();
         myApp.fuzzfinders.view.closeReportFilterForm();
       }
-      toggleFuzzfindersButtons($reportButton);
+      // toggleFuzzfindersButtons($reportButton);
     });
   };
 
@@ -503,7 +503,7 @@ $(function(){
   var initializeFuzzfinders = (function(){
     if (myApp.checkForElement(".fuzzfinders-buttons")) {
       // on fuzzfinders page
-      hideAllForms();
+      // hideAllForms();
       addEventListenerLostButtonClick();
       addEventListenerFoundButtonClick();
       addEventListenerReportButtonClick();

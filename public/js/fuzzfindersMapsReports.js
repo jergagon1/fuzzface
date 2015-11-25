@@ -532,7 +532,7 @@ $(function(){
   };
 
   // Controller: Generic report submit map initialize
-  var initializeMap = function(mapName, canvasDivId, iconUrl) {
+  window.initializeMap = function(mapName, canvasDivId, iconUrl) {
     console.log("fuzzfindersMapsReports.js initializeMap");
     var mapOptions = {
       zoom: 14,
@@ -702,7 +702,7 @@ $(function(){
   // Controller: Add maps DOM listener to initialize lost report map on lost a pet button click
   var addEventListenerInitializeLostMap = function(){
     console.log("fuzzfindersMapsReports addEventListenerInitializeLostMap");
-    google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
+    // google.maps.event.addDomListener(lostPetBtn, 'click', initializeLostMap);
   };
 
   // Controller: Remove DOM listener from lost a pet button
@@ -810,6 +810,9 @@ $(function(){
 
       });
     });
+
+
+
 
     $reportsList.on('click', '.unselected', function() {
       console.log('report summary clicked');
