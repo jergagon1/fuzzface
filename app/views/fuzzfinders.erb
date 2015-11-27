@@ -31,191 +31,48 @@
     top: 7px;
     margin: 5px;
   }
+
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+  }
 </style>
 
 <% content_for :scripts do %>
   <script src="/vendor/bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/angular-animate/angular-animate.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-cookies/angular-cookies.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/pusher-angular/lib/pusher-angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
+
   <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
 
-  <script type="text/javascript" charset="utf-8">
-    var fuzzFindersModule = angular.module('fuzzFindersModule', ['ngAnimate', 'ngFileUpload']);
+  <script src="/js/fuzzapp/modules/fuzzFinders.js" type="text/javascript" charset="utf-8"></script>
 
-    fuzzFindersModule.config(['$httpProvider', function($httpProvider) {
-      $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-    }]);
-
-    fuzzFindersModule.controller('MenuController', ['$rootScope', '$scope', function ($rootScope, $scope) {
-      $rootScope.$on('change-section', function (event, currentSection) {
-        $scope.currentSection = currentSection;
-      });
-
-      $scope.changeSection = function (section) {
-        console.log('MenuController changeSection()')
-        if (section == $scope.currentSection) {
-          $scope.currentSection = null;
-        } else {
-          $scope.currentSection = section;
-        }
-
-        $rootScope.$broadcast('section-changed', $scope.currentSection);
-
-        // if ($scope.currentSection == 'lostSection') {
-        //   google.maps.event.addDomListener(
-        //     lostPetBtn,
-        //     'click',
-        //     $scope.initializeMap(lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png'));
-        //
-        // };
-      };
-    }]);
-
-    fuzzFindersModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$http', function ($rootScope, $scope, Upload, $http) {
-      $scope.maps = [];
-
-      $scope.report = {};
-      $scope.lostMap = null; $scope.foundMap = null;
-
-
-      var initializeMap = function (mapName, canvasDivId, iconUrl) {
-        var mapOptions = {
-          zoom: 14,
-          center: new google.maps.LatLng(37.7848676, -122.3978871),
-          streetViewControl: false,
-          mapTypeControl: false,
-          scrollwheel: false,
-          draggable: false,
-        };
-
-        mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
-
-        $scope.maps.push(mapName);
-
-        // google.maps.event.addListener(mapName, 'click', enableScrollingWithMouseWheel);
-
-        var success = function(position) {
-          var lat = parseFloat(position.coords.latitude);
-          var lng = parseFloat(position.coords.longitude);
-
-          var pos = new google.maps.LatLng(lat, lng);
-
-          var marker = new google.maps.Marker({
-            map: mapName,
-            position: pos,
-            icon: iconUrl,
-            draggable: true,
-          });
-
-          var markerLat = marker.position.A;  //marker latitude;
-          var markerLong = marker.position.F;  //marker longitude
-
-          var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
-
-          var infowindow = new google.maps.InfoWindow({
-            map: mapName,
-            position: posInfoWindow,
-            content: 'Current location. Drag to location pet was last seen.'
-          });
-
-          google.maps.event.addListener(marker, 'dragend', function() {
-            lat = this.getPosition().lat();
-            lng = this.getPosition().lng();
-
-            $scope.report.lat = lat; $scope.report.lng = lng;
-            infowindow.close();
-          });
-
-          mapName.setCenter(pos);
-          $scope.report.lat = lat; $scope.report.lng = lng;
-        }
-
-        var failure = function(error) {
-          handleNoGeolocation(false, mapName);
-        };
-
-        //User's Current Location
-        if (gon.latitude && gon.longitude) {
-          success(
-            {
-              coords: { latitude: gon.latitude, longitude: gon.longitude }
-            }
-          )
-        } else {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(success, function() {
-              geolocator.locateByIP(success, failure, 1);
-            });
-          } else {
-            geolocator.locateByIP(success, failure, 1);
-          }
-        }
-      };
-
-      $scope.submit = function (report) {
-        if (report.last_seen) {
-          report['last_seen'] = moment(report.last_seen).format();
-        }
-
-        $.blockUI();
-
-        $http({
-          method: 'post',
-          url: myApp.fuzzfindersApiUrl + "/api/v1/reports.json?user_email=" + gon.email + '&user_token=' + gon.auth_token,
-          data: { report: report }
-        }).then(function (response) {
-          $scope.report = {
-            user_id: report.user_id,
-            report_type: report.report_type
-          };
-
-          $scope.image = null;
-
-          $.unblockUI();
-
-          // close current section
-          $rootScope.$broadcast('change-section', null);
-        }, function (response) {
-          $.unblockUI();
-        });
-      };
-
-      // TODO: merge 2 requests into one for uploading image and sending data
-      $scope.uploadImage = function (file, report) {
-        $.blockUI();
-
-        file.upload = Upload.upload({
-          method: 'post',
-          url: gon.api_server + '/api/v1/images.json?user_email=' + gon.email + '&user_token=' + gon.auth_token,
-          data: { image: file }
-        }).then(function (response) {
-          if (response.status == 200) {
-            $.unblockUI();
-
-            report.img_url = response.data.image.url
-          }
-        });
-      };
-
-      $rootScope.$on('section-changed', function (event, currentSection) {
-        if (currentSection == 'lostSection') {
-          setTimeout(function () {
-            initializeMap($scope.lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png');
-          }, 100);
-        } else if (currentSection == 'foundSection') {
-          setTimeout(function () {
-            initializeMap($scope.foundMap, 'found-map-canvas', '/images/FuzzFinders_icon_blue.png');
-          }, 100);
-        };
-      });
-    }]);
-  </script>
+  <!-- <script type="text/javascript" charset="utf&#45;8"> -->
+  <!--   // notifications -->
+  <!--   var notificationsModule = angular.module('notificationsModule', []); -->
+  <!--   notificationsModule.directive('app&#45;nofitications', function () { -->
+  <!--     return { -->
+  <!--       restrict: 'E', -->
+  <!--       template: '<h1>notifications</h1>', -->
+  <!--       // templateUrl: '/js/fuzzapp/modules/notifications/templates/index.html' -->
+  <!--     } -->
+  <!--   }).controller('NotificationsController', ['$scope', function ($scope) { -->
+  <!--  -->
+  <!--   }]); -->
+  <!-- </script> -->
 <% end %>
+
+<% content_for :ng_app do %>
+  <%= 'ng-app="fuzzFindersModule"' %>
+<% end %>
+
 
 <%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_notification', :layout => false %>
-<div class="container chat-padding _need-notifications" ng-app="fuzzFindersModule" ng-controller="MenuController">
+<div class="ng-cloak container chat-padding _need-notifications" ng-controller="MenuController">
+<!-- <div class="ng&#45;cloak container chat&#45;padding _need&#45;notifications" ng&#45;app="fuzzFindersModule" ng&#45;controller="MenuController"> -->
   <div class="row first-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFinders_Logo_med.png" alt="FuzzFinders Logo" id="main-logo">

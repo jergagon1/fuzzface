@@ -126,6 +126,16 @@ $(function(){
     .done(function(response){
       $('#reportDetailsModal .info').text('Comment has been posted');
 
+      // update my subscriptions
+      var $body = angular.element(document.body);
+      var $rootScope = $body.scope().$root;
+      var resp = { data: response.data };
+      $rootScope.$broadcast('subscriptions', response.subscriptions);
+      // $rootScope.$apply(function () {
+      //   debugger;
+      //   $rootScope.mySubscriptions;
+      // }.bind(resp));
+
       console.log(response);
       updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);

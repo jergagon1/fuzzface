@@ -28,7 +28,7 @@
     </title>
     <%= include_gon %>
   </head>
-  <body>
+  <body <%= yield_content :ng_app %>>
     <%= yield %>
     <!-- vendor js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
@@ -51,6 +51,8 @@
     <script src="/vendor/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>
     <script src="/vendor/geolocator/geolocator.js" type="text/javascript" charset="utf-8"></script>
     <script src="/vendor/js.cookie/js.cookie.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="/vendor/bower_components/lodash/lodash.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="/js/utils.js" type="text/javascript" charset="utf-8"></script>
 
