@@ -103,7 +103,7 @@ $(function(){
       toggleHideIcon($reportLi);
       hideReportSummaryOnDetailShow($reportLi);
 
-      myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
+      // myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -126,6 +126,16 @@ $(function(){
     .done(function(response){
       $('#reportDetailsModal .info').text('Comment has been posted');
 
+      // update my subscriptions
+      var $body = angular.element(document.body);
+      var $rootScope = $body.scope().$root;
+      var resp = { data: response.data };
+      $rootScope.$broadcast('subscriptions', response.subscriptions);
+      // $rootScope.$apply(function () {
+      //   debugger;
+      //   $rootScope.mySubscriptions;
+      // }.bind(resp));
+
       console.log(response);
       updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);
@@ -135,7 +145,7 @@ $(function(){
       //   $commentList
       // );
       resetFormInputs();
-      myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
+      // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
       transformTimestamps();
     })
     .fail(function(){
@@ -635,7 +645,7 @@ $(function(){
   // };
 
   // Controller: initialize map for reports in area section
-  var initializeReportMap = function() {
+  window.initializeReportMap = function() {
     console.log("fuzzfindersMapsReports.js initializeReportMap");
     var reportMapOptions = {
       zoom: 13,
@@ -655,6 +665,7 @@ $(function(){
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
+
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
@@ -682,6 +693,7 @@ $(function(){
         setRecentReportsHiddenFormInputFields(sw,ne);
         myApp.fuzzfinders.model.getRecentReports();
       });
+
       reportMap.setCenter(pos);
     };
 
@@ -734,13 +746,13 @@ $(function(){
   // Controller: Add DOM listener to initialize report map on report button click
   var addEventListenerInitializeReportMap = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerInitializeReportMap");
-    google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
+    // google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Remove DOM listener to initialize report map on report button click
   var removeEventListenerInitializeReportMap = function(){
     console.log("fuzzfindersMapsReports.js removeEventListenerInitializeReportMap");
-    google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
+    // google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Add delegated event listener to reports in reports list on click

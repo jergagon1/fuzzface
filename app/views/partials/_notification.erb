@@ -1,4 +1,7 @@
+<div ng-controller="NotificationsController" class="ng-cloak">
+
 <script id="notifications-report-detail-template" type="text/x-handlebars-template">
+
   <div class="report-detail modal_report modal_report_{{report.id}}">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <span class="report-detail-hide glyphicon glyphicon-minus" style="display: none;"></span>
@@ -70,11 +73,13 @@
   </div>
 
   <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
-</script>
+  </script>
 
-
-
-<div class="notification">
-  <ul>
-  </ul>
-</div><!-- notification -->
+  <div class="notification ng-cloak">
+    <ul>
+      <li ng-repeat="n in notifications" ng-click="showModalWithReport(n)"
+        data-report-id="{{n.report_id}}"
+        class="fuzzflash_{{n.report_id}} {{n.report_type}}" ng-bind="n.message"></li>
+    </ul>
+  </div><!-- notification -->
+</div>

@@ -18,6 +18,9 @@
     "ng-file-upload-shim": "~10.0.2",
     "angular-sanitize": "~1.4.8",
     "blockUI": "*",
-    "angular-animate": "~1.4.8"
+    "angular-animate": "~1.4.8",
+    "pusher-angular": "~0.1.8",
+    "lodash": "~3.10.1",
+    "angular-cookies": "~1.4.8"
   }
 }

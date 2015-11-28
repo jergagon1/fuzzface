@@ -1,10 +1,15 @@
 <% content_for :scripts do %>
   <script src="/vendor/bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-animate/angular-animate.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-cookies/angular-cookies.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/pusher-angular/lib/pusher-angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
 
+  <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/fuzzapp/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/fuzzapp/modules/profile.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/fuzzapp/modules/notifications.js" type="text/javascript" charset="utf-8"></script>
 <% end %>
 
 <style type="text/css" media="all">
@@ -22,17 +27,21 @@
   input.ng-invalid-required { border: 1px solid red; }
 </style>
 
+<% content_for :ng_app do %>
+  <%= 'ng-app="fuzzapp"' %>
+<% end %>
+
 <%= erb :'partials/_navbar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_sidebar', :layout => false, :locals => { :wags => @wags } %>
 <%= erb :'partials/_notification', :layout => false %>
 
-<div class="container chat-padding _need-notifications">
+<div class="container chat-padding _need-notifications ng-cloak">
   <div class="row first-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 logo-section">
       <img src="/images/FuzzFile_Logo_med.png" alt="FuzzFile Logo" id="main-logo">
     </div><!-- col logo-section -->
   </div><!-- row first-panel -->
-  <div class="row second-panel" ng-app="profileModule">
+  <div class="row second-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" ng-controller="ProfileController">
       <div ng-init='user=<%= @user.to_json %>'></div>
 

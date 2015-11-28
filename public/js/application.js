@@ -206,40 +206,41 @@ $(function() {
 
   // Controller: Initialize FuzzFlash - Notification when new lost or found pet report created
   var initializeFuzzFlash = function(){
-    console.log("application.js initializeFuzzFlash");
-    var clearFuzzflash = function(reportId) {
-      setTimeout(function() {
-        $('.fuzzflash_' + reportId).remove();
-      }, myApp.fuzzflashDisplayLength);
-    };
-    var pusher = new Pusher(gon.pusher_key);
-    var fuzzflashChannel = pusher.subscribe('fuzzflash');
-
-    fuzzflashChannel.bind('report_created', function(fuzzflash){
-      var showAllNotifications = !(gon.latitude && gon.longitude);
-      var didIreportIt = false; // gon.user_id == fuzzflash.user_id;
-      var distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
-      var settingsDistance = Cookies.get('distance') || 5;
-
-      if (didIreportIt) { return };
-
-      if (showAllNotifications || (distanceInMiles < settingsDistance)) {
-        var message = fuzzflash.message;
-        var reportId = fuzzflash.report_id;
-        var reportType = fuzzflash.report_type;
-        $('div.notification ul').prepend('<li data-report-id=' + fuzzflash.report_id + ' class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>').on('click', function (e) {
-          showModalWithReport($(e.target).data('report-id'));
-
-          console.log('new report notification click', 'hello');
-        });
-
-        clearFuzzflash(reportId);
-      }
-
-      if(checkIfOnFuzzfindersPageAndReportsListOpen()){
-        myApp.fuzzfinders.model.getRecentReports();
-      }
-    });
+    // console.log("application.js initializeFuzzFlash");
+    // var clearFuzzflash = function(reportId) {
+    //   setTimeout(function() {
+    //     $('.fuzzflash_' + reportId).remove();
+    //   }, myApp.fuzzflashDisplayLength);
+    // };
+    // var pusher = new Pusher(gon.pusher_key);
+    // var fuzzflashChannel = pusher.subscribe('fuzzflash');
+    //
+    // fuzzflashChannel.bind('report_created', function(fuzzflash){
+    //   var showAllNotifications = !(gon.latitude && gon.longitude);
+    //   var didIreportIt = false; // gon.user_id == fuzzflash.user_id;
+    //   var distanceInMiles = distance(gon.latitude, gon.longitude, fuzzflash.latitude, fuzzflash.longitude);
+    //   var settingsDistance = parseInt(Cookies.get('distance')) || 5;
+    //
+    //   if (didIreportIt) { return };
+    //
+    //   if (showAllNotifications || (distanceInMiles < settingsDistance)) {
+    //     var message = fuzzflash.message;
+    //     var reportId = fuzzflash.report_id;
+    //     var reportType = fuzzflash.report_type;
+    //
+    //     $('div.notification ul').prepend('<li data-report-id=' + fuzzflash.report_id + ' class="fuzzflash_' + reportId + ' ' + reportType + '">' + message + '</li>').on('click', function (e) {
+    //       showModalWithReport($(e.target).data('report-id'));
+    //
+    //       console.log('new report notification click', 'hello');
+    //     });
+    //
+    //     clearFuzzflash(reportId);
+    //   }
+    //
+    //   if(checkIfOnFuzzfindersPageAndReportsListOpen()){
+    //     myApp.fuzzfinders.model.getRecentReports();
+    //   }
+    // });
   };
 
 
