@@ -43,10 +43,16 @@
   <script src="/vendor/bower_components/angular-cookies/angular-cookies.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/pusher-angular/lib/pusher-angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
 
   <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
 
+  <!-- !!! -->
+
+
+  <script src="/js/fuzzapp/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/fuzzapp/modules/fuzzFinders.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/fuzzapp/modules/notifications.js" type="text/javascript" charset="utf-8"></script>
 
   <!-- <script type="text/javascript" charset="utf&#45;8"> -->
   <!--   // notifications -->
@@ -64,7 +70,7 @@
 <% end %>
 
 <% content_for :ng_app do %>
-  <%= 'ng-app="fuzzFindersModule"' %>
+  <%= 'ng-app="fuzzapp"' %>
 <% end %>
 
 

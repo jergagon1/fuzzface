@@ -1,10 +1,10 @@
-var profileModule = angular.module('profileModule', ['ngFileUpload', 'ngSanitize']);
+var fuzzappModule = angular.module('fuzzapp');
 
-profileModule.config(['$httpProvider', function($httpProvider) {
+fuzzappModule.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
-profileModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
+fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
   var file = null;
   $scope.errorText = '';
 

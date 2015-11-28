@@ -77,7 +77,9 @@
 
   <div class="notification ng-cloak">
     <ul>
-      <li ng-repeat="n in notifications" ng-click="showModalWithReport(n)" data-report-id="{{n.report_id}}" class="fuzzflash_{{n.report_id}} {{n.report_type}}">{{n.message}}</li>
+      <li ng-repeat="n in notifications" ng-click="showModalWithReport(n)"
+        data-report-id="{{n.report_id}}"
+        class="fuzzflash_{{n.report_id}} {{n.report_type}}" ng-bind="n.message"></li>
     </ul>
   </div><!-- notification -->
 </div>
