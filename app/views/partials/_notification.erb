@@ -75,9 +75,9 @@
   <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
   </script>
 
-  <div class="notification">
-    <ul ng-repeat="n in notifications">
-      <li ng-click="showModalWithReport(n)" data-report-id="{{n.report_id}}" class="fuzzflash_{{n.report_id}} {{n.report_type}}">{{n.message}}</li>
+  <div class="notification ng-cloak">
+    <ul>
+      <li ng-repeat="n in notifications" ng-click="showModalWithReport(n)" data-report-id="{{n.report_id}}" class="fuzzflash_{{n.report_id}} {{n.report_type}}">{{n.message}}</li>
     </ul>
   </div><!-- notification -->
 </div>

@@ -9,98 +9,98 @@ $(function(){
   //
   // }
   // Model: Subscribe to a channel for notifications of comments on a report
-  myApp.fuzzfinders.model.subscribeReportComments = function(reportId) {
-    if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(reportId) === -1) {
-      myApp.fuzzfinders.model.subscribedReportComments.push(reportId);
-      var pusher = new Pusher(gon.pusher_key);
-      // var reportCommentsChannel = pusher.subscribe('report_comments_' + reportId);
-      var reportCommentsChannel = pusher.subscribe('report_commented');
-
-      reportCommentsChannel.bind('report_commented', function(notification) {
-        if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(notification.report_id) === -1) {
-          return;
-        };
-
-        if (!$('li.comment[data-commentid="' + notification.comment.id + '"]').length) {
-          var selectedReportId = notification.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
-          console.log('reportID = ', selectedReportId);
-          var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
-          var $commentList = $('.comment-list');
-          var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
-
-          showCommentsListDivIfHidden($commentListDiv);
-
-          renderTemplates(
-            { comment: notification.comment },
-            $("#comment-template"),
-            $commentList
-          );
-
-          transformTimestamps();
-        }
-
-        var message = notification.message;
-        var commentId = notification.comment_id;
-
-        if ($('.report_comment_' + commentId).length) {
-          return;
-        };
-
-        $('div.notification ul').prepend('<li data-report-id=' + notification.report_id + ' data-comment-id=' + commentId + ' class="comment report_comment_' + commentId + '">' + message + '</li>').on('click', function (e) {
-          showModalWithReport($(e.target).data('report-id'), $(e.target).data('comment-id'));
-
-          console.log('new comment notification click', 'hello');
-        });
-
-        setTimeout(function() {
-          $('.report_comment_' + commentId).remove();
-        }, myApp.fuzzflashDisplayLength);
-      });
-    }
-  };
+  // myApp.fuzzfinders.model.subscribeReportComments = function(reportId) {
+  //   if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(reportId) === -1) {
+  //     myApp.fuzzfinders.model.subscribedReportComments.push(reportId);
+  //     var pusher = new Pusher(gon.pusher_key);
+  //     // var reportCommentsChannel = pusher.subscribe('report_comments_' + reportId);
+  //     var reportCommentsChannel = pusher.subscribe('report_commented');
+  //
+  //     reportCommentsChannel.bind('report_commented', function(notification) {
+  //       if (myApp.fuzzfinders.model.subscribedReportComments.indexOf(notification.report_id) === -1) {
+  //         return;
+  //       };
+  //
+  //       if (!$('li.comment[data-commentid="' + notification.comment.id + '"]').length) {
+  //         var selectedReportId = notification.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
+  //         console.log('reportID = ', selectedReportId);
+  //         var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
+  //         var $commentList = $('.comment-list');
+  //         var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
+  //
+  //         showCommentsListDivIfHidden($commentListDiv);
+  //
+  //         renderTemplates(
+  //           { comment: notification.comment },
+  //           $("#comment-template"),
+  //           $commentList
+  //         );
+  //
+  //         transformTimestamps();
+  //       }
+  //
+  //       var message = notification.message;
+  //       var commentId = notification.comment_id;
+  //
+  //       if ($('.report_comment_' + commentId).length) {
+  //         return;
+  //       };
+  //
+  //       $('div.notification ul').prepend('<li data-report-id=' + notification.report_id + ' data-comment-id=' + commentId + ' class="comment report_comment_' + commentId + '">' + message + '</li>').on('click', function (e) {
+  //         showModalWithReport($(e.target).data('report-id'), $(e.target).data('comment-id'));
+  //
+  //         console.log('new comment notification click', 'hello');
+  //       });
+  //
+  //       setTimeout(function() {
+  //         $('.report_comment_' + commentId).remove();
+  //       }, myApp.fuzzflashDisplayLength);
+  //     });
+  //   }
+  // };
 
   // Model: lost pet form submission
-  var lostPetFormSubmit = function($dataFromForm, $lostForm){
-    console.log("fuzzfinders.js lostPetFormSubmit");
-    console.log($dataFromForm);
-    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports.json?user_email=" + gon.email + '&user_token=' + gon.auth_token;
-    $.ajax({
-      url: link,
-      type: "post",
-      dataType: "json",
-      data: $dataFromForm
-    })
-    .done(function(response){
-      console.log(response);
-      resetViewOnFormSubmit($lostForm);
-      myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
-    })
-    .fail(function(){
-      console.log('lost pet form submission failed');
-    })
-  };
+  // var lostPetFormSubmit = function($dataFromForm, $lostForm){
+  //   console.log("fuzzfinders.js lostPetFormSubmit");
+  //   console.log($dataFromForm);
+  //   var link = myApp.fuzzfindersApiUrl + "/api/v1/reports.json?user_email=" + gon.email + '&user_token=' + gon.auth_token;
+  //   $.ajax({
+  //     url: link,
+  //     type: "post",
+  //     dataType: "json",
+  //     data: $dataFromForm
+  //   })
+  //   .done(function(response){
+  //     console.log(response);
+  //     resetViewOnFormSubmit($lostForm);
+  //     myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
+  //   })
+  //   .fail(function(){
+  //     console.log('lost pet form submission failed');
+  //   })
+  // };
 
   // Model: found pet form submission
-  var foundPetFormSubmit = function($dataFromForm, $foundForm){
-    console.log("fuzzfinders.js foundPetFormSubmit");
-    console.log($dataFromForm);
-    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports?user_email=" + gon.email + "&user_token=" + gon.auth_token;
-    $.ajax({
-      url: link,
-      type: "post",
-      dataType: "json",
-      data: $dataFromForm
-    })
-    .done(function(response){
-      console.log(response);
-      updateWags(response.wags);
-      resetViewOnFormSubmit($foundForm);
-      myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
-    })
-    .fail(function(){
-      console.log('found pet form submission failed');
-    })
-  };
+  // var foundPetFormSubmit = function($dataFromForm, $foundForm){
+  //   console.log("fuzzfinders.js foundPetFormSubmit");
+  //   console.log($dataFromForm);
+  //   var link = myApp.fuzzfindersApiUrl + "/api/v1/reports?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+  //   $.ajax({
+  //     url: link,
+  //     type: "post",
+  //     dataType: "json",
+  //     data: $dataFromForm
+  //   })
+  //   .done(function(response){
+  //     console.log(response);
+  //     updateWags(response.wags);
+  //     resetViewOnFormSubmit($foundForm);
+  //     myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
+  //   })
+  //   .fail(function(){
+  //     console.log('found pet form submission failed');
+  //   })
+  // };
 
   // Model: check if a form input element has a value set
   var checkForValueInFormInput = function($input){
@@ -138,66 +138,66 @@ $(function(){
   var $foundLastSeenPlaceholder = $("#found-last-seen-placeholder");
 
   // View: Hide/collapse the lost or found forms or reports list if open on page load
-  var hideAllForms = function() {
-    console.log("fuzzfinders.js hideAllForms");
-    $fuzzfindersButtons.siblings().hide();
-  };
+  // var hideAllForms = function() {
+  //   console.log("fuzzfinders.js hideAllForms");
+  //   $fuzzfindersButtons.siblings().hide();
+  // };
 
   // View: Slide closed the lost form, the found form and the report list if open
-  var slideUpAllForms = function() {
-    console.log("fuzzfinders.js slideUpAllForms");
-    $fuzzfindersButtons.siblings().slideUp("slow");
-  };
+  // var slideUpAllForms = function() {
+  //   console.log("fuzzfinders.js slideUpAllForms");
+  //   $fuzzfindersButtons.siblings().slideUp("slow");
+  // };
 
   // View: Add the selected-button class to the passed-in button
-  var addSelectedClassToButton = function($buttonToSelect){
-    console.log("fuzzfinders.js addSelectedClassToButton");
-    $buttonToSelect.addClass("selected-button");
-  };
+  // var addSelectedClassToButton = function($buttonToSelect){
+  //   console.log("fuzzfinders.js addSelectedClassToButton");
+  //   $buttonToSelect.addClass("selected-button");
+  // };
 
   // View: Remove the selected-button class from the passed-in button
-  var removeSelectedClassFromButton = function($buttonToDeselect){
-    console.log("fuzzfinders.js removeSelectedClassFromButton");
-    $buttonToDeselect.removeClass("selected-button");
-  };
+  // var removeSelectedClassFromButton = function($buttonToDeselect){
+  //   console.log("fuzzfinders.js removeSelectedClassFromButton");
+  //   $buttonToDeselect.removeClass("selected-button");
+  // };
 
   // View: Reveal the sibling content -form or list - of the passed-in button
-  var slideDownButtonForm = function($button){
-    console.log("fuzzfinders.js slideDownButtonForm");
-    $button.siblings().first().slideDown("slow");
-  };
+  // var slideDownButtonForm = function($button){
+  //   console.log("fuzzfinders.js slideDownButtonForm");
+  //   $button.siblings().first().slideDown("slow");
+  // };
 
   // View: Slide closed the form or list adjacent to the passed-in button
-  var slideUpButtonForm = function($button){
-    console.log("fuzzfinders.js slideUpButtonForm");
-    $button.siblings().first().slideUp();
-  };
+  // var slideUpButtonForm = function($button){
+  //   console.log("fuzzfinders.js slideUpButtonForm");
+  //   $button.siblings().first().slideUp();
+  // };
 
   // View: Slide open or closed form and list content adjacent to large buttons
-  var toggleFuzzfindersButtons = function($button){
-    console.log("fuzzfinders.js toggleFuzzfindersButtons");
-    if (checkIfFormSectionHidden($button)){
-      slideUpAllForms();
-      removeSelectedClassFromButton($fuzzfindersButtons);
-      slideDownButtonForm($button);
-      addSelectedClassToButton($button);
-    } else {
-      slideUpAllForms();
-      removeSelectedClassFromButton($fuzzfindersButtons);
-    }
-  };
-
+  // var toggleFuzzfindersButtons = function($button){
+  //   console.log("fuzzfinders.js toggleFuzzfindersButtons");
+  //   if (checkIfFormSectionHidden($button)){
+  //     slideUpAllForms();
+  //     removeSelectedClassFromButton($fuzzfindersButtons);
+  //     slideDownButtonForm($button);
+  //     addSelectedClassToButton($button);
+  //   } else {
+  //     slideUpAllForms();
+  //     removeSelectedClassFromButton($fuzzfindersButtons);
+  //   }
+  // };
+  //
   // View: determine if button form section is hidden
-  var checkIfFormSectionHidden = function($button){
-    console.log("fuzzfinders.js checkIfFormSectionHidden");
-    if ($button.siblings().first().is(":hidden")){
-      console.log("hidden");
-      return true
-    }	else {
-      console.log("not hidden");
-      return false
-    }
-  };
+  // var checkIfFormSectionHidden = function($button){
+  //   console.log("fuzzfinders.js checkIfFormSectionHidden");
+  //   if ($button.siblings().first().is(":hidden")){
+  //     console.log("hidden");
+  //     return true
+  //   }	else {
+  //     console.log("not hidden");
+  //     return false
+  //   }
+  // };
 
   // View: update the user wags text to display argument value
   var updateWags = function(value) {
@@ -206,94 +206,94 @@ $(function(){
   };
 
   // View: reset form input controls
-  var resetFormInputs = function(){
-    console.log("fuzzfinders.js resetFormInputs");
-    $("input[type='text']").val('');
-    $("textarea").val("");
-    $("select").prop("selectedIndex", 0);
-  };
+  // var resetFormInputs = function(){
+  //   console.log("fuzzfinders.js resetFormInputs");
+  //   $("input[type='text']").val('');
+  //   $("textarea").val("");
+  //   $("select").prop("selectedIndex", 0);
+  // };
 
   // View: reset inputs and buttons on form submittal
-  var resetViewOnFormSubmit = function($formElement){
-    console.log("fuzzfinders.js resetViewOnFormSubmit");
-    resetFormInputs();
-    slideUpAllForms();
-    removeSelectedClassFromButton($fuzzfindersButtons);
-    removeImageUploadPreviews();
-    resetImageUpload();
-  };
+  // var resetViewOnFormSubmit = function($formElement){
+  //   console.log("fuzzfinders.js resetViewOnFormSubmit");
+  //   resetFormInputs();
+  //   slideUpAllForms();
+  //   removeSelectedClassFromButton($fuzzfindersButtons);
+  //   removeImageUploadPreviews();
+  //   resetImageUpload();
+  // };
 
   // View: toggle display of last-seen-placeholder and last-seen input fields
-  var toggleDisplayLastSeenFormInputFields = function($lastSeen, $lastSeenPlaceholder){
-    console.log("fuzzfinders.js toggleDisplayLastSeenFormInputFields");
-    $lastSeen.toggle();
-    $lastSeenPlaceholder.toggle();
-    if($lastSeenPlaceholder.is(":hidden")){
-      console.log("lastSeenPlaceholder is hidden");
-      $lastSeen.focus();
-    }
-  };
+  // var toggleDisplayLastSeenFormInputFields = function($lastSeen, $lastSeenPlaceholder){
+  //   console.log("fuzzfinders.js toggleDisplayLastSeenFormInputFields");
+  //   $lastSeen.toggle();
+  //   $lastSeenPlaceholder.toggle();
+  //   if($lastSeenPlaceholder.is(":hidden")){
+  //     console.log("lastSeenPlaceholder is hidden");
+  //     $lastSeen.focus();
+  //   }
+  // };
 
   // View: Remove preview images for image upload
-  var removeImageUploadPreviews = function(){
-    console.log("fuzzfinders.js removeImageUploadPreviews");
-    $(".image-upload-preview").children().remove();
-  };
+  // var removeImageUploadPreviews = function(){
+  //   console.log("fuzzfinders.js removeImageUploadPreviews");
+  //   $(".image-upload-preview").children().remove();
+  // };
 
   // View: reset image upload button progress bar and text
-  var resetImageUpload = function(){
-    console.log("fuzzfinders.js resetImageUpload");
-    $(".bar").remove();
-    $("input.img_url").val("");
-  };
+  // var resetImageUpload = function(){
+  //   console.log("fuzzfinders.js resetImageUpload");
+  //   $(".bar").remove();
+  //   $("input.img_url").val("");
+  // };
 
   //========================== Controller ==========================//
 
   // Controller: Add event listener for lost pet form submit button
-  var addEventListenerLostPetFormSubmit = function(){
-    console.log("fuzzfinders.js addEventListenerLostPetFormSubmit");
-    $lostPetForm.on("submit", function(event){
-      event.preventDefault();
-      var $form = $(this);
-      var $formData = $form.serializeArray();
-      var lastSeenObject = retrieveLastSeenObject($formData);
-      if(lastSeenObject.value !== ""){
-        var utcTime = convertLocalToUtc(lastSeenObject.value);
-        lastSeenObject.value = utcTime;
-      }
-      lostPetFormSubmit($formData, $form);
-      removeEventsLost();
-    });
-  };
+  // var addEventListenerLostPetFormSubmit = function(){
+  //   console.log("fuzzfinders.js addEventListenerLostPetFormSubmit");
+  //   $lostPetForm.on("submit", function(event){
+  //     event.preventDefault();
+  //     var $form = $(this);
+  //     var $formData = $form.serializeArray();
+  //     var lastSeenObject = retrieveLastSeenObject($formData);
+  //     if(lastSeenObject.value !== ""){
+  //       var utcTime = convertLocalToUtc(lastSeenObject.value);
+  //       lastSeenObject.value = utcTime;
+  //     }
+  //     lostPetFormSubmit($formData, $form);
+  //     removeEventsLost();
+  //   });
+  // };
 
   // Controller: Remove event listener for lost pet form submit button
-  var removeEventListenerLostPetFormSubmit = function(){
-    console.log("fuzzfinders.js removeEventListenerLostPetFormSubmit");
-    $lostPetForm.off("submit");
-  };
+  // var removeEventListenerLostPetFormSubmit = function(){
+  //   console.log("fuzzfinders.js removeEventListenerLostPetFormSubmit");
+  //   $lostPetForm.off("submit");
+  // };
 
   // Controller: Add event listener for found pet form submit button
-  var addEventListenerFoundPetFormSubmit = function(){
-    console.log("fuzzfinders.js addEventListenerFoundPetFormSubmit");
-    $foundPetForm.on("submit", function(event){
-      event.preventDefault();
-      var $form = $(this);
-      var $formData = $form.serializeArray();
-      var lastSeenObject = retrieveLastSeenObject($formData);
-      if(lastSeenObject.value !== ""){
-        var utcTime = convertLocalToUtc(lastSeenObject.value);
-        lastSeenObject.value = utcTime;
-      }
-      foundPetFormSubmit($formData, $form);
-      removeEventsFound();
-    });
-  };
+  // var addEventListenerFoundPetFormSubmit = function(){
+  //   console.log("fuzzfinders.js addEventListenerFoundPetFormSubmit");
+  //   $foundPetForm.on("submit", function(event){
+  //     event.preventDefault();
+  //     var $form = $(this);
+  //     var $formData = $form.serializeArray();
+  //     var lastSeenObject = retrieveLastSeenObject($formData);
+  //     if(lastSeenObject.value !== ""){
+  //       var utcTime = convertLocalToUtc(lastSeenObject.value);
+  //       lastSeenObject.value = utcTime;
+  //     }
+  //     foundPetFormSubmit($formData, $form);
+  //     removeEventsFound();
+  //   });
+  // };
 
   // Controller: Remove event listener for found pet form submit button
-  var removeEventListenerFoundPetFormSubmit = function(){
-    console.log("fuzzfinders.js removeEventListenerFoundPetFormSubmit");
-    $foundPetForm.off("submit");
-  };
+  // var removeEventListenerFoundPetFormSubmit = function(){
+  //   console.log("fuzzfinders.js removeEventListenerFoundPetFormSubmit");
+  //   $foundPetForm.off("submit");
+  // };
 
   // Controller: Add event listener on focus in lost form last seen field
   // var addEventListenerFocusLostLastSeenPlaceholderInput = function(){
@@ -370,91 +370,91 @@ $(function(){
 
   //--------------------- lost button ---------------------------//
   // Controller: bind events for lost pet form section
-  var bindEventsLost = function(){
-    console.log("fuzzfinders.js bindEventsLost");
-    addEventListenerLostPetFormSubmit();
-    // addEventListenerFocusLostLastSeenPlaceholderInput();
-    // addEventListenerBlurLostLastSeenInput();
-  };
+  // var bindEventsLost = function(){
+  //   console.log("fuzzfinders.js bindEventsLost");
+  //   addEventListenerLostPetFormSubmit();
+  //   // addEventListenerFocusLostLastSeenPlaceholderInput();
+  //   // addEventListenerBlurLostLastSeenInput();
+  // };
 
   // Controller: remove event listeners for lost pet form section
-  var removeEventsLost = function(){
-    console.log("fuzzfinders.js removeEventsLost");
-    // remove lost events
-    removeEventListenerLostPetFormSubmit();
-    // removeEventListenerFocusLostLastSeenPlaceholderInput();
-    // removeEventListenerBlurLostLastSeenInput();
-  };
+  // var removeEventsLost = function(){
+  //   console.log("fuzzfinders.js removeEventsLost");
+  //   // remove lost events
+  //   removeEventListenerLostPetFormSubmit();
+  //   // removeEventListenerFocusLostLastSeenPlaceholderInput();
+  //   // removeEventListenerBlurLostLastSeenInput();
+  // };
 
   // Controller: Add event listener to lost button click
-  var addEventListenerLostButtonClick = function(){
-    console.log("fuzzfinders.js addEventListenerLostButtonClick");
-    $lostPetButton.on("click", function(event){
-      event.preventDefault();
-      // determine if open or closed
-      if(checkIfFormSectionHidden($lostPetButton)){
-        // bind events
-        removeEventsLost();
-        removeEventsFound();
-        removeEventsReports();
-        // bindEventsLost();
-      }	else {
-        // remove events
-        removeEventsLost();
-      }
-      // toggleFuzzfindersButtons($lostPetButton);
-    });
-  };
+  // var addEventListenerLostButtonClick = function(){
+  //   console.log("fuzzfinders.js addEventListenerLostButtonClick");
+  //   $lostPetButton.on("click", function(event){
+  //     event.preventDefault();
+  //     // determine if open or closed
+  //     if(checkIfFormSectionHidden($lostPetButton)){
+  //       // bind events
+  //       removeEventsLost();
+  //       removeEventsFound();
+  //       removeEventsReports();
+  //       // bindEventsLost();
+  //     }	else {
+  //       // remove events
+  //       removeEventsLost();
+  //     }
+  //     // toggleFuzzfindersButtons($lostPetButton);
+  //   });
+  // };
 
   // Controller: remove event listener for lost button click
-  var removeEventListenerLostButtonClick = function(){
-    console.log("fuzzfinders.js removeEventListenerLostButtonClick");
-    $lostPetButton.off("click");
-  };
+  // var removeEventListenerLostButtonClick = function(){
+  //   console.log("fuzzfinders.js removeEventListenerLostButtonClick");
+  //   $lostPetButton.off("click");
+  // };
 
   //----------------------- found button -------------------------//
 
   // bind events for found pet form section
-  var bindEventsFound = function(){
-    console.log("fuzzfinders.js bindEventsFound");
-    addEventListenerFoundPetFormSubmit();
-    // addEventListenerFocusFoundLastSeenPlaceholderInput();
-    // addEventListenerBlurFoundLastSeenInput();
-  };
+  // var bindEventsFound = function(){
+  //   console.log("fuzzfinders.js bindEventsFound");
+  //   addEventListenerFoundPetFormSubmit();
+  //   // addEventListenerFocusFoundLastSeenPlaceholderInput();
+  //   // addEventListenerBlurFoundLastSeenInput();
+  // };
 
   // remove events for found pet form section
-  var removeEventsFound = function(){
-    console.log("fuzzfinders.js removeEventsFound");
-    removeEventListenerFoundPetFormSubmit();
-    // removeEventListenerFocusFoundLastSeenPlaceholderInput();
-    // removeEventListenerBlurFoundLastSeenInput();
-  };
+  // var removeEventsFound = function(){
+  //   console.log("fuzzfinders.js removeEventsFound");
+  //   removeEventListenerFoundPetFormSubmit();
+  //   // removeEventListenerFocusFoundLastSeenPlaceholderInput();
+  //   // removeEventListenerBlurFoundLastSeenInput();
+  // };
 
   // add event listener on click of found pet form button
-  var addEventListenerFoundButtonClick = function(){
-    console.log("fuzzfinders.js addEventListenerFoundButtonClick");
-    $foundPetButton.on("click", function(event){
-      event.preventDefault();
-      console.log("FoundButtonClick");
-      // determine if open or closed
-      if(checkIfFormSectionHidden($foundPetButton)){
-        // bind events
-        removeEventsFound();
-        removeEventsLost();
-        removeEventsReports();
-        // bindEventsFound();
-      }	else {
-        // remove events
-        removeEventsFound();
-      }
-      // toggleFuzzfindersButtons($foundPetButton);
-    });
-  };
+  // var addEventListenerFoundButtonClick = function(){
+  //   console.log("fuzzfinders.js addEventListenerFoundButtonClick");
+  //   $foundPetButton.on("click", function(event){
+  //     event.preventDefault();
+  //     console.log("FoundButtonClick");
+  //     // determine if open or closed
+  //     if(checkIfFormSectionHidden($foundPetButton)){
+  //       // bind events
+  //       removeEventsFound();
+  //       removeEventsLost();
+  //       removeEventsReports();
+  //       // bindEventsFound();
+  //     }	else {
+  //       // remove events
+  //       removeEventsFound();
+  //     }
+  //     // toggleFuzzfindersButtons($foundPetButton);
+  //   });
+  // };
 
-  var removeEventListenerFoundButtonClick = function(){
-    console.log("fuzzfiners.js removeEventListenerFoundButtonClick");
-    $foundPetButton.off("click");
-  };
+  // var removeEventListenerFoundButtonClick = function(){
+  //   console.log("fuzzfiners.js removeEventListenerFoundButtonClick");
+  //   $foundPetButton.off("click");
+  // };
 
   //--------------------- reports button -------------------------//
 
@@ -504,17 +504,17 @@ $(function(){
     if (myApp.checkForElement(".fuzzfinders-buttons")) {
       // on fuzzfinders page
       // hideAllForms();
-      addEventListenerLostButtonClick();
-      addEventListenerFoundButtonClick();
-      addEventListenerReportButtonClick();
+      // addEventListenerLostButtonClick();
+      // addEventListenerFoundButtonClick();
+      // addEventListenerReportButtonClick();
     } else {
       // not on fuzzfinders page
-      removeEventsLost();
-      removeEventListenerLostButtonClick();
-      removeEventsFound();
-      removeEventListenerFoundButtonClick();
-      removeEventsReports();
-      removeEventListenerReportButtonClick();
+      // removeEventsLost();
+      // removeEventListenerLostButtonClick();
+      // removeEventsFound();
+      // removeEventListenerFoundButtonClick();
+      // removeEventsReports();
+      // removeEventListenerReportButtonClick();
     }
   })();
 

@@ -103,7 +103,7 @@ $(function(){
       toggleHideIcon($reportLi);
       hideReportSummaryOnDetailShow($reportLi);
 
-      myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
+      // myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
     })
     .fail(function(){
       console.log("report detail request failed");
@@ -145,7 +145,7 @@ $(function(){
       //   $commentList
       // );
       resetFormInputs();
-      myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
+      // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
       transformTimestamps();
     })
     .fail(function(){

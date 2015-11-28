@@ -59,15 +59,39 @@ fuzzFindersModule.controller('NotificationsController', [
 
       if (didIreportIt) { return };
 
-      if (reportISubscribedOn) { //(showAllNotifications || (distanceInMiles < settingsDistance)) {
+      if (reportISubscribedOn || showAllNotifications || (distanceInMiles < settingsDistance)) {
+        if (data.comment_id) {
+          data['report_type'] = 'comment';
+        };
+
         $scope.notifications.push(data);
 
         $timeout(function () {
           var reportId = this.data.report_id;
 
           $('.fuzzflash_' + reportId).fadeOut('slow');
-        }.bind(o), 1000);
+        }.bind(o), 15000);
       }
+
+      if (data.comment_id) {
+        if (!$('li.comment[data-commentid="' + data.comment.id + '"]').length) {
+          var selectedReportId = data.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
+          console.log('reportID = ', selectedReportId);
+          var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
+          var $commentList = $('.comment-list');
+          var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
+
+          showCommentsListDivIfHidden($commentListDiv);
+
+          renderTemplates(
+            { comment: data.comment },
+            $("#comment-template"),
+            $commentList
+          );
+
+          transformTimestamps();
+        }
+      };
     };
 
     var client = new Pusher(gon.pusher_key);
