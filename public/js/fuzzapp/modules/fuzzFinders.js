@@ -170,3 +170,11 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
     };
   });
 }]);
+
+fuzzappModule.controller('ReportsController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+  $rootScope.$on('section-changed', function (event, currentSection) {
+    if (currentSection == 'reportsSection') {
+      setTimeout(initializeReportMap, 300);
+    }
+  });
+}]);

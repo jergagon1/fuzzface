@@ -645,7 +645,7 @@ $(function(){
   // };
 
   // Controller: initialize map for reports in area section
-  var initializeReportMap = function() {
+  window.initializeReportMap = function() {
     console.log("fuzzfindersMapsReports.js initializeReportMap");
     var reportMapOptions = {
       zoom: 13,
@@ -665,6 +665,7 @@ $(function(){
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
+
       lat = position.coords.latitude;
       lng = position.coords.longitude;
 
@@ -692,6 +693,7 @@ $(function(){
         setRecentReportsHiddenFormInputFields(sw,ne);
         myApp.fuzzfinders.model.getRecentReports();
       });
+
       reportMap.setCenter(pos);
     };
 
@@ -744,13 +746,13 @@ $(function(){
   // Controller: Add DOM listener to initialize report map on report button click
   var addEventListenerInitializeReportMap = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerInitializeReportMap");
-    google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
+    // google.maps.event.addDomListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Remove DOM listener to initialize report map on report button click
   var removeEventListenerInitializeReportMap = function(){
     console.log("fuzzfindersMapsReports.js removeEventListenerInitializeReportMap");
-    google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
+    // google.maps.event.removeListener(reportBtn, 'click', initializeReportMap);
   };
 
   // Controller: Add delegated event listener to reports in reports list on click

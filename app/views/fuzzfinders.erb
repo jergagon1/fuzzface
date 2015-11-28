@@ -103,7 +103,7 @@
   <div class="row fourth-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <button class="btn-block main-buttons fuzzfinders-buttons report-btn" ng-click="changeSection('reportsSection')">Reports</button>
-      <div class="my-animation" id="reports-map-container" ng-show="currentSection == 'reportsSection'">
+      <div class="my-animation" id="reports-map-container" ng-show="currentSection == 'reportsSection'" ng-controller="ReportsController">
         <%= erb :'partials/_report_map_legend', :layout => false %>
         <div id="report-map-canvas" class="map-canvas">
         </div><!-- #report-map-canvas map-canvas -->
