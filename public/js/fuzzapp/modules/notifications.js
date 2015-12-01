@@ -79,7 +79,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
               }, scope);
             });
           });
-        }.bind(o), 5000); // TODO: move this to service or constant
+        }.bind(o), 15000); // TODO: move this to service or constant
       }
 
       if (data.comment_id) {
