@@ -546,7 +546,7 @@ $(function(){
   };
 
   // Controller: Generic report submit map initialize
-  initializeMap = function(mapName, canvasDivId, iconUrl, parentSelector) {
+  window.initializeMap = function(mapName, canvasDivId, iconUrl, parentSelector) {
     console.log("fuzzfindersMapsReports.js initializeMap");
     var mapOptions = {
       zoom: 14,
