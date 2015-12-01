@@ -22,12 +22,8 @@
       return function(input) {
         return _.titleize(input);
       };
-    }).filter('downcase', function () {
-      return function(input) {
-        return input.toLowerCase();
-      };
     });
-  </script>
+</script>
 <% end %>
 
 <% content_for :title do %>
@@ -111,7 +107,7 @@
             <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
             <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
               <li class="tags" ng-repeat="tag in tags">
-                <p class="btn btn-default btn-xs" ng-bind="(tag.name | downcase)"></p>
+                <p class="btn btn-default btn-xs" ng-bind="(tag.name | lowercase)"></p>
               </li>
             </ul>
           </div>
