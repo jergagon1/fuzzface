@@ -1,18 +1,57 @@
 <% content_for :scripts do %>
   <script src="/vendor/bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-animate/angular-animate.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/angular-moment/angular-moment.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/lodash/lodash.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/lodash-inflection/lib/lodash-inflection.js" type="text/javascript" charset="utf-8"></script>
 
+  <style type="text/css" media="all">
+    .ng-enter {
+      -webkit-transition: 1s;
+      transition: 1s;
+      margin-left: 100%;
+    }
+
+    .ng-enter-active {
+      margin-left: 0;
+    }
+
+    .ng-leave {
+      -webkit-transition: 1s;
+      transition: 1s;
+      margin-left: 0;
+    }
+
+    .ng-leave-active {
+      margin-left: 100%;
+    }
+
+    .ng-move {
+      -webkit-transition: 1s;
+      transition: 1s;
+      background: gold;
+    }
+
+    .ng-move-active {
+      background: #fff;
+    }
+
+  </style>
+
   <script type="text/javascript" charset="utf-8">
     window.maps = [];
 
-    var app = angular.module('fuzzappPublic', ['angularMoment']);
+    var app = angular.module('fuzzappPublic', ['angularMoment', 'ngAnimate']);
 
-    app.controller('ReportsController', ['$scope', function ($scope) {
+    app.controller('ReportsController', ['$scope', '$http', function ($scope, $http) {
       $scope.report = <%= @report['report'].to_json %>;
       $scope.comments = <%= @report['comments'].to_json %>;
       $scope.tags = <%= @report['tags'].to_json %>;
+
+      $scope.user = {
+        id: gon.user_id,
+        username: gon.username
+      };
 
       $(function () {
         createMapOnReportDetails($scope.report);
@@ -22,8 +61,47 @@
       return function(input) {
         return _.titleize(input);
       };
+    }).directive('commentForm', function () {
+      return {
+        restrict: 'E',
+        scope: false,
+        replace: true,
+        templateUrl: '/js/fuzzappPublic/directives/comment-form/index.html',
+
+        controller: ['$scope', '$http', function ($scope, $http) {
+          $scope.submitComment = function (comment) {
+            if (comment.content && $scope.report.id) {
+              comment['report_id'] = $scope.report.id;
+
+              $http({
+                method: 'post',
+                url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
+                data: { comment: comment }
+              }).then(function (response) {
+                $scope.comments.push(response.data);
+
+                $scope.c = {};
+
+                setTimeout(transformTimestamps, 100);
+              }, function (response) {
+                console.error(response);
+              });
+            }
+          };
+        }],
+
+        link: function ($scope, $element, $attributes) {
+        }
+      }
+    }).directive('commentsList', function () {
+      return {
+        restrict: 'E',
+        scope: false,
+        replace: true,
+        templateUrl: '/js/fuzzappPublic/directives/comments-list/index.html',
+      }
     });
-</script>
+  </script>
 <% end %>
 
 <% content_for :title do %>
@@ -112,19 +190,9 @@
             </ul>
           </div>
 
-          <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12" data-reportid="{{report.id}}" ng-show="comments.length">
-            <h4>Comments</h4>
-            <ul class="comment-list" data-reportid="{{report.id}}">
-              <li class="comment" data-commentid="{{comment.id}}" id="comment-{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}" ng-repeat="comment in comments">
-                <p class="comment-content">{{comment.content}}
-                </p>
-                <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
-                </p>
-                <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a' }}</span><span class="time-ago"></span>
-                </p>
-              </li>
-            </ul>
-          </div>
+          <comments-list></comments-list>
+
+          <comment-form></comment-form>
         </li>
       </ul>
     </div><!-- col -->
