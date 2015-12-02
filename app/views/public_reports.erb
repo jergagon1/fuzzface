@@ -1,0 +1,136 @@
+<% content_for :scripts do %>
+  <script src="/vendor/bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-moment/angular-moment.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/lodash/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/lodash-inflection/lib/lodash-inflection.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    window.maps = [];
+
+    var app = angular.module('fuzzappPublic', ['angularMoment']);
+
+    app.controller('ReportsController', ['$scope', function ($scope) {
+      $scope.report = <%= @report['report'].to_json %>;
+      $scope.comments = <%= @report['comments'].to_json %>;
+      $scope.tags = <%= @report['tags'].to_json %>;
+
+      $(function () {
+        createMapOnReportDetails($scope.report);
+        transformTimestamps();
+      });
+    }]).filter('titleize', function () {
+      return function(input) {
+        return _.titleize(input);
+      };
+    });
+</script>
+<% end %>
+
+<% content_for :title do %>
+  <%= @report['report']['normalized_title'] %>
+<% end %>
+
+<style type="text/css" media="all">
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+  }
+</style>
+
+<div class="report-lists ng-cloak" ng-controller="ReportsController">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h3 class="padded" ng-bind="report.normalized_title"></h3>
+    </div><!-- col -->
+  </div><!-- row -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <ul class="reports-list" data-currentId= "<%= @user_id %>" >
+        <li class="report {{report.report_type}}-report unselected" data-reportid="{{report.id}}">
+          <div class="report-detail">
+            <div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="report.img_url">
+              <img ng-src="{{report.img_url}}" class="report-image-big">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="report.lat && report.lng">
+              <div class="report-detail-map-canvas map-canvas">
+              </div><!-- map-canvas -->
+            </div><!-- col -->
+
+            <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <br />
+
+              <div class="row" ng-show="report.pet_size">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Size: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="( report.pet_size | titleize )"></div>
+              </div>
+
+              <div class="row" ng-show="report.color">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Color: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.color | titleize)"></div>
+              </div>
+
+              <div class="row" ng-show="report.breed">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Breed: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.breed | titleize)"></div>
+              </div>
+
+              <div class="row" ng-show="report.sex">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Sex: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.sex | titleize)"></div>
+              </div>
+
+              <div class="row" ng-show="report.notes">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Notes: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.notes"></div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <p><strong>Last Seen:</strong></p>
+                </div>
+
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <p>
+                    <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
+                    <span class="time-ago"></span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="row" ng-show="report.report_username">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Posted By: </strong></p></div>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.report_username"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags">
+            <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
+            <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <li class="tags" ng-repeat="tag in tags">
+                <p class="btn btn-default btn-xs" ng-bind="(tag.name | lowercase)"></p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12" data-reportid="{{report.id}}" ng-show="comments.length">
+            <h4>Comments</h4>
+            <ul class="comment-list" data-reportid="{{report.id}}">
+              <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}" ng-repeat="comment in comments">
+                <p class="comment-content">{{comment.content}}
+                </p>
+                <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
+                </p>
+                <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a' }}</span><span class="time-ago"></span>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div><!-- col -->
+  </div><!-- row -->
+</div>
+
+<% content_for :ng_app do %>
+  <%= 'ng-app="fuzzappPublic"' %>
+<% end %>

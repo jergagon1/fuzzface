@@ -218,6 +218,17 @@
         </div>
       {{/if_eq}}
 
+      {{#if report.slug}}
+        <div class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <p><strong>Public link:</strong></p>
+          </div>
+
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <a target="_blank" href="/reports/{{report.slug}}">reports/{{report.slug}}</a>
+          </div>
+        </div>
+      {{/if}}
 
       {{> reportField report=report property='pet_size' key='Size'}}
       {{> reportField report=report property='color' key='Color'}}

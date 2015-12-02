@@ -146,6 +146,16 @@ get '/sign_out' do
   redirect '/sign_in'
 end
 
+get '/reports/:report_id' do
+  @report = Report.find_by_slug params[:report_id]
+
+  if @report.code == 404
+    erb :public_reports_not_found, layout: :guest_layout
+  else
+    erb :public_reports, layout: :guest_layout
+  end
+end
+
 # public info pages
 get '/fuzzfacts' do
   erb :fuzzfacts, :layout => :public_layout
