@@ -1,0 +1,13 @@
+<div ng-show="user.id">
+  <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
+
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4>Create Comment</h4>
+    <form class="new-comment-form">
+      <!-- <input type="text" name="comment[report_id]" value="{{report.id}}"> -->
+      <!-- <input type="text" name="comment[user_id]" value="<%= @user_id %>"> -->
+      <textarea data-reportId={{report.id}} ng-model="c.content" name="comment[content]" class='comment-text-input'></textarea><br>
+      <input data-reportid={{report.id}} ng-click="submitComment(c)" type="submit" class="submit-comment btn btn-default" value="Comment">
+    </form>
+  </div>
+</div>

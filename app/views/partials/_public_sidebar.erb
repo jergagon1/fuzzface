@@ -3,7 +3,13 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-        <li><a href="/sign_in">Log In</a></li>
+        <% if session[:user] && session[:user]['id'] %>
+          <li><a href="/">FuzzFinders</a></li>
+        <% else %>
+          <li><a href="/sign_in?backUrl=<%= request.fullpath %>">Log In</a></li>
+        <% end %>
+
+        <!-- <li><a href="/sign_in">Log In</a></li> -->
         <li><a href="/fuzzfacts">FuzzFacts</a></li>
         <li><a href="/fuzzfable">FuzzFable</a></li>
         <li><a href="/fuzzfind_us">FuzzFind...Us!</a></li>

@@ -1,14 +1,16 @@
 var usersModule = angular.module('usersModule', ['ngSanitize']);
 
-usersModule.config(['$httpProvider', function($httpProvider) {
+usersModule.config(['$httpProvider', '$locationProvider', function($httpProvider, $locationProvider) {
   $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+  $locationProvider.html5Mode({ enabled: true, requireBase: false });
 }]);
+
 
 usersModule.controller('UsersController', ['$scope', function ($scope) {
   $scope.currentTab = 'signin';
 }]);
 
-usersModule.controller('SignInController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+usersModule.controller('SignInController', ['$scope', '$http', '$window', '$location', function ($scope, $http, $window, $location) {
   $scope.title = 'SignInController';
 
   $scope.login = function (e) {
@@ -23,7 +25,9 @@ usersModule.controller('SignInController', ['$scope', '$http', '$window', functi
       if(response.data.error) {
         $scope.error = 'Wrong password or email';
       } else {
-        $window.location.href = '/';
+        var backUrl = $location.search().backUrl;
+        var url = backUrl ? backUrl : '/';
+        $window.location.href = url;
       }
     }, function (response) {
     });
@@ -54,7 +58,7 @@ usersModule.controller('RestoreController', ['$scope', '$http', function ($scope
   };
 }]);
 
-usersModule.controller('SignUpController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+usersModule.controller('SignUpController', ['$scope', '$http', '$window', '$location', function ($scope, $http, $window, $location) {
   $scope.signup = function (e) {
     e.preventDefault();
 
@@ -76,11 +80,12 @@ usersModule.controller('SignUpController', ['$scope', '$http', '$window', functi
 
           $scope.errorText = errorText;
         } else {
-          $window.location.href = '/';
+          var backUrl = $location.search().backUrl;
+          var url = backUrl ? backUrl : '/';
+          $window.location.href = url;
         }
       }, function (response) {
       });
-
     } else {
       $scope.error = 'You must fill required fields';
     }
