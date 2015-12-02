@@ -115,7 +115,7 @@
           <div class="comments-list-div col-xs-12 col-sm-12 col-md-12 col-lg-12" data-reportid="{{report.id}}" ng-show="comments.length">
             <h4>Comments</h4>
             <ul class="comment-list" data-reportid="{{report.id}}">
-              <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}" ng-repeat="comment in comments">
+              <li class="comment" data-commentid="{{comment.id}}" id="comment-{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}" ng-repeat="comment in comments">
                 <p class="comment-content">{{comment.content}}
                 </p>
                 <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
