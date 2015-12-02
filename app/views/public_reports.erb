@@ -55,8 +55,10 @@
 
       $(function () {
         createMapOnReportDetails($scope.report);
-        transformTimestamps();
+
+        setTimeout(transformTimestamps, 500);
       });
+
     }]).filter('titleize', function () {
       return function(input) {
         return _.titleize(input);
