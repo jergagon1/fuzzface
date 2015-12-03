@@ -3,6 +3,8 @@ angular.module('fuzzapp').controller('NotificationsController', [
     $scope.notifications = [];
 
     $scope.showModalWithReport = function (report, highlightCommentId) {
+      console.info('showModalWithReport');
+
       var reportId = report.report_id;
 
       $.getJSON(gon.api_server + '/api/v1/reports/' + reportId + '.json?user_email=' + gon.email + '&user_token=' + gon.auth_token)
@@ -19,7 +21,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
         var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
 
 
-        $('#reportDetailsModal .modal-body .row').html('').html(html);
+        $('#reportDetailsModal .modal-body').html('<div class="row">' + html + '</div>');
         $('#myModalLabel').html(htmlTitle);
 
         $('#reportDetailsModal .modal-content')
