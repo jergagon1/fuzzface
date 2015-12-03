@@ -137,6 +137,7 @@ end
 
 # log in action
 get '/sign_in' do
+  @page_title = 'FuzzFinders.com'
   erb :sign_in, :layout => :public_layout
 end
 
