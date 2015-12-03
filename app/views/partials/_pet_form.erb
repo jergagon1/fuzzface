@@ -10,7 +10,13 @@
           <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
         </div><!-- image-upload-preview -->
 
-        <input type="file" ngf-select  ngf-change="uploadImage($file, report)" ng-model="image" name="file" accept="image/*" ngf-max-size="90MB">
+
+        <label>
+          <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
+
+          <input type="file" ngf-select  ngf-change="uploadImage($file, report)" ng-model="image" name="file" accept="image/*" ngf-max-size="90MB">
+        </label>
+
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->

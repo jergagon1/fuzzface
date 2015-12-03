@@ -13,8 +13,6 @@
 <% end %>
 
 <style type="text/css" media="all">
-  .ng-hide { display: none }
-
   .thumb {
     width: 64px;
     height: 64px;
@@ -42,10 +40,9 @@
     </div><!-- col logo-section -->
   </div><!-- row first-panel -->
   <div class="row second-panel">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" ng-controller="ProfileController">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 ng-cloak" ng-controller="ProfileController">
       <div ng-init='user=<%= @user.to_json %>'></div>
 
-      <hr />
       <img ng-src="{{ user.image.thumb.url }}" alt="" />
       <hr />
 
@@ -54,7 +51,12 @@
           <ul ng-bind-html="errorText"></ul>
         </div>
 
-        <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="20MB">
+        <label>
+          <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
+
+          <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="20MB">
+        </label>
+
 
         <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
         <br>
@@ -99,9 +101,9 @@
       </form>
 
       <div ng-show="mode !== 'edit'">
-        <p>Username: <span ng-bind="user.username"></span></p>
-        <p>Email: <span ng-bind="user.email"></span></p>
-        <p>Zipcode: <span ng-bind="user.zipcode"></span></p>
+        <p><strong>Username:</strong> <span ng-bind="user.username"></span></p>
+        <p><strong>Email:</strong> <span ng-bind="user.email"></span></p>
+        <p><strong>Zipcode:</strong> <span ng-bind="user.zipcode"></span></p>
 
         <p><a href="#" class="btn btn-primary" ng-click="mode = 'edit'">Edit</a></p>
       </div>

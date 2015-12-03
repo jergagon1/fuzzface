@@ -791,18 +791,9 @@ $(function(){
 
         $('#reportDetailsModal form [name="report[tag_list]"]').val(tags.join(', '));
 
-        $('.datetimepicker').datetimepicker({
-          formatTime: 'h:i a',
-          format: 'm/d/Y h:i a',
-          // formatTime: 'H:i A',
-          step: 30,
-          ampm: true,
-          maxDate: 0,
-        }).inputmask('99/99/9999 99:99 **');
-
 
         // filling form with data
-        $.each(response['report'], function(name, val){
+        $.each(response['report'], function (name, val){
           var $el = $('#reportDetailsModal form [name="report[' + name + ']"]'),
             type = $el.attr('type');
 
@@ -819,7 +810,19 @@ $(function(){
         });
 
         var momentObj = moment(response['report'].last_seen);
+
         $('#reportDetailsModal form [name="report[last_seen]"]').val(momentObj.format('MM/DD/YYYY hh:mm a'));
+
+        $('.datetimepicker').datetimepicker({
+          formatTime: 'h:i a',
+          format: 'm/d/Y h:i a',
+          formatDate: 'm/d/Y',
+          // formatTime: 'H:i A',
+          step: 30,
+          ampm: true,
+          maxDate: 0,
+        }); //.inputmask('99/99/9999 99:99 **');
+
 
         $('#reportDetailsModal').modal();
 
@@ -835,6 +838,9 @@ $(function(){
         }, 300);
 
         $('#reportDetailsModal form').submit(function () {
+          var ls = $('input[name="report[last_seen]"]', this);
+          ls.val(moment(ls.val()).format());
+
           var data = $(this).serialize();
 
           var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + reportId + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
@@ -854,7 +860,7 @@ $(function(){
 
             getReportDetails($('.report[data-reportid=' + reportId + ']'), reportId);
 
-            myApp.fuzzfinders.model.subscribeReportComments(reportId);
+            // myApp.fuzzfinders.model.subscribeReportComments(reportId);
           }).fail(function(){
             console.log("report detail request failed");
           });

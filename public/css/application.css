@@ -315,3 +315,11 @@ padding-bottom: 0;
 .time {
   display: none;
 }
+
+.ng-hide { display: none }
+
+label > input[type="file"] { display: none; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

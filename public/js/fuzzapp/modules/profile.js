@@ -4,7 +4,7 @@ fuzzappModule.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
-fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
+fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', function ($scope, $http, Upload) {
   var file = null;
   $scope.errorText = '';
 
@@ -25,6 +25,7 @@ fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', '$ti
 
       $scope.errorText = null;
       $scope.user = response.data.user;
+      $scope.image = null;
 
       $('.pusher-chat-widget-current-user-name').text(response.data.user.username);
     } else {
