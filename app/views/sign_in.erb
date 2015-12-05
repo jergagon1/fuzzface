@@ -16,12 +16,12 @@
         <div ng-show="error.length" class="alert alert-danger ng-hide">{{ error }}</div>
 
         <div class="form-group">
-          <label for="email">Your Email:</label>
+          <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
         </div>
 
         <div class="form-group">
-          <label for="pwd">Password:</label>
+          <label for="pwd">Password</label>
           <input type="password" class="form-control" id="pwd" name="password" required="true" ng-model="password">
           <br />
         </div>
@@ -33,9 +33,10 @@
         </div>
 
         <p>
-          <a href="#" class="" ng-click="$parent.currentTab = 'signup'">New Here? Sign Up For a Free Account</a>
-          //
-          <a href="#" class="" ng-click="$parent.currentTab = 'restore'">Lost Password?</a>
+          <a href="#" class="" ng-click="$parent.currentTab = 'signup'">Sign Up For a Free Account</a>
+        </p>
+        <p>
+          <a href="#" class="" ng-click="$parent.currentTab = 'restore'">Lost Password</a>
         </p>
       </form>
 
@@ -44,7 +45,7 @@
           <div class="error alert alert-danger ng-hide" ng-show="error"> {{ error }} </div>
           <div class="alert alert alert-success ng-hide" ng-show="message"> {{ message }} </div>
 
-          <label for="email">Your Email:</label>
+          <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
         </div>
 
@@ -56,19 +57,19 @@
       <form class="signUp ng-hide" action="/sign_up" method="post" ng-controller="SignUpController" ng-show="currentTab == 'signup'" ng-submit="signup($event)">
         <p>Sign Up For a Free Account</p>
         <div class="form-group">
-          <label for="username">Enter a Username:</label>
+          <label for="username">Username</label>
           <input type="text" class="form-control" name="username" required="true" ng-model="username">
         </div>
         <div class="form-group">
-          <label for="email">Your Email:</label>
+          <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="email" required="true" ng-model="email">
         </div>
         <div class="form-group">
-          <label for="pwd">Password:</label>
+          <label for="pwd">Password</label>
           <input type="password" class="form-control" id="pwd" name="password" required="true" ng-model="password">
         </div>
         <div class="form-group">
-          <label for="zip">Enter your Zip Code:</label>
+          <label for="zip">Zip Code</label>
           <input type="text" class="form-control" name="zip" ng-model="zipcode">
           <ul ng-bind-html="errorText">
           </ul>
@@ -79,7 +80,7 @@
           <label><input type="checkbox">Remember me</label>
         </div>
 
-        <p><a href="#" class="sign-form-swap" ng-click="$parent.currentTab = 'signin'">Already a Member? Click Here to Log In</a></p>
+        <p><a href="#" class="sign-form-swap" ng-click="$parent.currentTab = 'signin'">Already a FuzzFriend? Log In Here</a></p>
       </form>
     </div>
   </div>
