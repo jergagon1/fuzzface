@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[animal_type]">Pet Type:</label>
+        <label class="sr-only" for="report[animal_type]">Pet Type</label>
         <select name="report[animal_type]" class="form-control">
           <option value="">Pet Type</option>
           <option value="dog">Dog</option>
@@ -35,7 +35,7 @@
     </div><!-- col -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[sex]">Gender:</label>
+        <label class="sr-only" for="report[sex]">Gender</label>
         <select name="report[sex]" class="form-control">
           <option value="">Gender</option>
           <option value="male">Male</option>
@@ -47,7 +47,7 @@
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[pet_size]">Pet Size:</label>
+        <label class="sr-only" for="report[pet_size]">Pet Size</label>
         <select name="report[pet_size]" class="form-control">
           <option value="">Size</option>
           <option value="small">Small</option>
@@ -59,7 +59,7 @@
     </div><!-- col -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[age]">Age:</label>
+        <label class="sr-only" for="report[age]">Age</label>
         <select name="report[age]" class="form-control">
           <option value="">Age</option>
           <option value="Baby">Baby</option>
@@ -73,13 +73,13 @@
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[breed]">Breed:</label>
+        <label class="sr-only" for="report[breed]">Breed</label>
           <input type="text" class="form-control" id="{{form_type}}-pet-breed" placeholder="Pet Breed" name="report[breed]">
       </div><!-- form-group -->
     </div><!-- col -->
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
-        <label class="sr-only" for="report[color]">Color:</label>
+        <label class="sr-only" for="report[color]">Color</label>
           <input type="text" class="form-control" id="{{form_type}}-pet-color" placeholder="Pet Color" name="report[color]">
       </div><!-- form-group -->
     </div><!-- col -->
@@ -95,7 +95,7 @@
       </div><!-- col -->
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <div class="form-group">
-          <label class="sr-only" for="report[pet_name]">Pet Name:</label>
+          <label class="sr-only" for="report[pet_name]">Pet Name</label>
             <input type="text" class="form-control" id="{{form_type}}-pet-name" placeholder="Pet Name" name="report[pet_name]">
         </div><!-- form-group -->
       </div><!-- col -->
@@ -116,7 +116,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <label class="sr-only" for="report[last_seen]">Last Seen:</label>
+        <label class="sr-only" for="report[last_seen]">Last Seen</label>
           <input placeholder="Last Seen" type="text" name="report[last_seen]" id="{{form_type}}-last-seen" value="" class="form-control datetimepicker" />
       </div><!-- form-group -->
     </div><!-- col -->
@@ -124,7 +124,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <label class="sr-only" for="report[notes]">Notes:</label>
+        <label class="sr-only" for="report[notes]">Notes</label>
           <textarea name="report[notes]" class="form-control" id="{{form_type}}-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
       </div><!-- form-group -->
     </div><!-- col -->
@@ -159,10 +159,10 @@
           <div class="col-xs-6 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-1 report-summary-text-column">
             <h4>{{titleize report_type}} {{#if animal_type}}{{titleize animal_type}}{{else}}Pet{{/if}} {{#if pet_name}}"{{titleize pet_name}}"{{/if}}</h4>
             <p class="report-summary-text">
-              <strong>Last Seen:</strong> <span class="time">{{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</span><span class="time-ago"></span>
+              <strong>Last Seen</strong> <span class="time">{{#if last_seen}}{{last_seen}}{{else}}{{created_at}}{{/if}}</span><span class="time-ago"></span>
             </p>
 
-            <p class="report-summary-text"><strong>Posted By:</strong> {{report_username}}</p>
+            <p class="report-summary-text"><strong>Posted By</strong> {{report_username}}</p>
           </div>
         </div>
       </div>
@@ -213,7 +213,7 @@
       {{#if_eq report.user_id <%= session[:user]['id'] %> }}
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <p><strong>Edit report:</strong></p>
+            <p><strong>Edit report</strong></p>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -225,7 +225,7 @@
       {{#if report.slug}}
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <p><strong>Public link:</strong></p>
+            <p><strong>Public link</strong></p>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -243,7 +243,7 @@
 
       <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-          <p><strong>Last Seen:</strong></p>
+          <p><strong>Last Seen</strong></p>
         </div>
 
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -304,9 +304,9 @@
   <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}">
     <p class="comment-content">{{comment.content}}
     </p>
-    <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
+    <p class="comment-data"><strong>Comment By</strong> {{comment.comment_username}}
     </p>
-    <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at}}</span><span class="time-ago"></span>
+    <p class="comment-date"><strong>Posted</strong> <span class="time">{{comment.created_at}}</span><span class="time-ago"></span>
     </p>
   </li>
 </script>
@@ -337,7 +337,7 @@
   {{#if (lookupProp report property)}}
     <div class="row">
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <p><strong>{{key}}:</strong></p>
+        <p><strong>{{key}}</strong></p>
       </div>
 
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
