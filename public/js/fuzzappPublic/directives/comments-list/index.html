@@ -5,9 +5,9 @@
     <li class="comment" data-commentid="{{comment.id}}" id="comment-{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}" ng-repeat="comment in comments">
       <p class="comment-content">{{comment.content}}
       </p>
-      <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}
+      <p class="comment-data"><strong>Comment By</strong> {{comment.comment_username}}
       </p>
-      <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a' }}</span><span class="time-ago"></span>
+      <p class="comment-date"><strong>Posted</strong> <span class="time">{{comment.created_at |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a' }}</span><span class="time-ago"></span>
       </p>
     </li>
   </ul>
