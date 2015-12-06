@@ -175,7 +175,7 @@ PusherChatWidget._createHTML = function(appendTo) {
   '<div class="pusher-chat-widget">' +
     '<div class="pusher-chat-widget-header">' +
       '<div class="pusher-chat-widget-current-user-name">' +
-        gon.username +
+        '<p>' + gon.username + " " + "FuzzChat" + '</p>' +
       '</div>' +
     '</div>' +
     '<div class="pusher-chat-body">' +
