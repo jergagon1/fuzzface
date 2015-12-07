@@ -90,7 +90,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       mapName.setCenter(pos);
       $scope.report.lat = lat; $scope.report.lng = lng;
-    }
+    };
 
     var failure = function(error) {
       handleNoGeolocation(false, mapName);

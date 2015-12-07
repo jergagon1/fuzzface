@@ -51,8 +51,8 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
         marker.addListener('click', function () {
           var report = marker.report;
 
-          var html = Handlebars.compile($('#report-detail-template').html())({ report: report, modal: true });
-          var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({ report: report });
+          var html = Handlebars.compile($('#report-detail-template').html())({report: report, modal: true});
+          var htmlTitle = Handlebars.compile($('#report-detail-title-template').html())({report: report});
 
           $('#reportDetailsModal .modal-body .row').html('').html(html);
           $('#myModalLabel').html(htmlTitle);
@@ -63,12 +63,68 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
 
           //addEventListenerSubmitComment();
 
-          transformTimestamps();
+          $('body').off('submit', '.new-comment-form');
+          $('body').on("submit", ".new-comment-form", function (event) {
+            if (!$(this).find('.comment-text-input').val().length) {
+              // prevents submit comment on empty textarea
+              return false;
+            }
+
+            event.preventDefault();
+            var $currentForm = $(this);
+            var $currentFormData = $currentForm.serialize();
+            var $currentReportId = $currentForm.children().last().data("reportid");
+
+            // call commentSubmit function
+            //submitComment($currentForm, $currentFormData, $currentReportId);
+
+            var $reportId = report.id;
+
+            var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $reportId + "/comments?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+            var $commentList = $(".comment-list[data-reportid=" + $reportId + "]");
+            var $commentListDiv = $(".comments-list-div[data-reportid=" + $reportId + "]");
+
+            $.ajax({
+                url: link,
+                type: "post",
+                crossDomain: true,
+                dataType: "json",
+                data: $currentFormData
+              })
+              .done(function (response) {
+                $('#reportDetailsModal .info').text('Comment has been posted');
+
+                // update my subscriptions
+                var $body = angular.element(document.body);
+                var $rootScope = $body.scope().$root;
+                var resp = {data: response.data};
+                $rootScope.$broadcast('subscriptions', response.subscriptions);
+                // $rootScope.$apply(function () {
+                //   debugger;
+                //   $rootScope.mySubscriptions;
+                // }.bind(resp));
+
+                $('.comment-text-input', $currentForm).val('');
+
+                //console.log(response);
+                //updateTimestamps([response], "created_at");
+                //showCommentsListDivIfHidden($commentListDiv);
+                // renderTemplates(
+                //   { comment: response },
+                //   $("#comment-template"),
+                //   $commentList
+                // );
+                //resetFormInputs();
+                // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
+                transformTimestamps();
+              });
+          });
+
+          setTimeout(transformTimestamps, 100);
 
           $('#reportDetailsModal').modal();
+          reportMapMarkers.push(marker);
         });
-
-        reportMapMarkers.push(marker);
       };
 
       var createMarkers = function(reports) {
@@ -303,8 +359,14 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
         username: gon.username
       };
 
-      $scope.showMap = function () {
-        $scope.mapName = true;
+      $scope.toggleMap = function () {
+        if ($scope.mapName) {
+          $scope.mapName = null;
+
+          return;
+        } else {
+          $scope.mapName = true;
+        }
 
         setTimeout(function () {
           var el = $('.comment-map-' + $scope.report.id);
@@ -343,7 +405,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
             //addLatLongAttr(lat,lng);
             //infowindow.close();
           });
-        }, 300);
+        }, 100);
 
       };
 

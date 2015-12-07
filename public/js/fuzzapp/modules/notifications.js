@@ -43,6 +43,20 @@ angular.module('fuzzapp').controller('NotificationsController', [
       });
     };
 
+    $scope.checkIfDivHidden = function($div){
+      if($div.is(":hidden")){
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.showCommentsListDivIfHidden = function($commentsDiv){
+      if($scope.checkIfDivHidden($commentsDiv)) {
+        $commentsDiv.show();
+      }
+    };
+
     $scope.newPush = function (data) {
       var o = { data: data }
 
@@ -94,7 +108,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
           var $commentListDiv = $('.comments-list-div[data-reportid="' + data.report_id + '"]');
 
           $commentListDiv.removeClass('ng-hide');
-          showCommentsListDivIfHidden($commentListDiv);
+          $scope.showCommentsListDivIfHidden($commentListDiv);
 
           //debugger;
 

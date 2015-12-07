@@ -115,48 +115,48 @@ $(function(){
   };
 
   // Model: submit comment data to server api
-  //var submitComment = function($form, $formData, $reportId){
-  //  console.log("fuzzfindersMapsReports.js submitComment");
-  //  var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $reportId + "/comments?user_email=" + gon.email + "&user_token=" + gon.auth_token;
-  //  var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
-  //  var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
-  //  $.ajax({
-  //    url: link,
-  //    type: "post",
-  //    crossDomain: true,
-  //    dataType: "json",
-  //    data: $formData
-  //  })
-  //  .done(function(response){
-  //    $('#reportDetailsModal .info').text('Comment has been posted');
-  //
-  //    // update my subscriptions
-  //    var $body = angular.element(document.body);
-  //    var $rootScope = $body.scope().$root;
-  //    var resp = { data: response.data };
-  //    $rootScope.$broadcast('subscriptions', response.subscriptions);
-  //    // $rootScope.$apply(function () {
-  //    //   debugger;
-  //    //   $rootScope.mySubscriptions;
-  //    // }.bind(resp));
-  //
-  //    console.log(response);
-  //    updateTimestamps([response], "created_at");
-  //    showCommentsListDivIfHidden($commentListDiv);
-  //    // renderTemplates(
-  //    //   { comment: response },
-  //    //   $("#comment-template"),
-  //    //   $commentList
-  //    // );
-  //    resetFormInputs();
-  //    // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
-  //    transformTimestamps();
-  //  })
-  //  .fail(function(){
-  //    $('#reportDetailsModal .info').text('Error');
-  //    console.log("comment creation failed");
-  //  });
-  //};
+  var submitComment = function($form, $formData, $reportId){
+    console.log("fuzzfindersMapsReports.js submitComment");
+    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $reportId + "/comments?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+    var $commentList = $(".comment-list[data-reportid="+$reportId+"]");
+    var $commentListDiv = $(".comments-list-div[data-reportid="+$reportId+"]");
+    $.ajax({
+      url: link,
+      type: "post",
+      crossDomain: true,
+      dataType: "json",
+      data: $formData
+    })
+    .done(function(response){
+      $('#reportDetailsModal .info').text('Comment has been posted');
+
+      // update my subscriptions
+      var $body = angular.element(document.body);
+      var $rootScope = $body.scope().$root;
+      var resp = { data: response.data };
+      $rootScope.$broadcast('subscriptions', response.subscriptions);
+      // $rootScope.$apply(function () {
+      //   debugger;
+      //   $rootScope.mySubscriptions;
+      // }.bind(resp));
+
+      //console.log(response);
+      //updateTimestamps([response], "created_at");
+      showCommentsListDivIfHidden($commentListDiv);
+      // renderTemplates(
+      //   { comment: response },
+      //   $("#comment-template"),
+      //   $commentList
+      // );
+      resetFormInputs();
+      // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
+      transformTimestamps();
+    });
+    //.fail(function(){
+    //  $('#reportDetailsModal .info').text('Error');
+    //  console.log("comment creation failed");
+    //});
+  };
 
   // Model: loop through an array of records and create a unique sorted array of a specific field value
   var createArrayUniqueValues = function(recordsArray, fieldKey){
@@ -919,26 +919,26 @@ $(function(){
   };
 
   //// Controller: add delegated event listener for comment form submission
-  //var addEventListenerSubmitComment = function(){
-  //  console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
-  //  $('body').off('submit', '.new-comment-form');
-  //  $('body').on("submit", ".new-comment-form", function(event){
-  //    if (!$(this).find('.comment-text-input').val().length) {
-  //      // prevents submit comment on empty textarea
-  //      return false;
-  //    }
-  //
-  //    event.preventDefault();
-  //    var $currentForm = $(this);
-  //    var $currentFormData = $currentForm.serialize();
-  //    var $currentReportId = $currentForm.children().last().data("reportid");
-  //    console.log($currentForm);
-  //    console.log($currentFormData);
-  //    console.log($currentReportId);
-  //    // call commentSubmit function
-  //    submitComment($currentForm, $currentFormData, $currentReportId);
-  //  });
-  //};
+  var addEventListenerSubmitComment = function(){
+    console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
+    $('body').off('submit', '.new-comment-form');
+    $('body').on("submit", ".new-comment-form", function(event){
+      if (!$(this).find('.comment-text-input').val().length) {
+        // prevents submit comment on empty textarea
+        return false;
+      }
+
+      event.preventDefault();
+      var $currentForm = $(this);
+      var $currentFormData = $currentForm.serialize();
+      var $currentReportId = $currentForm.children().last().data("reportid");
+      console.log($currentForm);
+      console.log($currentFormData);
+      console.log($currentReportId);
+      // call commentSubmit function
+      submitComment($currentForm, $currentFormData, $currentReportId);
+    });
+  };
 
   // Controller: remove delegated event listener for comment form submission
   var removeEventListenerSubmitComment = function(){
