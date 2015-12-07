@@ -11,7 +11,9 @@
           <h4>{{report.report_type}}</h4>
 
           <p class="report-summary-text">
-            <strong>Last Seen:</strong> <span class="time"></span><span class="time-ago">{{report.last_seen}}</span>
+            <strong>Last Seen:</strong>
+            <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
+            <span class="time-ago">{{report.last_seen}}</span>
           </p>
 
           <p class="report-summary-text"><strong>Posted By:</strong> {{report.report_username}}</p>
@@ -90,7 +92,9 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+
             <p>
+
               <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
               <span class="time-ago"></span>
             </p>
@@ -103,7 +107,7 @@
         </div>
       </div>
 
-      <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags">
+      <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags.length">
         <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
         <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <li class="tags" ng-repeat="tag in tags">

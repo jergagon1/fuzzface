@@ -226,6 +226,8 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
           createMarkers(response.data, reportMapMarkers);
           //debugger;
           $scope.reports = response.data;
+
+          setTimeout(transformTimestamps, 200);
         }, function (response) {
         });
 
