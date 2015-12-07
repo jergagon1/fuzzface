@@ -5,13 +5,16 @@ fuzzappModule.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
+fuzzappModule.controller('ReportsController', ['$scope']);
+
 fuzzappModule.controller('MenuController', ['$rootScope', '$scope', function ($rootScope, $scope) {
   $rootScope.$on('change-section', function (event, currentSection) {
     $scope.currentSection = currentSection;
   });
 
   $scope.changeSection = function (section) {
-    console.log('MenuController changeSection()')
+    console.log('MenuController changeSection()');
+
     if (section == $scope.currentSection) {
       $scope.currentSection = null;
     } else {
@@ -177,4 +180,107 @@ fuzzappModule.controller('ReportsController', ['$rootScope', '$scope', function 
       setTimeout(initializeReportMap, 300);
     }
   });
+}]);
+
+fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scope, $http) {
+  $scope.toggleReport = function (report) {
+    if (report.details) {
+      report.details = null;
+
+      return;
+    } else {
+      //addEventListenerToAllGetReportDetails();
+    }
+
+    var link = gon.api_server + "/api/v1/reports/" + report.id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+
+    $http.get(link).then(function (response) {
+      var data = response.data;
+
+      $scope.map = null;
+
+      report.details = data;
+      $scope.comments = data.comments;
+      $scope.tags = data.tags;
+
+
+      setTimeout(function () {
+        var mapOptions = {
+          zoom: 14,
+          center: new google.maps.LatLng(report.lat, report.lng),
+          streetViewControl: false,
+          mapTypeControl: false,
+          scrollwheel: false,
+          draggable: false
+        };
+
+        $scope.map = new google.maps.Map($('.map-canvas-' + report.id)[0], mapOptions);
+
+        var marker = new google.maps.Marker({
+          map: $scope.map,
+          position: new google.maps.LatLng(report.lat, report.lng),
+          icon: '/images/FuzzFinders_icon_orange.png',
+          draggable: false
+        });
+
+      }, 300);
+
+      //initializeMap($scope.map, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
+
+    }, function (response) {
+    });
+  };
+
+
+
+  //var getReportDetails = function($reportLi, $id) {
+  //  removeReportDetails($reportLi);
+  //  var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+  //  console.log(11, link);
+  //  $.ajax({
+  //      url: link,
+  //      type: "GET",
+  //      crossDomain: true,
+  //      dataType: 'json'
+  //    })
+  //    .done(function(response){
+  //      console.log(response);
+  //      // render handlebars template
+  //      updateTimestamps([response["report"]], "last_seen");
+  //      updateTimestamps([response["report"]], "created_at");
+  //      updateTimestamps(response["comments"], "created_at");
+  //      // console.log(response);
+  //      renderTemplates({
+  //          report:     response["report"],
+  //          tags:       response["tags"],
+  //          comments:   response["comments"] },
+  //        $('#report-detail-template'),
+  //        $reportLi
+  //      );
+  //
+  //
+  //      if (response['report']['lng'] && response['report']['lat']) {
+  //        createMapOnReportDetails(response['report']);
+  //      }
+  //
+  //      transformTimestamps();
+  //
+  //      removeUnselectedClass($reportLi);
+  //      toggleHideIcon($reportLi);
+  //      hideReportSummaryOnDetailShow($reportLi);
+  //
+  //      // myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
+  //    })
+  //    .fail(function(){
+  //      console.log("report detail request failed");
+  //    })
+  //};
+
+
+
+
+
+
+
+
 }]);

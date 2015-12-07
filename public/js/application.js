@@ -151,11 +151,19 @@ $(function() {
   }
 
   window.transformTimestamps = function() {
+    //debugger;
     $.each($('.time'), function (i, el) {
+      //debugger;
       var momentObj = moment($(el).text());
       var relativeOrAbsoluteTime = null;
 
+      //debugger;
+
+      if (!$(el).text()) { return; }
+
+      //debugger;
       if (Math.abs(momentObj.diff(new Date, 'hours')) <= 24) {
+        //debugger;
         relativeOrAbsoluteTime = momentObj.fromNow();
       } else {
         // relativeOrAbsoluteTime = momentObj.utc().format();

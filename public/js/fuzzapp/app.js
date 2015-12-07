@@ -1,1 +1,4 @@
-angular.module('fuzzapp', ['ngAnimate', 'ngFileUpload', 'pusher-angular', 'ngCookies', 'ngSanitize']);
+angular.module('fuzzapp', [
+  'angularMoment', 'ngAnimate', 'ngFileUpload',
+  'pusher-angular', 'ngCookies', 'ngSanitize'
+]);

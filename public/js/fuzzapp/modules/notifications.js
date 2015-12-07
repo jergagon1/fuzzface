@@ -86,21 +86,26 @@ angular.module('fuzzapp').controller('NotificationsController', [
 
       if (data.comment_id) {
         if (!$('li.comment[data-commentid="' + data.comment.id + '"]').length) {
+          //debugger;
           var selectedReportId = data.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
           console.log('reportID = ', selectedReportId);
-          var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
-          var $commentList = $('.comment-list');
-          var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
+          var $commentList = $('.comment-list[data-reportid="' + data.report_id + '"]');
+          //var $commentList = $('.comment-list');
+          var $commentListDiv = $('.comments-list-div[data-reportid="' + data.report_id + '"]');
 
           showCommentsListDivIfHidden($commentListDiv);
 
-          renderTemplates(
-            { comment: data.comment },
-            $("#comment-template"),
-            $commentList
-          );
+          //debugger;
 
-          transformTimestamps();
+          if ($commentList) {
+            renderTemplates(
+              { comment: data.comment },
+              $("#comment-template"),
+              $commentList
+            );
+
+            transformTimestamps();
+          }
         }
       };
     };

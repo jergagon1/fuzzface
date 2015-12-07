@@ -1,0 +1,103 @@
+<div class="reports-filter" >
+  <form class="recent-reports-form" ng-show="filter">
+    <input type="text" name="sw" value="" ng-model="sw">
+    <input type="text" name="ne" value="" ng-model="ne">
+    <input type="hidden" name="filter_tags" value="" class="hidden-tags">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <label class="sr-only">Search Tags:</label>
+          <input type="text" class="form-control tags-filter" placeholder="Search Tags">
+        </div><!-- form-group -->
+      </div><!-- col -->
+    </div><!-- row -->
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="report_type">Lost or Found:</label>
+          <select name="report_type" class="form-control filter-control">
+            <option value="">Lost or Found</option>
+            <option value="lost">Lost</option>
+            <option value="found">Found</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="animal_type">Pet Type:</label>
+          <select name="animal_type" class="form-control filter-control">
+            <option value="">Pet Type</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="bird">Bird</option>
+            <option value="reptile">Reptile</option>
+            <option value="other">Other</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+    </div><!-- row -->
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="color">Color:</label>
+          <select name="color" class="form-control filter-control color-select" data-values="">
+            <option value="">Color</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="breed">Breed:</label>
+          <select name="breed" class="form-control filter-control breed-select" data-values="">
+            <option value="">Breed</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+    </div><!-- row -->
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="sex">Gender:</label>
+          <select name="sex" class="form-control filter-control">
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="pet_size">Size:</label>
+          <select name="pet_size" class="form-control filter-control">
+            <option value="">Size</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="x-large">Extra Large</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+    </div><!-- row -->
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <label class="sr-only" for="age">Age:</label>
+          <select name="age" class="form-control filter-control">
+            <option value="">Age</option>
+            <option value="Baby">Baby</option>
+            <option value="young">Young</option>
+            <option value="adult">Adult</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div><!-- form-group -->
+      </div><!-- col -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="form-group">
+          <input type="button" value="Reset Filters" class="btn btn-default form-control reset-filter-button">
+        </div><!-- form-group -->
+      </div><!-- col -->
+    </div><!-- row -->
+  </form>
+
+  <button class="btn-block main-buttons filter-btn" ng-click="toggleFilter()">Filter</button>
+</div>
