@@ -295,7 +295,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
     replace: true,
     templateUrl: '/js/fuzzapp/modules/directives/comment-form/index.html',
 
-    controller: ['$scope', '$http', 'uiGmapGoogleMapApi', function ($scope, $http, uiGmapGoogleMapApi) {
+    controller: ['$scope', '$http', function ($scope, $http) {
       $scope.user = {
         id: gon.user_id,
         username: gon.username
