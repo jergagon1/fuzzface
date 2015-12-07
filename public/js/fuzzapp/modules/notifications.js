@@ -93,6 +93,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
           //var $commentList = $('.comment-list');
           var $commentListDiv = $('.comments-list-div[data-reportid="' + data.report_id + '"]');
 
+          $commentListDiv.removeClass('ng-hide');
           showCommentsListDivIfHidden($commentListDiv);
 
           //debugger;

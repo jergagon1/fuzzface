@@ -198,10 +198,13 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
       var data = response.data;
 
       $scope.map = null;
+      $scope.comments = [];
 
       report.details = data;
       $scope.comments = data.comments;
       $scope.tags = data.tags;
+
+      $('ul[data-reportid="' + report.id + '"').find('li').remove();
 
 
       setTimeout(function () {

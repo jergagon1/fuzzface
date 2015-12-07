@@ -376,12 +376,11 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
     scope: false,
     replace: true,
     templateUrl: '/js/fuzzapp/modules/directives/comments-list/index.html',
-    link: function () {
+    link: function (scope, element, attributes) {
       transformTimestamps();
-      //setTimeout(transformTimestamps, 100);
-      //debugger;
     },
     controller: ['$scope', function ($scope) {
+
       $scope.$watch('comments', function (newValue) {
         if (newValue) {
           setTimeout(transformTimestamps, 100);
