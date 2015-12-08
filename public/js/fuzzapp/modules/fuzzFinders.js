@@ -226,6 +226,37 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
           draggable: false
         });
 
+
+        var infoWindow = new google.maps.InfoWindow({
+          content: 'hello, Im infoWindow'
+        });
+
+        var infoWindows = [];
+
+        angular.forEach($scope.comments, function (comment) {
+          if (comment.lat && comment.lng) {
+            var marker = new google.maps.Marker({
+              map: $scope.map,
+              position: new google.maps.LatLng(comment.lat, comment.lng),
+              icon: '/images/FuzzFinders_icon_blue.png',
+              draggable: false,
+              animation: google.maps.Animation.DROP
+            });
+
+            // TODO: we should use only one InfoWindow
+            var iw = new google.maps.InfoWindow({ content: comment.content });
+
+
+            marker.addListener('click', function () {
+              iw.open($scope.map, marker);
+            });
+
+            marker.addListener('mouseout', function () {
+              iw.close();
+            });
+          };
+        });
+
       }, 300);
 
       //initializeMap($scope.map, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);

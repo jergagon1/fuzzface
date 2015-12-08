@@ -346,7 +346,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
     return function(input) {
       return _.titleize(input);
     };
-}).directive('commentForm', function () {
+}).directive('commentForm', ['Upload', function (Upload) {
   return {
     restrict: 'E',
     scope: false,
@@ -409,23 +409,42 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
 
       };
 
-      $scope.submitComment = function (comment) {
+      $scope.submitComment = function (image) {
+        var comment = $scope.c;
+
+        if (image) {
+          comment.image = image;
+        } else {
+
+        };
+
         if (comment.content && $scope.report.id) {
+          $.blockUI();
           comment['report_id'] = $scope.report.id;
 
-          $http({
+          Upload.upload({
             method: 'post',
             url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
             data: { comment: comment }
           }).then(function (response) {
-            //$scope.comments.push(response.data);
-
             $scope.c = {};
-
-            setTimeout(transformTimestamps, 100);
-          }, function (response) {
-            console.error(response);
-          });
+            $scope.image = null;
+            $scope.mapName = null;
+            $.unblockUI();
+          }, function (response) {});
+          //$http({
+          //  method: 'post',
+          //  url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
+          //  data: { comment: comment }
+          //}).then(function (response) {
+          //  //$scope.comments.push(response.data);
+          //
+          //  $scope.c = {};
+          //
+          //  setTimeout(transformTimestamps, 100);
+          //}, function (response) {
+          //  console.error(response);
+          //});
         }
       };
     }],
@@ -434,7 +453,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
 
     }
   }
-}).directive('commentsList', function () {
+}]).directive('commentsList', function () {
   return {
     restrict: 'E',
     scope: false,

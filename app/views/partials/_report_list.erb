@@ -302,7 +302,12 @@
 
 <script id="comment-template" type="text/x-handlebars-template">
   <li class="comment" data-commentid="{{comment.id}}" data-reportid="{{comment.report_id}}" data-userid="{{comment.user_id}}">
-    <p class="comment-content">{{comment.content}}
+    <p class="comment-content">
+      {{#if comment.image}}
+        <img src="{{comment.image}}" alt="comment image">
+      {{/if}}
+
+      {{comment.content}}
     </p>
     <p class="comment-data"><strong>Comment By</strong> {{comment.comment_username}}
     </p>
