@@ -438,6 +438,13 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
       })
     }]
   }
+}).directive('reportField', function () {
+  return {
+    restrict: 'E',
+    scope: { label: '@', value: '=', condition: '=' },
+    replace: true,
+    templateUrl: '/js/fuzzapp/modules/directives/report-field/index.html'
+  }
 });
 // .directive('reportDetails', function () {
 //  return {

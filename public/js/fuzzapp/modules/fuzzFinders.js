@@ -22,14 +22,6 @@ fuzzappModule.controller('MenuController', ['$rootScope', '$scope', function ($r
     }
 
     $rootScope.$broadcast('section-changed', $scope.currentSection);
-
-    // if ($scope.currentSection == 'lostSection') {
-    //   google.maps.event.addDomListener(
-    //     lostPetBtn,
-    //     'click',
-    //     $scope.initializeMap(lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png'));
-    //
-    // };
   };
 }]);
 
@@ -38,7 +30,6 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
   $scope.report = {};
   $scope.lostMap = null; $scope.foundMap = null;
-
 
   var initializeMap = function (mapName, canvasDivId, iconUrl) {
     var mapOptions = {

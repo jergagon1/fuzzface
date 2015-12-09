@@ -20,6 +20,7 @@
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
+
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div class="form-group">
@@ -132,6 +133,15 @@
   </div><!-- row -->
   <input class="hidden-lat-field" type="hidden" name="report[lat]" value="" ng-model="report.lat">
   <input class="hidden-lng-field" type="hidden" name="report[lng]" value="" ng-model="report.lng">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="report.address" placeholder="Address">
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="<%= form_type %>-map-wrapper">
       <div id="<%= form_type %>-map-canvas" class="map-canvas">

@@ -55,36 +55,19 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-            <div ng-bind-html="snippetWithSingleURL | linky:'_blank'"></div>
+            <!--<div ng-bind-html="snippetWithSingleURL | linky:'_blank'"></div>-->
 
             <a target="_blank" ng-href="/reports/{{report.slug}}">reports/{{report.slug}}</a>
           </div>
         </div>
 
-        <div class="row" ng-show="report.pet_size">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Size: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="( report.pet_size | titleize )"></div>
-        </div>
+        <report-field label="Size:" value="(report.pet_size | titleize )" condition="report.pet_size"></report-field>
+        <report-field label="Address:" value="(report.address | titleize )" condition="report.address"></report-field>
+        <report-field label="Color:" value="(report.color | titleize )" condition="report.color"></report-field>
+        <report-field label="Breed:" value="(report.breed | titleize )" condition="report.breed"></report-field>
+        <report-field label="Sex:" value="(report.sex | titleize )" condition="report.sex"></report-field>
+        <report-field label="Notes:" value="report.notes" condition="report.notes"></report-field>
 
-        <div class="row" ng-show="report.color">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Color: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.color | titleize)"></div>
-        </div>
-
-        <div class="row" ng-show="report.breed">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Breed: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.breed | titleize)"></div>
-        </div>
-
-        <div class="row" ng-show="report.sex">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Sex: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.sex | titleize)"></div>
-        </div>
-
-        <div class="row" ng-show="report.notes">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Notes: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.notes"></div>
-        </div>
 
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -92,19 +75,14 @@
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-
             <p>
-
               <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
               <span class="time-ago"></span>
             </p>
           </div>
         </div>
 
-        <div class="row" ng-show="report.report_username">
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Posted By: </strong></p></div>
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.report_username"></div>
-        </div>
+        <report-field label="Posted By:" value="report.report_username" condition="report.report_username"></report-field>
       </div>
 
       <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags.length">
@@ -120,21 +98,6 @@
 
       <comment-form></comment-form>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!--<report-details ng-show="report.details" details="report.details"></report-details>-->
     <!-- /report details go here -->
