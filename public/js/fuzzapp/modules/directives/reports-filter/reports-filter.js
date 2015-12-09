@@ -359,54 +359,20 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
         username: gon.username
       };
 
-      $scope.toggleMap = function () {
-        if ($scope.mapName) {
-          $scope.mapName = null;
-
-          return;
-        } else {
-          $scope.mapName = true;
+      $scope.togglePin = function () {
+        if (!$scope.c) {
+          $scope.c = {};
         }
 
-        setTimeout(function () {
-          var el = $('.comment-map-' + $scope.report.id);
+        if ($scope.c.lat) {
+          $scope.c.lat = null;
+          $scope.c.lng = null;
 
-          var mapOptions = {
-            zoom: 14,
-            center: new google.maps.LatLng($scope.report.lat, $scope.report.lng),
-            streetViewControl: false,
-            mapTypeControl: false,
-            scrollwheel: false,
-            draggable: false,
-          };
+          return;
+        }
 
-          $scope.mapName = new google.maps.Map(el[0], mapOptions);
-          window.maps.push($scope.mapName);
-
-          var marker = new google.maps.Marker({
-            map: $scope.mapName,
-            position: new google.maps.LatLng($scope.report.lat, $scope.report.lng),
-            icon: '/images/FuzzFinders_icon_blue.png',
-            draggable: true,
-          });
-
-          google.maps.event.addListener(marker, 'dragend', function () {
-            if (!$scope.c) {
-              $scope.c = {};
-            }
-
-            var lat = this.getPosition().lat();
-            var lng = this.getPosition().lng();
-
-            $scope.$apply(function () {
-              $scope.c.lat = lat;
-              $scope.c.lng = lng;
-            });
-            //addLatLongAttr(lat,lng);
-            //infowindow.close();
-          });
-        }, 100);
-
+        $scope.c.lat = gon.latitude;
+        $scope.c.lng = gon.longitude;
       };
 
       $scope.submitComment = function (image) {

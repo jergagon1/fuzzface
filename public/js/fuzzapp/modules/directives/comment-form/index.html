@@ -15,12 +15,13 @@
   <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <h4>Create Comment</h4>
 
-    <h5 ng-click="toggleMap()" class="btn btn-default btn-xs">Pin</h5>
+    <h5 ng-click="togglePin()" class="btn {{(c.lng ? 'btn-info' : 'btn-default') }} btn-xs">
+      Add location
+    </h5>
+
     <br><br>
 
     <form class="new-comment-form">
-      <div class="map-canvas comment-map-{{report.id}}" ng-show="mapName"></div>
-
       <label>
         <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
         <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="20MB">

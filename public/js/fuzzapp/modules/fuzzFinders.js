@@ -226,13 +226,6 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
           draggable: false
         });
 
-
-        var infoWindow = new google.maps.InfoWindow({
-          content: 'hello, Im infoWindow'
-        });
-
-        var infoWindows = [];
-
         angular.forEach($scope.comments, function (comment) {
           if (comment.lat && comment.lng) {
             var marker = new google.maps.Marker({
@@ -245,7 +238,6 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
 
             // TODO: we should use only one InfoWindow
             var iw = new google.maps.InfoWindow({ content: comment.content });
-
 
             marker.addListener('click', function () {
               iw.open($scope.map, marker);
