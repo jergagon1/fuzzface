@@ -196,9 +196,11 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
             }
           });
 
-          var momentObj = moment(response['report'].last_seen);
+          if (response['report'].last_seen) {
+            var momentObj = moment(response['report'].last_seen);
 
-          $('#reportDetailsModal form [name="report[last_seen]"]').val(momentObj.format('MM/DD/YYYY hh:mm a'));
+            $('#reportDetailsModal form [name="report[last_seen]"]').val(momentObj.format('MM/DD/YYYY hh:mm a'));
+          }
 
           $('.datetimepicker').datetimepicker({
             formatTime: 'h:i a',
