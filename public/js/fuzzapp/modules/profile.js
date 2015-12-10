@@ -9,6 +9,7 @@ fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', func
   $scope.errorText = '';
 
   $scope.updateSession = function () {
+    // TODO: Service
     $http({
       url: '/update_session?user_id=' + gon.user_id + '&email=' + gon.email + '&token=' + gon.auth_token,
       method: 'post'
@@ -58,6 +59,7 @@ fuzzappModule.controller('ProfileController', ['$scope', '$http', 'Upload', func
   };
 
   $scope.updateProfileWithImage = function (file) {
+    // TODO: Service
     file.upload = Upload.upload($scope.requestParams(file)).then($scope.successCallback, function (response) {
       if (response.status > 0)
         $scope.errorMsg = response.status + ': ' + response.data;

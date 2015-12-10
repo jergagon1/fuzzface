@@ -7,6 +7,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
 
       var reportId = report.report_id;
 
+      // TODO: Service and rewrite this login in Angular style
       $.getJSON(gon.api_server + '/api/v1/reports/' + reportId + '.json?user_email=' + gon.email + '&user_token=' + gon.auth_token)
       .success(function (response) {
         $('#reportDetailsModal').modal();
@@ -39,8 +40,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
         }, 300);
 
         transformTimestamps();
-      }).fail(function (response) {
-      });
+      }).fail(function (response) {});
     };
 
     $scope.checkIfDivHidden = function($div){
@@ -95,7 +95,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
               }, scope);
             });
           });
-        }.bind(o), 15000); // TODO: move this to service or constant
+        }.bind(o), 15000); // TODO: move this to a constant
       }
 
       if (data.comment_id) {
@@ -147,12 +147,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
       }
     );
 
-    // var $body = angular.element(document.body);   // 1
-    // var $rootScope = $body.scope().$root;         // 2
-    // $rootScope.$apply(function () {               // 3
-    //   $rootScope.someText = 'This is BAD practice, dude ! :(';
-    // });
-
+    // TODO: Service
     $http.get(
       gon.api_server + '/api/v1/subscriptions.json?user_email=' + gon.email + '&user_token=' + gon.auth_token
     ).success(function (response) { $rootScope.mySubscriptions = response });

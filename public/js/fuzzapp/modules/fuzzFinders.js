@@ -15,11 +15,7 @@ fuzzappModule.controller('MenuController', ['$rootScope', '$scope', function ($r
   $scope.changeSection = function (section) {
     console.log('MenuController changeSection()');
 
-    if (section == $scope.currentSection) {
-      $scope.currentSection = null;
-    } else {
-      $scope.currentSection = section;
-    }
+    $scope.currentSection = section == $scope.currentSection ? null : section;
 
     $rootScope.$broadcast('section-changed', $scope.currentSection);
   };
@@ -89,19 +85,15 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
     //User's Current Location
     if (gon.latitude && gon.longitude) {
-      success(
-        {
-          coords: { latitude: gon.latitude, longitude: gon.longitude }
-        }
-      )
+      success({
+        coords: { latitude: gon.latitude, longitude: gon.longitude }
+      });
     } else {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, function() {
           geolocator.locateByIP(success, failure, 1);
         });
-      } else {
-        geolocator.locateByIP(success, failure, 1);
-      }
+      } else geolocator.locateByIP(success, failure, 1);
     }
   };
 
@@ -112,6 +104,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
     $.blockUI();
 
+    // TODO: Service
     $http({
       method: 'post',
       url: myApp.fuzzfindersApiUrl + "/api/v1/reports.json?user_email=" + gon.email + '&user_token=' + gon.auth_token,
@@ -130,15 +123,14 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       // close current section
       $rootScope.$broadcast('change-section', null);
-    }, function (response) {
-      $.unblockUI();
-    });
+    }, function (response) { $.unblockUI() });
   };
 
   // TODO: merge 2 requests into one for uploading image and sending data
   $scope.uploadImage = function (file, report) {
     $.blockUI();
 
+    // TODO: Service
     file.upload = Upload.upload({
       method: 'post',
       url: gon.api_server + '/api/v1/images.json?user_email=' + gon.email + '&user_token=' + gon.auth_token,
@@ -197,7 +189,6 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
 
       $('ul[data-reportid="' + report.id + '"]').find('li').remove();
 
-
       setTimeout(function () {
         var mapOptions = {
           zoom: 14,
@@ -239,65 +230,7 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
             });
           };
         });
-
       }, 300);
-
-      //initializeMap($scope.map, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
-
-    }, function (response) {
-    });
+    }, function (response) {});
   };
-
-
-
-  //var getReportDetails = function($reportLi, $id) {
-  //  removeReportDetails($reportLi);
-  //  var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
-  //  console.log(11, link);
-  //  $.ajax({
-  //      url: link,
-  //      type: "GET",
-  //      crossDomain: true,
-  //      dataType: 'json'
-  //    })
-  //    .done(function(response){
-  //      console.log(response);
-  //      // render handlebars template
-  //      updateTimestamps([response["report"]], "last_seen");
-  //      updateTimestamps([response["report"]], "created_at");
-  //      updateTimestamps(response["comments"], "created_at");
-  //      // console.log(response);
-  //      renderTemplates({
-  //          report:     response["report"],
-  //          tags:       response["tags"],
-  //          comments:   response["comments"] },
-  //        $('#report-detail-template'),
-  //        $reportLi
-  //      );
-  //
-  //
-  //      if (response['report']['lng'] && response['report']['lat']) {
-  //        createMapOnReportDetails(response['report']);
-  //      }
-  //
-  //      transformTimestamps();
-  //
-  //      removeUnselectedClass($reportLi);
-  //      toggleHideIcon($reportLi);
-  //      hideReportSummaryOnDetailShow($reportLi);
-  //
-  //      // myApp.fuzzfinders.model.subscribeReportComments(response.report.id);
-  //    })
-  //    .fail(function(){
-  //      console.log("report detail request failed");
-  //    })
-  //};
-
-
-
-
-
-
-
-
 }]);

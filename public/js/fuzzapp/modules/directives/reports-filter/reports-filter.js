@@ -1,7 +1,3 @@
-/**
- * Created by zudochkin on 04/12/15.
- */
-
 angular.module('fuzzapp').directive('reportsFilter', function () {
   return {
     restrict: 'E',
@@ -12,7 +8,6 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
     controller: ['$scope', '$http', function ($scope, $http) {
       var reportMapMarkers = [];
 
-      //debugger;
       var link = gon.api_server + "/api/v1/reports/mapquery?user_email=" + gon.email + "&user_token=" + gon.auth_token;
 
       $scope.toggleFilter = function () {
@@ -38,15 +33,6 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
           title: report.pet_name,
           report: report
         });
-
-        // marker.report = report;
-
-        //marker.addListener('mouseover', function() {
-        //  infoWin.open(window.reportMap, marker);
-        //});
-        //marker.addListener('mouseout', function(){
-        //  infoWin.close();
-        //});
 
         marker.addListener('click', function () {
           var report = marker.report;
@@ -75,9 +61,6 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
             var $currentFormData = $currentForm.serialize();
             var $currentReportId = $currentForm.children().last().data("reportid");
 
-            // call commentSubmit function
-            //submitComment($currentForm, $currentFormData, $currentReportId);
-
             var $reportId = report.id;
 
             var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + $reportId + "/comments?user_email=" + gon.email + "&user_token=" + gon.auth_token;
@@ -97,25 +80,11 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
                 // update my subscriptions
                 var $body = angular.element(document.body);
                 var $rootScope = $body.scope().$root;
-                var resp = {data: response.data};
+                // var resp = { data: response.data };
+
                 $rootScope.$broadcast('subscriptions', response.subscriptions);
-                // $rootScope.$apply(function () {
-                //   debugger;
-                //   $rootScope.mySubscriptions;
-                // }.bind(resp));
 
                 $('.comment-text-input', $currentForm).val('');
-
-                //console.log(response);
-                //updateTimestamps([response], "created_at");
-                //showCommentsListDivIfHidden($commentListDiv);
-                // renderTemplates(
-                //   { comment: response },
-                //   $("#comment-template"),
-                //   $commentList
-                // );
-                //resetFormInputs();
-                // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
                 transformTimestamps();
               });
           });
@@ -135,35 +104,30 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
           } else {
             console.log('no report type');
           }
-        };
+        }
       };
 
       var removeReportMapMarkers = function(markerArray){
         console.log("!! removeReportMapMarkers");
-        for(i=0; i<markerArray.length; i++){
+        for(i = 0; i < markerArray.length; i++){
           markerArray[i].setMap(null);
         }
       };
 
-
-
-
       $scope.editReport = function (report) {
-
         var reportId = report.id;
 
         var link = myApp.fuzzfindersApiUrl + '/api/v1/reports/' + reportId + '?user_email=' + gon.email + "&user_token=" + gon.auth_token;
 
+        // TODO: replace with a Service
         $.getJSON(link).done(function (response) {
-          // updateTimestamps([response["report"]], "last_seen");
-          // updateTimestamps([response["report"]], "created_at");
-
           $('#reportDetailsModal .modal-body').html('');
 
           var reportType = response.report.report_type;
 
           $('#myModalLabel').text('Editing');
 
+          // TODO: replace with a Directive and Angular Bootstrap
           renderTemplates(
             {report: response['report'], tags: response['tags'], form_type: reportType},
             $('#report-form-template'),
@@ -218,13 +182,11 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
           createDirectUploadForms();
 
           setTimeout(function () {
-            // initializeLostMap();
             if (reportType == 'lost') {
               initializeLostMap('#reportDetailsModal');
             } else {
               initializeFoundMap('#reportDetailsModal');
             }
-            ;
           }, 300);
 
           $('#reportDetailsModal form').submit(function () {
@@ -235,6 +197,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
 
             var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/" + reportId + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
 
+            // TODO: replace with a Service
             $.ajax({
                 url: link,
                 type: 'PUT',
@@ -243,14 +206,9 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
                 data: data
               })
               .done(function (response) {
-                // console.log(response);
                 transformTimestamps();
 
                 $('#reportDetailsModal').modal('hide');
-
-                //getReportDetails($('.report[data-reportid=' + reportId + ']'), reportId);
-
-                // myApp.fuzzfinders.model.subscribeReportComments(reportId);
               }).fail(function () {
               console.log("report detail request failed");
             });
@@ -260,67 +218,20 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
         });
       };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $scope.getReports = function (params) {
+      $scope.getReports = function (params) {
+        // TODO: replace with a Service
         $http({
           url: link + '&' + params,
           type: 'get',
-          dataType: 'json',
-          //params: params
+          dataType: 'json'
         }).then(function (response) {
           removeReportMapMarkers(reportMapMarkers);
           createMarkers(response.data, reportMapMarkers);
-          //debugger;
+
           $scope.reports = response.data;
 
           setTimeout(transformTimestamps, 200);
-        }, function (response) {
-        });
-
-
-
-        //debugger;
-        //$.ajax({
-        //    url: link,
-        //    type: "GET",
-        //    crossDomain: true,
-        //    dataType: 'json',
-        //    data: $recentReportsForm.serialize()
-        //  })
-        //  .done(function(response){
-        //    console.log(response);
-        //    $(".report").remove();
-        //    removeReportMapMarkers(reportMapMarkers);
-        //    createMarkers(response, reportMapMarkers);
-        //    updateTimestamps(response, "created_at");
-        //    updateTimestamps(response, "last_seen");
-        //    renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-        //    populateDynamicReportsFilters(response);
-        //
-        //    transformTimestamps();
-        //
-        //    if($dynamicFilter){
-        //      console.log("dynamic filter used");
-        //      setDynamicFilterDropdownValue($dynamicFilter);
-        //    } else {
-        //      console.log("dynamic filter not used");
-        //    }
-        //  })
-        //  .fail(function(){
-        //    console.log("reports request fail!");
-        //  });
+        }, function (response) {});
 
         console.log('!!! Getting reports', params);
       }
@@ -390,6 +301,7 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
           $.blockUI();
           comment['report_id'] = $scope.report.id;
 
+          // TODO: replace with a Service
           Upload.upload({
             method: 'post',
             url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
@@ -400,26 +312,9 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
             $scope.mapName = null;
             $.unblockUI();
           }, function (response) {});
-          //$http({
-          //  method: 'post',
-          //  url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
-          //  data: { comment: comment }
-          //}).then(function (response) {
-          //  //$scope.comments.push(response.data);
-          //
-          //  $scope.c = {};
-          //
-          //  setTimeout(transformTimestamps, 100);
-          //}, function (response) {
-          //  console.error(response);
-          //});
         }
       };
-    }],
-
-    link: function ($scope, $element, $attributes) {
-
-    }
+    }]
   }
 }]).directive('commentsList', function () {
   return {
@@ -431,11 +326,9 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
       transformTimestamps();
     },
     controller: ['$scope', function ($scope) {
-
       $scope.$watch('comments', function (newValue) {
         if (newValue) {
           setTimeout(transformTimestamps, 100);
-          //transformTimestamps();
         }
       })
     }]
