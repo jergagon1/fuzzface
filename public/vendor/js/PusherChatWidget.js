@@ -72,6 +72,18 @@ PusherChatWidget.instances = [];
 PusherChatWidget.prototype._chatMessageReceived = function(data) {
   var self = this;
 
+  var latitude = data.latitude;
+  var longitude = data.longitude;
+
+  if (latitude && longitude) {
+    var dist = distance(latitude, longitude, gon.latitude, gon.longitude);
+
+    // HINT: do nothing if distance more than FuzzFlash Alert Area setting
+    if (dist && dist > Cookies.get('distance')) {
+      return false;
+    }
+  }
+
   if ($('.pusher-chat-body').css('display') === 'none') {
     $('.pusher-chat-widget-header').css('backgroundColor', '#f37057');
   }

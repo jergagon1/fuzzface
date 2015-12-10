@@ -299,6 +299,10 @@ padding-bottom: 0;
   z-index: 1000;
 }
 
+.pusher-chat-widget-current-user-name p {
+  cursor: pointer;
+}
+
 .pusher-chat-widget textarea {
   width: 68%;
 }
