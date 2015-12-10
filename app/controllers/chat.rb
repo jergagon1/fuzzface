@@ -40,13 +40,16 @@ def get_channel_name(http_referer)
 end
 
 def sanitise_input(chat_info)
-  email = chat_info['email']?chat_info['email']:''
+  email = chat_info['email'] ? chat_info['email'] : ''
 
   options = {}
   options['displayName'] = escape_html(chat_info['nickname']).slice(0, 30)
   options['text'] = escape_html(chat_info['text']).slice(0, 300)
   options['email'] = escape_html(email).slice(0, 100)
   options['get_gravatar'] = true
+
+  options['latitude'] = escape_html(chat_info['latitude'])
+  options['longitude'] = escape_html(chat_info['longitude'])
 
   options
 end

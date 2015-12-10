@@ -127,6 +127,11 @@ PusherChatWidget.prototype._sendChatButtonClicked = function() {
 PusherChatWidget.prototype._sendChatMessage = function(data) {
   var self = this;
 
+  if (gon.latitude && gon.longitude) {
+    data.longitude = gon.longitude;
+    data.latitude = gon.latitude;
+  }
+
   this._messageInputEl.attr('readonly', 'readonly');
   $.ajax({
     url: this.settings.chatEndPoint,
