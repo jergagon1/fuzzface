@@ -151,12 +151,29 @@ $(function() {
   }
 
   window.transformTimestamps = function() {
+    //debugger;
     $.each($('.time'), function (i, el) {
-      var momentObj = moment($(el).text());
+      //debugger;
+      var time = $.trim($(el).text());
+
+      var momentObj = moment(time);
       var relativeOrAbsoluteTime = null;
 
+      //debugger;
+
+
+
+      //if ($(el).text().indexOf('m') == -1) { debugger; }
+
+      if (!time) { return; }
+
+      //debugger;
       if (Math.abs(momentObj.diff(new Date, 'hours')) <= 24) {
+        //debugger;
         relativeOrAbsoluteTime = momentObj.fromNow();
+      } else if (Math.abs(momentObj.diff(new Date, 'hours')) > 24) {
+
+        relativeOrAbsoluteTime = momentObj.format('MM/DD/YYYY h:mm a');
       } else {
         // relativeOrAbsoluteTime = momentObj.utc().format();
         relativeOrAbsoluteTime = $(el).text();

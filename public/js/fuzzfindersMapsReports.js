@@ -18,8 +18,11 @@ $(function(){
   // Model: set recent reports form hidden input values for SW and NE coordinates
   var setRecentReportsHiddenFormInputFields = function(southWestCoord,northEastCoord){
     console.log("fuzzfindersMapsReports.js setRecentReportsHiddenFormInputFields");
-    $("input[name='sw']").attr('value', southWestCoord);
-    $("input[name='ne']").attr('value', northEastCoord);
+    $("input[name='sw']").val(southWestCoord);
+    $("input[name='ne']").val(northEastCoord);
+
+    $("input[name='sw']").trigger('input');
+    $("input[name='ne']").trigger('input');
   };
 
   // Model: Remove the markers from the map
@@ -32,37 +35,38 @@ $(function(){
 
   // Model: Retrieve reports in map area
   myApp.fuzzfinders.model.getRecentReports = function($dynamicFilter) {
-    console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.model.getRecentReports");
-    var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/mapquery?user_email=" + gon.email + "&user_token=" + gon.auth_token;
-    $.ajax({
-      url: link,
-      type: "GET",
-      crossDomain: true,
-      dataType: 'json',
-      data: $recentReportsForm.serialize()
-    })
-    .done(function(response){
-      console.log(response);
-      $(".report").remove();
-      removeReportMapMarkers(reportMapMarkers);
-      createMarkers(response, reportMapMarkers);
-      updateTimestamps(response, "created_at");
-      updateTimestamps(response, "last_seen");
-      renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
-      populateDynamicReportsFilters(response);
-
-      transformTimestamps();
-
-      if($dynamicFilter){
-        console.log("dynamic filter used");
-        setDynamicFilterDropdownValue($dynamicFilter);
-      } else {
-        console.log("dynamic filter not used");
-      }
-    })
-    .fail(function(){
-      console.log("reports request fail!");
-    });
+    //console.log("fuzzfindersMapsReports.js myApp.fuzzfinders.model.getRecentReports");
+    //var link = myApp.fuzzfindersApiUrl + "/api/v1/reports/mapquery?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+    ////debugger;
+    //$.ajax({
+    //  url: link,
+    //  type: "GET",
+    //  crossDomain: true,
+    //  dataType: 'json',
+    //  data: $recentReportsForm.serialize()
+    //})
+    //.done(function(response){
+    //  console.log(response);
+    //  $(".report").remove();
+    //  removeReportMapMarkers(reportMapMarkers);
+    //  createMarkers(response, reportMapMarkers);
+    //  updateTimestamps(response, "created_at");
+    //  updateTimestamps(response, "last_seen");
+    //  renderTemplates({ reports: response }, $('#report-list-template'), $('.reports-list'));
+    //  populateDynamicReportsFilters(response);
+    //
+    //  transformTimestamps();
+    //
+    //  if($dynamicFilter){
+    //    console.log("dynamic filter used");
+    //    setDynamicFilterDropdownValue($dynamicFilter);
+    //  } else {
+    //    console.log("dynamic filter not used");
+    //  }
+    //})
+    //.fail(function(){
+    //  console.log("reports request fail!");
+    //});
   };
 
   // Model: retrieve report details, tags and comments
@@ -136,8 +140,8 @@ $(function(){
       //   $rootScope.mySubscriptions;
       // }.bind(resp));
 
-      console.log(response);
-      updateTimestamps([response], "created_at");
+      //console.log(response);
+      //updateTimestamps([response], "created_at");
       showCommentsListDivIfHidden($commentListDiv);
       // renderTemplates(
       //   { comment: response },
@@ -147,11 +151,11 @@ $(function(){
       resetFormInputs();
       // myApp.fuzzfinders.model.subscribeReportComments(response.report_id);
       transformTimestamps();
-    })
-    .fail(function(){
-      $('#reportDetailsModal .info').text('Error');
-      console.log("comment creation failed");
     });
+    //.fail(function(){
+    //  $('#reportDetailsModal .info').text('Error');
+    //  console.log("comment creation failed");
+    //});
   };
 
   // Model: loop through an array of records and create a unique sorted array of a specific field value
@@ -329,15 +333,15 @@ $(function(){
 
   var enableScrollingWithMouseWheel = function () {
     this.setOptions({ scrollwheel: true, draggable: true });
-  }
+  };
 
   var disableScrollingWithMouseWheel = function () {
-    $.each(maps, function(i, el) {
+    $.each(window.maps, function(i, el) {
       el.setOptions({ draggable: false, scrollwheel: false })
     });
-  }
+  };
 
-  $(window).scroll(disableScrollingWithMouseWheel);
+  //$(window).scroll(disableScrollingWithMouseWheel);
 
   // View: iterate through reports array and creates the markers
   var createMarkers = function(reports) {
@@ -627,13 +631,13 @@ $(function(){
   };
 
   // Controller: initialize map for lost pet report submission
-  var initializeLostMap = function(parentSelector){
+  window.initializeLostMap = function(parentSelector){
     console.log("fuzzfindersMapsReports.js initializeLostMap");
     initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
   };
 
   // Controller: initialize map for found pet report submission
-  var initializeFoundMap = function(parentSelector){
+  window.initializeFoundMap = function(parentSelector){
     console.log("fuzzfindersMapsReports.js initializeFoundMap");
     initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png', parentSelector)
   };
@@ -655,12 +659,12 @@ $(function(){
       draggable: false
     };
 
-    reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
+    window.reportMap = new google.maps.Map(document.getElementById('report-map-canvas'),
         reportMapOptions);
 
-    maps.push(reportMap);
+    maps.push(window.reportMap);
 
-    google.maps.event.addListener(reportMap, 'click', enableScrollingWithMouseWheel);
+    google.maps.event.addListener(window.reportMap, 'click', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var pos = new google.maps.LatLng(position.coords.latitude,
@@ -670,7 +674,7 @@ $(function(){
       lng = position.coords.longitude;
 
       var currentLocationMarker = new google.maps.Marker({
-        map: reportMap,
+        map: window.reportMap,
         position: pos,
         title: "Current location"
       });
@@ -680,8 +684,8 @@ $(function(){
       var sw;
 
       //get bounds of map
-      google.maps.event.addListener(reportMap, 'bounds_changed', function() {
-        boundary = reportMap.getBounds();
+      google.maps.event.addListener(window.reportMap, 'bounds_changed', function() {
+        boundary = window.reportMap.getBounds();
         // console.log(boundary);
         ne_bounds = boundary.getNorthEast();
         sw_bounds = boundary.getSouthWest();
@@ -691,14 +695,14 @@ $(function(){
         ne = ne_bounds.toString().substr(1, ne_string.length-2);
         sw = sw_bounds.toString().substr(1, sw_string.length-2);
         setRecentReportsHiddenFormInputFields(sw,ne);
-        myApp.fuzzfinders.model.getRecentReports();
+        //myApp.fuzzfinders.model.getRecentReports();
       });
 
-      reportMap.setCenter(pos);
+      window.reportMap.setCenter(pos);
     };
 
     var failure = function(error) {
-      handleNoGeolocation(false, reportMap);
+      handleNoGeolocation(false, window.reportMap);
     };
 
 
@@ -756,7 +760,7 @@ $(function(){
   };
 
   // Controller: Add delegated event listener to reports in reports list on click
-  var addEventListenerToAllGetReportDetails = function(){
+  window.addEventListenerToAllGetReportDetails = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerToAllGetReportDetails");
 
     $reportsList.on('click', 'span.glyphicon.glyphicon-pencil', function (e) {
@@ -871,12 +875,12 @@ $(function(){
 
     });
 
-    $reportsList.on('click', '.unselected', function() {
-      console.log('report summary clicked');
-      $clickedReport = $(this);
-      $reportId = $clickedReport.data('reportid');
-      getReportDetails($clickedReport, $reportId);
-    });
+    //$reportsList.on('click', '.unselected', function() {
+    //  console.log('report summary clicked');
+    //  $clickedReport = $(this);
+    //  $reportId = $clickedReport.data('reportid');
+    //  getReportDetails($clickedReport, $reportId);
+    //});
   };
 
   // Controller: Remove delegated event listener to reports in reports list
@@ -914,7 +918,7 @@ $(function(){
     $reportsList.off("click", ".report-detail-hide");
   };
 
-  // Controller: add delegated event listener for comment form submission
+  //// Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
     $('body').off('submit', '.new-comment-form');
@@ -1071,7 +1075,7 @@ $(function(){
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();
       addEventListenerReportHideDetail();
-      addEventListenerSubmitComment();
+      //addEventListenerSubmitComment();
       addEventListenerFilterButtonClick();
       addEventListenerOnChangeReportFilterControls();
       addEventListenerResetFilterFormControls();

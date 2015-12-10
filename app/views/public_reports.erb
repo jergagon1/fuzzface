@@ -1,9 +1,26 @@
 <% content_for :scripts do %>
-  <script src="/vendor/bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/angular-animate/angular-animate.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/angular-moment/angular-moment.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/lodash/lodash.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/vendor/bower_components/lodash-inflection/lib/lodash-inflection.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/angular/angular.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/angular-animate/angular-animate.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/angular-cookies/angular-cookies.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/pusher-angular/lib/pusher-angular.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- !!! -->
+
+<script src="/vendor/bower_components/angular-moment/angular-moment.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/lodash/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/lodash-inflection/lib/lodash-inflection.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script src="/js/fuzzapp/app.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="/js/fuzzapp/modules/fuzzFinders.js" type="text/javascript" charset="utf-8"></script>-->
+<script src="/js/utils.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/fuzzapp/modules/notifications.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="/js/fuzzapp/modules/directives/reports-filter/reports-filter.js" type="text/javascript" charset="utf-8"></script>
 
   <style type="text/css" media="all">
     .ng-enter {
@@ -41,7 +58,7 @@
   <script type="text/javascript" charset="utf-8">
     window.maps = [];
 
-    var app = angular.module('fuzzappPublic', ['angularMoment', 'ngAnimate']);
+    var app = angular.module('fuzzapp');
 
     app.controller('ReportsController', ['$scope', '$http', function ($scope, $http) {
       $scope.report = <%= @report['report'].to_json %>;
@@ -63,45 +80,6 @@
       return function(input) {
         return _.titleize(input);
       };
-    }).directive('commentForm', function () {
-      return {
-        restrict: 'E',
-        scope: false,
-        replace: true,
-        templateUrl: '/js/fuzzappPublic/directives/comment-form/index.html',
-
-        controller: ['$scope', '$http', function ($scope, $http) {
-          $scope.submitComment = function (comment) {
-            if (comment.content && $scope.report.id) {
-              comment['report_id'] = $scope.report.id;
-
-              $http({
-                method: 'post',
-                url: gon.api_server + '/api/v1/reports/' + $scope.report.id + '/comments?user_email=' + gon.email + '&user_token=' + gon.auth_token,
-                data: { comment: comment }
-              }).then(function (response) {
-                $scope.comments.push(response.data);
-
-                $scope.c = {};
-
-                setTimeout(transformTimestamps, 100);
-              }, function (response) {
-                console.error(response);
-              });
-            }
-          };
-        }],
-
-        link: function ($scope, $element, $attributes) {
-        }
-      }
-    }).directive('commentsList', function () {
-      return {
-        restrict: 'E',
-        scope: false,
-        replace: true,
-        templateUrl: '/js/fuzzappPublic/directives/comments-list/index.html',
-      }
     });
   </script>
 <% end %>
@@ -115,6 +93,8 @@
     display: none !important;
   }
 </style>
+
+<%= erb :'partials/_notification', :layout => false %>
 
 <div class="report-lists ng-cloak" ng-controller="ReportsController">
   <div class="row">
@@ -201,6 +181,9 @@
   </div><!-- row -->
 </div>
 
+
+<%= erb :'partials/_report_list', :layout => false %>
+
 <% content_for :ng_app do %>
-  <%= 'ng-app="fuzzappPublic"' %>
+  <%= 'ng-app="fuzzapp"' %>
 <% end %>

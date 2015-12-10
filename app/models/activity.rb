@@ -8,6 +8,8 @@ class Activity
     @id = UUID.new.generate
     @date = Time.now.to_s()
 
+    @latitude, @longitude = [options['latitude'], options['longitude']]
+
     @action_text = action_text;
     @display_name = options["displayName"]
     @image = options['image'];
@@ -27,6 +29,8 @@ class Activity
       'body' => @action_text,
       'published' => @date,
       'type' => @type,
+      'latitude' => @latitude,
+      'longitude' => @longitude,
       'actor' => {
         'displayName' => @display_name,
         'objectType' => 'person',

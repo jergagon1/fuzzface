@@ -1,0 +1,95 @@
+<div class="report-detail">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <span class="report-detail-hide glyphicon glyphicon-minus" style="display: none;"></span>
+  </div>
+
+  <div class="report-image-div-big col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="report.img_url">
+    <img ng-src="{{report.img_url}}" class="report-image-big">
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="report.lat && report.lng">
+    <div class="report-detail-map-canvas map-canvas map-canvas-{{report.id}}"></div><!-- map-canvas -->
+  </div><!-- col -->
+
+  <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4 ng-bind="report.normalized_title"></h4>
+
+    <div class="row" ng-show="details.user_id == gon.user_id">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <p><strong>Edit report:</strong></p>
+      </div>
+
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </div>
+    </div>
+
+    <div class="row" ng-show="report.slug">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <p><strong>Public link:</strong></p>
+      </div>
+
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <div ng-bind-html="slug | linky:'_blank'"></div>
+
+        <a target="_blank" ng-href="{{'/reports' + slug}}">reports/{{report.slug}}</a>
+      </div>
+    </div>
+
+    <div class="row" ng-show="report.pet_size">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Size: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="( report.pet_size | titleize )"></div>
+    </div>
+
+    <div class="row" ng-show="report.color">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Color: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.color | titleize)"></div>
+    </div>
+
+    <div class="row" ng-show="report.breed">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Breed: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.breed | titleize)"></div>
+    </div>
+
+    <div class="row" ng-show="report.sex">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Sex: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="(report.sex | titleize)"></div>
+    </div>
+
+    <div class="row" ng-show="report.notes">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Notes: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.notes"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <p><strong>Last Seen:</strong></p>
+      </div>
+
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+        <p>
+          <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
+          <span class="time-ago"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" ng-show="report.report_username">
+      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><p><strong>Posted By: </strong></p></div>
+      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-bind="report.report_username"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags">
+  <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
+  <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
+    <li class="tags" ng-repeat="tag in tags">
+      <p class="btn btn-default btn-xs" ng-bind="(tag.name | lowercase)"></p>
+    </li>
+  </ul>
+</div>
+
+<!--<comments-list></comments-list>-->
+
+<!--<comment-form></comment-form>-->

@@ -35,6 +35,8 @@
   [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
   }
+
+  input[name="sw"], input[name="ne"] { position: absolute; top: -1000px }
 </style>
 
 <% content_for :scripts do %>
@@ -49,10 +51,16 @@
 
   <!-- !!! -->
 
+<script src="/vendor/bower_components/angular-moment/angular-moment.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/lodash/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/vendor/bower_components/lodash-inflection/lib/lodash-inflection.js" type="text/javascript" charset="utf-8"></script>
+
 
   <script src="/js/fuzzapp/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/fuzzapp/modules/fuzzFinders.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/fuzzapp/modules/notifications.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="/js/fuzzapp/modules/directives/reports-filter/reports-filter.js" type="text/javascript" charset="utf-8"></script>
 
   <!-- <script type="text/javascript" charset="utf&#45;8"> -->
   <!--   // notifications -->
@@ -103,14 +111,44 @@
   <div class="row fourth-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <button class="btn-block main-buttons fuzzfinders-buttons report-btn" ng-class="currentSection == 'reportsSection' ? 'selected-button' : ''" ng-click="changeSection('reportsSection')">Reports</button>
-      <div class="my-animation" id="reports-map-container" ng-show="currentSection == 'reportsSection'" ng-controller="ReportsController">
-        <%= erb :'partials/_report_map_legend', :layout => false %>
+      <div class="my-animation" id="reports-map-container" ng-show="currentSection == 'reportsSection'" ng-controller="ReportsController as rc">
+        <div class="report-map-legend">
+          <ul>
+            <li>
+              <img src="/images/FuzzFinders_icon_orange.png" alt="Fuzzfinders lost pet icon"><p>Lost Pet Report</p>
+            </li>
+            <li>
+              <img src="/images/FuzzFinders_icon_blue.png" alt="Fuzzfinders found pet icon"><p>Found Pet Report</p>
+            </li>
+          </ul>
+        </div><!-- report-map-legend -->
+
+
         <div id="report-map-canvas" class="map-canvas">
         </div><!-- #report-map-canvas map-canvas -->
-        <%= erb :'partials/_report_filter', :layout => false %>
-        <%= erb :'partials/_report_list', :layout => false %>
+
+        <reports-filter></reports-filter>
+
+        <div class="report-lists">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <h3 class="padded">Reports in Your Area</h3>
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <reports-list></reports-list>
+            </div><!-- col -->
+          </div><!-- row -->
+        </div>
+
+        <!--<% erb :'partials/_report_filter', :layout => false %>-->
+
       </div><!-- #reports-map-container -->
     </div><!-- col -->
   </div><!-- row -->
-  <%= @user %>
+  <!--<%= @user %>-->
 </div><!-- container -->
+
+
+<%= erb :'partials/_report_list', :layout => false %>

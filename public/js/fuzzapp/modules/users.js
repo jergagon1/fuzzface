@@ -16,6 +16,7 @@ usersModule.controller('SignInController', ['$scope', '$http', '$window', '$loca
   $scope.login = function (e) {
     e.preventDefault();
 
+    // TODO: Service
     $http({
       method: 'post',
       url: '/sign_in',
@@ -39,6 +40,7 @@ usersModule.controller('RestoreController', ['$scope', '$http', function ($scope
     e.preventDefault();
 
     if ($scope.email) {
+      // TODO: Service
       $http({
         method: 'post',
         url: '/send_instuctions',
@@ -63,6 +65,7 @@ usersModule.controller('SignUpController', ['$scope', '$http', '$window', '$loca
     e.preventDefault();
 
     if ($scope.email && $scope.password && $scope.username) {
+      // TODO: Service
       $http({
         method: 'post',
         url: '/sign_up',
@@ -84,8 +87,7 @@ usersModule.controller('SignUpController', ['$scope', '$http', '$window', '$loca
           var url = backUrl ? backUrl : '/';
           $window.location.href = url;
         }
-      }, function (response) {
-      });
+      }, function (response) {});
     } else {
       $scope.error = 'You must fill required fields';
     }

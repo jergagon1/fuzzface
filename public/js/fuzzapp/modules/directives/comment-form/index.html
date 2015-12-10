@@ -1,0 +1,36 @@
+<div ng-show="user.id">
+  <style type="text/css" media="all">
+    .thumb {
+      width: 64px;
+      height: 64px;
+      float: none;
+      position: relative;
+      top: 7px;
+      margin: 5px;
+    }
+  </style>
+
+  <h4 class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info"></h4>
+
+  <div class="new-comments-form-div col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4>Create Comment</h4>
+
+    <h5 ng-click="togglePin()" class="btn {{(c.lng ? 'btn-info' : 'btn-default') }} btn-xs">
+      Add location
+    </h5>
+
+    <br><br>
+
+    <form class="new-comment-form">
+      <label>
+        <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
+        <input type="file" ngf-select ng-model="image" name="file" accept="image/*" ngf-max-size="20MB">
+      </label>
+
+      <img ngf-thumbnail="image" class="thumb">
+
+      <textarea data-reportId={{report.id}} ng-model="c.content" name="comment[content]" class='comment-text-input'></textarea><br>
+      <input data-reportid={{report.id}} ng-click="submitComment(image)" type="submit" class="submit-comment btn btn-default" value="Post">
+    </form>
+  </div>
+</div>

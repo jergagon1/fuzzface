@@ -7,6 +7,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
 
       var reportId = report.report_id;
 
+      // TODO: Service and rewrite this login in Angular style
       $.getJSON(gon.api_server + '/api/v1/reports/' + reportId + '.json?user_email=' + gon.email + '&user_token=' + gon.auth_token)
       .success(function (response) {
         $('#reportDetailsModal').modal();
@@ -39,8 +40,21 @@ angular.module('fuzzapp').controller('NotificationsController', [
         }, 300);
 
         transformTimestamps();
-      }).fail(function (response) {
-      });
+      }).fail(function (response) {});
+    };
+
+    $scope.checkIfDivHidden = function($div){
+      if($div.is(":hidden")){
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.showCommentsListDivIfHidden = function($commentsDiv){
+      if($scope.checkIfDivHidden($commentsDiv)) {
+        $commentsDiv.show();
+      }
     };
 
     $scope.newPush = function (data) {
@@ -81,26 +95,32 @@ angular.module('fuzzapp').controller('NotificationsController', [
               }, scope);
             });
           });
-        }.bind(o), 15000); // TODO: move this to service or constant
+        }.bind(o), 15000); // TODO: move this to a constant
       }
 
       if (data.comment_id) {
         if (!$('li.comment[data-commentid="' + data.comment.id + '"]').length) {
+          //debugger;
           var selectedReportId = data.report_id; // $('li.report.lost-report').not('.unselected').data('reportid');
           console.log('reportID = ', selectedReportId);
-          var $commentList = $('.comment-list[data-reportid="' + selectedReportId + '"]');
-          var $commentList = $('.comment-list');
-          var $commentListDiv = $('.comments-list-div[data-reportid="' + selectedReportId + '"]');
+          var $commentList = $('.comment-list[data-reportid="' + data.report_id + '"]');
+          //var $commentList = $('.comment-list');
+          var $commentListDiv = $('.comments-list-div[data-reportid="' + data.report_id + '"]');
 
-          showCommentsListDivIfHidden($commentListDiv);
+          $commentListDiv.removeClass('ng-hide');
+          $scope.showCommentsListDivIfHidden($commentListDiv);
 
-          renderTemplates(
-            { comment: data.comment },
-            $("#comment-template"),
-            $commentList
-          );
+          //debugger;
 
-          transformTimestamps();
+          if ($commentList) {
+            renderTemplates(
+              { comment: data.comment },
+              $("#comment-template"),
+              $commentList
+            );
+
+            transformTimestamps();
+          }
         }
       };
     };
@@ -127,12 +147,7 @@ angular.module('fuzzapp').controller('NotificationsController', [
       }
     );
 
-    // var $body = angular.element(document.body);   // 1
-    // var $rootScope = $body.scope().$root;         // 2
-    // $rootScope.$apply(function () {               // 3
-    //   $rootScope.someText = 'This is BAD practice, dude ! :(';
-    // });
-
+    // TODO: Service
     $http.get(
       gon.api_server + '/api/v1/subscriptions.json?user_email=' + gon.email + '&user_token=' + gon.auth_token
     ).success(function (response) { $rootScope.mySubscriptions = response });

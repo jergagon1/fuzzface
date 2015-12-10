@@ -5,28 +5,19 @@ fuzzappModule.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 
+fuzzappModule.controller('ReportsController', ['$scope']);
+
 fuzzappModule.controller('MenuController', ['$rootScope', '$scope', function ($rootScope, $scope) {
   $rootScope.$on('change-section', function (event, currentSection) {
     $scope.currentSection = currentSection;
   });
 
   $scope.changeSection = function (section) {
-    console.log('MenuController changeSection()')
-    if (section == $scope.currentSection) {
-      $scope.currentSection = null;
-    } else {
-      $scope.currentSection = section;
-    }
+    console.log('MenuController changeSection()');
+
+    $scope.currentSection = section == $scope.currentSection ? null : section;
 
     $rootScope.$broadcast('section-changed', $scope.currentSection);
-
-    // if ($scope.currentSection == 'lostSection') {
-    //   google.maps.event.addDomListener(
-    //     lostPetBtn,
-    //     'click',
-    //     $scope.initializeMap(lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png'));
-    //
-    // };
   };
 }]);
 
@@ -35,7 +26,6 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
   $scope.report = {};
   $scope.lostMap = null; $scope.foundMap = null;
-
 
   var initializeMap = function (mapName, canvasDivId, iconUrl) {
     var mapOptions = {
@@ -87,7 +77,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       mapName.setCenter(pos);
       $scope.report.lat = lat; $scope.report.lng = lng;
-    }
+    };
 
     var failure = function(error) {
       handleNoGeolocation(false, mapName);
@@ -95,19 +85,15 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
     //User's Current Location
     if (gon.latitude && gon.longitude) {
-      success(
-        {
-          coords: { latitude: gon.latitude, longitude: gon.longitude }
-        }
-      )
+      success({
+        coords: { latitude: gon.latitude, longitude: gon.longitude }
+      });
     } else {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, function() {
           geolocator.locateByIP(success, failure, 1);
         });
-      } else {
-        geolocator.locateByIP(success, failure, 1);
-      }
+      } else geolocator.locateByIP(success, failure, 1);
     }
   };
 
@@ -118,6 +104,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
     $.blockUI();
 
+    // TODO: Service
     $http({
       method: 'post',
       url: myApp.fuzzfindersApiUrl + "/api/v1/reports.json?user_email=" + gon.email + '&user_token=' + gon.auth_token,
@@ -136,15 +123,14 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       // close current section
       $rootScope.$broadcast('change-section', null);
-    }, function (response) {
-      $.unblockUI();
-    });
+    }, function (response) { $.unblockUI() });
   };
 
   // TODO: merge 2 requests into one for uploading image and sending data
   $scope.uploadImage = function (file, report) {
     $.blockUI();
 
+    // TODO: Service
     file.upload = Upload.upload({
       method: 'post',
       url: gon.api_server + '/api/v1/images.json?user_email=' + gon.email + '&user_token=' + gon.auth_token,
@@ -177,4 +163,74 @@ fuzzappModule.controller('ReportsController', ['$rootScope', '$scope', function 
       setTimeout(initializeReportMap, 300);
     }
   });
+}]);
+
+fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scope, $http) {
+  $scope.toggleReport = function (report) {
+    if (report.details) {
+      report.details = null;
+
+      return;
+    } else {
+      //addEventListenerToAllGetReportDetails();
+    }
+
+    var link = gon.api_server + "/api/v1/reports/" + report.id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
+
+    $http.get(link).then(function (response) {
+      var data = response.data;
+
+      $scope.map = null;
+      $scope.comments = [];
+
+      report.details = data;
+      $scope.comments = data.comments;
+      $scope.tags = data.tags;
+
+      $('ul[data-reportid="' + report.id + '"]').find('li').remove();
+
+      setTimeout(function () {
+        var mapOptions = {
+          zoom: 14,
+          center: new google.maps.LatLng(report.lat, report.lng),
+          streetViewControl: false,
+          mapTypeControl: false,
+          scrollwheel: false,
+          draggable: false
+        };
+
+        $scope.map = new google.maps.Map($('.map-canvas-' + report.id)[0], mapOptions);
+
+        var marker = new google.maps.Marker({
+          map: $scope.map,
+          position: new google.maps.LatLng(report.lat, report.lng),
+          icon: '/images/FuzzFinders_icon_orange.png',
+          draggable: false
+        });
+
+        angular.forEach($scope.comments, function (comment) {
+          if (comment.lat && comment.lng) {
+            var marker = new google.maps.Marker({
+              map: $scope.map,
+              position: new google.maps.LatLng(comment.lat, comment.lng),
+              icon: '/images/FuzzFinders_icon_blue.png',
+              draggable: false,
+              animation: google.maps.Animation.DROP
+            });
+
+            // TODO: we should use only one InfoWindow
+            var iw = new google.maps.InfoWindow({ content: comment.content });
+
+            marker.addListener('click', function () {
+              iw.open($scope.map, marker);
+            });
+
+            marker.addListener('mouseout', function () {
+              iw.close();
+            });
+          };
+        });
+      }, 300);
+    }, function (response) {});
+  };
 }]);
