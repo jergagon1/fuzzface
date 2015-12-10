@@ -8,7 +8,12 @@
         </div>
 
         <div class="col-xs-6 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-1 report-summary-text-column">
-          <h4>{{report.report_type}}</h4>
+          <h4>
+            {{ report.report_type | titleize }}
+            <span ng-show="report.animal_type">{{ report.animal_type }}</span>
+            <span ng-show="!report.animal_type">Pet</span>
+            <span ng-show="report.pet_name">"{{ report.pet_name | titleize }}"</span>
+          </h4>
 
           <p class="report-summary-text">
             <strong>Last Seen:</strong>
@@ -37,7 +42,12 @@
       </div><!-- col -->
 
       <div class="report-detail-text col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h4 ng-bind="report.normalized_title"></h4>
+        <h4>
+          {{ report.report_type | titleize }}
+          <span ng-show="report.animal_type">{{ report.animal_type }}</span>
+          <span ng-show="!report.animal_type">Pet</span>
+          <span ng-show="report.pet_name">"{{ report.pet_name | titleize }}"</span>
+        </h4>
 
         <div class="row" ng-show="details.user_id == gon.user_id">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -67,7 +77,6 @@
         <report-field label="Breed:" value="(report.breed | titleize )" condition="report.breed"></report-field>
         <report-field label="Sex:" value="(report.sex | titleize )" condition="report.sex"></report-field>
         <report-field label="Notes:" value="report.notes" condition="report.notes"></report-field>
-
 
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
