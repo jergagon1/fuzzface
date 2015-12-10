@@ -219,7 +219,7 @@
       {{#unless modal}} <h4> {{> reportDetailTitle report=report }} </h4> {{/unless}}
 
 
-      {{#if_eq report.user_id <%= session[:user]['id'] %> }}
+      {{#if_eq report.user_id gon.user_id }}
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <p><strong>Edit report</strong></p>
