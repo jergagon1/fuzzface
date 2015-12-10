@@ -9,8 +9,8 @@
         {{comment.content}}
       </p>
 
-      <p class="comment-data"><strong>Comment By:</strong> {{comment.comment_username}}</p>
-      <p class="comment-date"><strong>Posted:</strong> <span class="time">{{comment.created_at | amUtc | amLocal | amDateFormat: 'YYYY/MM/DD h:mm a' }}</span><span class="time-ago"></span>
+      <p class="comment-data"><strong>Comment By</strong> {{comment.comment_username}}</p>
+      <p class="comment-date"><strong>Posted</strong> <span class="time">{{comment.created_at | amUtc | amLocal | amDateFormat: 'YYYY/MM/DD h:mm a' }}</span><span class="time-ago"></span>
       </p>
     </li>
   </ul>

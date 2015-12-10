@@ -16,12 +16,12 @@
           </h4>
 
           <p class="report-summary-text">
-            <strong>Last Seen:</strong>
+            <strong>Last Seen</strong>
             <span class="time" ng-bind="(report.last_seen ? report.last_seen : report.created_at) |  amUtc | amLocal | amDateFormat: 'ddd MM/DD/YYYY h:mm a'" > </span>
             <span class="time-ago">{{report.last_seen}}</span>
           </p>
 
-          <p class="report-summary-text"><strong>Posted By:</strong> {{report.report_username}}</p>
+          <p class="report-summary-text"><strong>Posted By</strong> {{report.report_username}}</p>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
 
         <div class="row" ng-show="details.user_id == gon.user_id">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <p><strong>Edit report:</strong></p>
+            <p><strong>Edit report</strong></p>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -61,7 +61,7 @@
 
         <div class="row" ng-show="report.slug">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <p><strong>Public link:</strong></p>
+            <p><strong>Public link</strong></p>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -71,16 +71,16 @@
           </div>
         </div>
 
-        <report-field label="Size:" value="(report.pet_size | titleize )" condition="report.pet_size"></report-field>
-        <report-field label="Address:" value="(report.address | titleize )" condition="report.address"></report-field>
-        <report-field label="Color:" value="(report.color | titleize )" condition="report.color"></report-field>
-        <report-field label="Breed:" value="(report.breed | titleize )" condition="report.breed"></report-field>
-        <report-field label="Sex:" value="(report.sex | titleize )" condition="report.sex"></report-field>
-        <report-field label="Notes:" value="report.notes" condition="report.notes"></report-field>
+        <report-field label="Size" value="(report.pet_size | titleize )" condition="report.pet_size"></report-field>
+        <report-field label="Address" value="(report.address | titleize )" condition="report.address"></report-field>
+        <report-field label="Color" value="(report.color | titleize )" condition="report.color"></report-field>
+        <report-field label="Breed" value="(report.breed | titleize )" condition="report.breed"></report-field>
+        <report-field label="Sex" value="(report.sex | titleize )" condition="report.sex"></report-field>
+        <report-field label="Notes" value="report.notes" condition="report.notes"></report-field>
 
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <p><strong>Last Seen:</strong></p>
+            <p><strong>Last Seen</strong></p>
           </div>
 
           <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -91,11 +91,11 @@
           </div>
         </div>
 
-        <report-field label="Posted By:" value="report.report_username" condition="report.report_username"></report-field>
+        <report-field label="Posted By" value="report.report_username" condition="report.report_username"></report-field>
       </div>
 
       <div class="tags-div col-xs-12 col-sm-12 col-md-12 col-lg-12 negative-left-margin" ng-show="tags.length">
-        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Tags</strong></p>
+        <p class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><strong>Keywords</strong></p>
         <ul class="tag-list col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <li class="tags" ng-repeat="tag in tags">
             <p class="btn btn-default btn-xs" ng-bind="(tag.name | lowercase)"></p>
