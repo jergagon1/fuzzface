@@ -49,8 +49,8 @@ angular.module('fuzzapp').directive('reportsFilter', function () {
 
           //addEventListenerSubmitComment();
 
-          $('body').off('submit', '.new-comment-form');
-          $('body').on("submit", ".new-comment-form", function (event) {
+          $('body').off('submit', '.modal .new-comment-form');
+          $('body').on("submit", ".modal .new-comment-form", function (event) {
             if (!$(this).find('.comment-text-input').val().length) {
               // prevents submit comment on empty textarea
               return false;

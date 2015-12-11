@@ -1,45 +1,95 @@
 var fuzzappModule = angular.module('fuzzapp');
 
-
+// TODO: do not use fuzzappModule local variable
 fuzzappModule.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
+
+fuzzappModule.service('Geocoding', function ($http) {
+  "use strict";
+
+  this.parse = function (address, callback) {
+    $.blockUI();
+
+    (new google.maps.Geocoder()).geocode(
+      {'address': address}, callback
+    );
+
+    $.unblockUI();
+  };
+});
 
 fuzzappModule.controller('ReportsController', ['$scope']);
 
 fuzzappModule.controller('MenuController', ['$rootScope', '$scope', function ($rootScope, $scope) {
   $rootScope.$on('change-section', function (event, currentSection) {
+    var _currentSection = $scope.currentSection;
+
     $scope.currentSection = currentSection;
+
+    if (_currentSection !== currentSection) {
+      $rootScope.$broadcast('section-changed', currentSection);
+    }
   });
 
   $scope.changeSection = function (section) {
     console.log('MenuController changeSection()');
 
-    $scope.currentSection = section == $scope.currentSection ? null : section;
-
-    $rootScope.$broadcast('section-changed', $scope.currentSection);
+    if ($scope.currentSection !== section) {
+      $rootScope.$broadcast('change-section', section);
+    } else {
+      $rootScope.$broadcast('change-section', null);
+    }
   };
 }]);
 
-fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$http', function ($rootScope, $scope, Upload, $http) {
+fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$http', 'Geocoding', function ($rootScope, $scope, Upload, $http, Geocoding) {
+  'use strict';
+
   $scope.maps = [];
-
   $scope.report = {};
-  $scope.lostMap = null; $scope.foundMap = null;
+  $scope.marker = null;
 
-  var initializeMap = function (mapName, canvasDivId, iconUrl) {
+  $scope.geocoding = function () {
+    Geocoding.parse($scope.report.address, function (result, status) {
+      if (status === 'OK' && result[0]) {
+        var loc = result[0].geometry.location;
+        var coords = [loc.lat(), loc.lng()];
+
+        $scope.marker.setMap(null);
+
+        var pos = new google.maps.LatLng(coords[0], coords[1]);
+
+        $scope.marker = new google.maps.Marker({
+          map: $scope._map,
+          position: pos,
+          icon: $scope.currentIcon,
+          draggable: true
+        });
+
+        $scope._map.setCenter(pos);
+
+        $scope.report.lat = coords[0];
+        $scope.report.lng = coords[1];
+      }
+    });
+  };
+
+  var initializeMap = function (canvasDivId, iconUrl) {
+    $scope.currentIcon = iconUrl;
+
     var mapOptions = {
       zoom: 14,
       center: new google.maps.LatLng(37.7848676, -122.3978871),
       streetViewControl: false,
       mapTypeControl: false,
       scrollwheel: false,
-      draggable: false,
+      draggable: true
     };
 
-    mapName = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
+    $scope._map = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
-    $scope.maps.push(mapName);
+    $scope.maps.push($scope._map);
 
     // google.maps.event.addListener(mapName, 'click', enableScrollingWithMouseWheel);
 
@@ -49,25 +99,25 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       var pos = new google.maps.LatLng(lat, lng);
 
-      var marker = new google.maps.Marker({
-        map: mapName,
+      $scope.marker = new google.maps.Marker({
+        map: $scope._map,
         position: pos,
         icon: iconUrl,
-        draggable: true,
+        draggable: true
       });
 
-      var markerLat = marker.position.A;  //marker latitude;
-      var markerLong = marker.position.F;  //marker longitude
+      var markerLat = $scope.marker.position.A;  //marker latitude;
+      var markerLong = $scope.marker.position.F;  //marker longitude
 
       var posInfoWindow = new google.maps.LatLng(markerLat + .0025, markerLong + .00001);
 
       var infowindow = new google.maps.InfoWindow({
-        map: mapName,
+        map: $scope._map,
         position: posInfoWindow,
         content: 'Current location. Drag to location pet was last seen.'
       });
 
-      google.maps.event.addListener(marker, 'dragend', function() {
+      google.maps.event.addListener($scope.marker, 'dragend', function() {
         lat = this.getPosition().lat();
         lng = this.getPosition().lng();
 
@@ -75,12 +125,12 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
         infowindow.close();
       });
 
-      mapName.setCenter(pos);
+      $scope._map.setCenter(pos);
       $scope.report.lat = lat; $scope.report.lng = lng;
     };
 
     var failure = function(error) {
-      handleNoGeolocation(false, mapName);
+      handleNoGeolocation(false, $scope._map);
     };
 
     //User's Current Location
@@ -123,7 +173,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
 
       // close current section
       $rootScope.$broadcast('change-section', null);
-    }, function (response) { $.unblockUI() });
+    }, function (response) { $.unblockUI(); });
   };
 
   // TODO: merge 2 requests into one for uploading image and sending data
@@ -136,30 +186,30 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
       url: gon.api_server + '/api/v1/images.json?user_email=' + gon.email + '&user_token=' + gon.auth_token,
       data: { image: file }
     }).then(function (response) {
-      if (response.status == 200) {
+      if (response.status === 200) {
         $.unblockUI();
 
-        report.img_url = response.data.image.url
+        report.img_url = response.data.image.url;
       }
     });
   };
 
   $rootScope.$on('section-changed', function (event, currentSection) {
-    if (currentSection == 'lostSection') {
+    if (currentSection === 'lostSection' && $scope._type === 'lost') {
       setTimeout(function () {
-        initializeMap($scope.lostMap, 'lost-map-canvas', '/images/FuzzFinders_icon_orange.png');
+          initializeMap('lost-map-canvas', '/images/FuzzFinders_icon_orange.png');
       }, 100);
-    } else if (currentSection == 'foundSection') {
+    } else if (currentSection === 'foundSection' && $scope._type === 'found') {
       setTimeout(function () {
-        initializeMap($scope.foundMap, 'found-map-canvas', '/images/FuzzFinders_icon_blue.png');
+        initializeMap('found-map-canvas', '/images/FuzzFinders_icon_blue.png');
       }, 100);
-    };
+    }
   });
 }]);
 
 fuzzappModule.controller('ReportsController', ['$rootScope', '$scope', function ($rootScope, $scope) {
   $rootScope.$on('section-changed', function (event, currentSection) {
-    if (currentSection == 'reportsSection') {
+    if (currentSection === 'reportsSection') {
       setTimeout(initializeReportMap, 300);
     }
   });
@@ -171,8 +221,6 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
       report.details = null;
 
       return;
-    } else {
-      //addEventListenerToAllGetReportDetails();
     }
 
     var link = gon.api_server + "/api/v1/reports/" + report.id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
@@ -228,7 +276,7 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
             marker.addListener('mouseout', function () {
               iw.close();
             });
-          };
+          }
         });
       }, 300);
     }, function (response) {});
