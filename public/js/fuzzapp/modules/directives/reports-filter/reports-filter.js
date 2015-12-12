@@ -40,7 +40,7 @@ angular.module('fuzzapp')
         $element.modal('hide');
 
         //  Now close as normal, but give 500ms for bootstrap to animate
-        close(null, 500);
+        //close(null, 500);
       };
 
       $scope.submit = function () {
