@@ -633,13 +633,13 @@ $(function(){
   // Controller: initialize map for lost pet report submission
   window.initializeLostMap = function(parentSelector){
     //console.log("fuzzfindersMapsReports.js initializeLostMap");
-    //initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
+    initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
   };
 
   // Controller: initialize map for found pet report submission
   window.initializeFoundMap = function(parentSelector){
     //console.log("fuzzfindersMapsReports.js initializeFoundMap");
-    //initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png', parentSelector)
+    initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png', parentSelector)
   };
 
   // var getUsersLocation = function() {
@@ -1068,7 +1068,7 @@ $(function(){
   var initializeFuzzfindersMapsReports = (function(){
     if (myApp.checkForElement(".fuzzfinders-buttons")) {
       hideReportFilterForm();
-      addEventListenerToAllGetReportDetails();
+      //addEventListenerToAllGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();

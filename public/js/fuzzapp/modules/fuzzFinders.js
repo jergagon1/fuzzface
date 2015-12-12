@@ -197,7 +197,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
   $rootScope.$on('section-changed', function (event, currentSection) {
     if (currentSection === 'lostSection' && $scope._type === 'lost') {
       setTimeout(function () {
-          initializeMap('lost-map-canvas', '/images/FuzzFinders_icon_orange.png');
+        initializeMap('lost-map-canvas', '/images/FuzzFinders_icon_orange.png');
       }, 100);
     } else if (currentSection === 'foundSection' && $scope._type === 'found') {
       setTimeout(function () {
@@ -226,12 +226,16 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
     var link = gon.api_server + "/api/v1/reports/" + report.id + "?user_email=" + gon.email + "&user_token=" + gon.auth_token;
 
     $http.get(link).then(function (response) {
+      console.info('getting new data report');
+
       var data = response.data;
 
       $scope.map = null;
       $scope.comments = [];
 
-      report.details = data;
+      $scope.report = response.data.report;
+
+      $scope.report.details = data;
       $scope.comments = data.comments;
       $scope.tags = data.tags;
 
@@ -240,7 +244,7 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
       setTimeout(function () {
         var mapOptions = {
           zoom: 14,
-          center: new google.maps.LatLng(report.lat, report.lng),
+          center: new google.maps.LatLng($scope.report.lat, $scope.report.lng),
           streetViewControl: false,
           mapTypeControl: false,
           scrollwheel: false,
@@ -251,10 +255,12 @@ fuzzappModule.controller('ReportController', ['$scope', '$http', function ($scop
 
         var marker = new google.maps.Marker({
           map: $scope.map,
-          position: new google.maps.LatLng(report.lat, report.lng),
+          position: new google.maps.LatLng($scope.report.lat, $scope.report.lng),
           icon: '/images/FuzzFinders_icon_orange.png',
           draggable: false
         });
+
+        $scope.map.setCenter(new google.maps.LatLng($scope.report.lat, $scope.report.lng));
 
         angular.forEach($scope.comments, function (comment) {
           if (comment.lat && comment.lng) {
