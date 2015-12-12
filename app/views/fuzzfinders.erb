@@ -46,6 +46,8 @@
   <script src="/vendor/bower_components/pusher-angular/lib/pusher-angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/ng-file-upload/ng-file-upload-all.js" type="text/javascript" charset="utf-8"></script>
   <script src="/vendor/bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/vendor/bower_components/angular-modal-service/dst/angular-modal-service.js" type="text/javascript" charset="utf-8"></script>
+
 
   <script src="/vendor/bower_components/blockUI/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
 
@@ -95,7 +97,7 @@
   <div class="row second-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <button class="btn-block main-buttons fuzzfinders-buttons lost-pet" ng-class="currentSection == 'lostSection' ? 'selected-button' : ''" ng-click="changeSection('lostSection')">Lost a Pet</button>
-      <div id="lost-pet" class="my-animation" ng-show="currentSection == 'lostSection'" ng-controller="PetController">
+      <div id="lost-pet" class="my-animation" ng-init="_type='lost'" ng-show="currentSection == 'lostSection'" ng-controller="PetController">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "lost" } %>
       </div><!-- #lost-pet -->
     </div><!-- col -->
@@ -103,7 +105,7 @@
   <div class="row third-panel">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <button class="btn-block main-buttons fuzzfinders-buttons found-pet" ng-class="currentSection == 'foundSection' ? 'selected-button' : ''" ng-click="changeSection('foundSection')">Found a Pet</button>
-      <div class="my-animation" id="found-pet" ng-show="currentSection == 'foundSection'" ng-controller="PetController">
+      <div class="my-animation" ng-init="_type='found'" id="found-pet" ng-show="currentSection == 'foundSection'" ng-controller="PetController">
         <%= erb :'partials/_pet_form', :layout => false, :locals => { :form_type => "found" } %>
       </div><!-- #found-pet -->
     </div><!-- col -->

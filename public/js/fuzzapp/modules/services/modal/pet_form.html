@@ -1,0 +1,162 @@
+<div class="modal fade" id="pet-form-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" ng-class="'modal-' + r.report_type">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" ng-bind="r.normalized_title"></h4>
+      </div>
+      <div class="modal-body">
+        <form class="{{formType}}-pet-form" >
+          <input type="hidden" name="report[report_type]" value="{{formType}}">
+          <input type="hidden" class="img_url" name="report[img_url]" value="">
+          <input type="hidden" name="report[userId]" value="{{userId}}">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <div class="image-upload-preview">
+                  <!--<img ngf-thumbnail="image" ng-show="!r.img_url" r.img_url" class="thumb">-->
+                  <img class="upload-preview-image" ng-src="{{r.img_url}}">
+                </div><!-- image-upload-preview -->
+
+                <label>
+                  <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
+
+                  <input type="file" ngf-select ngf-change="uploadImage($file, report)" ng-model="image" name="file" accept="image/*" ngf-max-size="90MB">
+                </label>
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[animal_type]">Pet Type</label>
+                <select name="report[animal_type]" class="form-control" ng-model="r.animal_type">
+                  <option value="">Pet Type</option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="bird">Bird</option>
+                  <option value="reptile">Reptile</option>
+                  <option value="other">Other</option>
+                </select>
+              </div><!-- form-group -->
+            </div><!-- col -->
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[sex]">Gender</label>
+                <select name="report[sex]" class="form-control" ng-model="r.sex">
+                  <option value="">Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[pet_size]">Pet Size</label>
+                <select name="report[pet_size]" class="form-control" ng-model="r.pet_size">
+                  <option value="">Size</option>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                  <option value="x-large">Extra Large</option>
+                </select>
+              </div><!-- form-group -->
+            </div><!-- col -->
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[age]">Age</label>
+                <select name="report[age]" class="form-control" ng-model="r.age">
+                  <option value="">Age</option>
+                  <option value="Baby">Baby</option>
+                  <option value="young">Young</option>
+                  <option value="adult">Adult</option>
+                  <option value="senior">Senior</option>
+                </select>
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[breed]">Breed</label>
+                <input type="text" ng-model="r.breed" class="form-control" id="{{formType}}-pet-breed" placeholder="Pet Breed" name="report[breed]">
+              </div><!-- form-group -->
+            </div><!-- col -->
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[color]">Color</label>
+                <input type="text" ng-model="r.color" class="form-control" id="{{formType}}-pet-color" placeholder="Pet Color" name="report[color]">
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row" ng-if="formType == 'lost'">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[tag_list]">Keywords</label>
+                <input type="text" ng-model="r.tag_list" class="form-control" id="{{formType}}-pet-tags" placeholder="Additional Keywords i.e. timid, brown ears" name="report[tag_list]">
+              </div><!-- form-group -->
+            </div><!-- col -->
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label class="sr-only" for="report[pet_name]">Pet Name</label>
+                <input type="text" ng-model="r.pet_name" class="form-control" id="{{formType}}-pet-name" placeholder="Pet Name" name="report[pet_name]">
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+
+          <div class="row" ng-if="formType == 'found'">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <label class="sr-only" for="report[tag_list]">Keywords</label>
+                <input type="text" ng-model="r.tag_list" class="form-control" id="{{formType}}-pet-tags" placeholder="Additional Keywords i.e. timid, brown ears" name="report[tag_list]">
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <label class="sr-only" for="report[last_seen]">Last Seen</label>
+                <input ng-model="r.last_seen" placeholder="Last Seen" type="text" name="report[last_seen]" id="{{formType}}-last-seen" value="" class="form-control datetimepicker" />
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <label class="sr-only" for="report[notes]">Notes</label>
+                <textarea name="report[notes]" ng-model="r.notes" class="form-control" id="{{formType}}-pet-notes" cols="30" rows="7" placeholder="Describe the incident"></textarea>
+              </div><!-- form-group -->
+            </div><!-- col -->
+          </div><!-- row -->
+          <input class="hidden-lat-field" type="hidden" name="report[lat]" value="">
+          <input class="hidden-lng-field" type="hidden" name="report[lng]" value="">
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group">
+                <input type="text"
+                       class="form-control"
+                       ng-model="r.address"
+                       ng-blur="geocoding()"
+                       placeholder="Address">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div id="map-canvas-{{r.id}}" class="map-canvas">
+              </div><!-- map-canvas -->
+            </div><!-- col -->
+          </div><!-- row -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-default" ng-click="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

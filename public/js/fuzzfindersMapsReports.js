@@ -632,13 +632,13 @@ $(function(){
 
   // Controller: initialize map for lost pet report submission
   window.initializeLostMap = function(parentSelector){
-    console.log("fuzzfindersMapsReports.js initializeLostMap");
+    //console.log("fuzzfindersMapsReports.js initializeLostMap");
     initializeMap(lostMap, "lost-map-canvas", '/images/FuzzFinders_icon_orange.png', parentSelector);
   };
 
   // Controller: initialize map for found pet report submission
   window.initializeFoundMap = function(parentSelector){
-    console.log("fuzzfindersMapsReports.js initializeFoundMap");
+    //console.log("fuzzfindersMapsReports.js initializeFoundMap");
     initializeMap(foundMap, "found-map-canvas", '/images/FuzzFinders_icon_blue.png', parentSelector)
   };
 
@@ -921,8 +921,8 @@ $(function(){
   //// Controller: add delegated event listener for comment form submission
   var addEventListenerSubmitComment = function(){
     console.log("fuzzfindersMapsReports.js addEventListenerSubmitComment");
-    $('body').off('submit', '.new-comment-form');
-    $('body').on("submit", ".new-comment-form", function(event){
+    $('body').off('submit', '.modal .new-comment-form');
+    $('body').on("submit", ".modal .new-comment-form", function(event){
       if (!$(this).find('.comment-text-input').val().length) {
         // prevents submit comment on empty textarea
         return false;
@@ -932,9 +932,7 @@ $(function(){
       var $currentForm = $(this);
       var $currentFormData = $currentForm.serialize();
       var $currentReportId = $currentForm.children().last().data("reportid");
-      console.log($currentForm);
-      console.log($currentFormData);
-      console.log($currentReportId);
+
       // call commentSubmit function
       submitComment($currentForm, $currentFormData, $currentReportId);
     });
@@ -1070,7 +1068,7 @@ $(function(){
   var initializeFuzzfindersMapsReports = (function(){
     if (myApp.checkForElement(".fuzzfinders-buttons")) {
       hideReportFilterForm();
-      addEventListenerToAllGetReportDetails();
+      //addEventListenerToAllGetReportDetails();
       addEventListenerInitializeLostMap();
       addEventListenerInitializeFoundMap();
       addEventListenerInitializeReportMap();

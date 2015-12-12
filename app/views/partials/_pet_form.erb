@@ -10,13 +10,11 @@
           <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
         </div><!-- image-upload-preview -->
 
-
         <label>
           <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 32px; cursor: pointer"></span>
 
           <input type="file" ngf-select  ngf-change="uploadImage($file, report)" ng-model="image" name="file" accept="image/*" ngf-max-size="90MB">
         </label>
-
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
@@ -118,8 +116,6 @@
       <div class="form-group">
         <label class="sr-only" for="report[last_seen]">Last Seen</label>
         <input placeholder="Last Seen" type="text" name="report[last_seen]" id="<%= form_type %>-last-seen" value="" class="form-control datetimepicker" ng-model="report.last_seen" />
-        <!-- <input placeholder="Last Seen" class="form&#45;control" type="text" id="<%= form_type %>&#45;last&#45;seen&#45;placeholder"> -->
-        <!-- <input class="form&#45;control" type="datetime&#45;local" id="<%= form_type %>&#45;last&#45;seen" name="report[last_seen]" style="display: none"> -->
       </div><!-- form-group -->
     </div><!-- col -->
   </div><!-- row -->
@@ -137,7 +133,11 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <input type="text" class="form-control" ng-model="report.address" placeholder="Address">
+        <input type="text"
+               class="form-control"
+               ng-model="report.address"
+               ng-blur="geocoding()"
+               placeholder="Address">
       </div>
     </div>
   </div>

@@ -58,22 +58,22 @@ angular.module('fuzzapp').controller('NotificationsController', [
     };
 
     $scope.newPush = function (data) {
-      var o = { data: data }
+      var o = { data: data };
 
       console.log($rootScope.mySubscriptions);
-      var reportISubscribedOn = ($rootScope.mySubscriptions.indexOf(data.report_id) !== -1)
+      var reportISubscribedOn = ($rootScope.mySubscriptions.indexOf(data.report_id) !== -1);
 
       var showAllNotifications = !(gon.latitude && gon.longitude);
       var didIreportIt = false; // gon.user_id == fuzzflash.user_id;
       var distanceInMiles = distance(gon.latitude, gon.longitude, data.latitude, data.longitude);
       var settingsDistance = parseInt($cookies.get('distance')) || 5;
 
-      if (didIreportIt) { return };
+      if (didIreportIt) { return; }
 
       if (reportISubscribedOn || showAllNotifications || (distanceInMiles < settingsDistance)) {
         if (data.comment_id) {
           data['report_type'] = 'comment';
-        };
+        }
 
         $scope.notifications.push(data);
 

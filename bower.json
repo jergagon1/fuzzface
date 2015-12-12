@@ -24,6 +24,7 @@
     "angular-cookies": "~1.4.8",
     "angular-ui-router": "ui-router#~0.2.15",
     "angular-moment": "git://github.com/urish/angular-moment#master",
-    "lodash-inflection": "~1.3.0"
+    "lodash-inflection": "~1.3.0",
+    "angular-modal-service": "~0.6.9"
   }
 }
