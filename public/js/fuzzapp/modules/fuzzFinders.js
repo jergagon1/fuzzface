@@ -84,14 +84,14 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
       streetViewControl: false,
       mapTypeControl: false,
       scrollwheel: false,
-      draggable: true
+      draggable: false
     };
 
     $scope._map = new google.maps.Map(document.getElementById(canvasDivId), mapOptions);
 
-    $scope.maps.push($scope._map);
+    window.maps.push($scope._map);
 
-    // google.maps.event.addListener(mapName, 'click', enableScrollingWithMouseWheel);
+    google.maps.event.addListener($scope._map, 'click', enableScrollingWithMouseWheel);
 
     var success = function(position) {
       var lat = parseFloat(position.coords.latitude);
