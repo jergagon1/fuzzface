@@ -189,7 +189,7 @@ fuzzappModule.controller('PetController', ['$rootScope', '$scope', 'Upload', '$h
       if (response.status === 200) {
         $.unblockUI();
 
-        report.img_url = response.data.image.url;
+        report.img_url = response.data.image.normal.url;
       }
     });
   };
