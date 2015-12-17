@@ -7,7 +7,8 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <div class="image-upload-preview">
-          <img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">
+          <!--<img ng-show="myForm.file.$valid" ngf-thumbnail="image" class="thumb">-->
+          <img ng-if="report.img_url" ng-src="{{report.img_url}}" class="thumb">
         </div><!-- image-upload-preview -->
 
         <label>

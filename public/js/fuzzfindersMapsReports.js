@@ -331,13 +331,13 @@ $(function(){
     if(!clickedInsideMap) { disableScrollingWithMouseWheel(); }
   });
 
-  var enableScrollingWithMouseWheel = function () {
+  window.enableScrollingWithMouseWheel = function () {
     this.setOptions({ scrollwheel: true, draggable: true });
   };
 
-  var disableScrollingWithMouseWheel = function () {
+  window.disableScrollingWithMouseWheel = function () {
     $.each(window.maps, function(i, el) {
-      el.setOptions({ draggable: false, scrollwheel: false })
+      el.setOptions({ draggable: false, scrollwheel: false });
     });
   };
 
