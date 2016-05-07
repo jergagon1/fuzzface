@@ -77,17 +77,22 @@ post '/update_coodinates' do
   { status: 'ok' }.to_json
 end
 
+# Show sign in page or app if session
+# get '/' do
+#   if session[:user]
+#     @page_title = 'FuzzFinders'
+#     @user_id = session[:user]['id']
+
+#     retrieve_wags
+
+#     erb :fuzzfinders
+#   else
+#     redirect '/sign_in'
+#   end
+# end
+
+# Show coming soon page at root url fuzzfinders.com
 get '/' do
-  # if session[:user]
-  #   @page_title = 'FuzzFinders'
-  #   @user_id = session[:user]['id']
-
-  #   retrieve_wags
-
-  #   erb :fuzzfinders
-  # else
-  #   redirect '/sign_in'
-  # end
   erb :coming_soon, :layout => false
 end
 
