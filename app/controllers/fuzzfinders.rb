@@ -78,23 +78,23 @@ post '/update_coodinates' do
 end
 
 # Show sign in page or app if session
-# get '/' do
-#   if session[:user]
-#     @page_title = 'FuzzFinders'
-#     @user_id = session[:user]['id']
+get '/' do
+  if session[:user]
+    @page_title = 'FuzzFinders'
+    @user_id = session[:user]['id']
 
-#     retrieve_wags
+    retrieve_wags
 
-#     erb :fuzzfinders
-#   else
-#     redirect '/sign_in'
-#   end
-# end
+    erb :fuzzfinders
+  else
+    redirect '/sign_in'
+  end
+end
 
 # Show coming soon page at root url fuzzfinders.com
-get '/' do
-  erb :coming_soon, :layout => false
-end
+# get '/' do
+#   erb :coming_soon, :layout => false
+# end
 
 get '/js/app.js' do
   coffee 'coffee/app'.to_sym
