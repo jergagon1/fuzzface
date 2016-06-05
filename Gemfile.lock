@@ -58,7 +58,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.6.0.1)
     i18n (0.6.9)
-    json (1.8.1)
+    json (1.8.3)
     libv8 (3.16.14.13)
     macaddr (1.7.1)
       systemu (~> 2.6.2)
@@ -146,4 +146,4 @@ DEPENDENCIES
   uuid
 
 BUNDLED WITH
-   1.10.5
+   1.12.5
